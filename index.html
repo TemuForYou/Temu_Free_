@@ -1,22 +1,324 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>테무 26만원 쿠폰 | 가능 조건 정리</title>
-  <meta name="description" content="테무 26만원 쿠폰이 생성되는 조건과 안 뜨는 이유를 정리했습니다. 신규·기존 회원 기준과 실제 가능한 혜택 구조를 설명합니다.">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>테무 26만원 쿠폰 | 생성 조건·안 뜨는 이유·확인 방법</title>
+  <meta name="description" content="테무 26만원 쿠폰이 생성되는 조건, 안 뜨는 이유, 확인 방법을 정리했습니다. 신규/기존 회원 기준과 현실적인 최대 혜택 루트까지." />
+
+  <style>
+    :root{
+      --bg:#f5f6f8;
+      --card:#ffffff;
+      --text:#1f2937;
+      --muted:#6b7280;
+      --line:#e5e7eb;
+      --accent:#111827; /* 상단바 느낌 */
+      --link:#ff6a00;
+      --shadow: 0 10px 30px rgba(0,0,0,.07);
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
+      line-height:1.75;
+    }
+
+    /* 상단 네비 */
+    .topbar{
+      background:var(--accent);
+      color:#fff;
+      position:sticky;
+      top:0;
+      z-index:50;
+      box-shadow: 0 4px 18px rgba(0,0,0,.18);
+    }
+    .topbar-inner{
+      max-width:1100px;
+      margin:0 auto;
+      padding:12px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+    }
+    .brand{
+      font-weight:800;
+      letter-spacing:-0.2px;
+      font-size:15px;
+      white-space:nowrap;
+    }
+    .nav{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      justify-content:flex-end;
+    }
+    .nav a{
+      color:#fff;
+      opacity:.9;
+      text-decoration:none;
+      font-size:14px;
+      padding:6px 10px;
+      border-radius:8px;
+    }
+    .nav a:hover{opacity:1; background:rgba(255,255,255,.10)}
+
+    /* 레이아웃 */
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:18px 16px 70px;
+      display:grid;
+      grid-template-columns: 1fr 280px;
+      gap:18px;
+    }
+    @media (max-width: 980px){
+      .wrap{grid-template-columns:1fr}
+      .sidebar{position:static}
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:14px;
+      box-shadow:var(--shadow);
+    }
+    .content{
+      padding:28px 22px;
+    }
+
+    /* 제목 영역 */
+    h1{
+      margin:0 0 8px;
+      font-size:30px;
+      letter-spacing:-0.6px;
+      line-height:1.25;
+    }
+    .meta{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      color:var(--muted);
+      font-size:13px;
+      margin-bottom:18px;
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:4px 10px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:#fff;
+    }
+
+    /* 본문 */
+    h2{
+      margin:34px 0 10px;
+      font-size:20px;
+      letter-spacing:-0.4px;
+      padding-left:10px;
+      border-left:4px solid var(--link);
+    }
+    h3{
+      margin:18px 0 8px;
+      font-size:16px;
+      letter-spacing:-0.2px;
+    }
+    p{margin:12px 0}
+    ul{margin:10px 0 10px 18px}
+    li{margin:6px 0}
+    a{color:var(--link); text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .note{
+      margin:16px 0;
+      background:#fff3e8;
+      border:1px solid #ffd2b3;
+      padding:12px 14px;
+      border-radius:12px;
+    }
+    .warning{
+      margin:16px 0;
+      background:#fff1f2;
+      border:1px solid #fecdd3;
+      padding:12px 14px;
+      border-radius:12px;
+    }
+
+    /* 사이드바 */
+    .sidebar{
+      position:sticky;
+      top:74px;
+      height:fit-content;
+    }
+    .side-inner{
+      padding:16px 14px;
+    }
+    .side-title{
+      font-weight:800;
+      font-size:14px;
+      margin:0 0 10px;
+    }
+    .toc{
+      list-style:none;
+      padding:0;
+      margin:0;
+    }
+    .toc li{margin:6px 0}
+    .toc a{
+      display:block;
+      padding:8px 10px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:13px;
+      color:#111827;
+    }
+    .toc a:hover{border-color:#ffd2b3; background:#fff8f3}
+
+    /* 하단 */
+    footer{
+      margin-top:40px;
+      padding-top:16px;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
+    .next-links{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:10px;
+    }
+    .next-links a{
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      background:#fff;
+    }
+  </style>
 </head>
+
 <body>
-  <h1>테무 26만원 쿠폰 생성 가능할까?</h1>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">TemuForYou</div>
+      <nav class="nav">
+        <a href="./">Home</a>
+        <a href="./temu-26-coupon-condition.html">쿠폰조건</a>
+        <a href="./temu-26-coupon-not-showing.html">안뜸원인</a>
+        <a href="./temu-coupon-logic.html">쿠폰구조</a>
+        <a href="./temu-max-benefit.html">최대혜택</a>
+      </nav>
+    </div>
+  </header>
 
-  <p>
-    테무 26만원 쿠폰은 모든 사용자에게 무조건 제공되는 혜택은 아닙니다.
-    특정 조건과 시점이 맞아야 노출되는 구조를 가지고 있습니다.
-  </p>
+  <main class="wrap">
+    <!-- 본문 카드 -->
+    <article class="card">
+      <div class="content">
+        <h1>테무 26만원 쿠폰 생성 가능할까? 조건·안 뜨는 이유까지 정리</h1>
 
-  <p>
-    이 페이지에서는 테무 고액 쿠폰이 생성되는 조건,
-    안 뜨는 이유, 그리고 실제로 가능한 최대 혜택 구조를
-    정리해서 설명합니다.
-  </p>
+        <div class="meta">
+          <span class="badge">업데이트: 2025-12-18</span>
+          <span class="badge">주제: 테무 쿠폰/크레딧</span>
+          <span class="badge">목표: 조건 확인 → 현실적 혜택 루트</span>
+        </div>
+
+        <div class="note">
+          <strong>핵심 결론부터</strong><br>
+          테무 26만원 쿠폰은 “항상 고정으로 제공”되는 혜택이 아닙니다. 계정 상태, 이벤트 시점, 노출 조건이 맞아야 뜨는 구조입니다.
+        </div>
+
+        <h2 id="sec-1">테무 26만원 쿠폰이 뜨는 조건</h2>
+        <p>
+          테무 고액 쿠폰은 사용자마다 노출이 달라질 수 있습니다. 아래는 “실제로 자주 언급되는 조건”을 기준으로 정리한 체크리스트입니다.
+        </p>
+        <ul>
+          <li>신규/기존 회원 여부(계정 이력)</li>
+          <li>이벤트 진행 시점(기간/시간대)</li>
+          <li>앱 설치·로그인 경로(유입 경로)</li>
+          <li>계정 활동 패턴(최근 접속/구매 이력)</li>
+        </ul>
+
+        <h3>체크 포인트</h3>
+        <p>
+          같은 “테무 26만원 쿠폰”이라도 누구에게나 동일하게 뜨지 않습니다. 그래서 “조건 확인 페이지”와 “안 뜨는 이유 페이지”를 분리해서 보는 게 빠릅니다.
+        </p>
+
+        <h2 id="sec-2">안 뜨는 이유 (가장 흔한 5가지)</h2>
+        <p>아래 유형이 가장 많이 발생합니다. 한 가지라도 해당되면 노출이 막힐 가능성이 큽니다.</p>
+        <ul>
+          <li>이미 혜택을 받은 계정(동일 기기/동일 계정 이력 포함)</li>
+          <li>이벤트 종료 또는 지역/시간대에 따른 노출 차이</li>
+          <li>앱 내부에서 다른 이벤트 탭에 가려진 경우</li>
+          <li>쿠폰/크레딧 메뉴 진입 경로가 달라서 놓친 경우</li>
+          <li>오래된 캐시/앱 상태 문제</li>
+        </ul>
+
+        <div class="warning">
+          <strong>주의</strong><br>
+          “무조건 된다”는 단정형 문구는 신뢰도를 깎습니다. 조건부라는 프레임을 유지해야 정보 사이트로 인식됩니다.
+        </div>
+
+        <h2 id="sec-3">확인 방법: 어디에서 보면 되나</h2>
+        <p>테무 앱에서 확인해야 하는 위치를 ‘메뉴 기준’으로 정리합니다.</p>
+        <ul>
+          <li>내 계정 → 쿠폰/크레딧 메뉴</li>
+          <li>이벤트 탭 → 쿠폰 번들/프로모션 영역</li>
+          <li>장바구니/결제 화면 → 적용 가능한 쿠폰 자동 표시</li>
+        </ul>
+
+        <h2 id="sec-4">현실적인 최대 혜택 루트 (쿠폰 + 크레딧)</h2>
+        <p>
+          고액 쿠폰 하나만으로 “0원”이 되는 경우는 제한적입니다.
+          실제 체감 혜택은 <strong>쿠폰 + 크레딧</strong> 조합에서 만들어집니다.
+        </p>
+        <p>
+          그래서 우리는 앞으로 페이지를 1개로 끝내지 않고,
+          질문형(조건/안뜸/구조/최대혜택)으로 나눠서 각각 상단을 노립니다.
+        </p>
+
+        <footer>
+          다음 글로 이동해서 더 깊게 확인하세요.
+          <div class="next-links">
+            <a href="./temu-26-coupon-condition.html">26만원 쿠폰 조건 정리</a>
+            <a href="./temu-26-coupon-not-showing.html">안 뜨는 이유 총정리</a>
+            <a href="./temu-coupon-logic.html">쿠폰 구조 분석</a>
+            <a href="./temu-max-benefit.html">최대 혜택 루트</a>
+          </div>
+        </footer>
+      </div>
+    </article>
+
+    <!-- 사이드바 TOC -->
+    <aside class="card sidebar">
+      <div class="side-inner">
+        <div class="side-title">Table of Contents</div>
+        <ol class="toc" id="toc"></ol>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // TOC 자동 생성: h2만 뽑아서 사이드바에 표시
+    (function(){
+      const toc = document.getElementById('toc');
+      const h2s = document.querySelectorAll('article h2[id]');
+      h2s.forEach(h2 => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = '#' + h2.id;
+        a.textContent = h2.textContent.trim();
+        li.appendChild(a);
+        toc.appendChild(li);
+      });
+    })();
+  </script>
 </body>
 </html>
