@@ -4,16 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <title>TemuForYou - 테무 쿠폰/코드/혜택 가이드</title>
-  <meta name="description" content="테무(Temu) 쿠폰·쿠폰코드·사은품·크레딧 혜택을 발급→사용→적용까지 구조적으로 정리한 정보 허브. 최신 업데이트 글과 문제 해결 가이드를 제공합니다." />
-
-  <meta property="og:title" content="TemuForYou - 테무 쿠폰/코드/혜택 가이드" />
-  <meta property="og:description" content="테무 쿠폰 발급/사용/적용 실패 해결/쿠폰코드 입력 위치/사은품 0원 루트까지 한 번에 정리." />
-  <meta property="og:type" content="website" />
+  <title>TemuForYou - 테무 쿠폰/코드/사은품 가이드</title>
+  <meta name="description" content="테무(Temu) 쿠폰·쿠폰코드·사은품·특별세일 정보를 발급→적용→사용 순서대로 정리한 정보형 사이트. 헷갈리는 조건과 실패 원인을 한 번에 해결합니다." />
 
   <style>
     :root{
-      --bg:#f6f7fb;
+      --bg:#f7f8fc;
       --card:#ffffff;
       --text:#111827;
       --muted:#6b7280;
@@ -24,7 +20,11 @@
       --temuSoft:#fff3ea;
 
       --shadow: 0 12px 34px rgba(14, 30, 37, .10);
+      --shadow2: 0 10px 22px rgba(255, 106, 0, .16);
+
+      --radius:18px;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -33,17 +33,15 @@
       color:var(--text);
       line-height:1.75;
     }
-    a{color:var(--temu); text-decoration:none}
-    a:hover{text-decoration:underline}
+    a{color:inherit; text-decoration:none}
+    a:hover{text-decoration:none}
 
-    /* Top bar */
+    /* Topbar */
     .topbar{
+      position:sticky; top:0; z-index:999;
       background:linear-gradient(90deg, var(--temu), var(--temu2));
       color:#fff;
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow: 0 6px 22px rgba(0,0,0,.18);
+      box-shadow: 0 8px 22px rgba(0,0,0,.16);
     }
     .topbar-inner{
       max-width:1120px;
@@ -52,33 +50,29 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:14px;
+      gap:12px;
     }
     .brand{
+      display:flex; align-items:center; gap:10px;
       font-weight:900;
-      letter-spacing:-0.3px;
-      font-size:15px;
+      letter-spacing:-0.4px;
       white-space:nowrap;
-      display:flex;
-      align-items:center;
-      gap:10px;
     }
-    .brand-dot{
-      width:10px;height:10px;border-radius:999px;
-      background:#fff; opacity:.95;
-      box-shadow: 0 0 0 4px rgba(255,255,255,.20);
+    .logoDot{
+      width:10px;height:10px;border-radius:999px;background:#fff;
+      box-shadow:0 0 0 5px rgba(255,255,255,.18);
     }
     .nav{
-      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+      display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;
     }
     .nav a{
-      color:#fff; opacity:.95;
-      font-size:14px;
-      padding:6px 10px;
-      border-radius:10px;
-      background:rgba(255,255,255,.12);
+      color:#fff;
+      font-size:13px;
+      padding:7px 10px;
+      border-radius:999px;
+      background:rgba(255,255,255,.16);
     }
-    .nav a:hover{opacity:1; background:rgba(255,255,255,.20)}
+    .nav a:hover{background:rgba(255,255,255,.24)}
 
     /* Layout */
     .wrap{
@@ -86,8 +80,9 @@
       margin:0 auto;
       padding:18px 16px 70px;
       display:grid;
-      grid-template-columns: 1fr 320px; /* 오른쪽 사이드바 */
+      grid-template-columns: 1fr 340px; /* 오른쪽 메뉴 */
       gap:18px;
+      align-items:start;
     }
     @media (max-width: 980px){
       .wrap{grid-template-columns:1fr}
@@ -97,39 +92,41 @@
     .card{
       background:var(--card);
       border:1px solid var(--line);
-      border-radius:16px;
+      border-radius:var(--radius);
       box-shadow:var(--shadow);
     }
-    .content{padding:28px 22px}
 
-    /* Hero */
+    /* Main */
+    .content{padding:26px 22px}
     .hero{
       border:1px solid #ffd2b3;
       background:
-        radial-gradient(1200px 300px at 10% 10%, rgba(255,106,0,.18), transparent 60%),
-        radial-gradient(800px 280px at 90% 0%, rgba(255,138,61,.18), transparent 55%),
-        linear-gradient(135deg, #fff, #fff8f3);
-      border-radius:18px;
+        radial-gradient(900px 260px at 10% 10%, rgba(255,106,0,.20), transparent 60%),
+        radial-gradient(700px 240px at 90% 0%, rgba(255,138,61,.18), transparent 55%),
+        linear-gradient(135deg, #fff, #fff7f0);
+      border-radius:var(--radius);
       padding:18px 16px;
-      margin:0 0 18px;
-      position:relative;
       overflow:hidden;
+      position:relative;
     }
-    .hero-row{
-      display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;
-    }
-    .hero-icon{
-      width:54px;height:54px;border-radius:16px;
+    .heroRow{display:flex; gap:14px; align-items:flex-start; flex-wrap:wrap;}
+    .heroIcon{
+      width:56px;height:56px;border-radius:16px;
       background:linear-gradient(135deg, var(--temu), var(--temu2));
       display:flex;align-items:center;justify-content:center;
-      color:#fff; font-size:26px;
-      box-shadow: 0 10px 26px rgba(255,106,0,.25);
+      color:#fff;font-size:26px;
+      box-shadow:var(--shadow2);
       flex:0 0 auto;
     }
-    h1{margin:0 0 8px; font-size:28px; letter-spacing:-0.7px; line-height:1.25;}
-    .lead{margin:0; color:#374151; font-size:14px;}
-    .tags{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px;}
-    .tag{
+    h1{
+      margin:0 0 8px;
+      font-size:28px;
+      letter-spacing:-0.8px;
+      line-height:1.25;
+    }
+    .lead{margin:0;color:#374151;font-size:14px}
+    .badges{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .badge{
       font-size:12px; font-weight:900;
       color:var(--temu);
       background:var(--temuSoft);
@@ -138,7 +135,6 @@
       border-radius:999px;
     }
 
-    /* Sections */
     h2{
       margin:26px 0 10px;
       font-size:18px;
@@ -146,116 +142,89 @@
       padding-left:10px;
       border-left:5px solid var(--temu);
     }
+
     .grid{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:12px;
     }
-    @media (max-width: 720px){
-      .grid{grid-template-columns:1fr}
-    }
+    @media (max-width: 740px){ .grid{grid-template-columns:1fr} }
+
     .tile{
       border:1px solid var(--line);
-      border-radius:14px;
-      background:#fff;
+      border-radius:16px;
       padding:14px 14px;
+      background:#fff;
+      transition:transform .12s ease, border-color .12s ease;
     }
-    .tile-top{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      margin-bottom:6px;
-    }
-    .tile-title{
-      font-weight:900; letter-spacing:-0.2px;
-    }
-    .tile-meta{color:var(--muted); font-size:12px}
+    .tile:hover{transform:translateY(-2px); border-color:#ffd2b3}
+    .tileTop{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .tileTitle{font-weight:900; letter-spacing:-0.2px;}
     .pill{
-      font-size:12px; font-weight:900; color:#fff;
-      background:var(--temu);
+      font-size:12px; font-weight:900;
+      color:#fff; background:var(--temu);
+      padding:5px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+    .tileMeta{margin-top:6px;color:var(--muted);font-size:12px}
+    .tileDesc{margin:8px 0 0;color:#374151;font-size:13px}
+
+    /* Sidebar (sticky follow) */
+    .sidebar{position:sticky; top:74px; height:fit-content;}
+    .sideInner{padding:16px 14px}
+    .sideHead{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .sideHead strong{font-size:14px; letter-spacing:-0.2px}
+    .sideChip{
+      font-size:12px; font-weight:900; color:var(--temu);
+      background:var(--temuSoft);
+      border:1px solid #ffd2b3;
       padding:4px 10px;
       border-radius:999px;
       white-space:nowrap;
     }
-    .tile p{margin:8px 0 0; color:#374151; font-size:13px}
-
-    /* CTA (하단에만) */
-    .cta{
-      background:linear-gradient(135deg, rgba(255,106,0,.14), rgba(255,138,61,.06));
-      border:1px solid rgba(255,106,0,.32);
-      padding:16px;
-      border-radius:16px;
-      margin:18px 0 0;
-      position:relative;
-      overflow:hidden;
-    }
-    .cta:before{
-      content:"";
-      position:absolute;
-      right:-40px; top:-40px;
-      width:160px; height:160px;
-      border-radius:999px;
-      background:rgba(255,106,0,.16);
-    }
-    .cta-title{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:-0.2px;
-      margin:0 0 10px; font-size:16px;
-    }
-    .cta-badge{
-      font-size:12px; font-weight:900;
-      color:#fff; background:var(--temu);
-      padding:4px 10px; border-radius:999px;
-    }
-    .cta-item{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px;
-      margin-top:10px;
-    }
-    .cta-label{font-size:12px;color:var(--muted);margin-bottom:6px}
-    .cta-value{font-weight:900; word-break:break-all}
-    .cta-value code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:14px;
-      background:var(--temuSoft);
-      padding:3px 8px;
-      border-radius:10px;
-      border:1px solid #ffd2b3;
-    }
-    .footnote{margin-top:10px; font-size:12px; color:var(--muted)}
-
-    /* Sidebar */
-    .sidebar{position:sticky; top:74px; height:fit-content}
-    .side-inner{padding:16px 14px}
-    .side-title{
-      font-weight:900; font-size:14px; margin:0 0 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:8px;
-    }
-    .side-chip{
-      font-size:12px; font-weight:900; color:var(--temu);
-      background:var(--temuSoft); border:1px solid #ffd2b3;
-      padding:4px 10px; border-radius:999px;
-    }
-    .side-block{margin-top:14px}
-    .side-block h3{
-      margin:0 0 8px; font-size:13px; letter-spacing:-0.2px;
+    .sideBlock{margin-top:14px}
+    .sideBlock h3{
+      margin:0 0 8px;
+      font-size:13px;
+      letter-spacing:-0.2px;
       color:#111827;
     }
-    .side-list{list-style:none; padding:0; margin:0}
-    .side-list li{margin:6px 0}
-    .side-list a{
-      display:block;
-      padding:9px 10px;
-      border-radius:12px;
+    .sideList{list-style:none; padding:0; margin:0}
+    .sideList li{margin:7px 0}
+    .sideBtn{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+
+      padding:10px 10px;
+      border-radius:14px;
       border:1px solid var(--line);
       background:#fff;
       font-size:13px;
-      color:#111827;
+      font-weight:800;
     }
-    .side-list a:hover{border-color:#ffd2b3;background:#fff8f3}
+    .sideBtn:hover{border-color:#ffd2b3; background:#fff8f3}
+    .sideBtn small{color:var(--muted); font-weight:700}
 
+    .softBox{
+      margin-top:10px;
+      border:1px solid #ffd2b3;
+      background:var(--temuSoft);
+      border-radius:16px;
+      padding:12px;
+      color:#3b2a1f;
+      font-size:13px;
+      font-weight:800;
+    }
+
+    /* Footer */
     footer{
-      margin-top:28px;
+      margin-top:26px;
       padding-top:14px;
       border-top:1px solid var(--line);
       color:var(--muted);
@@ -267,7 +236,7 @@
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand"><span class="brand-dot"></span>TemuForYou</div>
+      <div class="brand"><span class="logoDot"></span>TemuForYou</div>
       <nav class="nav">
         <a href="./">Home</a>
         <a href="./posts/temu-coupon-2026.html">2026 무료쿠폰</a>
@@ -283,694 +252,135 @@
       <div class="content">
 
         <section class="hero">
-          <div class="hero-row">
-            <div class="hero-icon">🎟️</div>
+          <div class="heroRow">
+            <div class="heroIcon">🛒</div>
             <div style="min-width:240px; flex:1;">
-              <h1>테무 쿠폰/코드/혜택을 “적용”까지 정리한 가이드</h1>
+              <h1>테무 쿠폰·코드·사은품 정보를 “적용”까지 정리한 사이트</h1>
               <p class="lead">
-                테무는 혜택이 많지만, 발급/조건/적용 위치가 갈라져서 헷갈리는 구간이 반복됩니다.
-                이 사이트는 쿠폰과 코드 정보를 “순서대로” 정리해서, 필요한 순간에 바로 적용되도록 안내합니다.
+                테무(Temu)는 혜택이 많지만, 발급 위치/조건/적용 단계가 나뉘어 있어서
+                초보자일수록 “왜 안 되지?” 구간이 반복됩니다.
+                여기서는 쿠폰과 코드를 과장 없이, 순서대로 정리해서 실전 적용에 도움되게 구성합니다.
               </p>
-              <div class="tags">
-                <span class="tag">쿠폰 번들</span>
-                <span class="tag">쿠폰코드</span>
-                <span class="tag">사은품 0원</span>
-                <span class="tag">크레딧</span>
-                <span class="tag">적용 실패 해결</span>
+              <div class="badges">
+                <span class="badge">🎟️ 쿠폰 묶음</span>
+                <span class="badge">🔑 쿠폰코드</span>
+                <span class="badge">🎁 사은품 0원</span>
+                <span class="badge">⚙️ 적용 실패 해결</span>
+                <span class="badge">📌 단계별 체크</span>
               </div>
             </div>
           </div>
         </section>
 
-        <h2>가장 많이 찾는 핵심 가이드</h2>
+        <h2>가장 많이 찾는 글 5개</h2>
         <div class="grid">
-          <div class="tile">
-            <div class="tile-top">
-              <div class="tile-title"><a href="./posts/temu-coupon-2026.html">테무 2026 무료쿠폰 발급 및 사용방법</a></div>
-              <span class="pill">필수</span>
+          <a class="tile" href="./posts/temu-coupon-2026.html">
+            <div class="tileTop">
+              <div class="tileTitle">테무 2026 무료쿠폰 발급 및 사용방법 정리</div>
+              <div class="pill">핵심</div>
             </div>
-            <div class="tile-meta">발급 → 적용 → 사용 순서 정리</div>
-            <p>초보자가 가장 많이 막히는 “왜 적용이 안 되지?”를 조건/순서로 해결합니다.</p>
-          </div>
+            <div class="tileMeta">발급 → 적용 → 사용 순서 / 주의할 조건까지</div>
+            <p class="tileDesc">‘무조건 된다’가 아니라, 실제로 적용이 갈리는 조건을 단계별로 정리합니다.</p>
+          </a>
 
-          <div class="tile">
-            <div class="tile-top">
-              <div class="tile-title"><a href="./posts/temu-coupon-code-input.html">테무 쿠폰코드 입력 위치 총정리</a></div>
-              <span class="pill">필수</span>
+          <a class="tile" href="./posts/temu-coupon-code-input.html">
+            <div class="tileTop">
+              <div class="tileTitle">테무 쿠폰코드 입력 위치 총정리</div>
+              <div class="pill">필수</div>
             </div>
-            <div class="tile-meta">검색창/계정/이벤트 페이지 구조</div>
-            <p>입력 위치가 헷갈려서 시간을 날리는 문제를 최소화합니다.</p>
-          </div>
+            <div class="tileMeta">계정/이벤트/결제 단계 구분</div>
+            <p class="tileDesc">코드가 “어디에 들어가야” 반영되는지 가장 헷갈리는 지점을 정리합니다.</p>
+          </a>
 
-          <div class="tile">
-            <div class="tile-top">
-              <div class="tile-title"><a href="./posts/temu-coupon-not-working.html">테무 쿠폰 적용 안될 때 원인 체크</a></div>
-              <span class="pill">해결</span>
+          <a class="tile" href="./posts/temu-coupon-not-working.html">
+            <div class="tileTop">
+              <div class="tileTitle">테무 쿠폰 적용 안될 때 체크리스트</div>
+              <div class="pill">해결</div>
             </div>
-            <div class="tile-meta">조건/기간/계정 상태/최소금액</div>
-            <p>‘안됨’ 상황을 원인별로 분리해서, 재시도 루트를 제시합니다.</p>
-          </div>
+            <div class="tileMeta">최소금액/기간/계정상태/중복 규칙</div>
+            <p class="tileDesc">안 되는 이유를 “원인별”로 분리해서, 재시도 루트를 잡아드립니다.</p>
+          </a>
 
-          <div class="tile">
-            <div class="tile-top">
-              <div class="tile-title"><a href="./posts/temu-free-gift-0won.html">테무 사은품 0원, 가능한 조건과 순서</a></div>
-              <span class="pill">인기</span>
+          <a class="tile" href="./posts/temu-free-gift-0won.html">
+            <div class="tileTop">
+              <div class="tileTitle">테무 사은품 0원, 가능한 조건과 순서</div>
+              <div class="pill">인기</div>
             </div>
-            <div class="tile-meta">사은품/이벤트 참여 흐름</div>
-            <p>사은품이 뜨는 조건과 ‘중간에 끊기는 지점’을 정리합니다.</p>
-          </div>
-        </div>
+            <div class="tileMeta">노출 조건 + 참여 흐름 + 끊기는 구간</div>
+            <p class="tileDesc">사은품이 뜨는 조건과, 중간에 끊기는 지점을 현실적으로 정리합니다.</p>
+          </a>
 
-        <h2>최신 업데이트</h2>
-        <div class="tile">
-          <div class="tile-top">
-            <div class="tile-title"><a href="./posts/temu-special-sale.html">테무 특별 세일: 노출 구조와 적용 방법</a></div>
-            <span class="pill">NEW</span>
-          </div>
-          <div class="tile-meta">업데이트: 2025-12-18</div>
-          <p>특별 세일/프로모션 탭에서 실제로 적용되는 방식과 주의점을 정리합니다.</p>
-        </div>
-
-        <div class="cta" id="cta">
-          <div class="cta-title"><span class="cta-badge">혜택</span> 링크 & 코드 (필요할 때만 사용)</div>
-
-          <div class="cta-item">
-            <div class="cta-label">150,000원 쿠폰 묶음 (링크)</div>
-            <div class="cta-value">
-              <a href="https://temu.to/m/uotsq20netz" target="_blank" rel="noopener">https://temu.to/m/uotsq20netz</a>
+          <a class="tile" href="./posts/temu-special-sale.html" style="grid-column:1 / -1;">
+            <div class="tileTop">
+              <div class="tileTitle">테무 특별 세일/프로모션 구조와 적용 방법</div>
+              <div class="pill">보조</div>
             </div>
-            <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-            <div class="cta-value"><code>aak74594</code></div>
-          </div>
-
-          <div class="cta-item">
-            <div class="cta-label">사은품 0원개 (링크)</div>
-            <div class="cta-value">
-              <a href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener">https://temu.to/m/u3ia9bomcaw</a>
-            </div>
-            <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-            <div class="cta-value"><code>frq027981</code></div>
-          </div>
-
-          <div class="cta-item">
-            <div class="cta-label">특별 세일 (링크)</div>
-            <div class="cta-value">
-              <a href="https://temu.to/m/u3ckk6z4eku" target="_blank" rel="noopener">https://temu.to/m/u3ckk6z4eku</a>
-            </div>
-            <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-            <div class="cta-value"><code>acr804202</code></div>
-          </div>
-
-          <div class="footnote">
-            ※ 혜택은 이벤트/계정 상태에 따라 노출이나 조건이 달라질 수 있습니다.
-          </div>
+            <div class="tileMeta">프로모션 탭/세일 이벤트 흐름</div>
+            <p class="tileDesc">특별 세일이 어디서 뜨고 어떻게 적용되는지, 초보자 기준으로 쉽게 풀어드립니다.</p>
+          </a>
         </div>
 
         <footer>
-          본 사이트는 테무 쿠폰/코드 정보를 “정리”하는 허브입니다. 과장 대신, 적용에 필요한 조건과 순서를 중심으로 업데이트합니다.
+          “광고처럼 보이는 사이트”는 오래 못 갑니다. 이 사이트는 쿠폰/코드 정보를
+          적용에 필요한 조건과 순서 중심으로 꾸준히 업데이트하는 방식으로 운영합니다.
         </footer>
-
       </div>
     </article>
 
-    <!-- 오른쪽 사이드바: 사이트 차트 + 최신글 + 빠른이동 -->
+    <!-- 오른쪽 스크롤 따라오는 메뉴(스티키) -->
     <aside class="card sidebar">
-      <div class="side-inner">
-        <div class="side-title">Site Chart <span class="side-chip">Right</span></div>
-
-        <div class="side-block">
-          <h3>핵심 가이드</h3>
-          <ul class="side-list">
-            <li><a href="./posts/temu-coupon-2026.html">2026 무료쿠폰 발급/사용</a></li>
-            <li><a href="./posts/temu-coupon-code-input.html">쿠폰코드 입력 위치</a></li>
-            <li><a href="./posts/temu-coupon-not-working.html">쿠폰 적용 안될 때</a></li>
-            <li><a href="./posts/temu-free-gift-0won.html">사은품 0원 조건</a></li>
-            <li><a href="./posts/temu-special-sale.html">특별 세일 적용</a></li>
-          </ul>
+      <div class="sideInner">
+        <div class="sideHead">
+          <strong>바로 가기</strong>
+          <span class="sideChip">스크롤 따라옴</span>
         </div>
 
-        <div class="side-block">
-          <h3>문제 해결</h3>
-          <ul class="side-list">
-            <li><a href="./posts/temu-coupon-not-working.html#sec-check">원인 체크리스트</a></li>
-            <li><a href="./posts/temu-coupon-code-input.html#sec-where">입력 위치 3가지</a></li>
-            <li><a href="./posts/temu-coupon-2026.html#sec-flow">실전 순서(루트)</a></li>
+        <div class="sideBlock">
+          <h3>인기 글 5개</h3>
+          <ul class="sideList">
+            <li>
+              <a class="sideBtn" href="./posts/temu-coupon-2026.html">
+                2026 무료쿠폰 발급/사용 <small>핵심</small>
+              </a>
+            </li>
+            <li>
+              <a class="sideBtn" href="./posts/temu-coupon-code-input.html">
+                쿠폰코드 입력 위치 <small>필수</small>
+              </a>
+            </li>
+            <li>
+              <a class="sideBtn" href="./posts/temu-coupon-not-working.html">
+                쿠폰 적용 안될 때 <small>해결</small>
+              </a>
+            </li>
+            <li>
+              <a class="sideBtn" href="./posts/temu-free-gift-0won.html">
+                사은품 0원 조건 <small>인기</small>
+              </a>
+            </li>
+            <li>
+              <a class="sideBtn" href="./posts/temu-special-sale.html">
+                특별 세일/프로모션 <small>보조</small>
+              </a>
+            </li>
           </ul>
+
+          <div class="softBox">
+            아래 글도 보시겠어요? 😄💕<br>
+            위 5개 글은 서로 이어지게 구성되어 있어서, 하나만 읽어도 흐름이 잡히고
+            여러 개를 보면 적용 확률이 더 올라갑니다.
+          </div>
         </div>
 
-        <div class="side-block">
-          <h3>빠른 이동</h3>
-          <ul class="side-list">
-            <li><a href="#cta">링크/코드 박스</a></li>
+        <div class="sideBlock">
+          <h3>운영 원칙</h3>
+          <ul class="sideList">
+            <li><div class="sideBtn" style="cursor:default">과장 대신 “조건/순서” 중심 <small>신뢰</small></div></li>
+            <li><div class="sideBtn" style="cursor:default">링크/코드는 글 하단 중심 <small>자연</small></div></li>
           </ul>
         </div>
       </div>
     </aside>
   </main>
-</body>
-</html>
-
-    /* 상단바 */
-    .topbar{
-      background:linear-gradient(90deg, var(--temu), var(--temu2));
-      color:#fff;
-      position:sticky;
-      top:0;
-      z-index:50;
-      box-shadow: 0 6px 22px rgba(0,0,0,.18);
-    }
-    .topbar-inner{
-      max-width:1120px;
-      margin:0 auto;
-      padding:12px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-    }
-    .brand{
-      font-weight:900;
-      letter-spacing:-0.3px;
-      font-size:15px;
-      white-space:nowrap;
-      display:flex;
-      align-items:center;
-      gap:10px;
-    }
-    .brand-dot{
-      width:10px;height:10px;border-radius:999px;
-      background:#fff; opacity:.95;
-      box-shadow: 0 0 0 4px rgba(255,255,255,.20);
-    }
-    .nav{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .nav a{
-      color:#fff;
-      opacity:.95;
-      text-decoration:none;
-      font-size:14px;
-      padding:6px 10px;
-      border-radius:10px;
-      background:rgba(255,255,255,.12);
-    }
-    .nav a:hover{opacity:1; background:rgba(255,255,255,.20)}
-
-    /* 레이아웃 */
-    .wrap{
-      max-width:1120px;
-      margin:0 auto;
-      padding:18px 16px 70px;
-      display:grid;
-      grid-template-columns: 1fr 300px;
-      gap:18px;
-    }
-    @media (max-width: 980px){
-      .wrap{grid-template-columns:1fr}
-      .sidebar{position:static}
-    }
-
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:16px;
-      box-shadow:var(--shadow);
-    }
-    .content{padding:28px 22px}
-
-    h1{
-      margin:0 0 10px;
-      font-size:30px;
-      letter-spacing:-0.7px;
-      line-height:1.25;
-    }
-    .meta{
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-      color:var(--muted);
-      font-size:13px;
-      margin-bottom:18px;
-    }
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:6px;
-      padding:4px 10px;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:#fff;
-    }
-    .badge .pill{width:8px;height:8px;border-radius:999px;background:var(--temu)}
-
-    h2{
-      margin:34px 0 10px;
-      font-size:20px;
-      letter-spacing:-0.4px;
-      padding-left:10px;
-      border-left:5px solid var(--temu);
-    }
-    h3{
-      margin:18px 0 8px;
-      font-size:16px;
-      letter-spacing:-0.2px;
-    }
-    p{margin:12px 0}
-    ul{margin:10px 0 10px 18px}
-    li{margin:6px 0}
-    a{color:var(--temu); text-decoration:none}
-    a:hover{text-decoration:underline}
-
-    /* 상단 히어로(밝게) */
-    .hero{
-      border:1px solid #ffd2b3;
-      background:
-        radial-gradient(1200px 300px at 10% 10%, rgba(255,106,0,.18), transparent 60%),
-        radial-gradient(800px 280px at 90% 0%, rgba(255,138,61,.18), transparent 55%),
-        linear-gradient(135deg, #fff, #fff8f3);
-      border-radius:18px;
-      padding:18px 16px;
-      margin:0 0 18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-row{
-      display:flex;
-      gap:14px;
-      align-items:flex-start;
-      flex-wrap:wrap;
-    }
-    .hero-icon{
-      width:54px;height:54px;border-radius:16px;
-      background:linear-gradient(135deg, var(--temu), var(--temu2));
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;
-      font-size:26px;
-      box-shadow: 0 10px 26px rgba(255,106,0,.25);
-      flex:0 0 auto;
-    }
-    .hero-title{
-      margin:0;
-      font-weight:900;
-      letter-spacing:-0.4px;
-      font-size:16px;
-    }
-    .hero-sub{
-      margin:6px 0 0;
-      color:#374151;
-      font-size:14px;
-    }
-    .hero-tags{
-      display:flex;
-      gap:8px;
-      flex-wrap:wrap;
-      margin-top:10px;
-    }
-    .tag{
-      font-size:12px;
-      font-weight:900;
-      color:var(--temu);
-      background:var(--temuSoft);
-      border:1px solid #ffd2b3;
-      padding:5px 10px;
-      border-radius:999px;
-    }
-
-    .temu-box{
-      background:linear-gradient(135deg, var(--temuSoft), #fff);
-      border:1px solid #ffd2b3;
-      padding:14px 16px;
-      border-radius:16px;
-      margin:18px 0;
-    }
-    .temu-box strong{color:var(--temu)}
-    .warn-box{
-      background:#fff1f2;
-      border:1px solid #fecdd3;
-      padding:14px 16px;
-      border-radius:16px;
-      margin:18px 0;
-    }
-
-    /* 쿠폰 섹션(아이콘+배지 느낌) */
-    .coupon-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin:18px 0 10px;
-    }
-    .coupon-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      letter-spacing:-0.2px;
-    }
-    .coupon-emoji{
-      width:36px;height:36px;border-radius:12px;
-      background:linear-gradient(135deg, rgba(255,106,0,.18), rgba(255,138,61,.10));
-      border:1px solid rgba(255,106,0,.25);
-      display:flex;align-items:center;justify-content:center;
-      font-size:18px;
-    }
-    .coupon-note{
-      font-size:12px;
-      color:var(--muted);
-      border:1px dashed #ffd2b3;
-      padding:6px 10px;
-      border-radius:999px;
-      background:#fff;
-      white-space:nowrap;
-    }
-
-    /* CTA */
-    .cta{
-      background:linear-gradient(135deg, rgba(255,106,0,.14), rgba(255,138,61,.06));
-      border:1px solid rgba(255,106,0,.32);
-      padding:16px;
-      border-radius:16px;
-      margin:12px 0 20px;
-      position:relative;
-      overflow:hidden;
-    }
-    .cta:before{
-      content:"";
-      position:absolute;
-      right:-40px; top:-40px;
-      width:160px; height:160px;
-      border-radius:999px;
-      background:rgba(255,106,0,.16);
-    }
-    .cta-title{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:900;
-      letter-spacing:-0.2px;
-      margin:0 0 10px;
-      font-size:16px;
-    }
-    .cta-badge{
-      font-size:12px;
-      font-weight:900;
-      color:#fff;
-      background:var(--temu);
-      padding:4px 10px;
-      border-radius:999px;
-    }
-    .cta-grid{
-      display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
-      margin-top:10px;
-    }
-    .cta-item{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:14px;
-      padding:12px 12px;
-    }
-    .cta-label{font-size:12px;color:var(--muted);margin-bottom:6px}
-    .cta-value{
-      font-weight:900;
-      letter-spacing:-0.2px;
-      word-break:break-all;
-    }
-    .cta-value code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:14px;
-      background:var(--temuSoft);
-      padding:3px 8px;
-      border-radius:10px;
-      border:1px solid #ffd2b3;
-    }
-    .cta-hint{margin-top:10px;font-size:13px;color:var(--muted)}
-
-    /* 사이드바 TOC */
-    .sidebar{position:sticky;top:74px;height:fit-content}
-    .side-inner{padding:16px 14px}
-    .side-title{
-      font-weight:900;font-size:14px;margin:0 0 10px;
-      display:flex;align-items:center;justify-content:space-between;gap:8px;
-    }
-    .side-chip{
-      font-size:12px;font-weight:900;color:var(--temu);
-      background:var(--temuSoft);border:1px solid #ffd2b3;
-      padding:4px 10px;border-radius:999px;
-    }
-    .toc{list-style:none;padding:0;margin:0}
-    .toc li{margin:6px 0}
-    .toc a{
-      display:block;padding:9px 10px;border-radius:12px;border:1px solid var(--line);
-      background:#fff;font-size:13px;color:#111827;
-    }
-    .toc a:hover{border-color:#ffd2b3;background:#fff8f3}
-
-    footer{
-      margin-top:40px;
-      padding-top:16px;
-      border-top:1px solid var(--line);
-      color:var(--muted);
-      font-size:13px;
-    }
-    .closing{
-      margin-top:16px;
-      padding:14px 16px;
-      border-radius:16px;
-      border:1px solid #ffd2b3;
-      background:linear-gradient(135deg, #fff, #fff8f3);
-      color:#374151;
-    }
-  </style>
-</head>
-
-<body>
-  <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand"><span class="brand-dot"></span>TemuForYou</div>
-      <nav class="nav">
-        <a href="./">Home</a>
-        <a href="#sec-1">테무 소개</a>
-        <a href="#sec-2">발급</a>
-        <a href="#sec-3">사용방법</a>
-        <a href="#sec-4">쿠폰코드</a>
-      </nav>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <article class="card">
-      <div class="content">
-
-        <h1>테무 2026 무료쿠폰 발급 및 사용방법 정리!</h1>
-
-        <div class="meta">
-          <span class="badge"><span class="pill"></span>업데이트: 2025-12-18</span>
-          <span class="badge"><span class="pill"></span>키워드: 테무 2026 무료쿠폰 / 테무 쿠폰코드 / 테무 쿠폰 사용방법</span>
-          <span class="badge"><span class="pill"></span>핵심: 발급 → 입력 → 적용 확인</span>
-        </div>
-
-        <!-- 밝은 상단 소개 -->
-        <section class="hero" id="sec-1">
-          <div class="hero-row">
-            <div class="hero-icon">🛒</div>
-            <div style="min-width:240px; flex:1;">
-              <p class="hero-title">테무(Temu)는 어떤 쇼핑앱인가요?</p>
-              <p class="hero-sub">
-                테무는 “가볍게 둘러보다가도, 혜택이 보이면 바로 구매로 이어지는” 구조가 강한 쇼핑앱입니다.
-                특히 신규 사용자에게는 쿠폰/프로모션/크레딧이 한 번에 묶여 노출되는 경우가 많아,
-                <strong>테무 2026 무료쿠폰</strong> 같은 키워드가 꾸준히 검색됩니다.
-              </p>
-
-              <div class="hero-tags">
-                <span class="tag">무료배송</span>
-                <span class="tag">쿠폰 번들</span>
-                <span class="tag">프로모션</span>
-                <span class="tag">크레딧</span>
-                <span class="tag">초저가 카테고리</span>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <div class="temu-box">
-          <strong>이 글의 목적</strong><br>
-          테무 2026 무료쿠폰을 “받는 방법”만이 아니라,
-          실제 결제에서 <strong>적용되게 만드는 사용방법</strong>까지 정리합니다.
-          쿠폰코드 입력 위치, 적용 실패 원인, 최대 혜택 루트까지 한 번에 확인하시면 됩니다.
-        </div>
-
-        <h2 id="sec-1b">테무만의 장점 (왜 이렇게 혜택 이야기가 많을까)</h2>
-        <p>
-          테무는 “이벤트 참여 → 쿠폰/크레딧 노출 → 결제에서 할인 체감” 흐름이 빠르게 연결되는 편입니다.
-          그래서 같은 쇼핑앱이라도, 체감 혜택을 만들기 위한 동선이 비교적 단순하다는 평가가 많습니다.
-          다만 테무 2026 무료쿠폰 같은 혜택은 계정 상태/노출 시점에 따라 달라질 수 있으니,
-          이 글에서는 “항상 동일하다”는 식의 과장 대신, <strong>성공 확률을 높이는 순서</strong>를 중심으로 정리합니다.
-        </p>
-        <ul>
-          <li>쿠폰 번들 형태로 여러 장이 한 번에 보이는 경우가 있습니다.</li>
-          <li>결제 화면에서 자동 적용/선택 적용으로 나뉘는 경우가 있습니다.</li>
-          <li>쿠폰코드 입력 위치를 정확히 알면 시행착오가 줄어듭니다.</li>
-        </ul>
-
-        <!-- 쿠폰 섹션 헤더 + 이모지 -->
-        <div class="coupon-head" id="coupon-box">
-          <div class="coupon-title">
-            <div class="coupon-emoji">🎟️</div>
-            <div>혜택 링크 & 쿠폰코드 모음</div>
-          </div>
-          <div class="coupon-note">필요할 때만 사용</div>
-        </div>
-
-        <!-- CTA: 링크/코드 (상단에서 너무 앞에 나오지 않게 내려옴) -->
-        <div class="cta" id="cta">
-          <div class="cta-title">
-            <span class="cta-badge">정리</span>
-            테무 링크 & 쿠폰코드 (복사해서 바로 쓰기)
-          </div>
-
-          <div class="cta-grid">
-            <div class="cta-item">
-              <div class="cta-label">150,000원 쿠폰 묶음 (링크)</div>
-              <div class="cta-value">
-                <a href="https://temu.to/m/uotsq20netz" target="_blank" rel="noopener">https://temu.to/m/uotsq20netz</a>
-              </div>
-              <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-              <div class="cta-value"><code>aak74594</code></div>
-            </div>
-
-            <div class="cta-item">
-              <div class="cta-label">사은품 0원개 (링크)</div>
-              <div class="cta-value">
-                <a href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener">https://temu.to/m/u3ia9bomcaw</a>
-              </div>
-              <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-              <div class="cta-value"><code>frq027981</code></div>
-            </div>
-
-            <div class="cta-item">
-              <div class="cta-label">특별 세일 (링크)</div>
-              <div class="cta-value">
-                <a href="https://temu.to/m/u3ckk6z4eku" target="_blank" rel="noopener">https://temu.to/m/u3ckk6z4eku</a>
-              </div>
-              <div class="cta-label" style="margin-top:8px;">쿠폰코드</div>
-              <div class="cta-value"><code>acr804202</code></div>
-            </div>
-
-            <div class="cta-item">
-              <div class="cta-label">30% 할인 (코드)</div>
-              <div class="cta-value"><code>aak74594</code></div>
-              <div class="cta-hint">※ 혜택은 계정 상태, 이벤트 노출 시점에 따라 달라질 수 있습니다.</div>
-            </div>
-          </div>
-        </div>
-
-        <h2 id="sec-2">테무 2026 무료쿠폰 발급 방법 (실전 순서)</h2>
-        <p>
-          테무 2026 무료쿠폰은 “발급”과 “적용”이 다를 수 있습니다.
-          그래서 발급만 확인하고 끝내면, 결제 화면에서 조건 때문에 빠지는 경우가 생깁니다.
-          아래는 실패 확률을 줄이는 순서입니다.
-        </p>
-        <ul>
-          <li>혜택 페이지(링크)에서 노출 여부를 먼저 확인합니다.</li>
-          <li>앱에서 이벤트/쿠폰 번들/프로모션이 뜨는지 확인합니다.</li>
-          <li>내 계정 → 쿠폰/크레딧에서 지급 상태를 확인합니다.</li>
-          <li>장바구니 → 결제 화면에서 할인 반영을 확인합니다.</li>
-        </ul>
-
-        <h2 id="sec-3">테무 쿠폰 사용방법 (결제에서 적용되게 만드는 포인트)</h2>
-        <p>
-          테무 쿠폰 사용방법은 단순합니다.
-          다만 “자동 적용”처럼 보였다가 결제 직전 단계에서 빠지는 경우가 있어,
-          최종 결제 화면에서 <strong>할인 금액이 실제로 반영되었는지</strong>를 확인해야 합니다.
-        </p>
-        <h3>가장 흔한 사용 흐름</h3>
-        <ul>
-          <li>상품 담기 → 결제 화면 진입</li>
-          <li>쿠폰/프로모션 영역에서 적용 가능한 항목 확인</li>
-          <li>최종 금액이 내려갔는지 체크</li>
-          <li>조건(최소금액/카테고리/기간)으로 빠지지 않는지 확인</li>
-        </ul>
-
-        <h2 id="sec-4">테무 쿠폰코드 입력 위치 (가장 많이 헤매는 구간)</h2>
-        <p>
-          “테무 쿠폰코드 어디에 입력해요?”는 정말 많습니다.
-          앱 버전에 따라 문구가 달라도, 구조는 대체로 아래 중 하나입니다.
-        </p>
-        <ul>
-          <li>검색창에 쿠폰코드를 입력</li>
-          <li>내 계정 → 쿠폰/크레딧 메뉴에서 입력</li>
-          <li>이벤트 페이지 내 코드 입력 박스에서 입력</li>
-        </ul>
-
-        <div class="temu-box">
-          <strong>쿠폰코드만 다시 보기</strong><br>
-          150,000원/30% 할인: <code>aak74594</code><br>
-          사은품 0원개: <code>frq027981</code><br>
-          특별 세일: <code>acr804202</code>
-        </div>
-
-        <h2 id="sec-5">적용이 안 될 때 (원인 체크)</h2>
-        <p>
-          테무 2026 무료쿠폰이 “안 뜨는” 경우와 “적용이 안 되는” 경우는 원인이 다를 수 있습니다.
-          아래 원인부터 차례로 점검하면 대부분 방향이 잡힙니다.
-        </p>
-        <ul>
-          <li>이벤트 기간 종료 또는 노출 변동</li>
-          <li>신규/기존 회원 조건 차이</li>
-          <li>최소 결제금액 조건 미충족</li>
-          <li>특정 카테고리 전용 쿠폰</li>
-          <li>동일 기기/계정 이력으로 제한</li>
-          <li>앱 캐시/세션 문제로 반영 지연</li>
-          <li>결제 단계에서 쿠폰 선택이 해제됨</li>
-        </ul>
- <div class="warn-box">
-  <strong>체크 포인트</strong><br>
-  테무 쿠폰은 이벤트/계정 상태에 따라 노출과 조건이 달라질 수 있습니다.<br>
-  그래서 “왜 안 되지?”가 생기면, 위 체크리스트(입력 위치 → 조건 → 결제 반영)를 순서대로 확인하는 게 가장 빠릅니다.
-</div>
-
-        <footer>
-          <div class="closing">
-            오늘 정리한 내용은 “테무 2026 무료쿠폰 발급 및 사용방법”의 핵심만 모은 버전입니다.<br>
-            급하게 쿠폰만 찾고 들어오셨다면, 위쪽 링크/코드 박스만 참고하셔도 되고요.<br>
-            적용이 잘 안 되셨던 분들은 “입력 위치”와 “적용 실패 원인” 구간을 천천히 체크해보시면 확률이 확 올라갑니다 😊<br><br>
-            다음 글에서는 “쿠폰 번들/크레딧을 같이 묶어서 최대 혜택으로 만드는 루트”를 더 자세히 정리해볼게요.
-          </div>
-        </footer>
-
-      </div>
-    </article>
-
-    <aside class="card sidebar">
-      <div class="side-inner">
-        <div class="side-title">Table of Contents <span class="side-chip">자동</span></div>
-        <ol class="toc" id="toc"></ol>
-        <div class="temu-box" style="margin-top:14px;">
-          <strong>빠른 이동</strong><br>
-          혜택 링크/코드가 필요하면 <a href="#coupon-box">쿠폰 박스</a>로 이동하세요.
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  <script>
-    (function(){
-      const toc = document.getElementById('toc');
-      const h2s = document.querySelectorAll('article h2[id]');
-      h2s.forEach(h2 => {
-        const li = document.createElement('li');
-        const a = document.createElement('a');
-        a.href = '#' + h2.id;
-        a.textContent = h2.textContent.trim();
-        li.appendChild(a);
-        toc.appendChild(li);
-      });
-    })();
-  </script>
 </body>
 </html>
