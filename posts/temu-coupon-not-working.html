@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>테무 쿠폰 적용 안될 때? 원인별 체크리스트로 해결!</title>
+  <meta name="description" content="테무(Temu) 쿠폰이 적용되지 않을 때 원인을 기간/최소금액/대상 상품/중복 규칙/계정 상태로 분리해 해결 루트를 제시합니다. 결제 단계에서 바로 적용되게 만드는 실전 체크리스트." />
+
+  <style>
+    :root{
+      --bg:#f7f8fc; --card:#fff; --text:#111827; --muted:#6b7280; --line:#e6e8ef;
+      --temu:#ff6a00; --temu2:#ff8a3d; --temuSoft:#fff3ea;
+      --shadow: 0 12px 34px rgba(14, 30, 37, .10); --shadow2: 0 10px 22px rgba(255, 106, 0, .16);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.85}
+    a{color:inherit;text-decoration:none}
+    .topbar{position:sticky;top:0;z-index:999;background:linear-gradient(90deg,var(--temu),var(--temu2));color:#fff;box-shadow:0 8px 22px rgba(0,0,0,.16)}
+    .topbar-inner{max-width:1120px;margin:0 auto;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .brand{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-0.4px;white-space:nowrap}
+    .logoDot{width:10px;height:10px;border-radius:999px;background:#fff;box-shadow:0 0 0 5px rgba(255,255,255,.18)}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+    .nav a{color:#fff;font-size:13px;padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.16)}
+    .nav a:hover{background:rgba(255,255,255,.24)}
+
+    .wrap{max-width:1120px;margin:0 auto;padding:18px 16px 70px;display:grid;grid-template-columns:1fr 340px;gap:18px;align-items:start}
+    @media (max-width:980px){.wrap{grid-template-columns:1fr}.sidebar{position:static}}
+
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
+    .content{padding:26px 22px}
+
+    h1{margin:0 0 10px;font-size:28px;letter-spacing:-0.8px;line-height:1.25}
+    .sub{margin:0;color:#374151;font-size:14px}
+    .hero{
+      border:1px solid #ffd2b3;border-radius:var(--radius);
+      background:
+        radial-gradient(900px 260px at 10% 10%, rgba(255,106,0,.20), transparent 60%),
+        radial-gradient(700px 240px at 90% 0%, rgba(255,138,61,.18), transparent 55%),
+        linear-gradient(135deg,#fff,#fff7f0);
+      padding:18px 16px;overflow:hidden
+    }
+    .heroTop{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+    .heroIcon{width:56px;height:56px;border-radius:16px;background:linear-gradient(135deg,var(--temu),var(--temu2));
+      display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:var(--shadow2);flex:0 0 auto}
+    .badges{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .badge{font-size:12px;font-weight:900;color:var(--temu);background:var(--temuSoft);border:1px solid #ffd2b3;padding:5px 10px;border-radius:999px}
+
+    h2{margin:24px 0 10px;font-size:18px;letter-spacing:-0.4px;padding-left:10px;border-left:5px solid var(--temu)}
+    h3{margin:18px 0 8px;font-size:15px;letter-spacing:-0.2px}
+
+    .note{
+      border:1px solid #ffd2b3;background:var(--temuSoft);
+      border-radius:16px;padding:12px;margin:14px 0;color:#3b2a1f;font-weight:800;font-size:13px
+    }
+    .list{margin:8px 0 0;padding-left:18px;color:#374151}
+    .list li{margin:6px 0}
+
+    .case{
+      border:1px solid var(--line);
+      border-radius:16px;
+      background:#fff;
+      padding:14px;
+      margin:12px 0;
+    }
+    .caseTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .caseTitle{font-weight:900;letter-spacing:-0.2px}
+    .pill{font-size:12px;font-weight:900;color:#fff;background:var(--temu);padding:5px 10px;border-radius:999px;white-space:nowrap}
+
+    .mini{
+      border:1px dashed #ffd2b3;
+      background:#fff;
+      border-radius:14px;
+      padding:10px;
+      margin-top:10px;
+      color:#374151;
+      font-size:13px;
+    }
+
+    /* Sidebar */
+    .sidebar{position:sticky;top:74px;height:fit-content}
+    .sideInner{padding:16px 14px}
+    .sideHead{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
+    .sideHead strong{font-size:14px;letter-spacing:-0.2px}
+    .sideChip{font-size:12px;font-weight:900;color:var(--temu);background:var(--temuSoft);border:1px solid #ffd2b3;padding:4px 10px;border-radius:999px;white-space:nowrap}
+    .sideBlock{margin-top:14px}
+    .sideBlock h4{margin:0 0 8px;font-size:13px;letter-spacing:-0.2px}
+    .sideList{list-style:none;padding:0;margin:0}
+    .sideList li{margin:7px 0}
+    .sideBtn{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 10px;border-radius:14px;border:1px solid var(--line);background:#fff;font-size:13px;font-weight:800}
+    .sideBtn:hover{border-color:#ffd2b3;background:#fff8f3}
+    .sideBtn small{color:var(--muted);font-weight:700}
+
+    /* Coupon box (하단) */
+    .couponWrap{margin-top:18px}
+    .couponTitle{display:flex;align-items:center;gap:10px;font-weight:900;letter-spacing:-0.2px;margin:0 0 10px;font-size:16px}
+    .couponTitle span{font-size:18px}
+    .couponBox{
+      border:1px solid rgba(255,106,0,.32);
+      background:linear-gradient(135deg, rgba(255,106,0,.14), rgba(255,138,61,.06));
+      border-radius:18px;
+      padding:14px;
+      overflow:hidden;
+      position:relative;
+    }
+    .couponItem{
+      background:#fff;border:1px solid var(--line);border-radius:16px;padding:12px;margin-top:10px
+    }
+    .label{font-size:12px;color:var(--muted);margin-bottom:6px}
+    .value{font-weight:900;word-break:break-all}
+    .value a{color:var(--temu);text-decoration:underline}
+    code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size:14px;background:var(--temuSoft);padding:3px 8px;border-radius:10px;border:1px solid #ffd2b3
+    }
+
+    footer{margin-top:26px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><span class="logoDot"></span>TemuForYou</div>
+      <nav class="nav">
+        <a href="../">Home</a>
+        <a href="./temu-coupon-2026.html">2026 무료쿠폰</a>
+        <a href="./temu-coupon-code-input.html">코드 입력</a>
+        <a href="./temu-coupon-not-working.html">안될 때</a>
+        <a href="./temu-free-gift-0won.html">사은품 0원</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <article class="card">
+      <div class="content">
+
+        <section class="hero">
+          <div class="heroTop">
+            <div class="heroIcon">🧩</div>
+            <div style="min-width:240px; flex:1;">
+              <h1>테무 쿠폰 적용 안될 때? 원인별 체크리스트로 해결!</h1>
+              <p class="sub">
+                “테무 쿠폰이 있는데 결제에서 안 빠져요”는 아주 흔한 상황입니다.
+                하지만 이 문제는 운이 아니라 <strong>조건/대상/단계</strong>를 어디서 놓쳤는지의 문제입니다.
+                이 글은 원인을 5개로 쪼개서, <strong>지금 상황에서 무엇부터 확인해야 하는지</strong>를 빠르게 잡아드립니다.
+              </p>
+              <div class="badges">
+                <span class="badge">기간</span>
+                <span class="badge">최소금액</span>
+                <span class="badge">대상 상품</span>
+                <span class="badge">중복 규칙</span>
+                <span class="badge">계정 상태</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <h2 id="sec-fast">가장 빠른 결론: “적용 안 됨”은 대부분 이 5가지 중 하나</h2>
+        <p>
+          쿠폰 적용이 안 될 때 가장 흔한 실수는, 여러 화면을 왔다 갔다 하면서 더 복잡하게 만드는 것입니다.
+          먼저 아래 5가지 원인 중 어디에 해당하는지부터 찾으면, 해결 시간이 확 줄어듭니다.
+        </p>
+        <ul class="list">
+          <li><strong>기간</strong>: 이미 종료되었거나, 특정 시간/기간 제한이 있음</li>
+          <li><strong>최소 주문금액</strong>: 조건 금액 미달</li>
+          <li><strong>대상 상품</strong>: 특정 카테고리/상품만 적용</li>
+          <li><strong>중복 규칙</strong>: 다른 할인과 동시에 적용 불가</li>
+          <li><strong>계정 상태</strong>: 신규/기존, 이벤트 참여 가능 여부에 따라 다름</li>
+        </ul>
+
+        <div class="note">
+          ✅ 가장 먼저 볼 곳<br>
+          쿠폰함에서 “쿠폰이 존재한다”를 확인한 뒤,<br>
+          <b>결제 화면에서 할인 영역을 펼쳐서 ‘적용 가능’으로 뜨는지</b>부터 확인하세요.<br>
+          여기서 0개로 뜨면, 아래 원인 중 하나가 거의 확정입니다.
+        </div>
+
+        <h2 id="sec-1">원인 1) 기간이 끝났거나, 기간 조건을 놓친 경우</h2>
+        <div class="case">
+          <div class="caseTop">
+            <div class="caseTitle">증상</div>
+            <div class="pill">기간</div>
+          </div>
+          <ul class="list">
+            <li>쿠폰은 보이는데 적용 목록에 뜨지 않음</li>
+            <li>결제 화면에서 할인 항목이 0원 변화 없음</li>
+            <li>쿠폰 상세를 열어보면 사용 기간이 짧게 남아있었음</li>
+          </ul>
+          <div class="mini">
+            해결 루트<br>
+            1) 쿠폰 상세에서 종료일/시간 확인<br>
+            2) 만료 직전이면 “적용 테스트”를 가격 낮은 상품으로 먼저 진행<br>
+            3) 만료면 다른 쿠폰으로 전환(같은 쿠폰이라도 이벤트가 다시 뜰 수 있음)
+          </div>
+        </div>
+
+        <h2 id="sec-2">원인 2) 최소 주문금액(최소 결제 금액) 조건 미달</h2>
+        <div class="case">
+          <div class="caseTop">
+            <div class="caseTitle">증상</div>
+            <div class="pill">최소금액</div>
+          </div>
+          <ul class="list">
+            <li>쿠폰은 있는데 “조건 미달” 같은 표시가 뜨거나 적용이 비활성</li>
+            <li>장바구니에서 금액이 조금 부족한데도 그냥 결제로 넘어감</li>
+            <li>배송비/옵션 포함 여부 때문에 체감 금액이 달라져 혼란</li>
+          </ul>
+          <div class="mini">
+            해결 루트<br>
+            1) 쿠폰 상세에서 최소금액 조건 확인<br>
+            2) 장바구니 합계가 조건을 넘는지 확인(옵션/수량 조정)<br>
+            3) “조건을 딱 넘기는” 선에서 테스트 후, 최종 구매 구성으로 변경
+          </div>
+        </div>
+
+        <h2 id="sec-3">원인 3) 대상 상품/카테고리 제한 (가장 많이 놓침)</h2>
+        <div class="case">
+          <div class="caseTop">
+            <div class="caseTitle">증상</div>
+            <div class="pill">대상</div>
+          </div>
+          <ul class="list">
+            <li>쿠폰은 있는데 특정 상품에서는 절대 적용이 안 됨</li>
+            <li>비슷해 보이는 상품인데 하나는 되고 하나는 안 됨</li>
+            <li>쿠폰 상세에 “특정 카테고리/특정 상품만” 표시가 있었음</li>
+          </ul>
+          <p style="margin:10px 0 0; color:#374151;">
+            이 케이스가 흔한 이유는 간단합니다. 사용자는 “테무 상품이면 다 되겠지”라고 생각하는데,
+            쿠폰은 종종 “일부 상품만” 대상으로 설계됩니다. 그래서 실패를 줄이려면,
+            쿠폰 적용이 잘 되는 카테고리로 먼저 테스트하는 게 효율적입니다.
+          </p>
+          <div class="mini">
+            해결 루트<br>
+            1) 쿠폰 상세에서 대상 상품/카테고리 문구 확인<br>
+            2) 같은 장바구니에서 상품을 1개씩 빼서 “어느 상품이 막는지” 확인<br>
+            3) 막는 상품을 제외하거나, 대상 상품으로 구성 변경
+          </div>
+        </div>
+
+        <h2 id="sec-4">원인 4) 중복 할인 규칙(쿠폰+크레딧/다른 쿠폰) 충돌</h2>
+        <div class="case">
+          <div class="caseTop">
+            <div class="caseTitle">증상</div>
+            <div class="pill">중복</div>
+          </div>
+          <ul class="list">
+            <li>다른 쿠폰을 선택하면 이 쿠폰이 사라짐</li>
+            <li>크레딧/무료배송과 동시에 적용하려다 한쪽이 풀림</li>
+            <li>쿠폰을 여러 장 보유 중인데 결제에서는 일부만 선택 가능</li>
+          </ul>
+          <p style="margin:10px 0 0; color:#374151;">
+            할인은 “많이 쌓을수록 무조건 이득”처럼 보이지만,
+            실제로는 규칙이 있어서 조합이 안 되는 경우가 생깁니다.
+            이때 가장 중요한 건 욕심을 줄이고, <strong>최종 결제 금액이 가장 낮아지는 조합</strong>을 찾는 것입니다.
+          </p>
+          <div class="mini">
+            해결 루트<br>
+            1) 결제 화면에서 쿠폰을 하나씩 선택하며 최종 금액 변화를 확인<br>
+            2) “할인액 큰 쿠폰 + 무료배송” 조합이 되는지 먼저 체크<br>
+            3) 조합이 안 되면, 할인액이 더 큰 한쪽을 선택(숫자로 판단)
+          </div>
+        </div>
+
+        <h2 id="sec-5">원인 5) 계정 상태(신규/기존/이벤트 참여 가능 여부) 문제</h2>
+        <div class="case">
+          <div class="caseTop">
+            <div class="caseTitle">증상</div>
+            <div class="pill">계정</div>
+          </div>
+          <ul class="list">
+            <li>다른 사람은 되는데 내 계정만 안 됨</li>
+            <li>이벤트 페이지가 아예 안 뜨거나 내용이 다르게 보임</li>
+            <li>신규 혜택으로 보이는 쿠폰이 기존 계정에서는 적용 불가</li>
+          </ul>
+          <p style="margin:10px 0 0; color:#374151;">
+            이 부분은 감정적으로 “왜 나만?”이 나오기 쉬운데, 시스템상 흔한 구조입니다.
+            이벤트는 “노출 조건”이 걸리는 경우가 많아서 계정 상태에 따라 화면이 달라질 수 있습니다.
+            따라서 이 케이스는 억지로 밀기보다, <strong>다른 이벤트/쿠폰으로 전환</strong>하는 편이 빠릅니다.
+          </p>
+          <div class="mini">
+            해결 루트<br>
+            1) 이벤트/쿠폰이 신규 전용인지 문구 확인<br>
+            2) 결제 단계에서 ‘적용 가능 쿠폰’이 없으면 다른 쿠폰으로 전환<br>
+            3) 이벤트가 다시 노출될 때까지 기다렸다가 재시도(계정마다 타이밍 다를 수 있음)
+          </div>
+        </div>
+
+        <h2 id="sec-one">결제에서 바로 써먹는 “원샷 체크리스트”</h2>
+        <p>
+          지금 당장 결제 단계에서 막혔다면, 아래 순서로만 보세요.
+          이 순서대로 하면 원인 파악이 가장 빠릅니다.
+        </p>
+        <ol class="list">
+          <li>쿠폰함에서 쿠폰이 있는지 확인</li>
+          <li>쿠폰 상세에서 기간/최소금액/대상 확인</li>
+          <li>결제 화면에서 할인 영역 펼치기</li>
+          <li>적용 가능 쿠폰이 0개면 조건 불일치(기간/최소금액/대상/계정) 의심</li>
+          <li>쿠폰이 보이면 하나씩 선택하면서 최종 금액이 내려가는지 확인</li>
+        </ol>
+
+        <div class="note">
+          💡 실전 팁<br>
+          “한 번에 완벽하게”를 노리면 오히려 실패합니다.<br>
+          먼저 <b>가격 낮은 상품으로 쿠폰 적용 테스트</b> → 적용이 확인되면 최종 구매 구성으로 변경하는 방식이 가장 안정적입니다.
+        </div>
+
+        <h2 id="sec-end">마무리</h2>
+        <p>
+          테무 쿠폰 적용이 안 되는 이유는 생각보다 단순합니다.
+          대부분은 <strong>기간 / 최소금액 / 대상 상품 / 중복 규칙 / 계정 상태</strong> 이 다섯 가지 중 하나입니다.
+          이 글에서 안내한 원인별 체크 순서대로만 확인하면,
+          “왜 안 되는지”를 감으로 추측하는 시간이 크게 줄어듭니다.
+        </p>
+        <p>
+          다음 글에서는 테무 사은품 0원 이벤트가 “어떤 조건에서 뜨는지”를
+          노출 조건과 참여 흐름 중심으로 정리해두었습니다.
+          사은품이 궁금하시다면 다음 글로 이어서 보시면 됩니다. 😄
+        </p>
+
+        <div class="couponWrap" id="sec-coupon">
+          <div class="couponTitle"><span>🎟️</span>쿠폰 & 링크 (필요할 때만 사용)</div>
+
+          <div class="couponBox">
+            <div class="couponItem">
+              <div class="label">150,000원 쿠폰 묶음 (링크)</div>
+              <div class="value"><a href="https://temu.to/m/uotsq20netz" target="_blank" rel="noopener">https://temu.to/m/uotsq20netz</a></div>
+              <div class="label" style="margin-top:8px;">쿠폰코드</div>
+              <div class="value"><code>aak74594</code></div>
+            </div>
+
+            <div class="couponItem">
+              <div class="label">사은품 0원 (링크)</div>
+              <div class="value"><a href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener">https://temu.to/m/u3ia9bomcaw</a></div>
+              <div class="label" style="margin-top:8px;">쿠폰코드</div>
+              <div class="value"><code>frq027981</code></div>
+            </div>
+
+            <div class="couponItem">
+              <div class="label">특별 세일 (링크)</div>
+              <div class="value"><a href="https://temu.to/m/u3ckk6z4eku" target="_blank" rel="noopener">https://temu.to/m/u3ckk6z4eku</a></div>
+              <div class="label" style="margin-top:8px;">쿠폰코드</div>
+              <div class="value"><code>acr804202</code></div>
+            </div>
+
+            <p style="margin:10px 0 0; color:#6b7280; font-size:12px;">
+              ※ 이벤트/계정 상태에 따라 노출 및 조건이 달라질 수 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <footer>
+          TemuForYou는 테무 쿠폰/코드 정보를 “적용 가능한 형태”로 정리하는 사이트입니다.
+          아래 글도 함께 보면 흐름이 더 빠르게 잡힙니다.
+        </footer>
+
+      </div>
+    </article>
+
+    <aside class="card sidebar">
+      <div class="sideInner">
+        <div class="sideHead">
+          <strong>바로 가기</strong>
+          <span class="sideChip">스크롤 따라옴</span>
+        </div>
+
+        <div class="sideBlock">
+          <h4>인기 글 5개</h4>
+          <ul class="sideList">
+            <li><a class="sideBtn" href="./temu-coupon-2026.html">2026 무료쿠폰 <small>핵심</small></a></li>
+            <li><a class="sideBtn" href="./temu-coupon-code-input.html">코드 입력 위치 <small>필수</small></a></li>
+            <li><a class="sideBtn" href="./temu-coupon-not-working.html">적용 안될 때 <small>현재 글</small></a></li>
+            <li><a class="sideBtn" href="./temu-free-gift-0won.html">사은품 0원 <small>인기</small></a></li>
+            <li><a class="sideBtn" href="./temu-special-sale.html">특별 세일 <small>보조</small></a></li>
+          </ul>
+        </div>
+
+        <div class="sideBlock">
+          <h4>이 글 목차</h4>
+          <ul class="sideList">
+            <li><a class="sideBtn" href="#sec-fast">원인 5가지 <small>요약</small></a></li>
+            <li><a class="sideBtn" href="#sec-1">기간 <small>1</small></a></li>
+            <li><a class="sideBtn" href="#sec-2">최소금액 <small>2</small></a></li>
+            <li><a class="sideBtn" href="#sec-3">대상 상품 <small>3</small></a></li>
+            <li><a class="sideBtn" href="#sec-4">중복 규칙 <small>4</small></a></li>
+            <li><a class="sideBtn" href="#sec-5">계정 상태 <small>5</small></a></li>
+            <li><a class="sideBtn" href="#sec-coupon">쿠폰/링크 <small>하단</small></a></li>
+          </ul>
+        </div>
+
+        <div class="sideBlock">
+          <div class="note" style="margin:0;">
+            아래 글도 보시겠어요? 😄💕<br>
+            다음은 “사은품 0원 조건” 글을 보면, 이벤트 흐름이 더 명확해집니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+
+  </main>
+</body>
+</html>
