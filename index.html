@@ -3,63 +3,61 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TFY · TemuForYou</title>
-
-  <!-- ✅ 이미 소유확인 끝났다면, 아래 메타 2줄은 "삭제해도 됩니다".
-       (완료되었다고 하셨으니, 저는 깔끔하게 비워둔 상태로 제공합니다.) -->
+  <title>TemuForYou</title>
 
   <style>
+    /* =========================
+       ✅ Global (Font fixed)
+    ========================== */
     :root{
-      --bg:#f6f7f9;
+      --bg:#f6f7fb;
       --card:#ffffff;
-      --ink:#111827;
+      --text:#111827;
       --muted:#6b7280;
-      --line:#e5e7eb;
 
-      --temu:#ff6a00;
+      --temu:#ff7a18;         /* Temu-like orange */
       --temu2:#ff8a3d;
 
-      /* 쿠폰 카드(주황 아님) 포인트 */
-      --p1:#2dd4bf; /* teal */
-      --p2:#60a5fa; /* blue */
-      --p3:#a78bfa; /* purple */
+      --line:rgba(17,24,39,.10);
+      --shadow:0 18px 40px rgba(17,24,39,.10);
+      --shadow2:0 12px 24px rgba(17,24,39,.10);
 
-      --shadow: 0 16px 40px rgba(17,24,39,.10);
-      --shadow2: 0 10px 24px rgba(17,24,39,.08);
-      --r: 22px;
+      --pill:#fff6ef;
+      --soft:#fff2e8;
+
+      /* coupon accent (NOT orange) */
+      --acc1:#14b8a6; /* teal */
+      --acc2:#3b82f6; /* blue */
+      --acc3:#a855f7; /* purple */
     }
-
     *{box-sizing:border-box}
     html,body{height:100%}
     body{
       margin:0;
-      font-family: "Apple SD Gothic Neo","AppleSDGothicNeo","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-      color:var(--ink);
-      background: radial-gradient(900px 500px at 20% 10%, rgba(255,106,0,.10), transparent 60%),
-                  radial-gradient(900px 500px at 80% 0%, rgba(255,138,61,.10), transparent 60%),
-                  var(--bg);
-      overflow-x:hidden;
+      background:radial-gradient(1200px 700px at 60% -80px, rgba(255,122,24,.18), transparent 60%),
+                 radial-gradient(900px 600px at 15% 80%, rgba(59,130,246,.10), transparent 55%),
+                 var(--bg);
+      color:var(--text);
+      font-family: "Apple SD Gothic Neo","Apple SD Gothic Neo Regular","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      letter-spacing:-.2px;
     }
+    a{color:inherit; text-decoration:none}
+    button{font-family:inherit}
 
-    /* Top bar */
+    /* =========================
+       ✅ Top Bar (Logo: TFY / hover wiggle)
+    ========================== */
     .topbar{
-      position:sticky; top:0; z-index:50;
-      background: linear-gradient(90deg, var(--temu), var(--temu2));
-      height:58px;
+      position:sticky;
+      top:0;
+      z-index:60;
+      height:64px;
+      background:linear-gradient(90deg, var(--temu), var(--temu2));
+      box-shadow:0 10px 24px rgba(0,0,0,.10);
       display:flex;
       align-items:center;
-      box-shadow: 0 10px 20px rgba(255,106,0,.22);
+      padding:0 22px;
     }
-    .topbar-inner{
-      width:min(1260px, 100%);
-      margin:0 auto;
-      padding:0 18px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-
     .brand{
       display:flex;
       align-items:center;
@@ -67,364 +65,289 @@
       user-select:none;
       cursor:pointer;
     }
-
-    /* TFY 캘리 느낌 */
-    .logo-mark{
+    .brand .dot{
+      width:12px;height:12px;border-radius:50%;
+      background:rgba(255,255,255,.95);
+      box-shadow:0 8px 14px rgba(0,0,0,.18);
+    }
+    .brand .logo{
       font-weight:900;
+      color:#fff;
       font-size:22px;
       letter-spacing:.5px;
-      color:#fff;
-      line-height:1;
-      font-style:italic;
-      text-shadow: 0 10px 24px rgba(0,0,0,.18);
-      transform-origin: 30% 70%;
-      position:relative;
+      /* calligraphy-like 느낌 */
+      font-family: "Apple SD Gothic Neo","Snell Roundhand","Segoe Script","Brush Script MT",cursive,system-ui;
+      transform-origin:center;
     }
+    .brand:hover .logo{
+      animation: tickle 420ms ease-in-out both;
+    }
+    @keyframes tickle{
+      0%{transform:translateX(0)}
+      20%{transform:translateX(-2px) rotate(-1deg)}
+      40%{transform:translateX(3px) rotate(1.2deg)}
+      60%{transform:translateX(-3px) rotate(-1.2deg)}
+      80%{transform:translateX(2px) rotate(1deg)}
+      100%{transform:translateX(0) rotate(0)}
+    }
+    .brand:active .logo{transform:translateY(1px)}
 
-    /* "간지럼" 흔들 */
-    .brand:hover .logo-mark{
-      animation: ticky 420ms ease-in-out 1;
-    }
-    @keyframes ticky{
-      0%{ transform: translateX(0) rotate(0deg) }
-      18%{ transform: translateX(-3px) rotate(-2deg) }
-      36%{ transform: translateX(4px) rotate(2deg) }
-      54%{ transform: translateX(-4px) rotate(-2deg) }
-      72%{ transform: translateX(3px) rotate(2deg) }
-      100%{ transform: translateX(0) rotate(0deg) }
-    }
-
-    .brand-sub{
-      color:rgba(255,255,255,.92);
-      font-size:13px;
-      font-weight:700;
-      letter-spacing:.2px;
-      opacity:.95;
-    }
-
-    .top-actions{
-      display:flex; align-items:center; gap:10px;
-      color:#fff;
-      font-weight:700;
-      font-size:13px;
-      opacity:.95;
-    }
-    .chip{
-      border:1px solid rgba(255,255,255,.35);
-      background: rgba(255,255,255,.14);
-      padding:8px 10px;
-      border-radius:999px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 10px 22px rgba(0,0,0,.10);
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
-    }
-
-    /* Layout */
+    /* =========================
+       ✅ Layout
+    ========================== */
     .wrap{
-      width:min(1260px, 100%);
-      margin: 20px auto 90px;
-      padding: 0 18px;
+      max-width:1240px;
+      margin:0 auto;
+      padding:22px 18px 80px;
       display:grid;
-      grid-template-columns: 1fr 340px;
-      gap: 22px;
-      align-items:start;
+      grid-template-columns: 1fr 360px;
+      gap:18px;
     }
-
     @media (max-width: 980px){
-      .wrap{ grid-template-columns: 1fr; }
-      .right-rail{ position:static !important; transform:none !important; }
-      .fab{ right:18px; }
+      .wrap{grid-template-columns:1fr; padding-bottom:120px}
     }
 
-    /* Hero */
+    /* =========================
+       ✅ Hero / Main
+    ========================== */
     .hero{
-      background: linear-gradient(180deg, rgba(255,106,0,.10), rgba(255,255,255,.75));
-      border:1px solid rgba(255,106,0,.18);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
-      padding: 26px 26px 22px;
+      border:1px solid rgba(255,255,255,.55);
+      background:linear-gradient(180deg, rgba(255,255,255,.82), rgba(255,255,255,.62));
+      backdrop-filter: blur(10px);
+      border-radius:22px;
+      padding:22px;
+      box-shadow:var(--shadow);
       overflow:hidden;
       position:relative;
     }
-    .hero:before{
+    .hero::before{
       content:"";
       position:absolute;
-      inset:-120px -120px auto auto;
-      width:260px; height:260px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.8), rgba(255,255,255,0));
-      transform: rotate(12deg);
+      inset:-80px -120px auto auto;
+      width:260px;height:260px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.55), rgba(255,255,255,0));
+      filter: blur(1px);
       pointer-events:none;
     }
-
-    .hero-title{
-      margin:0 0 10px;
-      font-size:28px;
-      line-height:1.25;
-      letter-spacing:-.6px;
-    }
-    .hero-desc{
+    .hero h1{
       margin:0;
+      font-size:30px;
+      line-height:1.15;
+      letter-spacing:-.8px;
+    }
+    .hero p{
+      margin:10px 0 0;
       color:var(--muted);
-      font-size:14px;
-      line-height:1.65;
-      max-width: 680px;
-    }
-
-    /* “좌측 중상단 네모칸” + 쿠폰 3개 */
-    .coupon-panel{
-      margin-top: 18px;
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap: 16px;
-    }
-    @media (max-width: 780px){
-      .coupon-panel{ grid-template-columns: 1fr; }
-    }
-
-    .intro-box{
-      border-radius: 18px;
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(17,24,39,.08);
-      box-shadow: var(--shadow2);
-      padding: 16px 16px 14px;
-    }
-    .intro-head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-    .intro-head b{
-      font-size:14px;
-      letter-spacing:-.2px;
-    }
-    .intro-head span{
-      color:var(--muted);
-      font-size:12px;
       font-weight:700;
-    }
-    .intro-text{
-      margin:0;
-      color:#374151;
-      font-size:13px;
-      line-height:1.7;
+      line-height:1.6;
+      max-width:760px;
     }
 
-    .coupon-stack{
-      display:flex;
-      flex-direction:column;
-      gap: 12px;
-    }
-
-    .coupon-card{
-      border-radius: 18px;
-      background: rgba(255,255,255,.86);
-      border:1px solid rgba(17,24,39,.08);
-      box-shadow: 0 18px 34px rgba(17,24,39,.10);
-      padding: 14px 14px 12px;
-      position:relative;
-      overflow:hidden;
-    }
-    .coupon-card:after{
-      content:"";
-      position:absolute;
-      inset:0 auto auto 0;
-      width:140px; height:140px;
-      background: radial-gradient(circle at 20% 20%, rgba(255,255,255,.95), rgba(255,255,255,0));
-      pointer-events:none;
-    }
-
-    .coupon-row{
-      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
-    }
-    .coupon-left{
-      display:flex; gap:10px; align-items:flex-start;
-      min-width:0;
-    }
-    .badge3d{
-      width:42px; height:42px;
-      border-radius:14px;
-      display:grid; place-items:center;
-      font-size:18px;
-      color:#0b1220;
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.9),
-        0 14px 26px rgba(0,0,0,.10);
-      border: 1px solid rgba(0,0,0,.06);
-      flex:0 0 auto;
-    }
-    .b1{ background: linear-gradient(180deg, rgba(45,212,191,.95), rgba(45,212,191,.55)); }
-    .b2{ background: linear-gradient(180deg, rgba(96,165,250,.95), rgba(96,165,250,.55)); }
-    .b3{ background: linear-gradient(180deg, rgba(167,139,250,.95), rgba(167,139,250,.55)); }
-
-    .coupon-meta{
-      min-width:0;
-    }
-    .coupon-meta h4{
-      margin:0 0 4px;
-      font-size:14px;
-      letter-spacing:-.2px;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-    .coupon-meta p{
-      margin:0;
-      color:var(--muted);
-      font-size:12px;
-      line-height:1.4;
-    }
-
-    .coupon-actions{
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      align-items:flex-end;
-      flex:0 0 auto;
-    }
-    .pill{
-      border-radius:999px;
-      padding: 8px 10px;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:-.1px;
-      background: rgba(255,106,0,.10);
-      border:1px solid rgba(255,106,0,.25);
-      color:#8a2f00;
-      cursor:pointer;
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
-      transition: transform .12s ease, box-shadow .12s ease;
-      white-space:nowrap;
-    }
-    .pill:active{ transform: translateY(1px); }
-
-    .code-chip{
-      border-radius: 999px;
-      padding: 8px 12px;
-      font-size:12px;
-      font-weight:900;
-      letter-spacing:.3px;
-      border:1px dashed rgba(17,24,39,.25);
-      background: rgba(255,255,255,.78);
-      cursor:pointer;
-      transition: transform .12s ease;
-      white-space:nowrap;
-    }
-    .code-chip:active{ transform: translateY(1px); }
-
-    .hero-cta{
-      margin-top: 14px;
+    .chip-row{
+      margin-top:16px;
       display:flex;
       gap:10px;
       flex-wrap:wrap;
     }
-    .btn{
-      border:none;
-      border-radius: 14px;
-      padding: 12px 14px;
+    .chip{
+      border:1px solid rgba(17,24,39,.10);
+      background:rgba(255,255,255,.75);
+      border-radius:999px;
+      padding:10px 12px;
+      display:flex;
+      align-items:center;
+      gap:8px;
       font-weight:900;
-      letter-spacing:-.2px;
+      font-size:13px;
       cursor:pointer;
-      background: linear-gradient(180deg, var(--temu2), var(--temu));
-      color:#fff;
-      box-shadow: 0 14px 24px rgba(255,106,0,.25);
-      transition: transform .14s ease;
+      box-shadow:0 10px 18px rgba(17,24,39,.08);
     }
-    .btn:active{ transform: translateY(1px); }
+    .chip:active{transform:translateY(1px)}
+    .chip .ic{opacity:.9}
 
-    .btn-ghost{
-      background: rgba(255,255,255,.75);
-      color:#8a2f00;
-      border:1px solid rgba(255,106,0,.22);
-      box-shadow: var(--shadow2);
+    /* =========================
+       ✅ Main grid block (Left mid-top: 3 empty coupon blocks)
+    ========================== */
+    .main-grid{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
     }
 
-    /* Categories */
-    .section{
-      margin-top: 18px;
-      background: rgba(255,255,255,.78);
-      border:1px solid rgba(17,24,39,.08);
-      border-radius: var(--r);
-      box-shadow: var(--shadow);
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:16px;
+    }
+    @media (min-width: 980px){
+      .two-col{grid-template-columns: 1fr;}
+    }
+
+    .coupon-slot-wrap{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:16px;
+      max-width:760px;
+    }
+    @media (max-width: 760px){
+      .coupon-slot-wrap{grid-template-columns: 1fr}
+    }
+
+    .slot{
+      border-radius:18px;
+      padding:14px 14px 12px;
+      background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.70));
+      border:1px solid rgba(17,24,39,.10);
+      box-shadow: 0 18px 28px rgba(17,24,39,.08);
+      position:relative;
       overflow:hidden;
+      min-height:92px;
     }
-    .section-head{
-      padding: 16px 18px;
+    .slot::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -60px auto;
+      width:140px;height:140px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(255,255,255,.7), rgba(255,255,255,0));
+      transform:rotate(20deg);
+      pointer-events:none;
+    }
+    .slot .t{
+      display:flex; align-items:center; gap:8px;
+      font-weight:1000;
+      letter-spacing:-.3px;
+    }
+    .badge{
+      width:10px;height:10px;border-radius:50%;
+      box-shadow:0 10px 18px rgba(0,0,0,.12);
+    }
+    .badge.b1{background:var(--acc1)}
+    .badge.b2{background:var(--acc2)}
+    .badge.b3{background:var(--acc3)}
+    .slot .sub{
+      margin-top:10px;
+      color:rgba(107,114,128,.92);
+      font-weight:800;
+      font-size:12px;
+      line-height:1.5;
+    }
+
+    /* =========================
+       ✅ Category section (scroll + 4 categories)
+    ========================== */
+    .panel{
+      margin-top:18px;
+      background:rgba(255,255,255,.72);
+      border:1px solid rgba(17,24,39,.08);
+      border-radius:22px;
+      padding:18px;
+      box-shadow:var(--shadow2);
+    }
+    .panel-title{
       display:flex;
       align-items:center;
       justify-content:space-between;
-      gap:12px;
-      border-bottom:1px solid rgba(17,24,39,.06);
-      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.66));
+      gap:10px;
+      margin:0 0 12px;
     }
-    .section-head h3{
+    .panel-title h2{
       margin:0;
-      font-size:15px;
-      letter-spacing:-.2px;
+      font-size:18px;
+      letter-spacing:-.4px;
+      font-weight:1000;
     }
-    .section-head .sub{
-      color:var(--muted);
+    .panel-title .hint{
       font-size:12px;
-      font-weight:800;
+      font-weight:900;
+      color:rgba(107,114,128,.95);
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(17,24,39,.08);
+      padding:7px 10px;
+      border-radius:999px;
+      white-space:nowrap;
     }
+
+    .cat-tabs{
+      padding: 0 2px 14px;
+      display:flex;
+      gap:10px;
+      overflow:auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .cat-tabs::-webkit-scrollbar{ height:10px }
+    .cat-tabs::-webkit-scrollbar-thumb{
+      background: rgba(17,24,39,.12);
+      border-radius:999px;
+      border:2px solid rgba(255,255,255,.9);
+    }
+    .cat-tab{
+      flex:0 0 auto;
+      border:1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.78);
+      border-radius:999px;
+      padding:10px 12px;
+      font-weight:1000;
+      font-size:12px;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(17,24,39,.08);
+      white-space:nowrap;
+    }
+    .cat-tab:active{ transform: translateY(1px); }
 
     .cat-grid{
       display:grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      padding: 14px;
+      gap:12px;
     }
-    @media (max-width: 780px){
-      .cat-grid{ grid-template-columns: 1fr; }
-    }
+    @media (max-width:760px){ .cat-grid{grid-template-columns:1fr} }
 
-    .cat{
-      border-radius: 18px;
-      border:1px solid rgba(17,24,39,.08);
-      background: rgba(255,255,255,.86);
-      box-shadow: var(--shadow2);
+    .cat-card{
+      border-radius:18px;
+      background:linear-gradient(180deg, rgba(255,255,255,.86), rgba(255,255,255,.70));
+      border:1px solid rgba(17,24,39,.10);
+      box-shadow: 0 16px 26px rgba(17,24,39,.08);
       overflow:hidden;
+    }
+    .cat-head{
+      padding:14px 14px 10px;
       display:flex;
-      flex-direction:column;
-      min-height: 280px;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      border-bottom:1px solid rgba(17,24,39,.08);
+      background:rgba(255,255,255,.55);
     }
-    .cat-top{
-      padding: 14px 14px 10px;
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      border-bottom:1px solid rgba(17,24,39,.06);
-    }
-    .cat-top b{
-      font-size:14px;
+    .cat-head .name{
+      font-weight:1000;
       letter-spacing:-.2px;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
-    .cat-top .tag{
+    .cat-head .count{
       font-size:12px;
-      font-weight:900;
-      color:#8a2f00;
-      background: rgba(255,106,0,.10);
-      border:1px solid rgba(255,106,0,.20);
+      font-weight:1000;
+      color:rgba(107,114,128,.95);
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(17,24,39,.08);
       padding:6px 10px;
       border-radius:999px;
       white-space:nowrap;
     }
 
-    .cat-list{
-      padding: 10px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-      max-height: 210px;   /* ✅ 스크롤 영역 */
+    /* ✅ only show 5 at once, but scroll to see more */
+    .post-list{
+      max-height: 240px; /* about 5 items */
       overflow:auto;
+      padding:10px;
     }
-    .cat-list::-webkit-scrollbar{ width:10px }
-    .cat-list::-webkit-scrollbar-thumb{
+    .post-list::-webkit-scrollbar{ width:10px }
+    .post-list::-webkit-scrollbar-thumb{
       background: rgba(17,24,39,.12);
       border-radius:999px;
-      border:2px solid rgba(255,255,255,.9);
+      border:2px solid rgba(255,255,255,.95);
     }
 
     .post-item{
@@ -432,714 +355,769 @@
       align-items:center;
       justify-content:space-between;
       gap:10px;
-      padding: 12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(17,24,39,.07);
-      background: rgba(255,255,255,.86);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(17,24,39,.08);
+      background:rgba(255,255,255,.70);
       cursor:pointer;
-      transition: transform .12s ease, box-shadow .12s ease;
+      margin-bottom:10px;
+      box-shadow: 0 10px 16px rgba(17,24,39,.06);
     }
-    .post-item:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 14px 24px rgba(17,24,39,.10);
-    }
+    .post-item:last-child{margin-bottom:0}
+    .post-item:active{transform:translateY(1px)}
     .post-item .ttl{
-      font-size:13px;
-      font-weight:900;
+      font-weight:1000;
       letter-spacing:-.2px;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      min-width:0;
+      line-height:1.25;
+      font-size:13px;
     }
     .post-item .meta{
-      font-size:12px;
-      color:var(--muted);
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:6px;
-      white-space:nowrap;
-    }
-
-    /* Right rail: inertia follow */
-    .right-rail{
-      position: sticky;
-      top: 78px;
-      align-self:start;
-      will-change: transform;
-    }
-
-    .rail-card{
-      background: rgba(255,255,255,.80);
-      border:1px solid rgba(17,24,39,.08);
-      border-radius: 22px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .rail-head{
-      padding: 14px 14px 12px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      border-bottom:1px solid rgba(17,24,39,.06);
-      background: linear-gradient(180deg, rgba(255,255,255,.88), rgba(255,255,255,.66));
-    }
-    .rail-head b{ font-size:14px; letter-spacing:-.2px; }
-    .rail-head span{
-      font-size:12px;
-      font-weight:900;
-      color:#8a2f00;
-      background: rgba(255,106,0,.10);
-      border:1px solid rgba(255,106,0,.20);
       padding:6px 10px;
       border-radius:999px;
+      border:1px solid rgba(17,24,39,.10);
+      background: rgba(255,255,255,.70);
+      font-weight:1000;
+      font-size:12px;
+      color:rgba(107,114,128,.95);
+      white-space:nowrap;
     }
 
-    .rail-body{
-      padding: 12px;
+    /* =========================
+       ✅ Right sidebar (inertia follower + fixed popular & coupons)
+    ========================== */
+    .right-col{
+      position:relative;
+      min-height: 300px;
+    }
+    .follow{
+      position:relative;
+      will-change: transform;
+      transition: transform 0.08s linear;
+    }
+    @media (max-width: 980px){
+      .right-col{order:2}
+    }
+
+    .side{
+      border-radius:22px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(17,24,39,.08);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .side .side-head{
+      padding:14px 14px 10px;
+      background:linear-gradient(180deg, rgba(255,122,24,.16), rgba(255,255,255,.68));
+      border-bottom:1px solid rgba(17,24,39,.08);
       display:flex;
-      flex-direction:column;
-      gap: 12px;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
     }
-
-    .rail-block{
-      border:1px solid rgba(17,24,39,.07);
-      background: rgba(255,255,255,.86);
-      border-radius: 18px;
-      padding: 12px;
-      box-shadow: var(--shadow2);
-    }
-    .rail-block h4{
-      margin:0 0 10px;
-      font-size:13px;
+    .side .side-head .h{
+      font-weight:1000;
       letter-spacing:-.2px;
-    }
-
-    .mini-list{
       display:flex;
-      flex-direction:column;
+      align-items:center;
       gap:8px;
-      max-height: 180px;
-      overflow:auto;
-      padding-right:6px;
     }
-    .mini-list::-webkit-scrollbar{ width:10px }
-    .mini-list::-webkit-scrollbar-thumb{
-      background: rgba(17,24,39,.12);
+    .side .side-head .tag{
+      font-size:12px;
+      font-weight:1000;
+      color:rgba(107,114,128,.95);
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(17,24,39,.08);
+      padding:6px 10px;
       border-radius:999px;
-      border:2px solid rgba(255,255,255,.9);
+      white-space:nowrap;
+    }
+    .side .body{
+      padding:12px;
     }
 
-    .mini-item{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
+    /* =========================
+       ✅ Coupon UI cards (6 links + 6 codes)
+    ========================== */
+    .cta-box{
+      border:1px solid rgba(255,122,24,.25);
+      background:linear-gradient(180deg, rgba(255,255,255,.90), rgba(255,240,229,.66));
+      border-radius:18px;
+      padding:14px;
+      box-shadow: 0 18px 28px rgba(255,122,24,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .cta-box::before{
+      content:"";
+      position:absolute;
+      inset:-80px auto auto -80px;
+      width:220px;height:220px;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(255,122,24,.18), rgba(255,122,24,0));
+      pointer-events:none;
+    }
+    .cta-title{
+      display:flex; align-items:center; gap:10px;
+      font-weight:1000;
+      letter-spacing:-.3px;
+      margin-bottom:10px;
+    }
+    .cta-desc{
+      margin:0 0 10px;
+      color:rgba(107,114,128,.95);
+      font-weight:900;
+      font-size:12px;
+      line-height:1.55;
+    }
+
+    .coupon-card{
+      border-radius:16px;
+      background:rgba(255,255,255,.78);
+      border:1px solid rgba(17,24,39,.08);
+      box-shadow: 0 14px 22px rgba(17,24,39,.07);
+      padding:12px;
+      display:grid;
+      grid-template-columns: 1fr auto;
       gap:10px;
-      padding: 10px 10px;
-      border-radius: 14px;
-      border:1px solid rgba(17,24,39,.06);
-      background: rgba(255,255,255,.88);
-      cursor:pointer;
-      transition: transform .12s ease;
+      align-items:center;
+      margin-top:10px;
     }
-    .mini-item:hover{ transform: translateY(-1px); }
-
-    .mini-item .left{
-      display:flex; align-items:center; gap:8px;
+    .coupon-left{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
       min-width:0;
     }
-    .dot{
-      width:10px; height:10px; border-radius:999px;
-      background: rgba(255,106,0,.45);
-      box-shadow: 0 10px 18px rgba(255,106,0,.18);
+    .coupon-ic{
+      width:34px;height:34px;border-radius:12px;
+      background:linear-gradient(180deg, rgba(255,122,24,.20), rgba(255,122,24,.08));
+      border:1px solid rgba(255,122,24,.25);
+      display:flex;align-items:center;justify-content:center;
+      box-shadow: 0 14px 18px rgba(255,122,24,.10);
       flex:0 0 auto;
     }
-    .mini-item .t{
-      font-size:12px;
-      font-weight:900;
+    .coupon-txt{
+      min-width:0;
+    }
+    .coupon-name{
+      font-weight:1000;
       letter-spacing:-.2px;
+      font-size:13px;
+      white-space:nowrap;
       overflow:hidden;
       text-overflow:ellipsis;
-      white-space:nowrap;
-      min-width:0;
     }
-    .mini-item .r{
-      display:flex;
-      align-items:center;
-      gap:6px;
-      white-space:nowrap;
-      flex:0 0 auto;
-      color:var(--muted);
-      font-size:12px;
+    .coupon-sub{
+      margin-top:4px;
       font-weight:900;
+      font-size:12px;
+      color:rgba(107,114,128,.95);
+      line-height:1.4;
     }
-
-    /* Coupons (right rail) */
-    .coupon-mini{
+    .coupon-actions{
       display:flex;
       flex-direction:column;
-      gap:10px;
+      gap:8px;
+      align-items:flex-end;
     }
-    .coupon-mini .c{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding: 12px;
-      border-radius: 16px;
-      border:1px solid rgba(17,24,39,.06);
-      background: rgba(255,255,255,.90);
-      box-shadow: inset 0 1px 0 rgba(255,255,255,.85);
-    }
-    .coupon-mini .c .l{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      min-width:0;
-    }
-    .ic{
-      width:38px; height:38px;
-      border-radius: 14px;
-      display:grid; place-items:center;
-      background: linear-gradient(180deg, rgba(255,106,0,.22), rgba(255,255,255,.92));
-      border:1px solid rgba(255,106,0,.25);
-      box-shadow: 0 14px 22px rgba(17,24,39,.10);
-      flex:0 0 auto;
-    }
-    .coupon-mini .c .txt{
-      min-width:0;
-    }
-    .coupon-mini .c .txt b{
-      display:block;
-      font-size:12px;
+    .btn{
+      border:none;
+      background:linear-gradient(180deg, var(--temu), var(--temu2));
+      color:#fff;
+      font-weight:1000;
       letter-spacing:-.2px;
+      padding:10px 12px;
+      border-radius:999px;
+      cursor:pointer;
+      box-shadow: 0 16px 22px rgba(255,122,24,.22);
       white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
     }
-    .coupon-mini .c .txt span{
-      display:block;
-      margin-top:2px;
-      color:var(--muted);
-      font-size:11px;
-      font-weight:900;
-      white-space:nowrap;
-      overflow:hidden;
-      text-overflow:ellipsis;
-    }
-
-    .mini-btns{
+    .btn:active{transform:translateY(1px)}
+    .code-pill{
       display:flex;
       align-items:center;
       gap:8px;
-      flex:0 0 auto;
-    }
-    .mini-copy{
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-weight:900;
-      font-size:11px;
-      border:1px solid rgba(17,24,39,.10);
-      background: rgba(255,255,255,.86);
+      border:1px solid rgba(255,122,24,.25);
+      background:rgba(255,245,238,.90);
+      border-radius:999px;
+      padding:8px 10px;
+      font-weight:1000;
+      font-size:12px;
+      color:rgba(17,24,39,.92);
       cursor:pointer;
       white-space:nowrap;
     }
-    .mini-go{
-      border:none;
-      border-radius: 12px;
-      padding: 8px 10px;
-      font-weight:900;
-      font-size:11px;
-      background: linear-gradient(180deg, var(--temu2), var(--temu));
-      color:#fff;
-      cursor:pointer;
-      white-space:nowrap;
-      box-shadow: 0 12px 18px rgba(255,106,0,.22);
+    .code-pill:active{transform:translateY(1px)}
+    .mini{
+      font-size:12px;
+      font-weight:1000;
+      color:rgba(107,114,128,.95);
     }
 
-    /* Floating coupon CTA (bottom-right) */
-    .fab{
-      position: fixed;
-      right: 22px;
-      bottom: 22px;
-      width: 58px;
-      height: 58px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.72); /* ✅ 반투명 흰색 원 */
-      border:1px solid rgba(17,24,39,.10);
-      backdrop-filter: blur(10px);
-      box-shadow: 0 18px 34px rgba(17,24,39,.18);
-      display:grid;
-      place-items:center;
-      cursor:pointer;
-      z-index:60;
-      transition: transform .12s ease;
-    }
-    .fab:active{ transform: translateY(1px); }
-    .fab svg{ opacity:.92 }
-
-    /* Toast */
-    .toast{
-      position: fixed;
-      left: 50%;
-      bottom: 22px;
-      transform: translateX(-50%);
-      background: rgba(17,24,39,.92);
-      color: #fff;
-      padding: 10px 12px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 900;
+    .big-link{
+      margin-top:12px;
+      display:block;
+      text-align:center;
+      padding:14px 14px;
+      border-radius:16px;
+      font-weight:1000;
       letter-spacing:-.2px;
-      box-shadow: 0 18px 34px rgba(0,0,0,.25);
+      color:#fff;
+      background:linear-gradient(180deg, var(--temu), var(--temu2));
+      box-shadow: 0 18px 28px rgba(255,122,24,.22);
+    }
+    .big-link:active{transform:translateY(1px)}
+    .side-note{
+      margin:10px 0 0;
+      background:rgba(255,255,255,.62);
+      border:1px solid rgba(17,24,39,.08);
+      border-radius:16px;
+      padding:12px 12px;
+      font-weight:900;
+      color:rgba(17,24,39,.80);
+      line-height:1.55;
+      font-size:12px;
+    }
+
+    /* =========================
+       ✅ Bottom-right floating coupon button (semi-transparent white circle)
+    ========================== */
+    .float-coupon{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:56px;height:56px;
+      border-radius:50%;
+      background:rgba(255,255,255,.68);
+      border:1px solid rgba(17,24,39,.12);
+      box-shadow: 0 18px 32px rgba(17,24,39,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      z-index:80;
+      cursor:pointer;
+      backdrop-filter: blur(10px);
+    }
+    .float-coupon:active{transform:translateY(1px)}
+    .float-coupon span{
+      font-size:20px;
+      filter: drop-shadow(0 6px 10px rgba(0,0,0,.15));
+    }
+
+    /* =========================
+       ✅ Toast
+    ========================== */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:22px;
+      transform:translateX(-50%);
+      background:rgba(17,24,39,.92);
+      color:#fff;
+      padding:12px 14px;
+      border-radius:14px;
+      font-weight:900;
+      box-shadow:0 18px 28px rgba(0,0,0,.22);
       opacity:0;
       pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
-      z-index:70;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      white-space:nowrap;
+      transition:opacity .18s ease, transform .18s ease;
+      z-index:90;
+      max-width:calc(100% - 36px);
+      text-align:center;
+      line-height:1.35;
     }
-    .toast.on{
-      opacity:1;
-      transform: translateX(-50%) translateY(-6px);
-    }
+    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px);}
   </style>
 </head>
 
 <body>
+  <!-- ✅ Top bar -->
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand" id="brandHome" title="홈으로">
-        <div class="logo-mark">TFY</div>
-        <div class="brand-sub">TemuForYou</div>
-      </div>
-
-      <div class="top-actions">
-        <div class="chip">🧾 기사형 정리</div>
-        <div class="chip">🎟️ 쿠폰 · 코드</div>
-        <div class="chip">📈 실사용 기준</div>
-      </div>
+    <div class="brand" id="brand">
+      <div class="dot"></div>
+      <div class="logo" aria-label="TFY 로고">TFY</div>
     </div>
   </header>
 
   <main class="wrap">
-    <!-- LEFT -->
+    <!-- ✅ Left (Main) -->
     <section>
-      <div class="hero" id="homeTop">
-        <h1 class="hero-title">테무 혜택 + 문제해결, <br/>기사형으로 빠르게 정리합니다</h1>
-        <p class="hero-desc">
-          테무는 프로모션 노출이 계속 바뀝니다. “된다/안된다”만 반복하지 않고,
-          실제로 막히는 지점을 기준으로 <b>쿠폰 · 코드 · 통관 · 배송</b> 흐름을 정리합니다.
+      <div class="hero" id="home">
+        <h1>테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
+        <p>
+          테무는 프로모션 노출이 계속 바뀝니다. 그래서 “무조건 된다”가 아니라,
+          <b>쿠폰·사은품·특별세일</b>은 “되는 구조”로, <b>배송·통관·환불·결제</b>는 “막히는 지점” 기준으로 정리합니다.
+          <br/>
+          아래 탭과 카테고리에서 필요한 글을 바로 찾아보세요.
         </p>
 
-        <div class="coupon-panel">
-          <!-- ✅ 좌측 중상단 네모칸: 소개 -->
-          <div class="intro-box">
-            <div class="intro-head">
-              <b>TFY 안내</b>
-              <span>Temu 핵심만</span>
-            </div>
-            <p class="intro-text">
-              이 사이트는 테무를 처음 시작하는 분들이 가장 많이 헤매는 구간(코드 입력 위치, 적용 실패, 배송·통관, 결제)을
-              “한 번에 따라 하기” 좋게 정리합니다. 글은 계속 추가됩니다.
-            </p>
-          </div>
-
-          <!-- ✅ 쿠폰 3개 (주황 아닌 포인트 컬러) -->
-          <div class="coupon-stack" id="mainCoupon3">
-            <!-- JS로 채움 -->
-          </div>
+        <!-- ✅ Quick chips -->
+        <div class="chip-row">
+          <div class="chip" data-target="cat-coupon"><span class="ic">🎟️</span>쿠폰·코드</div>
+          <div class="chip" data-target="cat-ship"><span class="ic">🚚</span>배송·통관</div>
+          <div class="chip" data-target="cat-pay"><span class="ic">💳</span>결제·계정</div>
+          <div class="chip" data-target="cat-info"><span class="ic">📰</span>테무 ↔ 정보</div>
         </div>
 
-        <div class="hero-cta">
-          <button class="btn" id="jumpToCategories">카테고리 글 목록 보기 →</button>
-          <button class="btn btn-ghost" id="jumpToCouponRail">우측 쿠폰 패널 보기 →</button>
+        <!-- ✅ Left mid-top (3 empty coupon slots) -->
+        <div class="coupon-slot-wrap" aria-label="좌측 중상단 쿠폰 슬롯(3개, 공백 유지)">
+          <div class="slot">
+            <div class="t"><span class="badge b1"></span>쿠폰 슬롯 1</div>
+            <div class="sub">공백 (추후 배치)</div>
+          </div>
+          <div class="slot">
+            <div class="t"><span class="badge b2"></span>쿠폰 슬롯 2</div>
+            <div class="sub">공백 (추후 배치)</div>
+          </div>
+          <div class="slot">
+            <div class="t"><span class="badge b3"></span>쿠폰 슬롯 3</div>
+            <div class="sub">공백 (추후 배치)</div>
+          </div>
         </div>
       </div>
 
-      <div class="section" id="categories">
-        <div class="section-head">
-          <h3>📝 TFT(캘리) 포스팅 카테고리</h3>
-          <div class="sub">카테고리마다 최대 5개만 보이고, 스크롤로 더 확인</div>
+      <!-- ✅ Categories -->
+      <div class="panel" id="categories">
+        <div class="panel-title">
+          <h2>🎴 TFT(캘리 표현) 포스팅 카테고리 (+이모지)</h2>
+          <div class="hint">카테고리마다 5개 표시 · 스크롤로 더 보기</div>
         </div>
 
-        <!-- ✅ 4개로 세분화 (애매하면 “테무 ↔ 정보”로) -->
-        <div class="cat-grid" id="catGrid">
-          <!-- JS로 채움 -->
+        <!-- ✅ category tabs -->
+        <div class="cat-tabs" id="catTabs">
+          <button class="cat-tab" data-target="cat-coupon">🎟️ 쿠폰·코드</button>
+          <button class="cat-tab" data-target="cat-ship">🚚 배송·통관</button>
+          <button class="cat-tab" data-target="cat-pay">💳 결제·계정</button>
+          <button class="cat-tab" data-target="cat-info">📰 테무 ↔ 정보</button>
+        </div>
+
+        <div class="cat-grid">
+          <div class="cat-card" id="cat-coupon">
+            <div class="cat-head">
+              <div class="name">🎟️ 쿠폰·코드</div>
+              <div class="count" id="count-coupon">0</div>
+            </div>
+            <div class="post-list" id="list-coupon"></div>
+          </div>
+
+          <div class="cat-card" id="cat-ship">
+            <div class="cat-head">
+              <div class="name">🚚 배송·통관</div>
+              <div class="count" id="count-ship">0</div>
+            </div>
+            <div class="post-list" id="list-ship"></div>
+          </div>
+
+          <div class="cat-card" id="cat-pay">
+            <div class="cat-head">
+              <div class="name">💳 결제·계정</div>
+              <div class="count" id="count-pay">0</div>
+            </div>
+            <div class="post-list" id="list-pay"></div>
+          </div>
+
+          <div class="cat-card" id="cat-info">
+            <div class="cat-head">
+              <div class="name">📰 테무 ↔ 정보</div>
+              <div class="count" id="count-info">0</div>
+            </div>
+            <div class="post-list" id="list-info"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- RIGHT -->
-    <aside class="right-rail" id="rightRail">
-      <div class="rail-card">
-        <div class="rail-head">
-          <b>바로 가기</b>
-          <span>스크롤 따라옴</span>
-        </div>
-
-        <div class="rail-body">
-          <div class="rail-block">
-            <h4>📈 인기글</h4>
-            <div class="mini-list" id="popularList">
-              <!-- JS로 채움 -->
-            </div>
+    <!-- ✅ Right (Sidebar follower) -->
+    <aside class="right-col">
+      <div class="follow" id="follow">
+        <div class="side">
+          <div class="side-head">
+            <div class="h">🎁 지금 바로 혜택 받기</div>
+            <div class="tag">스크롤 따라옴</div>
           </div>
+          <div class="body">
+            <div class="cta-box">
+              <div class="cta-title">🎟️ 쿠폰/사은품/특별세일은 “루트 + 코드”가 핵심입니다</div>
+              <p class="cta-desc">
+                아래 카드를 누르면 <b>링크 이동</b> 또는 <b>코드 복사</b>가 됩니다.
+                (필요 시 “곧 업로드 예정입니다!” 안내가 뜰 수 있습니다.)
+              </p>
 
-          <div class="rail-block" id="couponRail">
-            <h4>🎁 쿠폰/코드 (6개)</h4>
-            <div class="coupon-mini" id="couponList6">
-              <!-- JS로 채움 -->
-            </div>
-          </div>
+              <!-- ✅ 6 coupon cards -->
+              <div id="couponCards"></div>
 
-          <div class="rail-block" style="background: linear-gradient(180deg, rgba(255,106,0,.10), rgba(255,255,255,.88)); border-color: rgba(255,106,0,.18);">
-            <h4>아래 글도 보시겠어요? 😄💕</h4>
-            <div style="color:#374151;font-size:12px;line-height:1.65;font-weight:800;">
-              이 글을 다 읽고 나면, 다음 글은 보통 “코드 입력 위치”를 보면 실전 적용이 훨씬 쉬워집니다.
+              <a class="big-link" id="mainCouponJump" href="posts/temu-coupon-2026.html">2026 무료쿠폰 글도 보기 →</a>
+
+              <div class="side-note">
+                아래 글도 보시겠어요? 😊💕<br/>
+                이 글을 다 읽고 “막히는 지점”을 확인하면, 실제 적용이 더 쉬워집니다.
+              </div>
             </div>
-            <div style="margin-top:10px;display:flex;gap:10px;">
-              <button class="mini-go" id="nextSuggested">다음 글로 →</button>
-              <button class="mini-copy" id="copyTopCode">대표 코드 복사</button>
+
+            <!-- Popular -->
+            <div style="height:12px"></div>
+            <div class="side">
+              <div class="side-head" style="border-top:1px solid rgba(17,24,39,.08)">
+                <div class="h">📈 인기글</div>
+                <div class="tag">Top</div>
+              </div>
+              <div class="body" id="popularBox"></div>
             </div>
+
           </div>
         </div>
       </div>
     </aside>
   </main>
 
-  <!-- ✅ 우측 하단 따라다니는 반투명 흰색 원형 쿠폰 버튼 -->
-  <div class="fab" id="fabCoupon" title="쿠폰 패널 열기">
-    <!-- ticket icon -->
-    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-      <path d="M5 7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2a2 2 0 0 0 0 4v2a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-2a2 2 0 0 0 0-4V7Z" stroke="#111827" stroke-width="1.6"/>
-      <path d="M10 8.5h7M10 12h7M10 15.5h7" stroke="#111827" stroke-width="1.6" stroke-linecap="round"/>
-    </svg>
+  <!-- ✅ Floating coupon button -->
+  <div class="float-coupon" id="floatCouponBtn" title="쿠폰 바로가기">
+    <span>🎟️</span>
   </div>
 
-  <div class="toast" id="toast">✅ 복사되었습니다</div>
+  <!-- ✅ Toast -->
+  <div class="toast" id="toast"></div>
 
   <script>
-    // =========================
-    // 1) 데이터 (쿠폰 6개 + 메인 3개)
-    // =========================
-    const coupons6 = [
-      { title:"150,000원 쿠폰 묶음", who:"신규 앱 사용자", link:"https://temu.to/m/uotsq20netz", code:"aak74594", icon:"🎟️" },
-      { title:"사은품 0원 이벤트", who:"신규 앱 사용자", link:"https://temu.to/m/u3ia9bomcaw", code:"frq027981", icon:"🎁" },
-      { title:"특별 세일 루트", who:"신규 앱 사용자", link:"https://temu.to/m/u3ckk6z4eku", code:"acr804202", icon:"⚡" },
+    /* =========================
+       ✅ Data
+    ========================== */
 
-      { title:"150,000원 쿠폰 묶음", who:"신규 앱 사용자", link:"https://temu.to/m/u6ndc7zl0v8", code:"ack263361", icon:"🎟️" },
-      { title:"사은품 0원 이벤트", who:"신규 앱 사용자", link:"https://temu.to/m/u0zwrhwzccf", code:"frw419209", icon:"🎁" },
-      { title:"특별 세일", who:"신규 앱 사용자", link:"https://temu.to/k/qgzxbhz73coe", code:"alf468043", icon:"⚡" },
+    // ✅ 6 coupons + links (fixed)
+    const COUPONS = [
+      { title:"150,000원 쿠폰 묶음", who:"신규 앱 사용자", code:"aak74594", link:"https://temu.to/m/uotsq20netz", icon:"🎟️" },
+      { title:"사은품 0원 이벤트", who:"신규 앱 사용자", code:"frq027981", link:"https://temu.to/m/u3ia9bomcaw", icon:"🎁" },
+      { title:"특별 세일", who:"신규 앱 사용자", code:"acr804202", link:"https://temu.to/m/u3ckk6z4eku", icon:"⚡" },
+      { title:"30% 할인", who:"신규 앱 사용자", code:"ack263361", link:"https://temu.to/m/u6ndc7zl0v8", icon:"🏷️" },
+      { title:"사은품 0원(세트2)", who:"신규 앱 사용자", code:"frw419209", link:"https://temu.to/m/u0zwrhwzccf", icon:"🎀" },
+      { title:"특별 세일(세트2)", who:"신규 앱 사용자", code:"alf468043", link:"https://temu.to/k/qgzxbhz73coe", icon:"🔥" },
     ];
 
-    // 메인에 보여줄 쿠폰 3개(주황 아님) - 첫 3개를 사용
-    const main3 = coupons6.slice(0,3);
+    // ✅ Existing uploaded posts (8 shown in screenshot)
+    // NOTE: 실제 파일명이 다르면 여기 slug만 맞춰주시면 됩니다.
+    const EXISTING_POSTS = [
+      { title:"테무 2026 무료쿠폰 발급 및 사용방법 정리!", slug:"posts/temu-coupon-2026.html", cat:"coupon", pop:true },
+      { title:"테무 코드 입력 위치, 여기서 막히면 적용이 안 됩니다", slug:"posts/temu-coupon-code-input.html", cat:"coupon", pop:true },
+      { title:"테무 쿠폰이 적용 안 될 때, 대부분 이 조건 때문입니다", slug:"posts/temu-coupon-not-working.html", cat:"coupon", pop:true },
 
-    // =========================
-    // 2) 글 목록 (기존 8개 + 신규 타이틀 선배치)
-    //    ※ 사용자 요청: 카테고리에서 2개 삭제
-    // =========================
-    const existingPosts = [
-      { title:"테무 2026 무료쿠폰 발급 및 사용방법 정리!", slug:"posts/temu-coupon-2026.html", pop:true },
-      { title:"테무 코드 입력 위치, 여기서 대부분 갈립니다", slug:"posts/temu-coupon-code-input.html", pop:true },
-      { title:"테무 쿠폰 적용 안 될 때, 실제로 많이 막히는 이유", slug:"posts/temu-coupon-not-working.html", pop:true },
-      { title:"테무 통관번호 한 글자 실수, 배송이 멈추는 구조", slug:"posts/temu-customs-code-typo.html", pop:true },
-      { title:"테무 무료선물 0원, 되는 흐름과 조건 정리", slug:"posts/temu-free-gift-0won.html", pop:true },
-      { title:"“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유", slug:"posts/temu-order-stuck-real-reason.html", pop:true },
-      { title:"테무 특별 세일, 노출이 뜨는 구조와 접근 루트", slug:"posts/temu-special-sale.html", pop:false },
-      { title:"테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다", slug:"posts/temu-refund-not-working-common-mistake.html", pop:false },
+      { title:"테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다", slug:"posts/temu-customs-code-typo.html", cat:"ship", pop:true },
+
+      { title:"“테무 무료상품, 진짜 받는 사람은 따로 있었습니다”", slug:"posts/temu-free-gift-0won.html", cat:"info", pop:false },
+      { title:"“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유", slug:"posts/temu-order-stuck-real-reason.html", cat:"ship", pop:true },
+
+      { title:"특별 세일이 진짜로 ‘되는’ 루트는 따로 있습니다", slug:"posts/temu-special-sale.html", cat:"coupon", pop:false },
+
+      { title:"테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다", slug:"posts/temu-refund-not-working-common-mistake.html", cat:"ship", pop:false }
     ];
 
-    // 20개 기사형 타이틀(요청 2개는 삭제)
-    const planned20Minus2 = [
-      // 🔥 실수·문제 해결형
-      { title:"테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다", slug:"#", pop:true },
-      { title:"“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유", slug:"#", pop:true },
-      // (삭제) 테무 주문 취소...
-      // (삭제) 테무 환불이 안 된다는...
-      { title:"테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다", slug:"#", pop:true },
-      { title:"주소 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일", slug:"#", pop:false },
-      { title:"테무 배송조회가 안 될 때, 실제로는 이미 처리된 상태일 수도 있습니다", slug:"#", pop:false },
-      { title:"주문했는데 기록이 안 보일 때, 테무 시스템은 이렇게 작동합니다", slug:"#", pop:false },
-      { title:"결제 완료 후 취소 버튼이 사라지는 이유, 내부 구조를 확인했습니다", slug:"#", pop:false },
-      { title:"테무 배송이 멈춘 것처럼 보일 때, 기다려야 할지 조치해야 할지 기준은 이것입니다", slug:"#", pop:true },
+    // ✅ Planned titles (20 list) BUT:
+    // - Remove 2 titles as requested:
+    //   1) "테무 주문 취소, 되는 경우와 절대 안 되는 경우가 갈립니다"  (삭제)
+    //   2) "테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다" (삭제)  -> (기존 업로드 8개에 있었으나, 카테고리에서 제외 요청이 있어서 아래에서 필터로 제거 처리)
+    //
+    // Also: add route (slug) for "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다"
+    const PLANNED_POSTS = [
+      // 실수·문제 해결형 (남는 것)
+      { title:"주소 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일", slug:"#", cat:"ship" },
+      { title:"테무 배송조회가 안 될 때, 실제로는 이미 처리된 상태일 수도 있습니다", slug:"#", cat:"ship" },
+      { title:"주문했는데 기록이 안 보일 때, 테무 시스템은 이렇게 작동합니다", slug:"#", cat:"ship" },
+      { title:"결제 완료 후 취소 버튼이 사라지는 이유, 내부 구조를 확인했습니다", slug:"#", cat:"pay" },
+      { title:"테무 배송이 멈춘 것처럼 보일 때, 기다려야 할지 조치해야 할지 기준은 이것입니다", slug:"#", cat:"ship" },
 
-      // 🔥 진짜냐 가짜냐 검증형
-      { title:"“테무 무료상품, 진짜 받는 사람은 따로 있었습니다”", slug:"#", pop:true },
-      { title:"테무 사기 논란, 실제 사용자 데이터로 확인해보니 결과는 달랐습니다", slug:"#", pop:false },
-      { title:"테무 0원 결제는 가능한가? 조건을 충족한 사례만 정리했습니다", slug:"#", pop:true },
-      { title:"왜 이렇게 쌀까? 테무 가격 구조를 뜯어보니 숨겨진 방식이 보였습니다", slug:"#", pop:false },
-      { title:"테무 개인정보 논란, 불안해하는 지점과 실제 구조는 달랐습니다", slug:"#", pop:true },
-      { title:"테무 후기, 믿을 수 없는 글과 신뢰 가능한 글의 차이점", slug:"#", pop:false },
-      { title:"‘무료배송’이라는 말, 테무에서는 어디까지가 진짜일까", slug:"#", pop:false },
-      { title:"과장 광고라는 말이 나오는 이유, 테무 이벤트 구조를 분석했습니다", slug:"#", pop:false },
-      { title:"테무 이벤트, 참여해도 되는 사람과 손해 보는 사람이 갈립니다", slug:"#", pop:true },
-      { title:"한국에서 테무 사용해도 괜찮을까? 실제 이용 흐름으로 확인해봤습니다", slug:"#", pop:false },
+      // ✅ 1번 파트 4번(요청): "테무 환불이 안 된다는..." 는 삭제 처리 대상
+      // 결제오류 (요청: 루트 추가)
+      { title:"테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
+        slug:"posts/temu-payment-error-most-stuck-step.html",
+        cat:"pay",
+        pop:true
+      },
+
+      // 검증형
+      { title:"테무 사기 논란, 실제 사용자 데이터로 확인해보니 결과는 달랐습니다", slug:"#", cat:"info" },
+      { title:"테무 0원 결제는 가능한가? 조건을 충족한 사례만 정리했습니다", slug:"#", cat:"info" },
+      { title:"왜 이렇게 쌀까? 테무 가격 구조를 뜯어보니 숨겨진 방식이 보였습니다", slug:"#", cat:"info" },
+      { title:"테무 개인정보 논란, 불안해하는 지점과 실제 구조는 달랐습니다", slug:"#", cat:"info" },
+      { title:"테무 후기, 믿을 수 없는 글과 신뢰 가능한 글의 차이점", slug:"#", cat:"info" },
+      { title:"‘무료배송’이라는 말, 테무에서는 어디까지가 진짜일까", slug:"#", cat:"ship" },
+      { title:"과장 광고라는 말이 나오는 이유, 테무 이벤트 구조를 분석했습니다", slug:"#", cat:"info" },
+      { title:"테무 이벤트, 참여해도 되는 사람과 손해 보는 사람이 갈립니다", slug:"#", cat:"info" },
+      { title:"한국에서 테무 사용해도 괜찮을까? 실제 이용 흐름으로 확인해봤습니다", slug:"#", cat:"info" },
+
+      // 추가(누락 보정: 문제해결형의 남은 제목 2개)
+      { title:"테무 배송이 안 올 때, ‘멈춤’처럼 보이는 화면의 의미", slug:"#", cat:"ship" },
+      { title:"테무 환불/반품 진행이 느릴 때 확인해야 할 체크포인트", slug:"#", cat:"ship" }
     ];
 
-    // =========================
-    // 3) 카테고리 4개 구성
-    //    (애매한 건 “테무 ↔ 정보”로)
-    // =========================
-    const categories = [
-      { name:"🎟️ 쿠폰·코드", tag:"핵심", items:[
-        ...existingPosts.filter(p => /쿠폰|코드|0원/.test(p.title)).slice(0,5),
-        ...planned20Minus2.filter(p => /0원|무료상품|이벤트/.test(p.title)).slice(0,6),
-      ]},
-      { name:"🚚 배송·통관", tag:"필수", items:[
-        ...existingPosts.filter(p => /배송|통관|주문/.test(p.title)).slice(0,5),
-        ...planned20Minus2.filter(p => /배송|통관|주소|기록|주문/.test(p.title)),
-      ]},
-      { name:"💳 결제·계정", tag:"해결", items:[
-        ...planned20Minus2.filter(p => /결제|취소 버튼/.test(p.title)),
-        ...existingPosts.filter(p => /환불/.test(p.title)),
-      ]},
-      { name:"📰 테무 ↔ 정보", tag:"분석", items:[
-        ...planned20Minus2.filter(p => /사기|가격|개인정보|후기|무료배송|과장/.test(p.title)),
-      ]},
-    ];
+    // ✅ Category labels
+    const CAT_LABEL = {
+      coupon: "🎟️ 쿠폰·코드",
+      ship: "🚚 배송·통관",
+      pay: "💳 결제·계정",
+      info: "📰 테무 ↔ 정보"
+    };
 
-    // =========================
-    // 4) 렌더링
-    // =========================
-    const $ = (s)=>document.querySelector(s);
+    // ✅ titles explicitly removed from categories
+    const REMOVE_TITLES = new Set([
+      "테무 주문 취소, 되는 경우와 절대 안 되는 경우가 갈립니다",
+      "테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다"
+    ]);
 
+    /* =========================
+       ✅ Helpers
+    ========================== */
+    const $ = (sel)=>document.querySelector(sel);
+
+    const toastEl = $("#toast");
+    let toastTimer = null;
     function toast(msg){
-      const t = $("#toast");
-      t.textContent = msg;
-      t.classList.add("on");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(()=>t.classList.remove("on"), 1200);
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toastEl.classList.remove("show"), 1700);
     }
 
-    async function copyText(text){
+    async function copyText(t){
       try{
-        await navigator.clipboard.writeText(text);
-        toast("✅ 복사되었습니다");
+        await navigator.clipboard.writeText(t);
+        toast("복사 완료!");
       }catch(e){
-        // fallback
-        const ta = document.createElement("textarea");
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        ta.remove();
-        toast("✅ 복사되었습니다");
+        toast("복사에 실패했어요. (브라우저 권한 확인)");
       }
     }
 
-    function openLink(url){
-      window.open(url, "_blank", "noopener,noreferrer");
+    function go(url){
+      window.location.href = url;
     }
 
-    function renderMain3(){
-      const box = $("#mainCoupon3");
-      box.innerHTML = "";
-      const badges = ["b1","b2","b3"];
-      const icons = ["🎟️","🎁","⚡"];
-      main3.forEach((c, i)=>{
+    /* =========================
+       ✅ Render: coupon cards (6)
+    ========================== */
+    function renderCoupons(){
+      const root = $("#couponCards");
+      root.innerHTML = "";
+
+      COUPONS.forEach((c)=>{
         const el = document.createElement("div");
         el.className = "coupon-card";
         el.innerHTML = `
-          <div class="coupon-row">
-            <div class="coupon-left">
-              <div class="badge3d ${badges[i]}">${icons[i]}</div>
-              <div class="coupon-meta">
-                <h4>${c.title}</h4>
-                <p>${c.who} · 링크+코드 한 번에 정리</p>
-              </div>
-            </div>
-            <div class="coupon-actions">
-              <button class="pill" data-act="issue">발급</button>
-              <div class="code-chip" data-act="copy">${c.code}</div>
+          <div class="coupon-left">
+            <div class="coupon-ic">${c.icon}</div>
+            <div class="coupon-txt">
+              <div class="coupon-name">${c.title}</div>
+              <div class="coupon-sub">${c.who} · 링크 이동 + 코드 복사</div>
+              <div class="mini" style="margin-top:6px">링크: <span style="font-weight:1000">${c.link}</span></div>
             </div>
           </div>
+          <div class="coupon-actions">
+            <button class="btn" data-link="${c.link}">이동</button>
+            <div class="code-pill" data-code="${c.code}">코드: ${c.code} ⧉</div>
+          </div>
         `;
-        el.querySelector('[data-act="issue"]').addEventListener("click", ()=>{
-          copyText(c.code);
-          setTimeout(()=>openLink(c.link), 120);
+        root.appendChild(el);
+      });
+
+      root.querySelectorAll(".btn").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const link = btn.getAttribute("data-link");
+          go(link);
         });
-        el.querySelector('[data-act="copy"]').addEventListener("click", ()=>copyText(c.code));
-        el.addEventListener("dblclick", ()=>openLink(c.link));
-        box.appendChild(el);
+      });
+
+      root.querySelectorAll(".code-pill").forEach(p=>{
+        p.addEventListener("click", ()=>{
+          copyText(p.getAttribute("data-code"));
+        });
       });
     }
 
-    function renderCoupon6(){
-      const box = $("#couponList6");
-      box.innerHTML = "";
-      coupons6.forEach((c)=>{
-        const el = document.createElement("div");
-        el.className = "c";
-        el.innerHTML = `
-          <div class="l">
-            <div class="ic">${c.icon}</div>
-            <div class="txt">
-              <b>${c.title}</b>
-              <span>${c.code} · ${c.link}</span>
-            </div>
-          </div>
-          <div class="mini-btns">
-            <button class="mini-copy" title="코드 복사">복사</button>
-            <button class="mini-go" title="링크 이동">이동</button>
-          </div>
-        `;
-        el.querySelector(".mini-copy").addEventListener("click", ()=>copyText(c.code));
-        el.querySelector(".mini-go").addEventListener("click", ()=>{
-          copyText(c.code);
-          setTimeout(()=>openLink(c.link), 120);
-        });
-        box.appendChild(el);
-      });
+    /* =========================
+       ✅ Build posts list (existing + planned)
+    ========================== */
+    function buildAllPosts(){
+      const merged = [...EXISTING_POSTS, ...PLANNED_POSTS];
+
+      // 1) remove requested titles from categories
+      const filtered = merged.filter(p => !REMOVE_TITLES.has(p.title));
+
+      // 2) dedupe by title (keep first encountered)
+      const seen = new Set();
+      const deduped = [];
+      for(const p of filtered){
+        if(seen.has(p.title)) continue;
+        seen.add(p.title);
+        deduped.push(p);
+      }
+
+      return deduped;
     }
 
-    function renderPopular(){
-      const pop = $("#popularList");
-      pop.innerHTML = "";
-
-      // “가장 인기있을법한 주제”엔 📈 표시(요청 반영)
-      // 우선순위: 기존 글(pop:true) + 계획 글(pop:true) 섞어서 10개
-      const pool = [
-        ...existingPosts.map(p => ({...p, src:"existing"})),
-        ...planned20Minus2.map(p => ({...p, src:"planned"})),
-      ];
-
-      const picks = pool
-        .filter(p => p.pop)
-        .slice(0, 10);
-
-      picks.forEach((p, idx)=>{
-        const el = document.createElement("div");
-        el.className = "mini-item";
-        el.innerHTML = `
-          <div class="left">
-            <div class="dot"></div>
-            <div class="t">${p.title}</div>
-          </div>
-          <div class="r">${idx < 3 ? "📈" : " "}</div>
-        `;
-        el.addEventListener("click", ()=>{
-          // slug가 #이면 아직 글이 없는 상태 → 알림만
-          if(!p.slug || p.slug === "#"){
-            toast("📝 이 글은 곧 업로드됩니다");
-            return;
-          }
-          window.location.href = p.slug;
-        });
-        pop.appendChild(el);
-      });
-    }
-
+    /* =========================
+       ✅ Render categories
+    ========================== */
     function renderCategories(){
-      const grid = $("#catGrid");
-      grid.innerHTML = "";
+      const all = buildAllPosts();
 
-      categories.forEach(cat=>{
-        // 중복 제거 (같은 제목 여러 번 뜨는 문제 방지)
-        const seen = new Set();
-        const uniq = [];
-        for(const it of cat.items){
-          if(!it || !it.title) continue;
-          if(seen.has(it.title)) continue;
-          seen.add(it.title);
-          uniq.push(it);
-        }
+      const byCat = {coupon:[], ship:[], pay:[], info:[]};
+      all.forEach(p=>{
+        if(byCat[p.cat]) byCat[p.cat].push(p);
+        else byCat.info.push(p);
+      });
 
-        const el = document.createElement("div");
-        el.className = "cat";
-        el.innerHTML = `
-          <div class="cat-top">
-            <b>${cat.name}</b>
-            <div class="tag">${cat.tag}</div>
-          </div>
-          <div class="cat-list"></div>
-        `;
-        const list = el.querySelector(".cat-list");
+      // counts
+      $("#count-coupon").textContent = `${byCat.coupon.length}개`;
+      $("#count-ship").textContent   = `${byCat.ship.length}개`;
+      $("#count-pay").textContent    = `${byCat.pay.length}개`;
+      $("#count-info").textContent   = `${byCat.info.length}개`;
 
-        // “최대 5개가 보이되 스크롤로 더 보기”
-        // 실제 항목은 더 넣어두고, 스크롤 영역만 제한
-        uniq.forEach((p)=>{
+      function fill(listId, arr){
+        const box = document.getElementById(listId);
+        box.innerHTML = "";
+
+        arr.forEach(p=>{
+          const isPlanned = (!p.slug || p.slug === "#");
           const item = document.createElement("div");
           item.className = "post-item";
           item.innerHTML = `
             <div class="ttl">${p.title}</div>
-            <div class="meta">${p.pop ? "📈" : " "}</div>
+            <div class="meta">${isPlanned ? "곧 업로드" : (p.pop ? "📈" : " ")}</div>
           `;
           item.addEventListener("click", ()=>{
             if(!p.slug || p.slug === "#"){
-              toast("📝 이 글은 곧 업로드됩니다");
+              toast("곧 업로드 예정입니다!");
               return;
             }
-            window.location.href = p.slug;
+            go(p.slug);
           });
-          list.appendChild(item);
+          box.appendChild(item);
         });
+      }
 
-        grid.appendChild(el);
+      fill("list-coupon", byCat.coupon);
+      fill("list-ship", byCat.ship);
+      fill("list-pay", byCat.pay);
+      fill("list-info", byCat.info);
+    }
+
+    /* =========================
+       ✅ Render Popular (Top 5)
+    ========================== */
+    function renderPopular(){
+      const all = buildAllPosts();
+
+      // prefer pop:true first, then existing posts
+      const popList = all
+        .filter(p=>p.pop === true)
+        .slice(0,5);
+
+      const box = $("#popularBox");
+      box.innerHTML = "";
+      popList.forEach(p=>{
+        const isPlanned = (!p.slug || p.slug === "#");
+        const item = document.createElement("div");
+        item.className = "post-item";
+        item.innerHTML = `
+          <div class="ttl">${p.title}</div>
+          <div class="meta">${isPlanned ? "곧 업로드" : "📈"}</div>
+        `;
+        item.addEventListener("click", ()=>{
+          if(!p.slug || p.slug === "#"){
+            toast("곧 업로드 예정입니다!");
+            return;
+          }
+          go(p.slug);
+        });
+        box.appendChild(item);
       });
     }
 
-    // =========================
-    // 5) UI 동작
-    // =========================
-    function smoothScrollTo(el){
-      el.scrollIntoView({behavior:"smooth", block:"start"});
+    /* =========================
+       ✅ Smooth jump for chips/tabs
+    ========================== */
+    function bindJumps(){
+      // chips
+      document.querySelectorAll(".chip").forEach(ch=>{
+        ch.addEventListener("click", ()=>{
+          const id = ch.getAttribute("data-target");
+          const el = document.getElementById(id);
+          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        });
+      });
+
+      // tabs
+      document.querySelectorAll(".cat-tab").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.getAttribute("data-target");
+          const el = document.getElementById(id);
+          if(el) el.scrollIntoView({behavior:"smooth", block:"start"});
+        });
+      });
     }
 
-    // 로고 클릭 = 홈으로(이동) / 호버 = 흔들 (CSS)
-    $("#brandHome").addEventListener("click", ()=>smoothScrollTo($("#homeTop")));
+    /* =========================
+       ✅ Sidebar follower (inertia)
+    ========================== */
+    function sidebarFollow(){
+      const follow = document.getElementById("follow");
+      if(!follow) return;
 
-    $("#jumpToCategories").addEventListener("click", ()=>smoothScrollTo($("#categories")));
-    $("#jumpToCouponRail").addEventListener("click", ()=>smoothScrollTo($("#couponRail")));
+      let targetY = 0;
+      let currentY = 0;
 
-    $("#fabCoupon").addEventListener("click", ()=>smoothScrollTo($("#couponRail")));
+      function onScroll(){
+        const topbarH = 74; // slight offset
+        const scrollY = window.scrollY || document.documentElement.scrollTop;
+        targetY = Math.max(0, scrollY - topbarH);
+      }
+      window.addEventListener("scroll", onScroll, {passive:true});
+      onScroll();
 
-    $("#nextSuggested").addEventListener("click", ()=>{
-      // “코드 입력 위치”를 추천
-      const next = existingPosts.find(p => /코드 입력 위치/.test(p.title));
-      if(next) window.location.href = next.slug;
-    });
-
-    $("#copyTopCode").addEventListener("click", ()=>{
-      // 대표 코드 = 첫 번째 쿠폰 코드
-      copyText(coupons6[0].code);
-    });
-
-    // =========================
-    // 6) 관성(부드럽게 뒤따라오는) 사이드바 트래킹
-    // =========================
-    let currentY = 0;
-    let targetY = 0;
-
-    function tick(){
-      // 사용자가 스크롤을 내릴수록 목표가 약간 늦게 따라오도록
-      const scrollY = window.scrollY || 0;
-      // sticky top(78px) + 약간의 오프셋
-      targetY = Math.min(28, Math.max(-18, (scrollY * 0.03)));
-
-      // 관성: 현재값이 목표를 천천히 따라감
-      currentY += (targetY - currentY) * 0.10;
-
-      const rail = $("#rightRail");
-      if(rail){
-        rail.style.transform = `translateY(${currentY.toFixed(2)}px)`;
+      function tick(){
+        // inertia (lag behind)
+        currentY += (targetY - currentY) * 0.10;
+        follow.style.transform = `translateY(${currentY}px)`;
+        requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
     }
-    requestAnimationFrame(tick);
 
-    // =========================
-    // init
-    // =========================
-    renderMain3();
-    renderCoupon6();
-    renderPopular();
+    /* =========================
+       ✅ Logo behavior: click = tickle (home move)
+    ========================== */
+    function bindLogo(){
+      const brand = document.getElementById("brand");
+      brand.addEventListener("click", ()=>{
+        // tickle animation (retrigger)
+        const logo = brand.querySelector(".logo");
+        logo.style.animation = "none";
+        // force reflow
+        void logo.offsetWidth;
+        logo.style.animation = "tickle 420ms ease-in-out both";
+
+        // also scroll to top/home (no navigation)
+        document.getElementById("home").scrollIntoView({behavior:"smooth", block:"start"});
+      });
+    }
+
+    /* =========================
+       ✅ Floating coupon button behavior
+    ========================== */
+    function bindFloatCoupon(){
+      const btn = document.getElementById("floatCouponBtn");
+      btn.addEventListener("click", ()=>{
+        // focus sidebar coupon box area
+        document.querySelector(".cta-box").scrollIntoView({behavior:"smooth", block:"center"});
+      });
+    }
+
+    /* =========================
+       ✅ Init
+    ========================== */
+    renderCoupons();
     renderCategories();
+    renderPopular();
+    bindJumps();
+    sidebarFollow();
+    bindLogo();
+    bindFloatCoupon();
   </script>
 </body>
 </html>
