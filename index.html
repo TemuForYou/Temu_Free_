@@ -1,729 +1,197 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-<meta name="naver-site-verification" content="306a433fedb09cdb830b4b6e64068881e885221c" />
-  <title>TFY - 테무 혜택 + 문제해결</title>
-  <meta name="description" content="테무 혜택과 문제 해결을 기사형으로 빠르게 정리합니다. 쿠폰/사은품/배송·통관/환불·결제." />
+  <meta charset="UTF-8">
+
+  <!-- 네이버 사이트 소유 확인 (필수) -->
+  <meta name="naver-site-verification" content="306a433fedb09cdb830b4b6e64068881e885221c" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>테무 2026 무료쿠폰 발급 및 사용방법 정리!</title>
+  <meta name="description" content="테무(Temu) 2026 무료쿠폰 발급 조건, 사용 방법, 안될 때 해결법까지 기사형으로 정리했습니다. 실제 적용 기준으로 확인하세요.">
 
   <style>
     :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --text:#0f172a;
-      --muted:#64748b;
-      --line:#e6e8f0;
-
-      --temu:#ff6a00;
-      --temu2:#ff8a3d;
-      --temuSoft:#fff3ea;
-
-      --shadow: 0 14px 40px rgba(15, 23, 42, .10);
-      --shadow2: 0 18px 48px rgba(255, 106, 0, .18);
-
-      --radius:18px;
-      --radius2:22px;
+      --orange:#ff7a1a;
+      --soft:#fff6ef;
+      --text:#222;
+      --sub:#666;
     }
+
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",Arial,sans-serif;
-      background:var(--bg);
+      font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR",sans-serif;
+      background:#f5f6f8;
       color:var(--text);
-      line-height:1.8;
-    }
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1100px;margin:0 auto;padding:0 18px}
-
-    /* Topbar */
-    .topbar{
-      position:sticky; top:0; z-index:999;
-      background:linear-gradient(90deg,var(--temu),var(--temu2));
-      color:#fff;
-      box-shadow:0 10px 26px rgba(0,0,0,.16);
-    }
-    .topbar .inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px; padding:12px 0;
-    }
-    .brand{display:flex;align-items:center;gap:10px}
-    .dot{
-      width:10px;height:10px;border-radius:999px;background:#fff;
-      box-shadow:0 0 0 5px rgba(255,255,255,.18)
-    }
-    .logoTFY{
-      font-weight:900;
-      font-size:24px;
-      letter-spacing:-0.6px;
-      font-family:"Brush Script MT","Segoe Script","Apple Chancery","Snell Roundhand",cursive;
-      text-shadow: 0 2px 0 rgba(0,0,0,.10);
-    }
-    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
-    .nav a{
-      color:#fff;font-size:13px;font-weight:900;
-      padding:7px 10px;border-radius:999px;
-      background:rgba(255,255,255,.16)
-    }
-    .nav a:hover{background:rgba(255,255,255,.24)}
-
-    /* Layout */
-    .hero{
-      background:
-        radial-gradient(1100px 380px at 12% 10%, rgba(255,106,0,.18), transparent 60%),
-        radial-gradient(900px 320px at 90% 0%, rgba(255,138,61,.14), transparent 55%),
-        linear-gradient(180deg,#fff, #fff7f0 68%, rgba(255,255,255,0));
-      border-bottom:1px solid rgba(255,106,0,.10);
-      padding:22px 0 14px;
-    }
-    h1{
-      margin:0 0 10px;
-      font-size:30px; letter-spacing:-1px; line-height:1.25;
-    }
-    .sub{color:rgba(15,23,42,.72);font-weight:900;margin:0 0 14px}
-    .pillRow{display:flex;gap:10px;flex-wrap:wrap}
-    .pill{
-      font-size:12px;font-weight:1000;color:var(--temu);
-      background:var(--temuSoft);
-      border:1px solid rgba(255,106,0,.22);
-      padding:8px 12px;border-radius:999px;
-      box-shadow: 0 10px 18px rgba(255,106,0,.10);
-      cursor:pointer;
-      user-select:none;
-    }
-    .pill:hover{filter:brightness(0.98)}
-
-    .wrap{padding:18px 0 90px}
-    .grid{
-      display:grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap:16px;
-      align-items:start;
-    }
-    @media (max-width: 980px){
-      .grid{grid-template-columns: 1fr}
     }
 
-    .card{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius2);
-      box-shadow:var(--shadow);
-      padding:16px;
-    }
-
-    .sectionTitle{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin:0 0 10px;
-    }
-    .sectionTitle b{font-size:15px;letter-spacing:-0.2px}
-    .hint{font-size:12px;font-weight:900;color:rgba(15,23,42,.55)}
-
-    /* Category blocks */
-    .catGrid{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap:12px;
-      margin-top:8px;
-    }
-    .cat{
-      border:1px solid var(--line);
-      border-radius:18px;
-      overflow:hidden;
-      background:#fff;
-    }
-    .catHead{
-      padding:12px 12px;
-      background:linear-gradient(90deg, rgba(255,106,0,.08), rgba(255,138,61,.06));
-      border-bottom:1px solid rgba(15,23,42,.06);
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-    }
-    .catHead b{letter-spacing:-0.2px}
-    .catHead span{font-size:12px;font-weight:1000;color:rgba(15,23,42,.55)}
-    .list{padding:8px}
-    .item{
+    /* 헤더 */
+    header{
+      background:var(--orange);
+      padding:14px 20px;
       display:flex;
       align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      padding:10px 10px;
-      border-radius:14px;
-      border:1px solid transparent;
-      cursor:pointer;
     }
-    .item:hover{
-      background:#f8fafc;
-      border-color:rgba(15,23,42,.08);
-    }
-    .itemLeft{
-      display:flex;flex-direction:column;gap:3px;
-      min-width:0;
-    }
-    .itemLeft strong{
-      font-size:14px;letter-spacing:-0.2px;
-      white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
-    }
-    .itemLeft small{
-      font-size:12px;color:var(--muted);font-weight:900;
-    }
-    .tag{
-      font-size:11px;font-weight:1000;
-      color:rgba(15,23,42,.62);
-      background:#fff;
-      border:1px solid rgba(15,23,42,.12);
-      padding:6px 10px;border-radius:999px;
-      white-space:nowrap;
-      display:flex;gap:6px;align-items:center;
-    }
-
-    /* Right card */
-    .rightStack{display:flex;flex-direction:column;gap:12px}
-    .couponBox{
-      border:1px solid rgba(255,106,0,.20);
-      background: linear-gradient(180deg,#fff,#fff7f0);
-      border-radius:18px;
-      padding:12px;
-      box-shadow:var(--shadow2);
-    }
-    .couponBox .top{
-      display:flex;align-items:center;justify-content:space-between;gap:10px;
-      margin-bottom:10px;
-    }
-    .couponBox .top b{letter-spacing:-0.2px}
-    .mini{font-size:12px;font-weight:900;color:rgba(15,23,42,.58)}
-    .couponBtn{
-      border-radius:16px;
-      padding:12px 12px;
-      border:1px solid rgba(255,106,0,.22);
-      background: linear-gradient(180deg, #fff, #fff3ea);
-      box-shadow:
-        0 14px 26px rgba(15,23,42,.10),
-        0 10px 0 rgba(255,106,0,.22);
-      transform: translateY(-2px);
-      cursor:pointer;
-      user-select:none;
-      position:relative;
-      overflow:hidden;
-      margin-bottom:10px;
-    }
-    .couponBtn:active{
-      transform: translateY(8px);
-      box-shadow:
-        0 10px 20px rgba(15,23,42,.10),
-        0 2px 0 rgba(255,106,0,.28);
-    }
-    .couponRow{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
-    .couponL{display:flex;gap:10px;align-items:flex-start}
-    .couponIcon{
-      width:40px;height:40px;border-radius:14px;
-      background: linear-gradient(135deg,var(--temu),var(--temu2));
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;font-size:18px;
-      box-shadow: 0 14px 22px rgba(255,106,0,.22);
-      flex:0 0 auto;
-    }
-    .couponTxt strong{display:block;font-size:13px;letter-spacing:-0.2px}
-    .couponTxt small{display:block;color:var(--muted);font-size:11px;font-weight:900;margin-top:2px;line-height:1.45}
-    .couponR{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
-    .pill2{
-      font-size:11px;font-weight:1000;color:#fff;
-      background:rgba(255,106,0,.92);
-      padding:6px 9px;border-radius:999px;
-      box-shadow: 0 10px 16px rgba(255,106,0,.18);
-      white-space:nowrap;
-    }
-    .code{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size:12px;font-weight:1000;
-      background: var(--temuSoft);
-      border:1px solid rgba(255,106,0,.22);
-      padding:4px 9px;border-radius:999px;
-      color:#7c2d12;
-      white-space:nowrap;
-    }
-
-    /* Floating bottom-right coupon circle */
-    .couponBubble{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      width:62px;
-      height:62px;
-      border-radius:999px;
-      background: rgba(255,255,255,.72);
-      border: 1px solid rgba(15,23,42,.10);
-      box-shadow: 0 18px 42px rgba(15,23,42,.18);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display:flex;align-items:center;justify-content:center;
-      z-index:3000;
-      cursor:pointer;
-      user-select:none;
-    }
-    .couponBubble::before{
-      content:"";
-      position:absolute; inset:-10px;
-      border-radius:999px;
-      background: radial-gradient(circle, rgba(255,106,0,.22), transparent 60%);
-      z-index:-1;
-    }
-    .couponBubble span{
-      font-size:22px;
-      filter: drop-shadow(0 6px 12px rgba(255,106,0,.18));
-    }
-    .bubbleHint{
-      position:fixed;
-      right:92px;
-      bottom:28px;
-      background:#0f172a;
+    header a{
+      text-decoration:none;
       color:#fff;
-      font-size:12px;
-      font-weight:1000;
-      padding:8px 10px;
-      border-radius:999px;
-      box-shadow:0 18px 40px rgba(15,23,42,.22);
-      opacity:0;
-      transform:translateY(4px);
-      pointer-events:none;
-      transition:opacity .18s ease, transform .18s ease;
-      z-index:3001;
-      white-space:nowrap;
+      font-size:28px;
+      font-weight:800;
+      letter-spacing:2px;
+      font-family:'Brush Script MT','Comic Sans MS',cursive;
     }
-    .bubbleHint.show{opacity:1; transform:translateY(0)}
 
-    /* Modal (쿠폰 패널) */
-    .modalBg{
-      position:fixed; inset:0;
-      background: rgba(15,23,42,.45);
-      display:none;
-      align-items:flex-end;
-      justify-content:center;
-      z-index:3500;
-      padding:18px;
+    /* 메인 카드 */
+    .hero-wrap{
+      padding:30px 16px 10px;
     }
-    .modalBg.show{display:flex}
-    .modal{
-      width:min(520px, 100%);
+    .hero{
+      max-width:1100px;
+      margin:0 auto;
+      background:var(--soft);
+      border-radius:22px;
+      padding:28px;
+    }
+    .hero h1{
+      font-size:30px;
+      line-height:1.3;
+      margin:0 0 12px;
+    }
+    .hero p{
+      margin:0;
+      color:var(--sub);
+      font-size:15px;
+      line-height:1.6;
+    }
+
+    /* 쿠폰 버튼 */
+    .coupon-box{
+      margin-top:22px;
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+    }
+    .coupon{
+      background:#fff;
+      border:1px solid #ffd3b3;
+      border-radius:16px;
+      padding:12px 18px;
+      font-size:14px;
+      font-weight:700;
+      color:var(--orange);
+      box-shadow:0 6px 14px rgba(255,122,26,.15);
+      cursor:pointer;
+      transition:.2s;
+    }
+    .coupon:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 20px rgba(255,122,26,.25);
+    }
+
+    /* 본문 */
+    main{
+      max-width:1100px;
+      margin:24px auto;
+      padding:0 16px 120px;
       background:#fff;
       border-radius:22px;
-      overflow:hidden;
-      box-shadow:0 26px 60px rgba(15,23,42,.26);
-      border:1px solid rgba(255,106,0,.18);
     }
-    .modalHead{
-      display:flex;align-items:center;justify-content:space-between;
-      padding:12px 14px;
-      background:linear-gradient(90deg, rgba(255,106,0,.12), rgba(255,138,61,.10));
-      border-bottom:1px solid rgba(255,106,0,.16);
+    article{
+      padding:30px;
     }
-    .modalHead b{letter-spacing:-0.2px}
-    .closeBtn{
-      border:0;background:#fff;border:1px solid rgba(15,23,42,.12);
-      padding:8px 10px;border-radius:999px;
-      font-weight:1000; cursor:pointer;
+    article h2{
+      font-size:24px;
+      margin-top:0;
     }
-    .modalBody{padding:14px}
+    article p{
+      font-size:15px;
+      line-height:1.8;
+      color:#333;
+    }
 
-    /* Toast */
-    .toast{
+    /* 따라다니는 쿠폰 */
+    .floating-coupon{
       position:fixed;
-      left:50%;
-      bottom:90px;
-      transform:translateX(-50%);
-      background:#0f172a;
-      color:#fff;
-      padding:10px 12px;
-      border-radius:999px;
-      box-shadow:0 18px 40px rgba(15,23,42,.25);
-      font-size:13px;
-      font-weight:1000;
-      opacity:0;
-      pointer-events:none;
-      transition:opacity .18s ease, transform .18s ease;
-      z-index:9999;
-      white-space:nowrap;
+      right:20px;
+      bottom:20px;
+      width:72px;
+      height:72px;
+      background:rgba(255,255,255,.9);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      box-shadow:0 12px 30px rgba(0,0,0,.18);
+      font-size:30px;
+      cursor:pointer;
+      z-index:999;
     }
-    .toast.show{opacity:1; transform:translateX(-50%) translateY(-6px)}
+    .floating-coupon:hover{
+      transform:scale(1.05);
+    }
   </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="container">
-      <div class="inner">
-        <a class="brand" href="./" aria-label="TFY 홈으로">
-          <span class="dot"></span>
-          <span class="logoTFY">TFY</span>
-        </a>
-        <nav class="nav">
-          <a href="./">Home</a>
-          <a href="./posts/temu-coupon-2026.html">2026 무료쿠폰</a>
-          <a href="./posts/temu-customs-code-typo.html">통관번호 오타</a>
-          <a href="./posts/temu-order-stuck-real-reason.html">배송 안옴</a>
-        </nav>
-      </div>
-    </div>
+
+  <!-- 헤더 -->
+  <header>
+    <a href="./">TFY</a>
   </header>
 
-  <section class="hero">
-    <div class="container">
-      <h1>테무 혜택 + 문제해결, 기사형으로 빠르게 정리합니다</h1>
-      <p class="sub">
-        쿠폰/사은품/특별세일은 “되는 구조”가 있고, 배송·통관·환불·결제 문제는 “막히는 지점”이 있습니다.
-        이 사이트는 감으로 쓰지 않고, 흐름 기준으로 정리합니다.
+  <!-- 상단 소개 -->
+  <section class="hero-wrap">
+    <div class="hero">
+      <h1>테무 혜택 + 문제해결,<br>기사형으로 빠르게 정리합니다</h1>
+      <p>
+        테무 쿠폰·사은품은 ‘되는 구조’가 있고, 배송·통관·환불·결제 문제는
+        ‘막히는 지점’이 있습니다.<br>
+        이 사이트는 과장이 아닌, 실제 적용 기준으로 정리합니다.
       </p>
 
-      <div class="pillRow" id="quickJump">
-        <div class="pill" data-scroll="#sec-coupon">쿠폰·코드</div>
-        <div class="pill" data-scroll="#sec-gift">사은품 0원</div>
-        <div class="pill" data-scroll="#sec-ship">배송·통관</div>
-        <div class="pill" data-scroll="#sec-refund">환불·결제</div>
-        <div class="pill" data-scroll="#sec-popular">인기글</div>
+      <div class="coupon-box">
+        <div class="coupon">🎟 2026 무료쿠폰</div>
+        <div class="coupon">🎁 사은품 0원</div>
+        <div class="coupon">🔥 특별 세일</div>
+        <div class="coupon">🚚 배송·통관</div>
+        <div class="coupon">💳 환불·결제</div>
       </div>
     </div>
   </section>
 
-  <main class="container wrap">
-    <div class="grid">
-
-      <!-- LEFT: 카테고리 목록 -->
-      <section class="card">
-        <div class="sectionTitle">
-          <b>카테고리별 기사 목록</b>
-          <span class="hint">클릭하면 글로 이동합니다</span>
-        </div>
-
-        <div class="catGrid">
-
-          <div class="cat" id="sec-coupon">
-            <div class="catHead">
-              <b>쿠폰·코드</b>
-              <span>혜택 루트</span>
-            </div>
-            <div class="list">
-              <!-- ✅ 링크는 data-href로 통일: JS가 확실히 이동 처리 -->
-              <div class="item" data-href="./posts/temu-coupon-2026.html">
-                <div class="itemLeft">
-                  <strong>테무 2026 무료쿠폰 발급 및 사용방법 정리!</strong>
-                  <small>발급 순서 · 코드 입력 위치 · 적용 팁</small>
-                </div>
-                <div class="tag">현재글</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cat" id="sec-ship">
-            <div class="catHead">
-              <b>배송·통관</b>
-              <span>막히는 지점</span>
-            </div>
-            <div class="list">
-              <div class="item" data-href="./posts/temu-order-stuck-real-reason.html">
-                <div class="itemLeft">
-                  <strong>“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유</strong>
-                  <small>대기 vs 조치 기준</small>
-                </div>
-                <div class="tag">📈 상승</div>
-              </div>
-
-              <div class="item" data-href="./posts/temu-customs-code-typo.html">
-                <div class="itemLeft">
-                  <strong>테무 통관번호 한 글자 때문에 배송이 멈춘 사례</strong>
-                  <small>오타/불일치 체크</small>
-                </div>
-                <div class="tag">필독</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cat" id="sec-refund">
-            <div class="catHead">
-              <b>환불·결제</b>
-              <span>실수 패턴</span>
-            </div>
-            <div class="list">
-              <div class="item" data-href="./posts/temu-refund-common-mistake.html">
-                <div class="itemLeft">
-                  <strong>테무 환불이 안 된다는 사람들의 공통 실수</strong>
-                  <small>환불 흐름 · 복구 조건</small>
-                </div>
-                <div class="tag">준비중</div>
-              </div>
-
-              <div class="item" data-href="./posts/temu-payment-error-stage.html">
-                <div class="itemLeft">
-                  <strong>테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다</strong>
-                  <small>오류 지점별 체크</small>
-                </div>
-                <div class="tag">준비중</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="cat" id="sec-popular">
-            <div class="catHead">
-              <b>인기글</b>
-              <span>많이 보는 글</span>
-            </div>
-            <div class="list">
-              <div class="item" data-href="./posts/temu-order-stuck-real-reason.html">
-                <div class="itemLeft">
-                  <strong>배송이 안 올 때 “기다릴지/조치할지” 기준</strong>
-                  <small>실제로 가장 많이 보는 주제</small>
-                </div>
-                <div class="tag">📈</div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </section>
-
-      <!-- RIGHT: 메인 쿠폰 박스 -->
-      <aside class="rightStack">
-        <div class="couponBox">
-          <div class="top">
-            <b>🎁 쿠폰/이벤트 빠른 발급</b>
-            <span class="mini">클릭하면 코드 복사 + 이동</span>
-          </div>
-
-          <div class="couponBtn" data-code="aak74594" data-url="https://temu.to/m/uotsq20netz" data-name="150,000원 쿠폰 묶음">
-            <div class="couponRow">
-              <div class="couponL">
-                <div class="couponIcon">🎟️</div>
-                <div class="couponTxt">
-                  <strong>150,000원 쿠폰 묶음</strong>
-                  <small>신규/기본 루트</small>
-                </div>
-              </div>
-              <div class="couponR">
-                <div class="pill2">발급</div>
-                <div class="code">aak74594</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="couponBtn" data-code="frq027981" data-url="https://temu.to/m/u3ia9bomcaw" data-name="사은품 0원 이벤트">
-            <div class="couponRow">
-              <div class="couponL">
-                <div class="couponIcon">🎁</div>
-                <div class="couponTxt">
-                  <strong>사은품 0원 이벤트</strong>
-                  <small>노출 뜰 때 빠르게</small>
-                </div>
-              </div>
-              <div class="couponR">
-                <div class="pill2">참여</div>
-                <div class="code">frq027981</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="couponBtn" data-code="acr804202" data-url="https://temu.to/m/u3ckk6z4eku" data-name="특별 세일 루트">
-            <div class="couponRow">
-              <div class="couponL">
-                <div class="couponIcon">⚡</div>
-                <div class="couponTxt">
-                  <strong>특별 세일 루트</strong>
-                  <small>대안 루트</small>
-                </div>
-              </div>
-              <div class="couponR">
-                <div class="pill2">적용</div>
-                <div class="code">acr804202</div>
-              </div>
-            </div>
-          </div>
-
-          <p class="mini" style="margin:0">
-            아래 글도 보시겠어요? 😊💕<br/>
-            쿠폰 발급 후에는 “막히는 지점” 글을 같이 보면 시행착오가 줄어듭니다.
-          </p>
-        </div>
-
-        <div class="card">
-          <div class="sectionTitle">
-            <b>오늘의 추천 흐름</b>
-            <span class="hint">처음이면 이 순서</span>
-          </div>
-          <ol style="margin:0; padding-left:18px; font-weight:900; color:rgba(15,23,42,.78)">
-            <li>2026 무료쿠폰 글 → 코드 입력 위치 확인</li>
-            <li>배송/통관 글 → 대기/조치 기준 잡기</li>
-            <li>환불/결제 글 → 실수 패턴 방지</li>
-          </ol>
-        </div>
-      </aside>
-
-    </div>
+  <!-- 본문 -->
+  <main>
+    <article>
+      <h2>테무 2026 무료쿠폰, 실제로 가능한가?</h2>
+      <p>
+        테무 무료쿠폰은 모든 사용자에게 무조건 제공되는 구조가 아닙니다.
+        신규 계정, 접속 경로, 쿠폰 입력 순서가 맞아야 정상적으로 적용됩니다.
+      </p>
+      <p>
+        많은 사람들이 “안 된다”고 말하는 이유는 대부분
+        쿠폰 입력 위치를 잘못 찾거나, 이미 사용 이력이 있는 계정으로
+        시도하기 때문입니다.
+      </p>
+      <p>
+        이 사이트에서는 실제 적용되는 기준만 정리하며,
+        과장된 표현이나 무조건 된다는 식의 안내는 하지 않습니다.
+      </p>
+      <p>
+        아래 글들을 통해 발급 순서, 실패 원인, 해결 방법을
+        하나씩 확인해보세요.
+      </p>
+      <p>
+        도움이 되셨다면 즐겨찾기 해두셔도 좋습니다.
+        이후 업데이트도 계속 이어집니다 🙂
+      </p>
+    </article>
   </main>
 
-  <!-- Bottom-right floating coupon circle -->
-  <div class="couponBubble" id="couponBubble" aria-label="쿠폰 패널 열기">
-    <span>🎟️</span>
-  </div>
-  <div class="bubbleHint" id="bubbleHint">쿠폰 패널 열기</div>
-
-  <!-- Coupon Modal -->
-  <div class="modalBg" id="modalBg" aria-hidden="true">
-    <div class="modal" role="dialog" aria-modal="true" aria-label="쿠폰 패널">
-      <div class="modalHead">
-        <b>🎁 쿠폰/이벤트 발급</b>
-        <button class="closeBtn" id="closeModal">닫기</button>
-      </div>
-      <div class="modalBody">
-        <div class="couponBtn" data-code="aak74594" data-url="https://temu.to/m/uotsq20netz" data-name="150,000원 쿠폰 묶음">
-          <div class="couponRow">
-            <div class="couponL">
-              <div class="couponIcon">🎟️</div>
-              <div class="couponTxt">
-                <strong>150,000원 쿠폰 묶음</strong>
-                <small>가장 기본 루트</small>
-              </div>
-            </div>
-            <div class="couponR">
-              <div class="pill2">발급</div>
-              <div class="code">aak74594</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="couponBtn" data-code="frq027981" data-url="https://temu.to/m/u3ia9bomcaw" data-name="사은품 0원 이벤트">
-          <div class="couponRow">
-            <div class="couponL">
-              <div class="couponIcon">🎁</div>
-              <div class="couponTxt">
-                <strong>사은품 0원 이벤트</strong>
-                <small>노출 뜰 때 빠르게</small>
-              </div>
-            </div>
-            <div class="couponR">
-              <div class="pill2">참여</div>
-              <div class="code">frq027981</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="couponBtn" data-code="acr804202" data-url="https://temu.to/m/u3ckk6z4eku" data-name="특별 세일 루트">
-          <div class="couponRow">
-            <div class="couponL">
-              <div class="couponIcon">⚡</div>
-              <div class="couponTxt">
-                <strong>특별 세일 루트</strong>
-                <small>대안 루트</small>
-              </div>
-            </div>
-            <div class="couponR">
-              <div class="pill2">적용</div>
-              <div class="code">acr804202</div>
-            </div>
-          </div>
-        </div>
-
-        <p class="mini" style="margin:0">
-          버튼을 누르면 <b>코드가 복사</b>되고, 새 탭에서 링크가 열립니다.
-        </p>
-      </div>
-    </div>
+  <!-- 따라다니는 쿠폰 -->
+  <div class="floating-coupon" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    🎟
   </div>
 
-  <div class="toast" id="toast">코드가 복사되었습니다!</div>
-
-  <script>
-    // ==============
-    // Fix: "카테고리 클릭이 글로 안 넘어감" 문제 해결
-    // -> item에 data-href 붙여두고, JS에서 강제 이동 처리
-    // ==============
-    document.querySelectorAll('.item[data-href]').forEach(el=>{
-      el.addEventListener('click', ()=>{
-        const href = el.getAttribute('data-href');
-        if(!href) return;
-        window.location.href = href;
-      });
-    });
-
-    // Quick scroll pills
-    document.querySelectorAll('.pill[data-scroll]').forEach(el=>{
-      el.addEventListener('click', ()=>{
-        const sel = el.getAttribute('data-scroll');
-        const target = document.querySelector(sel);
-        if(target) target.scrollIntoView({behavior:'smooth', block:'start'});
-      });
-    });
-
-    // Toast + coupon click
-    const toast = document.getElementById('toast');
-    let toastTimer = null;
-
-    function showToast(msg){
-      toast.textContent = msg;
-      toast.classList.add('show');
-      clearTimeout(toastTimer);
-      toastTimer = setTimeout(()=>toast.classList.remove('show'), 1350);
-    }
-
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        return true;
-      }catch(e){
-        const ta = document.createElement('textarea');
-        ta.value = text;
-        document.body.appendChild(ta);
-        ta.select();
-        const ok = document.execCommand('copy');
-        document.body.removeChild(ta);
-        return ok;
-      }
-    }
-
-    async function issueCoupon(code, url, name){
-      const ok = await copyText(code);
-      showToast(ok ? `${name} 코드 복사 완료! 이동합니다.` : `복사 실패: 코드(${code})를 직접 복사해주세요.`);
-      setTimeout(()=>window.open(url, '_blank', 'noopener'), 260);
-    }
-
-    function bindCouponButtons(root=document){
-      root.querySelectorAll('.couponBtn[data-code][data-url]').forEach(el=>{
-        el.addEventListener('click', ()=>{
-          const code = el.getAttribute('data-code');
-          const url = el.getAttribute('data-url');
-          const name = el.getAttribute('data-name') || '쿠폰';
-          issueCoupon(code, url, name);
-        });
-      });
-    }
-    bindCouponButtons();
-
-    // Floating coupon bubble + modal
-    const bubble = document.getElementById('couponBubble');
-    const hint = document.getElementById('bubbleHint');
-    const modalBg = document.getElementById('modalBg');
-    const closeModal = document.getElementById('closeModal');
-
-    let hintTimer=null;
-    bubble.addEventListener('mouseenter', ()=>{
-      hint.classList.add('show');
-      clearTimeout(hintTimer);
-    });
-    bubble.addEventListener('mouseleave', ()=>{
-      hintTimer=setTimeout(()=>hint.classList.remove('show'), 120);
-    });
-
-    bubble.addEventListener('click', ()=>{
-      modalBg.classList.add('show');
-      modalBg.setAttribute('aria-hidden','false');
-    });
-
-    closeModal.addEventListener('click', ()=>{
-      modalBg.classList.remove('show');
-      modalBg.setAttribute('aria-hidden','true');
-    });
-
-    modalBg.addEventListener('click', (e)=>{
-      if(e.target === modalBg){
-        modalBg.classList.remove('show');
-        modalBg.setAttribute('aria-hidden','true');
-      }
-    });
-  </script>
 </body>
 </html>
