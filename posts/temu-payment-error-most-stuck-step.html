@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다</title>
+  <meta name="description" content="테무 결제 오류가 반복되는 원인을 '가장 많이 막히는 단계' 기준으로 정리했습니다. 카드 결제/간편결제/승인 실패/보안 차단/계정 제한까지 흐름으로 점검하세요." />
+  <meta name="robots" content="index,follow" />
+  <style>
+    /* ✅ 고정 폰트: Apple SD Gothic Neo (없으면 시스템 폰트로 자연스러운 폴백) */
+    :root{
+      --bg:#f6f7fb;
+      --paper:#ffffff;
+      --ink:#121417;
+      --muted:#5b6470;
+      --line:rgba(18,20,23,.08);
+
+      --temu:#ff7a1a;
+      --temu2:#ff9b3d;
+
+      /* 주황과 어울리되 주황이 아닌 포인트 */
+      --mint:#20c997;
+      --sky:#4dabf7;
+      --violet:#845ef7;
+
+      --radius:22px;
+      --shadow: 0 16px 40px rgba(16,24,40,.12);
+      --shadow2: 0 8px 18px rgba(16,24,40,.10);
+      --shadow3: 0 2px 10px rgba(16,24,40,.08);
+
+      --max: 1160px;
+      --sideW: 360px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: "Apple SD Gothic Neo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--ink);
+      background:
+        radial-gradient(1200px 600px at 30% -10%, rgba(255,122,26,.18), transparent 60%),
+        radial-gradient(900px 500px at 90% 10%, rgba(77,171,247,.16), transparent 55%),
+        var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:22px 18px 70px}
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      background: linear-gradient(90deg, var(--temu), var(--temu2));
+      border-bottom:1px solid rgba(255,255,255,.18);
+      box-shadow: 0 10px 24px rgba(255,122,26,.18);
+    }
+    .topbar-inner{
+      max-width:var(--max); margin:0 auto;
+      padding:14px 18px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
+    }
+
+    /* ✅ TFY 로고: 커서 올리면 간지럼(좌우 흔들) / 클릭하면 홈 */
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      color:#fff;
+      user-select:none;
+    }
+    .tfi{
+      width:34px; height:34px; border-radius:12px;
+      background: rgba(255,255,255,.18);
+      display:grid; place-items:center;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.18);
+    }
+    .logo{
+      font-weight:900;
+      letter-spacing:.5px;
+      font-size:22px;
+      line-height:1;
+      font-family: "Apple SD Gothic Neo", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      text-shadow: 0 6px 16px rgba(0,0,0,.18);
+      display:inline-block;
+      transform-origin:center;
+    }
+    .brand:hover .logo{
+      animation: tickle .55s ease-in-out both;
+    }
+    @keyframes tickle{
+      0%{transform:translateX(0)}
+      20%{transform:translateX(-4px)}
+      40%{transform:translateX(4px)}
+      60%{transform:translateX(-3px)}
+      80%{transform:translateX(3px)}
+      100%{transform:translateX(0)}
+    }
+    .brand a{display:flex; align-items:center; gap:10px}
+
+    .top-actions{
+      display:flex; align-items:center; gap:10px;
+      color:#fff;
+      opacity:.95;
+      font-size:13px;
+      white-space:nowrap;
+    }
+    .pill{
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.20);
+      padding:8px 10px;
+      border-radius:999px;
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.02);
+    }
+
+    /* Layout */
+    .layout{
+      display:grid;
+      grid-template-columns: 1fr var(--sideW);
+      gap:22px;
+      align-items:start;
+      margin-top:18px;
+    }
+
+    /* Article */
+    .card{
+      background:rgba(255,255,255,.9);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(6px);
+    }
+    .article-head{
+      padding:26px 26px 18px;
+      border-bottom:1px solid var(--line);
+      background:
+        radial-gradient(900px 280px at 30% 0%, rgba(255,122,26,.18), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.82));
+    }
+    .kicker{
+      display:inline-flex; gap:8px; align-items:center;
+      font-weight:800;
+      font-size:12px;
+      color: rgba(18,20,23,.75);
+      background: rgba(255,122,26,.10);
+      border:1px solid rgba(255,122,26,.18);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:28px;
+      letter-spacing:-.6px;
+      line-height:1.25;
+    }
+    .sub{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14.5px;
+    }
+
+    .article-body{
+      padding:22px 26px 26px;
+      line-height:1.85;
+      font-size:15.5px;
+      color:#1b1f24;
+    }
+    .article-body p{margin:0 0 14px}
+    .article-body h2{
+      margin:26px 0 10px;
+      font-size:18px;
+      letter-spacing:-.3px;
+    }
+    .article-body h3{
+      margin:18px 0 8px;
+      font-size:16px;
+      letter-spacing:-.2px;
+    }
+    .note{
+      margin:14px 0 18px;
+      padding:14px 14px;
+      border-radius:16px;
+      background: rgba(77,171,247,.10);
+      border:1px solid rgba(77,171,247,.20);
+      color: rgba(18,20,23,.85);
+    }
+
+    /* TOC */
+    .toc{
+      margin:16px 0 6px;
+      padding:14px 14px;
+      border-radius:18px;
+      border:1px solid rgba(18,20,23,.08);
+      background: rgba(255,255,255,.82);
+      box-shadow: var(--shadow3);
+    }
+    .toc-title{
+      display:flex; align-items:center; justify-content:space-between;
+      font-weight:900; font-size:13px;
+      color: rgba(18,20,23,.78);
+      margin-bottom:10px;
+    }
+    .toc a{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(18,20,23,.06);
+      background: rgba(246,247,251,.7);
+      margin-bottom:8px;
+    }
+    .toc a:hover{background: rgba(255,122,26,.08); border-color: rgba(255,122,26,.18)}
+    .tag{
+      font-size:12px;
+      color: rgba(18,20,23,.7);
+      background: rgba(255,255,255,.8);
+      border:1px solid rgba(18,20,23,.08);
+      padding:5px 8px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    /* Right sidebar wrapper (tracking inertia) */
+    .side-ghost{
+      position:relative;
+      min-height: 40px;
+    }
+    .side-follow{
+      position:relative;
+      will-change: transform;
+    }
+
+    /* Premium coupon panel (like your image but cleaner) */
+    .coupon-panel{
+      border-radius: 22px;
+      overflow:hidden;
+      border:1px solid rgba(255,122,26,.18);
+      background:
+        radial-gradient(900px 360px at 40% -10%, rgba(255,122,26,.20), transparent 62%),
+        linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.84));
+      box-shadow: var(--shadow);
+    }
+    .cp-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 16px;
+      border-bottom:1px solid rgba(18,20,23,.08);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(6px);
+    }
+    .cp-head .left{
+      display:flex; flex-direction:column; gap:4px;
+    }
+    .cp-title{
+      font-weight:900; font-size:13px;
+      color: rgba(18,20,23,.78);
+      display:flex; align-items:center; gap:8px;
+    }
+    .cp-sub{
+      font-size:12px;
+      color: rgba(18,20,23,.62);
+    }
+    .cp-chip{
+      font-size:12px;
+      font-weight:800;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,26,.25);
+      background: rgba(255,122,26,.12);
+      color: rgba(18,20,23,.78);
+      white-space:nowrap;
+    }
+
+    .cp-list{padding:14px 14px 12px; display:flex; flex-direction:column; gap:12px;}
+    .cp-item{
+      position:relative;
+      border-radius:18px;
+      padding:14px 14px;
+      background: rgba(255,255,255,.88);
+      border:1px solid rgba(18,20,23,.08);
+      box-shadow:
+        0 14px 24px rgba(255,122,26,.10),
+        0 2px 8px rgba(16,24,40,.08);
+      overflow:hidden;
+    }
+    .cp-item:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(220px 120px at 0% 0%, rgba(255,122,26,.18), transparent 55%);
+      pointer-events:none;
+    }
+    .cp-row{
+      position:relative;
+      display:flex; gap:12px; align-items:flex-start; justify-content:space-between;
+    }
+    .cp-badge{
+      width:42px; height:42px; border-radius:16px;
+      display:grid; place-items:center;
+      color:#fff; font-weight:900;
+      box-shadow: 0 10px 22px rgba(16,24,40,.18);
+      flex:0 0 auto;
+    }
+    .bg-mint{background: linear-gradient(135deg, var(--mint), #12b886);}
+    .bg-sky{background: linear-gradient(135deg, var(--sky), #339af0);}
+    .bg-violet{background: linear-gradient(135deg, var(--violet), #7048e8);}
+
+    .cp-main{min-width:0}
+    .cp-name{
+      font-weight:900;
+      letter-spacing:-.2px;
+      margin:0 0 6px;
+      font-size:14px;
+    }
+    .cp-desc{
+      margin:0;
+      font-size:12.5px;
+      color: rgba(18,20,23,.66);
+      line-height:1.5;
+    }
+
+    .cp-actions{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      align-items:flex-end;
+      flex:0 0 auto;
+    }
+    .btn{
+      border:0;
+      cursor:pointer;
+      font-weight:900;
+      font-size:12px;
+      padding:10px 12px;
+      border-radius:999px;
+      background: linear-gradient(90deg, var(--temu), var(--temu2));
+      color:#fff;
+      box-shadow: 0 12px 24px rgba(255,122,26,.25);
+    }
+    .btn:active{transform: translateY(1px)}
+    .code-pill{
+      cursor:pointer;
+      font-weight:900;
+      font-size:12px;
+      padding:9px 10px;
+      border-radius:999px;
+      background: rgba(246,247,251,.85);
+      border:1px solid rgba(18,20,23,.10);
+      color: rgba(18,20,23,.82);
+      display:inline-flex; gap:8px; align-items:center;
+      white-space:nowrap;
+    }
+    .code-pill:hover{border-color: rgba(255,122,26,.25); background: rgba(255,122,26,.08)}
+    .toast{
+      position:fixed; left:50%; bottom:18px;
+      transform: translateX(-50%) translateY(20px);
+      opacity:0;
+      background: rgba(18,20,23,.90);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      transition: .25s ease;
+      z-index:2000;
+      pointer-events:none;
+    }
+    .toast.show{opacity:1; transform: translateX(-50%) translateY(0)}
+
+    .cp-cta{
+      padding: 12px 14px 16px;
+      border-top:1px solid rgba(18,20,23,.06);
+    }
+    .big-cta{
+      display:flex; justify-content:center; align-items:center;
+      padding:14px 14px;
+      border-radius:18px;
+      font-weight:900;
+      color:#fff;
+      background: linear-gradient(90deg, var(--temu), var(--temu2));
+      box-shadow: 0 18px 34px rgba(255,122,26,.28);
+      letter-spacing:-.2px;
+    }
+    .cp-foot{
+      margin-top:10px;
+      font-size:12.5px;
+      line-height:1.65;
+      color: rgba(18,20,23,.70);
+    }
+
+    /* Popular/ Coupon list (right sidebar below panel) */
+    .side-stack{display:flex; flex-direction:column; gap:14px; margin-top:14px;}
+    .mini{
+      background: rgba(255,255,255,.88);
+      border:1px solid rgba(18,20,23,.08);
+      border-radius: 20px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    .mini-h{
+      padding:12px 14px;
+      border-bottom:1px solid rgba(18,20,23,.07);
+      display:flex; justify-content:space-between; align-items:center;
+      background: rgba(255,255,255,.75);
+    }
+    .mini-h strong{font-size:13px; letter-spacing:-.2px}
+    .mini-b{padding:10px 10px 12px; display:flex; flex-direction:column; gap:8px}
+    .mini-a{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:10px;
+      padding:10px 10px;
+      border-radius:14px;
+      border:1px solid rgba(18,20,23,.06);
+      background: rgba(246,247,251,.75);
+    }
+    .mini-a:hover{background: rgba(255,122,26,.08); border-color: rgba(255,122,26,.18)}
+    .mini-left{min-width:0}
+    .mini-title{font-weight:900; font-size:13px; margin:0 0 2px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .mini-sub{margin:0; font-size:12px; color: rgba(18,20,23,.62); white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+    .mini-r{display:flex; gap:8px; align-items:center; flex:0 0 auto;}
+    .badge{
+      font-size:12px; font-weight:900;
+      padding:6px 8px; border-radius:999px;
+      border:1px solid rgba(18,20,23,.10);
+      background: rgba(255,255,255,.78);
+      color: rgba(18,20,23,.74);
+      white-space:nowrap;
+    }
+    .up{border-color: rgba(255,122,26,.25); background: rgba(255,122,26,.10);}
+
+    /* Bottom-right floating coupon button (transparent white circle) */
+    .float-coupon{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      width:54px; height:54px;
+      border-radius:999px;
+      background: rgba(255,255,255,.75);
+      border:1px solid rgba(18,20,23,.10);
+      box-shadow: 0 18px 36px rgba(16,24,40,.16);
+      display:grid; place-items:center;
+      z-index:1200;
+      cursor:pointer;
+      backdrop-filter: blur(8px);
+    }
+    .float-coupon:hover{border-color: rgba(255,122,26,.25)}
+    .float-coupon span{font-size:20px}
+
+    /* Responsive */
+    @media (max-width: 1020px){
+      :root{--sideW: 330px}
+      .layout{grid-template-columns:1fr}
+      .side-ghost{display:none}
+      .float-coupon{right:14px; bottom:14px}
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand" title="TFY">
+        <a href="../index.html" aria-label="홈으로">
+          <div class="tfi">🟠</div>
+          <div class="logo">TFY</div>
+        </a>
+      </div>
+      <div class="top-actions">
+        <div class="pill">Temu 혜택 · 문제해결 기사</div>
+        <div class="pill">최신 업데이트 반영</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="layout">
+      <!-- LEFT: ARTICLE -->
+      <main class="card">
+        <header class="article-head">
+          <div class="kicker">🧾 결제 · 오류 분석</div>
+          <h1>테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다</h1>
+          <p class="sub">
+            테무 결제 문제는 “카드가 안 되네?” 한 문장으로 끝나는 일이 아닙니다.
+            실제로는 <b>가장 많이 막히는 단계</b>가 따로 있고, 그 단계만 정확히 건드리면 대부분은 빠르게 풀립니다.
+            이 글은 원인과 해결을 <b>흐름 기준</b>으로 정리합니다.
+          </p>
+
+          <nav class="toc" aria-label="목차">
+            <div class="toc-title">
+              <span>Table of Contents</span>
+              <span class="tag">빠른 점검</span>
+            </div>
+            <a href="#intro"><span>테무 소개 + 결제 기본 구조</span><span class="tag">필수</span></a>
+            <a href="#step"><span>대부분 막히는 ‘그 단계’</span><span class="tag">핵심</span></a>
+            <a href="#case"><span>오류 유형별 증상 → 조치</span><span class="tag">정리</span></a>
+            <a href="#check"><span>10분 점검 체크리스트</span><span class="tag">실전</span></a>
+            <a href="#finish"><span>마무리 + 다음 글</span><span class="tag">끝</span></a>
+          </nav>
+        </header>
+
+        <article class="article-body">
+          <!-- ✅ 글 도입부에 Temu 소개 + 필수 기본 정보 섹션(고정) -->
+          <section id="intro">
+            <h2>테무 소개 + 결제 기본 구조</h2>
+            <p>
+              테무(Temu)는 글로벌 쇼핑 플랫폼으로, 국내 사용자 입장에서는 “앱에서 결제만 하면 끝”처럼 보이지만,
+              실제 결제는 <b>결제수단(카드/간편결제) → 승인 요청 → 보안·리스크 검사 → 결제 확정</b> 순서로 처리됩니다.
+              이 과정 중 어느 한 단계라도 조건이 맞지 않으면 결제 오류가 발생합니다.
+            </p>
+            <div class="note">
+              <b>기본 포인트</b><br/>
+              1) 결제 오류는 “카드 문제”만이 아니라 <b>승인 단계/보안 단계</b>에서 많이 멈춥니다.<br/>
+              2) 동일 카드라도 <b>앱 내부 상태(계정·주소·통관정보·쿠폰 적용 상태)</b>에 따라 결과가 달라질 수 있습니다.<br/>
+              3) 해결은 “무작정 재시도”가 아니라 <b>막히는 지점 분리</b>가 빠릅니다.
+            </div>
+          </section>
+
+          <section id="step">
+            <h2>대부분 막히는 ‘그 단계’는 어디일까?</h2>
+            <p>
+              결제 오류가 가장 많이 몰리는 구간은 보통 <b>승인 직전(최종 결제 확정 버튼을 누른 뒤)</b>입니다.
+              사용자는 “로딩만 돌다가 실패”로 느끼지만, 내부적으로는 승인 요청이 올라간 뒤
+              <b>리스크 검사(보안/정책/이상 결제 탐지)</b>에서 차단되거나,
+              <b>쿠폰·크레딧 적용 값</b> 때문에 결제 금액 계산이 흔들릴 때 에러가 납니다.
+            </p>
+            <p>
+              그래서 해결 접근은 간단합니다.
+              <b>결제수단이 문제인지</b> / <b>앱 계산(쿠폰·크레딧)이 문제인지</b> / <b>보안·정책 차단인지</b>
+              이 세 갈래로 먼저 나눠야 합니다.
+              이 글은 그 흐름대로 바로 정리합니다.
+            </p>
+          </section>
+
+          <section id="case">
+            <h2>오류 유형별 증상 → 조치(가장 많이 나오는 패턴)</h2>
+
+            <h3>1) “결제 실패/승인 실패”가 즉시 뜨는 경우</h3>
+            <p>
+              버튼을 누르자마자 실패가 뜬다면, 결제수단 또는 결제수단 인증(3D 보안, 간편결제 인증)이 원인일 확률이 높습니다.
+              이때는 “재시도”보다 아래 순서가 효율적입니다.
+            </p>
+            <p>
+              먼저 <b>다른 결제수단으로 1회만 테스트</b>하세요.
+              카드 A가 안 되는데 카드 B가 된다면, 앱 문제가 아니라 카드/승인 정책 문제로 범위가 좁혀집니다.
+              반대로 카드 B도 동일하게 실패한다면, 앱 내부 상태(쿠폰·주소·계정) 쪽을 봐야 합니다.
+            </p>
+
+            <h3>2) 로딩이 길고 “잠시 후 다시 시도”가 뜨는 경우</h3>
+            <p>
+              이 패턴이 바로 “대부분 막히는 단계”입니다.
+              승인 요청은 올라갔는데 <b>리스크 검사</b>에서 확정이 보류되거나 차단되는 경우가 많습니다.
+              특히 다음 조건이 겹치면 확률이 올라갑니다.
+            </p>
+            <p>
+              - 신규 계정인데 결제 금액이 갑자기 크거나, 장바구니가 너무 많은 경우<br/>
+              - 주소/수취인/통관정보가 자주 바뀌거나, 공란이 있는 경우<br/>
+              - 쿠폰/크레딧이 여러 개 겹쳐 최종 금액이 급격히 낮아지는 경우
+            </p>
+            <p>
+              해결은 “정리”입니다. 장바구니를 1개 품목으로 줄여 결제 테스트를 하고,
+              쿠폰/크레딧은 <b>한 번에 다 넣지 말고</b> 1개만 적용해 결제 흐름을 확인하세요.
+              그 다음 문제가 없으면, 할인 요소를 하나씩 추가하면서 어디서 깨지는지 체크하면 됩니다.
+            </p>
+
+            <h3>3) 특정 상품만 결제가 안 되는 경우</h3>
+            <p>
+              같은 카드, 같은 계정인데 특정 상품만 안 된다면 결제수단이 아니라
+              <b>상품/판매자/배송 조건</b>이 원인일 수 있습니다.
+              예를 들어 배송 옵션이 바뀌거나, 재고/옵션이 갱신되는 타이밍에 결제 단계에서 충돌이 생깁니다.
+            </p>
+            <p>
+              이때는 해당 상품을 잠시 빼고 결제 성공 여부를 확인한 뒤,
+              상품 페이지를 새로고침하고 옵션(색상/규격)을 다시 선택해 재시도하는 방식이 깔끔합니다.
+            </p>
+
+            <h3>4) 결제는 된 것 같은데 주문이 “안 보이는” 경우</h3>
+            <p>
+              결제 직후 앱이 늦게 갱신되면 주문이 잠깐 안 보일 수 있습니다.
+              다만 “결제 완료 알림”이 뜬 뒤에도 주문 내역이 비어 있다면,
+              결제가 확정된 것이 아니라 <b>승인 시도만 발생</b>했을 가능성이 있습니다.
+            </p>
+            <p>
+              이 구간은 무리하게 반복 결제를 하면 중복 승인 시도가 생길 수 있으니,
+              결제 수단 앱/문자에서 승인 기록을 먼저 확인한 뒤 조치하는 것이 안전합니다.
+            </p>
+
+            <h3>5) 쿠폰 적용 순간부터 오류가 늘어나는 경우</h3>
+            <p>
+              많은 분들이 여기서 시간을 씁니다.
+              쿠폰/크레딧은 혜택이지만, 적용 조건이 맞지 않으면 결제 단계에서 실패로 이어질 수 있습니다.
+              그래서 “조건 확인 → 적용 순서”를 분리하는 게 핵심입니다.
+            </p>
+            <p>
+              예: 최소 결제금액, 카테고리 제한, 신규 전용, 기간 제한 등.
+              조건이 맞지 않으면 결제 버튼에서 한 번에 깨지는 대신, 승인 단계에서 오류가 나기도 합니다.
+            </p>
+          </section>
+
+          <section id="check">
+            <h2>10분 점검 체크리스트(이 순서대로 하면 빠릅니다)</h2>
+            <p>
+              아래는 “막히는 지점”을 가장 빨리 분리하는 체크리스트입니다.
+              그냥 읽는 용도가 아니라, <b>실제로 1~10번 순서대로</b> 해보면 범위가 좁혀집니다.
+            </p>
+
+            <p><b>1)</b> 장바구니를 1개 상품으로 줄여 결제 테스트</p>
+            <p><b>2)</b> 쿠폰/크레딧 적용 없이 결제 테스트</p>
+            <p><b>3)</b> 결제수단을 1회만 변경해 비교(카드A → 카드B)</p>
+            <p><b>4)</b> 주소/수취인/연락처 공란 없는지 확인</p>
+            <p><b>5)</b> 통관정보가 필요한 상품이라면 정보가 최신인지 확인</p>
+            <p><b>6)</b> 동일 실패가 반복되면 앱 재로그인 후 1회만 재시도</p>
+            <p><b>7)</b> 특정 상품만 실패면 옵션 재선택/상품 교체 테스트</p>
+            <p><b>8)</b> 결제 완료 후 주문이 안 보이면 승인 기록 먼저 확인</p>
+            <p><b>9)</b> 쿠폰은 1개씩 추가 적용하며 “깨지는 지점” 찾기</p>
+            <p><b>10)</b> 마지막으로 다시 전체 적용(쿠폰+크레딧+무료배송) 조합 테스트</p>
+
+            <div class="note">
+              체크리스트는 “될 때까지 누르는 방식”이 아니라,
+              <b>어느 단계에서 깨지는지 증거를 모으는 방식</b>입니다.
+              이게 쌓이면 다음 조치(수단 변경/조건 수정/상품 교체)가 정확해집니다.
+            </div>
+          </section>
+
+          <section id="finish">
+            <h2>마무리: 결제 오류는 ‘원인 분리’가 답입니다</h2>
+            <p>
+              테무 결제 오류는 당황하기 쉬운데, 막히는 지점만 나눠서 보면 생각보다 빨리 풀립니다.
+              특히 “로딩이 길다가 실패” 패턴은 대개 승인 직전 단계의 검사/조건 충돌이 핵심이어서,
+              장바구니/쿠폰/결제수단을 하나씩 분리하면 정답이 보입니다.
+            </p>
+            <p>
+              다음 글에서는 “주소를 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일”을 흐름으로 정리합니다.
+              배송 문제는 결제 문제와 이어지는 부분이 많아서, 함께 보면 훨씬 이해가 빠릅니다.
+            </p>
+            <p style="margin-top:18px; color:rgba(18,20,23,.72)">
+              오늘 내용이 도움이 되셨다면, 우측 쿠폰 패널에서 필요한 혜택을 바로 적용해보세요 😊
+              그리고 사이트는 계속 업데이트됩니다.
+            </p>
+          </section>
+        </article>
+      </main>
+
+      <!-- RIGHT: SIDEBAR (inertia follow) -->
+      <aside class="side-ghost">
+        <div class="side-follow" id="sideFollow">
+          <!-- Premium coupon panel -->
+          <section class="coupon-panel" aria-label="쿠폰 패널">
+            <div class="cp-head">
+              <div class="left">
+                <div class="cp-title">🎁 지금 바로 혜택 받기</div>
+                <div class="cp-sub">클릭 → 코드복사 → 이동</div>
+              </div>
+              <div class="cp-chip">노출은 수시 변동</div>
+            </div>
+
+            <div class="cp-list">
+              <!-- Coupon 1 -->
+              <div class="cp-item">
+                <div class="cp-row">
+                  <div class="cp-badge bg-mint">%</div>
+                  <div class="cp-main">
+                    <p class="cp-name">150,000원 쿠폰 묶음</p>
+                    <p class="cp-desc">가장 기본 루트 / 신규에 유리</p>
+                  </div>
+                  <div class="cp-actions">
+                    <button class="btn" data-go="https://temu.to/m/uotsg20netz" data-copy="aak74594">발급</button>
+                    <div class="code-pill" data-copy="aak74594">aak74594 <span style="opacity:.55">⧉</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coupon 2 -->
+              <div class="cp-item">
+                <div class="cp-row">
+                  <div class="cp-badge bg-sky">🎁</div>
+                  <div class="cp-main">
+                    <p class="cp-name">사은품 0원 이벤트</p>
+                    <p class="cp-desc">노출될 때 빠르게 진행</p>
+                  </div>
+                  <div class="cp-actions">
+                    <button class="btn" data-go="https://temu.to/m/u3ia9bomcaw" data-copy="frq027981">참여</button>
+                    <div class="code-pill" data-copy="frq027981">frq027981 <span style="opacity:.55">⧉</span></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Coupon 3 -->
+              <div class="cp-item">
+                <div class="cp-row">
+                  <div class="cp-badge bg-violet">⚡</div>
+                  <div class="cp-main">
+                    <p class="cp-name">특별 세일 루트</p>
+                    <p class="cp-desc">노출 약할 때 대안 루트</p>
+                  </div>
+                  <div class="cp-actions">
+                    <button class="btn" data-go="https://temu.to/m/u3ckk6z4eku" data-copy="acr804202">적용</button>
+                    <div class="code-pill" data-copy="acr804202">acr804202 <span style="opacity:.55">⧉</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="cp-cta">
+              <a class="big-cta" href="./temu-coupon-2026.html">2026 무료쿠폰 글도 보기 →</a>
+              <div class="cp-foot">
+                아래 글도 보시겠어요? 😊💕<br/>
+                이 글을 다 읽고 “막히는 지점”을 확인하면, 실제 적용이 더 쉬워집니다.
+              </div>
+            </div>
+          </section>
+
+          <!-- Popular posts + Coupon list (kept as always-on right stack) -->
+          <div class="side-stack">
+            <section class="mini" aria-label="인기글">
+              <div class="mini-h">
+                <strong>인기글 5</strong>
+                <span class="badge up">📈 상승</span>
+              </div>
+              <div class="mini-b">
+                <a class="mini-a" href="./temu-coupon-2026.html">
+                  <div class="mini-left">
+                    <p class="mini-title">2026 무료쿠폰</p>
+                    <p class="mini-sub">현재 글</p>
+                  </div>
+                  <div class="mini-r">
+                    <span class="badge">필수</span>
+                  </div>
+                </a>
+                <a class="mini-a" href="./temu-coupon-code-input.html">
+                  <div class="mini-left">
+                    <p class="mini-title">코드 입력 위치</p>
+                    <p class="mini-sub">실전</p>
+                  </div>
+                  <div class="mini-r">
+                    <span class="badge">핵심</span>
+                  </div>
+                </a>
+                <a class="mini-a" href="./temu-coupon-not-working.html">
+                  <div class="mini-left">
+                    <p class="mini-title">적용 안될 때</p>
+                    <p class="mini-sub">해결</p>
+                  </div>
+                  <div class="mini-r">
+                    <span class="badge">체크</span>
+                  </div>
+                </a>
+                <a class="mini-a" href="./temu-free-gift-0won.html">
+                  <div class="mini-left">
+                    <p class="mini-title">사은품 0원</p>
+                    <p class="mini-sub">인기</p>
+                  </div>
+                  <div class="mini-r">
+                    <span class="badge">급상승</span>
+                  </div>
+                </a>
+                <a class="mini-a" href="./temu-special-sale.html">
+                  <div class="mini-left">
+                    <p class="mini-title">특별 세일</p>
+                    <p class="mini-sub">보조</p>
+                  </div>
+                  <div class="mini-r">
+                    <span class="badge">루트</span>
+                  </div>
+                </a>
+              </div>
+            </section>
+
+            <section class="mini" aria-label="쿠폰 목록">
+              <div class="mini-h">
+                <strong>쿠폰 · 코드</strong>
+                <span class="badge">원클릭</span>
+              </div>
+              <div class="mini-b">
+                <a class="mini-a" href="#" data-go="https://temu.to/m/uotsg20netz" data-copy="aak74594">
+                  <div class="mini-left">
+                    <p class="mini-title">150,000원 쿠폰 묶음</p>
+                    <p class="mini-sub">aak74594</p>
+                  </div>
+                  <div class="mini-r"><span class="badge">발급</span></div>
+                </a>
+                <a class="mini-a" href="#" data-go="https://temu.to/m/u3ia9bomcaw" data-copy="frq027981">
+                  <div class="mini-left">
+                    <p class="mini-title">사은품 0원 이벤트</p>
+                    <p class="mini-sub">frq027981</p>
+                  </div>
+                  <div class="mini-r"><span class="badge">참여</span></div>
+                </a>
+                <a class="mini-a" href="#" data-go="https://temu.to/m/u3ckk6z4eku" data-copy="acr804202">
+                  <div class="mini-left">
+                    <p class="mini-title">특별 세일 루트</p>
+                    <p class="mini-sub">acr804202</p>
+                  </div>
+                  <div class="mini-r"><span class="badge">적용</span></div>
+                </a>
+              </div>
+            </section>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- floating coupon button -->
+  <button class="float-coupon" id="floatCoupon" aria-label="쿠폰 패널로 이동">
+    <span>🎟️</span>
+  </button>
+
+  <div class="toast" id="toast">코드가 복사되었습니다.</div>
+
+  <script>
+    // ===== Copy + Go helpers =====
+    const toast = document.getElementById("toast");
+    let toastTimer = null;
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast(`코드 복사 완료: ${text}`);
+        return true;
+      }catch(e){
+        // fallback
+        const t = document.createElement("textarea");
+        t.value = text;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand("copy");
+        document.body.removeChild(t);
+        showToast(`코드 복사 완료: ${text}`);
+        return true;
+      }
+    }
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toast.classList.remove("show"), 1300);
+    }
+    function go(url){
+      window.open(url, "_blank", "noopener");
+    }
+
+    // Buttons (copy then go)
+    document.addEventListener("click", async (e)=>{
+      const btn = e.target.closest("[data-copy],[data-go]");
+      if(!btn) return;
+
+      // prevent dummy links
+      if(btn.tagName === "A" && btn.getAttribute("href") === "#") e.preventDefault();
+
+      const code = btn.getAttribute("data-copy");
+      const url = btn.getAttribute("data-go");
+
+      if(code && url){
+        await copyText(code);
+        go(url);
+        return;
+      }
+      if(code){
+        await copyText(code);
+        return;
+      }
+      if(url){
+        go(url);
+        return;
+      }
+    });
+
+    // ===== Sidebar inertia follow (acts like action-reaction) =====
+    const side = document.getElementById("sideFollow");
+    let currentY = 0;
+    let targetY = 0;
+
+    function tick(){
+      const maxOffset = Math.max(0, document.body.scrollHeight - window.innerHeight);
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+
+      // target: keep sidebar slightly down from topbar
+      targetY = Math.min(scrollY, maxOffset);
+
+      // inertia (lerp): slower follow
+      currentY += (targetY - currentY) * 0.08;
+
+      // clamp for safety
+      if(side){
+        side.style.transform = `translateY(${currentY}px)`;
+      }
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+
+    // Floating button -> scroll to top of sidebar area (desktop) or top (mobile)
+    const floatBtn = document.getElementById("floatCoupon");
+    floatBtn?.addEventListener("click", ()=>{
+      // on desktop: nudge scroll so sidebar is visible; on mobile: scroll to top
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      showToast("쿠폰 패널은 우측에 있습니다.");
+    });
+  </script>
+</body>
+</html>
