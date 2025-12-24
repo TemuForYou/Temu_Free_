@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다 | TFY</title>
+  <meta name="description" content="테무(Temu) 환불이 안 된다고 느껴질 때 가장 많이 하는 공통 실수와 해결 기준을 정리했습니다. 환불 상태별 의미, 반품/환불 흐름, 크레딧/쿠폰 복구, 진행이 멈춘 것처럼 보일 때 확인 순서까지 기사형으로 정리합니다." />
+  <link rel="canonical" href="https://temuforyou.github.io/posts/temu-refund-not-working-common-mistake.html" />
+
+  <!-- (구글/네이버 소유확인 메타는 index에 넣어둔 값이 있으면 유지. 여기엔 생략 가능) -->
+
+  <style>
+    :root{
+      --bg:#fff7f0;
+      --card:#ffffff;
+      --text:#1f2328;
+      --muted:#667085;
+      --line:#f1e2d8;
+      --temu:#ff6a00;
+      --temu2:#ff8a3d;
+      --shadow: 0 18px 40px rgba(17, 24, 39, .12);
+      --shadow2: 0 10px 22px rgba(17, 24, 39, .10);
+      --radius: 18px;
+      --radius2: 14px;
+      --max: 1120px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", "Apple SD Gothic Neo", Arial, sans-serif;
+      color:var(--text);
+      background: radial-gradient(1000px 600px at 20% -10%, rgba(255,106,0,.18), transparent 60%),
+                  radial-gradient(900px 500px at 100% 0%, rgba(255,138,61,.16), transparent 60%),
+                  var(--bg);
+    }
+    a{color:inherit; text-decoration:none}
+    .topbar{
+      position: sticky;
+      top:0;
+      z-index:50;
+      background: linear-gradient(90deg, var(--temu), var(--temu2));
+      box-shadow: 0 8px 22px rgba(255,106,0,.25);
+    }
+    .topbar-inner{
+      max-width: var(--max);
+      margin:0 auto;
+      padding: 14px 18px;
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+    /* TFY 로고: hover 흔들림 */
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      color:#fff;
+      font-weight:900;
+      letter-spacing:.2px;
+      user-select:none;
+    }
+    .logo-badge{
+      width:30px; height:30px;
+      border-radius:12px;
+      background: rgba(255,255,255,.18);
+      border:1px solid rgba(255,255,255,.28);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 22px rgba(0,0,0,.12);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo-badge::after{
+      content:"";
+      position:absolute; inset:-20%;
+      background: linear-gradient(120deg, transparent, rgba(255,255,255,.35), transparent);
+      transform: translateX(-60%) rotate(10deg);
+      opacity:.55;
+    }
+    .logo-text{
+      font-size:18px;
+      line-height:1;
+    }
+    /* 캘리그라피 느낌: 시스템 폰트 중 가장 유사하게 처리 */
+    .logo-text span{
+      font-family: "Segoe Script", "Bradley Hand", "Comic Sans MS", "Apple Chancery", cursive;
+      font-weight:800;
+      letter-spacing:.6px;
+    }
+    .logo:hover{
+      animation: wiggle .55s ease-in-out;
+    }
+    @keyframes wiggle{
+      0%{transform:translateX(0)}
+      20%{transform:translateX(-2px)}
+      40%{transform:translateX(3px)}
+      60%{transform:translateX(-2px)}
+      80%{transform:translateX(2px)}
+      100%{transform:translateX(0)}
+    }
+
+    .container{
+      max-width: var(--max);
+      margin: 22px auto 80px;
+      padding: 0 18px;
+      display:grid;
+      grid-template-columns: 1fr 320px;
+      gap:18px;
+    }
+    @media (max-width: 980px){
+      .container{grid-template-columns:1fr}
+      .aside{position:static !important; width:auto}
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+    .article{
+      padding: 22px 22px 26px;
+    }
+    .kicker{
+      display:flex; flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:10px;
+    }
+    .tag{
+      font-size:12px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,106,0,.26);
+      background: rgba(255,106,0,.07);
+      color:#b54500;
+      font-weight:700;
+    }
+    h1{
+      margin: 8px 0 12px;
+      font-size: 30px;
+      line-height: 1.18;
+      letter-spacing: -0.6px;
+    }
+    .meta{
+      color: var(--muted);
+      font-size: 13px;
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-bottom: 18px;
+    }
+    .lead{
+      background: linear-gradient(180deg, rgba(255,106,0,.10), rgba(255,106,0,.04));
+      border: 1px solid rgba(255,106,0,.22);
+      border-radius: var(--radius2);
+      padding: 14px 14px;
+      color:#3a2b24;
+      line-height:1.65;
+      margin: 0 0 16px;
+    }
+    .toc{
+      border:1px solid var(--line);
+      border-radius: var(--radius2);
+      padding: 14px;
+      background: #fff;
+      box-shadow: var(--shadow2);
+      margin: 0 0 18px;
+    }
+    .toc-title{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      font-weight:900;
+      margin-bottom:10px;
+    }
+    .toc ol{
+      margin:0;
+      padding-left:18px;
+      color:#2b2f36;
+      line-height:1.7;
+      font-size:14px;
+    }
+    .toc a{color:#2b2f36}
+    .toc a:hover{color:var(--temu)}
+    h2{
+      margin: 20px 0 10px;
+      font-size: 20px;
+      letter-spacing: -0.3px;
+    }
+    p{
+      margin: 0 0 12px;
+      line-height: 1.82;
+      color:#2b2f36;
+      font-size: 15.5px;
+      word-break: keep-all;
+    }
+    .note{
+      background:#fff;
+      border:1px dashed rgba(255,106,0,.35);
+      border-radius: var(--radius2);
+      padding: 12px 12px;
+      color:#3a2b24;
+      margin: 12px 0 14px;
+    }
+
+    /* 오른쪽 사이드: 인기글 + 쿠폰 */
+    .aside{
+      position: sticky;
+      top: 86px;
+      height: fit-content;
+      padding: 0;
+      background: transparent;
+    }
+    .aside-card{
+      background: rgba(255,255,255,.85);
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 14px;
+      backdrop-filter: blur(8px);
+    }
+    .aside h3{
+      margin: 6px 0 10px;
+      font-size: 14px;
+      color:#111827;
+      letter-spacing:-0.2px;
+    }
+    .list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom: 14px;
+    }
+    .chiplink{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background:#fff;
+      box-shadow: 0 8px 16px rgba(17,24,39,.08);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+    .chiplink:hover{
+      transform: translateY(-1px);
+      box-shadow: 0 14px 26px rgba(17,24,39,.12);
+    }
+    .chiplink strong{font-size:14px}
+    .chiplink small{color:var(--muted); font-weight:700}
+
+    /* 쿠폰 3D 카드 */
+    .coupon-3d{
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,106,0,.12), rgba(255,106,0,.06));
+      border: 1px solid rgba(255,106,0,.22);
+      padding: 12px;
+      box-shadow: 0 18px 32px rgba(255,106,0,.12);
+    }
+    .coupon-3d .row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      margin-bottom:10px;
+    }
+    .coupon-3d .emoji{
+      width:34px; height:34px;
+      border-radius: 14px;
+      background: rgba(255,106,0,.16);
+      border:1px solid rgba(255,106,0,.22);
+      display:grid; place-items:center;
+      box-shadow: 0 10px 18px rgba(255,106,0,.18);
+      font-size:18px;
+    }
+    .coupon-3d .btn{
+      cursor:pointer;
+      border:none;
+      border-radius: 14px;
+      padding: 10px 12px;
+      background: linear-gradient(180deg, #ff7a1a, #ff5f00);
+      color:#fff;
+      font-weight:900;
+      box-shadow: 0 14px 24px rgba(255,106,0,.28);
+      transition: transform .12s ease;
+      white-space:nowrap;
+    }
+    .coupon-3d .btn:active{transform: translateY(1px) scale(.99)}
+    .coupon-3d .field{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      padding: 10px 10px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      box-shadow: 0 10px 18px rgba(17,24,39,.08);
+    }
+    .coupon-3d code{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-weight:900;
+      color:#111827;
+    }
+    .copy{
+      border:1px solid rgba(255,106,0,.28);
+      background: rgba(255,106,0,.08);
+      color:#b54500;
+      font-weight:900;
+      border-radius: 12px;
+      padding: 8px 10px;
+      cursor:pointer;
+    }
+
+    /* 우하단 쿠폰 원형 버튼 */
+    .floating-coupon{
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.72);
+      border: 1px solid rgba(255,255,255,.6);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 30px rgba(17,24,39,.18);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      z-index: 99;
+      transition: transform .15s ease;
+    }
+    .floating-coupon:hover{transform: translateY(-1px)}
+    .floating-coupon span{
+      font-size: 22px;
+      filter: drop-shadow(0 6px 10px rgba(255,106,0,.18));
+    }
+
+    /* 작은 토스트 */
+    .toast{
+      position: fixed;
+      left: 50%;
+      bottom: 26px;
+      transform: translateX(-50%);
+      background: rgba(17,24,39,.92);
+      color:#fff;
+      padding: 10px 12px;
+      border-radius: 14px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index: 120;
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(-6px);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="logo" href="https://temuforyou.github.io/">
+        <div class="logo-badge">🟠</div>
+        <div class="logo-text"><span>TFY</span></div>
+      </a>
+    </div>
+  </div>
+
+  <main class="container">
+    <!-- 본문 -->
+    <article class="card article">
+      <div class="kicker">
+        <span class="tag">문제 해결</span>
+        <span class="tag">환불/반품</span>
+        <span class="tag">크레딧/쿠폰</span>
+      </div>
+
+      <h1>테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다</h1>
+
+      <div class="meta">
+        <span>TFY 기사형 정리</span>
+        <span>·</span>
+        <span>최신 기준: 사이트 운영 흐름 기준</span>
+        <span>·</span>
+        <span>읽는 시간: 6~8분</span>
+      </div>
+
+      <div class="lead">
+        테무(Temu)를 쓰다 보면 “환불이 안 돼요”라는 말이 생각보다 자주 나옵니다.  
+        그런데 실제로 케이스를 뜯어보면, 테무가 환불을 막아놓은 경우보다 <b>사용자가 ‘환불이 진행되는 구조’를 잘못 이해해서</b> 멈춘 것처럼 보이는 경우가 훨씬 많았습니다.  
+        이 글은 “왜 안 되는지”를 감정이 아니라 <b>흐름 기준</b>으로 정리합니다. 끝까지 읽으면, 지금 내 상태가 “기다려야 하는지 / 조치해야 하는지”가 선명해집니다.
+      </div>
+
+      <nav class="toc" aria-label="Table of Contents">
+        <div class="toc-title">
+          <span>Table of Contents</span>
+          <span style="color:#ff6a00;font-weight:900;">📌</span>
+        </div>
+        <ol>
+          <li><a href="#sec1">테무 환불은 “즉시 환불”이 아니라 “상태 관리”입니다</a></li>
+          <li><a href="#sec2">가장 많은 공통 실수: 환불 버튼을 “한 단계”에서 멈추는 것</a></li>
+          <li><a href="#sec3">환불이 안 되는 것처럼 보이는 5가지 대표 패턴</a></li>
+          <li><a href="#sec4">지금 내 상황별로 이렇게 확인하면 가장 빠릅니다</a></li>
+          <li><a href="#sec5">쿠폰/크레딧 복구 관련 오해 정리</a></li>
+          <li><a href="#sec6">마무리: “환불이 안 됨”을 줄이는 가장 현실적인 기준</a></li>
+        </ol>
+      </nav>
+
+      <h2 id="sec1">테무 환불은 “즉시 환불”이 아니라 “상태 관리”입니다</h2>
+      <p>
+        테무 환불은 다른 쇼핑몰처럼 “반품 접수 → 택배 보내고 → 돈 받기” 한 줄로 끝나는 구조가 아닙니다.
+        테무는 주문마다 <b>상태가 세분화</b>되어 있고, 상태에 따라 가능한 조치가 달라집니다.
+        그래서 사용자는 환불을 눌렀다고 생각했는데, 시스템 입장에서는 <b>아직 ‘환불 절차가 시작되지 않은 상태’</b>인 경우가 많습니다.
+      </p>
+      <p class="note">
+        핵심은 딱 한 문장입니다.  
+        <b>“환불은 버튼 1번이 아니라, 상태를 ‘완료 상태’까지 밀어 넣는 과정”</b>입니다.
+      </p>
+
+      <h2 id="sec2">가장 많은 공통 실수: 환불 버튼을 “한 단계”에서 멈추는 것</h2>
+      <p>
+        “환불 신청했는데 며칠째 그대로예요”라는 케이스에서 가장 많이 보이는 공통 실수는
+        <b>최종 제출(확정) 단계에서 실제로 완료되지 않은 상태</b>입니다.
+      </p>
+      <p>
+        특히 모바일에서 뒤로 가기, 앱이 꺼짐, 네트워크 불안정이 겹치면
+        사용자는 “눌렀다”고 기억하지만, 시스템에는 <b>임시 상태</b>로 남는 경우가 생깁니다.
+      </p>
+      <p class="note">
+        환불은 “신청 화면을 봤다”가 아니라, <b>주문 내역에 ‘환불 진행/승인/반품 대기’ 같은 상태 문구가 찍혀야</b> 시작된 겁니다.
+      </p>
+
+      <h2 id="sec3">환불이 안 되는 것처럼 보이는 5가지 대표 패턴</h2>
+
+      <p><b>1) 배송 전인데 환불이 안 되는 것처럼 보임</b><br/>
+      배송 전 환불은 가능한 경우가 많지만, 상품이 이미 물류로 넘어가면 “취소”가 아니라 “반품/환불” 흐름으로 바뀝니다.
+      이 전환 지점에서 사용자가 헷갈리면 “막혔다”고 느낍니다.</p>
+
+      <p><b>2) 배송 중인데 버튼이 사라짐</b><br/>
+      배송 중간 단계에서는 시스템이 ‘취소’ 버튼을 숨기고, 수령 이후 반품 흐름으로 안내합니다.
+      버튼이 사라진 건 오류가 아니라 <b>상태가 바뀐 것</b>일 가능성이 큽니다.</p>
+
+      <p><b>3) 수령했는데 환불이 “검토 중”에서 멈춘 느낌</b><br/>
+      여기서 중요한 건 ‘검토 중’은 곧바로 돈이 안 들어오는 게 정상이라는 점입니다.
+      다만 일정 시간이 지나도 상태가 움직이지 않으면, <b>반품 방식 선택(반품/미반품/부분환불)</b>을 제대로 완료했는지 확인해야 합니다.</p>
+
+      <p><b>4) 반품했는데 환불이 안 되는 것처럼 보임</b><br/>
+      택배가 이동 중인 시간은 시스템에서 “정지”처럼 느껴집니다.
+      이때는 “반품 송장/추적 정보가 실제로 주문에 연결됐는지”가 핵심입니다.
+      연결이 안 되면 테무는 ‘모르는 반품’이 됩니다.</p>
+
+      <p><b>5) 환불은 됐는데 돈이 아닌 크레딧으로 들어옴</b><br/>
+      사용자가 가장 많이 “환불이 안 됐다”고 말하는 케이스입니다.
+      실제로는 환불이 처리됐고, 형태가 “카드 환불”이 아니라 “테무 크레딧”일 수 있습니다.
+      이 부분을 모르면 ‘돈이 안 들어왔다’고 느끼게 됩니다.</p>
+
+      <h2 id="sec4">지금 내 상황별로 이렇게 확인하면 가장 빠릅니다</h2>
+      <p>
+        아래 순서대로 보면, “내가 기다려야 하는지 / 뭘 눌러야 하는지”가 정리됩니다.
+      </p>
+
+      <p><b>① 주문 내역에서 상태 문구 확인</b><br/>
+      ‘환불 진행’, ‘검토 중’, ‘반품 대기’, ‘환불 승인’ 같은 키워드가 있는지 먼저 봅니다.
+      아무 문구가 없으면, 환불이 시작이 안 된 겁니다.</p>
+
+      <p><b>② 반품/미반품 선택을 끝까지 했는지 확인</b><br/>
+      테무는 케이스에 따라 “반품 필요/반품 없이 환불/부분 환불”을 고르게 합니다.
+      여기서 선택을 중간에 끊으면 상태가 멈춘 것처럼 보입니다.</p>
+
+      <p><b>③ 결제 수단 환불인지, 크레딧 환불인지 확인</b><br/>
+      “환불 완료”인데 돈이 안 들어온 느낌이면,
+      우선 크레딧(내 계정/지갑) 쪽을 확인하는 게 빠릅니다.</p>
+
+      <p><b>④ 시간이 지나도 변화가 없으면 ‘연결 정보’ 확인</b><br/>
+      반품을 보냈다면 추적번호가 주문과 연결됐는지,
+      주소/수취 정보가 일치하는지 확인합니다.</p>
+
+      <h2 id="sec5">쿠폰/크레딧 복구 관련 오해 정리</h2>
+      <p>
+        환불에서 자주 나오는 오해가 “쿠폰이 날아갔다”입니다.
+        정책은 케이스에 따라 다르지만, 사용자 입장에서 실전 기준은 이렇게 잡으면 됩니다.
+      </p>
+
+      <p><b>쿠폰</b>은 “사용 처리”가 되면 자동 복구가 안 될 수 있습니다.  
+      <b>크레딧</b>은 환불 형태로 들어오는 경우가 많아서, 돈이 아닌 크레딧으로 보이는 순간 오해가 생깁니다.</p>
+
+      <p class="note">
+        결론: “환불이 안 됐다”라고 느끼면, 가장 먼저 <b>환불 형태(카드/크레딧)</b>를 확인하는 게 시간 절약입니다.
+      </p>
+
+      <h2 id="sec6">마무리: “환불이 안 됨”을 줄이는 가장 현실적인 기준</h2>
+      <p>
+        테무 환불은 생각보다 “막힌” 게 아니라 “상태가 멈춘 것처럼 보이는” 경우가 많습니다.
+        그리고 그 이유는 거의 항상 하나로 모입니다.
+      </p>
+      <p>
+        <b>환불은 ‘시도’가 아니라 ‘상태 문구가 바뀌는 것’까지 완료해야 한다.</b><br/>
+        이 기준만 잡아두면, 불필요한 불안이 크게 줄어듭니다.
+      </p>
+      <p>
+        다음 글에서는 “결제 오류가 발생했을 때 대부분 어디서 막히는지”를 같은 방식으로,
+        단계/원인/해결 기준으로 정리해드리겠습니다.
+      </p>
+    </article>
+
+    <!-- 사이드바 -->
+    <aside class="aside">
+      <div class="aside-card" id="asideCard">
+        <h3>바로 가기</h3>
+        <div class="list">
+          <a class="chiplink" href="https://temuforyou.github.io/">
+            <strong>홈으로</strong><small>TFY</small>
+          </a>
+          <a class="chiplink" href="https://temuforyou.github.io/#popular">
+            <strong>인기글 모아보기</strong><small>TOP</small>
+          </a>
+        </div>
+
+        <h3>쿠폰 / 코드</h3>
+        <div class="coupon-3d">
+          <div class="row">
+            <div class="emoji">🎟️</div>
+            <button class="btn" id="openCoupon">쿠폰 받기</button>
+          </div>
+
+          <div class="field">
+            <div>
+              <div style="font-size:12px;color:var(--muted);font-weight:800;margin-bottom:4px;">쿠폰 코드</div>
+              <code id="couponCode">aak74594</code>
+            </div>
+            <button class="copy" data-copy="aak74594">복사</button>
+          </div>
+
+          <div style="height:10px"></div>
+
+          <div class="field">
+            <div>
+              <div style="font-size:12px;color:var(--muted);font-weight:800;margin-bottom:4px;">초대 링크</div>
+              <code id="inviteLink">https://temu.to/m/uotsq20netz</code>
+            </div>
+            <button class="copy" data-copy="https://temu.to/m/uotsq20netz">복사</button>
+          </div>
+
+          <p style="margin:10px 0 0;color:#5b463a;font-size:13px;line-height:1.55;">
+            버튼을 누르면 링크로 이동합니다. 코드/링크는 필요할 때만 사용해도 됩니다.
+          </p>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <!-- 우하단 원형 쿠폰 버튼 -->
+  <button class="floating-coupon" id="floatingCoupon" aria-label="coupon">
+    <span>🎟️</span>
+  </button>
+
+  <div class="toast" id="toast">복사되었습니다</div>
+
+  <script>
+    // 토스트
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+    function showToast(msg){
+      toast.textContent = msg;
+      toast.classList.add('show');
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>toast.classList.remove('show'), 1100);
+    }
+
+    // 복사 버튼
+    document.querySelectorAll('.copy').forEach(btn=>{
+      btn.addEventListener('click', async ()=>{
+        const text = btn.getAttribute('data-copy');
+        try{
+          await navigator.clipboard.writeText(text);
+          showToast('복사되었습니다');
+        }catch(e){
+          showToast('복사 실패: 수동으로 복사해주세요');
+        }
+      });
+    });
+
+    // 쿠폰 받기 버튼(상단/우하단 동일 동작)
+    const inviteLink = document.getElementById('inviteLink').textContent.trim();
+    function goCoupon(){
+      window.open(inviteLink, '_blank', 'noopener,noreferrer');
+    }
+    document.getElementById('openCoupon').addEventListener('click', goCoupon);
+    document.getElementById('floatingCoupon').addEventListener('click', goCoupon);
+
+    // 사이드바 "관성" 트래킹 느낌: 스크롤 따라오되 약간 늦게(부드럽게)
+    const asideCard = document.getElementById('asideCard');
+    let currentY = 0;
+    let targetY = 0;
+
+    function animateAside(){
+      const scrollY = window.scrollY || window.pageYOffset;
+      targetY = 0; // sticky 기반이라 기본 0, 대신 내부에 미세 이동만 관성으로 표현
+      const diff = (targetY - currentY);
+      currentY += diff * 0.08; // 느리게 따라오게
+      asideCard.style.transform = `translateY(${currentY}px)`;
+      requestAnimationFrame(animateAside);
+    }
+    animateAside();
+  </script>
+</body>
+</html>
