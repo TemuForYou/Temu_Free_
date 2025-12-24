@@ -73,7 +73,7 @@
     }
     .nav a:hover{background:rgba(255,255,255,.24)}
 
-    /* Hero (Full-width feel) */
+    /* Hero */
     .heroWrap{
       background:
         radial-gradient(1100px 380px at 12% 10%, rgba(255,106,0,.22), transparent 60%),
@@ -81,7 +81,7 @@
         linear-gradient(180deg,#fff, #fff7f0 68%, rgba(255,255,255,0));
       border-bottom:1px solid rgba(255,106,0,.10);
     }
-    .hero{padding:20px 0 8px;} /* 아래 여백 살짝 줄임 */
+    .hero{padding:20px 0 10px;}
     .heroGrid{
       display:grid;
       grid-template-columns: 1.4fr 1fr;
@@ -110,7 +110,7 @@
       padding:6px 10px;border-radius:999px
     }
 
-    /* HERO coupon strips (fill the blank) */
+    /* HERO coupon strips */
     .heroCoupons{
       margin-top:14px;
       display:flex;
@@ -172,7 +172,7 @@
       font-weight:800;
     }
 
-    /* 3D Coupon buttons (Right panel) */
+    /* 3D Coupon panel */
     .couponPanel{
       background:rgba(255,255,255,.72);
       border:1px solid rgba(255,106,0,.16);
@@ -224,14 +224,6 @@
     }
     .couponRow{display:flex; align-items:flex-start; justify-content:space-between; gap:12px;}
     .couponLeft{display:flex; gap:12px; align-items:flex-start}
-    .couponIcon{
-      width:44px;height:44px;border-radius:14px;
-      background: linear-gradient(135deg,var(--temu),var(--temu2));
-      display:flex;align-items:center;justify-content:center;
-      color:#fff;font-size:20px;
-      box-shadow: 0 14px 24px rgba(255,106,0,.26);
-      flex:0 0 auto;
-    }
     .couponText strong{display:block;font-size:14px;letter-spacing:-0.2px}
     .couponText span{display:block;color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
     .couponRight{display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex:0 0 auto;}
@@ -251,9 +243,17 @@
       color:#7c2d12;
       white-space:nowrap;
     }
+    .couponIcon{
+      width:44px;height:44px;border-radius:14px;
+      background: linear-gradient(135deg,var(--temu),var(--temu2));
+      display:flex;align-items:center;justify-content:center;
+      color:#fff;font-size:20px;
+      box-shadow: 0 14px 24px rgba(255,106,0,.26);
+      flex:0 0 auto;
+    }
 
     /* Layout */
-    .main{padding:12px 0 80px;} /* 상단 여백 살짝 줄임 */
+    .main{padding:12px 0 80px;}
     .grid{
       display:grid;
       grid-template-columns: 1fr 340px;
@@ -304,6 +304,9 @@
       border-radius:18px;
       padding:14px 12px;
       background:#fff;
+      min-height: 320px; /* 카드 크기 안정감 */
+      display:flex;
+      flex-direction:column;
     }
     .chartTop{
       display:flex; align-items:center; justify-content:space-between; gap:10px;
@@ -317,10 +320,33 @@
       padding:5px 10px;border-radius:999px;
       white-space:nowrap;
     }
+
     .list{
       list-style:none; padding:0; margin:0;
       display:flex; flex-direction:column; gap:8px;
     }
+
+    /* ✅ 목록 스크롤: 카드 크기는 유지, 글만 내려감 */
+    .list.scrollList{
+      max-height: 230px;
+      overflow-y: auto;
+      padding-right: 6px;
+      margin-top: 4px;
+    }
+    .list.scrollList::-webkit-scrollbar{width:10px}
+    .list.scrollList::-webkit-scrollbar-track{background:transparent}
+    .list.scrollList::-webkit-scrollbar-thumb{
+      background: rgba(15,23,42,.14);
+      border-radius: 999px;
+      border: 3px solid transparent;
+      background-clip: content-box;
+    }
+    .list.scrollList::-webkit-scrollbar-thumb:hover{
+      background: rgba(15,23,42,.22);
+      border: 3px solid transparent;
+      background-clip: content-box;
+    }
+
     .item{
       border:1px solid var(--line);
       border-radius:14px;
@@ -329,9 +355,19 @@
       background:#fff;
     }
     .item:hover{border-color:rgba(255,106,0,.28); background:#fff8f3}
-    .itemTitle{font-weight:900;font-size:13px;letter-spacing:-0.2px}
+    .itemTitle{font-weight:900;font-size:13px;letter-spacing:-0.2px; display:flex; align-items:center; gap:8px}
     .itemMeta{color:var(--muted);font-size:12px;font-weight:800;margin-top:2px}
     .arrow{color:rgba(255,106,0,.85);font-weight:900}
+
+    /* ✅ 인기 배지(상승차트) */
+    .hotBadge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      font-size:14px;
+      transform: translateY(-1px);
+      flex:0 0 auto;
+    }
 
     /* Sidebar */
     .sidebar{position:sticky; top:74px}
@@ -387,6 +423,7 @@
 
         <nav class="nav">
           <a href="./">Home</a>
+          <!-- 아래 5개는 실제 글 파일 만들면 연결 -->
           <a href="./posts/temu-coupon-2026.html">2026 무료쿠폰</a>
           <a href="./posts/temu-coupon-code-input.html">코드 입력</a>
           <a href="./posts/temu-coupon-not-working.html">안될 때</a>
@@ -400,7 +437,7 @@
     <div class="container hero">
       <div class="heroGrid">
 
-        <!-- LEFT: intro + chips + coupon strips -->
+        <!-- LEFT -->
         <div class="heroCard">
           <h1>테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
           <p class="sub">
@@ -417,7 +454,7 @@
             <span class="chip">환불·결제</span>
           </div>
 
-          <!-- Coupon strip banners (fills blank area) -->
+          <!-- Coupon strip banners -->
           <div class="heroCoupons">
             <button class="stripCoupon"
               onclick="issueCoupon('aak74594','https://temu.to/m/uotsq20netz','150,000원 쿠폰 묶음'); return false;">
@@ -470,7 +507,7 @@
           </p>
         </div>
 
-        <!-- RIGHT: 3D coupon quick issue -->
+        <!-- RIGHT -->
         <div class="couponPanel">
           <div class="couponTitle">
             <div>🎟️ 쿠폰/이벤트 퀵 발급</div>
@@ -558,71 +595,116 @@
 
         <div class="chartGrid">
 
+          <!-- 혜택/검증 -->
           <div class="chartCard">
             <div class="chartTop">
-              <strong>혜택 · 쿠폰 · 이벤트</strong>
-              <span class="tag">바로보기</span>
+              <strong>혜택 · 쿠폰 · 검증</strong>
+              <span class="tag">20개 프로젝트</span>
             </div>
-            <ul class="list">
+
+            <!-- ✅ 카드 크기 유지, 목록만 스크롤 -->
+            <ul class="list scrollList">
               <li>
                 <a class="item" href="./posts/temu-coupon-2026.html">
                   <div>
-                    <div class="itemTitle">테무 2026 무료쿠폰 발급 및 사용방법 정리</div>
-                    <div class="itemMeta">쿠폰/사용법/주의점</div>
+                    <div class="itemTitle">
+                      테무 0원 결제는 가능한가? 조건을 충족한 사례만 정리했습니다
+                      <span class="hotBadge" title="인기 예상">📈</span>
+                    </div>
+                    <div class="itemMeta">조건·사례·실패 패턴</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
               </li>
-              <li>
-                <a class="item" href="./posts/temu-coupon-code-input.html">
-                  <div>
-                    <div class="itemTitle">테무 쿠폰코드 입력 위치, 여기서 막힙니다</div>
-                    <div class="itemMeta">앱 동선/입력 팁</div>
-                  </div>
-                  <div class="arrow">›</div>
-                </a>
-              </li>
-              <li>
-                <a class="item" href="./posts/temu-special-sale.html">
-                  <div>
-                    <div class="itemTitle">테무 특별 세일 활용법, 사은품 안 될 때 대안</div>
-                    <div class="itemMeta">세일+쿠폰+크레딧 조합</div>
-                  </div>
-                  <div class="arrow">›</div>
-                </a>
-              </li>
-            </ul>
-          </div>
 
-          <div class="chartCard">
-            <div class="chartTop">
-              <strong>문제 해결 · 체크리스트</strong>
-              <span class="tag">기사형</span>
-            </div>
-            <ul class="list">
-              <li>
-                <a class="item" href="./posts/temu-coupon-not-working.html">
-                  <div>
-                    <div class="itemTitle">테무 쿠폰 적용 안 될 때, 원인별 해결 루트</div>
-                    <div class="itemMeta">기간/최소금액/대상/중복</div>
-                  </div>
-                  <div class="arrow">›</div>
-                </a>
-              </li>
               <li>
                 <a class="item" href="./posts/temu-free-gift-0won.html">
                   <div>
-                    <div class="itemTitle">테무 사은품 0원 조건 총정리 (끊기는 이유 포함)</div>
-                    <div class="itemMeta">노출/재고/계정/흐름</div>
+                    <div class="itemTitle">
+                      “테무 무료상품, 진짜 받는 사람은 따로 있었습니다”
+                      <span class="hotBadge" title="인기 예상">📈</span>
+                    </div>
+                    <div class="itemMeta">가능 조건·흐름·주의점</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
               </li>
+
               <li>
-                <a class="item" href="./posts/temu-coupon-code-input.html">
+                <a class="item" href="./posts/temu-special-sale.html">
                   <div>
-                    <div class="itemTitle">코드 입력했는데 적용이 안 될 때, 가장 먼저 볼 것</div>
-                    <div class="itemMeta">결제 단계 확인</div>
+                    <div class="itemTitle">왜 이렇게 쌀까? 테무 가격 구조를 뜯어보니 숨겨진 방식이 보였습니다</div>
+                    <div class="itemMeta">가격 구조·프로모션 방식</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 사기 논란, 실제 사용자 데이터로 확인해보니 결과는 달랐습니다</div>
+                    <div class="itemMeta">논란 포인트·현실적 체크</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 개인정보 논란, 불안해하는 지점과 실제 구조는 달랐습니다</div>
+                    <div class="itemMeta">불안 포인트·체크리스트</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 후기, 믿을 수 없는 글과 신뢰 가능한 글의 차이점</div>
+                    <div class="itemMeta">후기 판별 기준·패턴</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">‘무료배송’이라는 말, 테무에서는 어디까지가 진짜일까</div>
+                    <div class="itemMeta">무료배송 조건·예외</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">과장 광고라는 말이 나오는 이유, 테무 이벤트 구조를 분석했습니다</div>
+                    <div class="itemMeta">이벤트 구조·체감 차이</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 이벤트, 참여해도 되는 사람과 손해 보는 사람이 갈립니다</div>
+                    <div class="itemMeta">손해 포인트·회피 기준</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">한국에서 테무 사용해도 괜찮을까? 실제 이용 흐름으로 확인해봤습니다</div>
+                    <div class="itemMeta">이용 흐름·안전 체크</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
@@ -630,26 +712,105 @@
             </ul>
           </div>
 
+          <!-- 주문/취소/계정 -->
+          <div class="chartCard">
+            <div class="chartTop">
+              <strong>주문 · 취소 · 기록</strong>
+              <span class="tag">문제 해결</span>
+            </div>
+
+            <ul class="list scrollList">
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">
+                      “배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유
+                      <span class="hotBadge" title="인기 예상">📈</span>
+                    </div>
+                    <div class="itemMeta">멈춤처럼 보이는 대표 원인</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 주문 취소, 되는 경우와 절대 안 되는 경우가 갈립니다</div>
+                    <div class="itemMeta">취소 가능 조건·막히는 조건</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">주문했는데 기록이 안 보일 때, 테무 시스템은 이렇게 작동합니다</div>
+                    <div class="itemMeta">기록 지연·계정/결제 확인</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">결제 완료 후 취소 버튼이 사라지는 이유, 내부 구조를 확인했습니다</div>
+                    <div class="itemMeta">상태 전환·취소 불가 타이밍</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- 배송/통관 -->
           <div class="chartCard">
             <div class="chartTop">
               <strong>배송 · 통관</strong>
-              <span class="tag">준비중</span>
+              <span class="tag">실수 많음</span>
             </div>
-            <ul class="list">
+
+            <ul class="list scrollList">
               <li>
                 <a class="item" href="#" onclick="return false;">
                   <div>
-                    <div class="itemTitle">통관번호 한 글자 때문에 배송이 멈춘 사례</div>
-                    <div class="itemMeta">20개 기사 프로젝트로 확장</div>
+                    <div class="itemTitle">
+                      테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다
+                      <span class="hotBadge" title="인기 예상">📈</span>
+                    </div>
+                    <div class="itemMeta">오타·불일치·수정 루트</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
               </li>
+
               <li>
                 <a class="item" href="#" onclick="return false;">
                   <div>
-                    <div class="itemTitle">배송조회가 안 될 때, 실제로는 처리된 상태?</div>
-                    <div class="itemMeta">조회 지연/반영 구조</div>
+                    <div class="itemTitle">주소 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일</div>
+                    <div class="itemMeta">주소 오류 시나리오·대응</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 배송조회가 안 될 때, 실제로는 이미 처리된 상태일 수도 있습니다</div>
+                    <div class="itemMeta">조회 지연·반영 시점</div>
+                  </div>
+                  <div class="arrow">›</div>
+                </a>
+              </li>
+
+              <li>
+                <a class="item" href="#" onclick="return false;">
+                  <div>
+                    <div class="itemTitle">테무 배송이 멈춘 것처럼 보일 때, 기다려야 할지 조치해야 할지 기준은 이것입니다</div>
+                    <div class="itemMeta">대기 vs 조치 기준표</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
@@ -657,26 +818,29 @@
             </ul>
           </div>
 
+          <!-- 환불/결제 -->
           <div class="chartCard">
             <div class="chartTop">
               <strong>환불 · 결제</strong>
-              <span class="tag">준비중</span>
+              <span class="tag">막히는 구간</span>
             </div>
-            <ul class="list">
+
+            <ul class="list scrollList">
               <li>
                 <a class="item" href="#" onclick="return false;">
                   <div>
-                    <div class="itemTitle">환불이 안 된다는 사람들의 공통 실수</div>
-                    <div class="itemMeta">요청 단계/증빙/처리</div>
+                    <div class="itemTitle">테무 환불이 안 된다는 사람들의 공통 실수, 이 지점이었습니다</div>
+                    <div class="itemMeta">환불 실패 패턴·회피법</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
               </li>
+
               <li>
                 <a class="item" href="#" onclick="return false;">
                   <div>
-                    <div class="itemTitle">결제 오류 발생 시 대부분 막히는 단계</div>
-                    <div class="itemMeta">카드/인증/앱 오류</div>
+                    <div class="itemTitle">테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다</div>
+                    <div class="itemMeta">인증·결제수단·앱 오류</div>
                   </div>
                   <div class="arrow">›</div>
                 </a>
@@ -693,11 +857,11 @@
             <strong>인기 글 바로가기</strong>
             <span class="tag">Top</span>
           </div>
-          <a class="sideBtn" href="./posts/temu-coupon-2026.html">2026 무료쿠폰 <small>대표</small></a>
-          <a class="sideBtn" href="./posts/temu-coupon-code-input.html">코드 입력 위치 <small>필수</small></a>
-          <a class="sideBtn" href="./posts/temu-coupon-not-working.html">적용 안될 때 <small>해결</small></a>
-          <a class="sideBtn" href="./posts/temu-free-gift-0won.html">사은품 0원 <small>인기</small></a>
-          <a class="sideBtn" href="./posts/temu-special-sale.html">특별 세일 <small>대안</small></a>
+          <a class="sideBtn" href="./posts/temu-coupon-2026.html">0원 결제 가능 조건 <small>📈</small></a>
+          <a class="sideBtn" href="./posts/temu-free-gift-0won.html">무료상품/사은품 기준 <small>📈</small></a>
+          <a class="sideBtn" href="#">주문이 멈춰 보일 때 <small>📈</small></a>
+          <a class="sideBtn" href="#">통관번호 오타/수정 <small>📈</small></a>
+          <a class="sideBtn" href="#">환불 실패 공통 실수 <small>핵심</small></a>
         </div>
 
         <div class="sideBlock">
