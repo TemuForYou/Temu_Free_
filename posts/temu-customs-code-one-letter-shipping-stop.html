@@ -6,425 +6,753 @@
   <meta name="theme-color" content="#ff7a00" />
 
   <title>테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다 | TFY</title>
-  <meta name="description" content="테무 통관번호(개인통관고유부호) 한 글자 오타로 배송이 멈춘 사례가 가장 많습니다. 멈춘 이유, 확인 방법, 수정 흐름, 반송/지연 기준까지 한 번에 정리합니다." />
+  <meta name="description" content="테무(Temu) 배송이 멈춘 것처럼 보일 때, 실제 최다 원인은 ‘개인통관고유번호 1글자 오타’입니다. 어디서 확인하고 어떻게 수정/재처리하는지, 막히는 지점 기준으로 기사형으로 정리합니다." />
+  <link rel="canonical" href="https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop.html" />
 
-  <!-- Canonical은 운영 도메인 확정 후 교체 권장 -->
-  <link rel="canonical" href="https://temuforyou.github.io/Temu_Free_/posts/temu-customs-code-one-letter-shipping-stop.html" />
-
-  <meta property="og:type" content="article" />
+  <!-- Open Graph -->
   <meta property="og:title" content="테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다" />
-  <meta property="og:description" content="한 글자 오타가 배송 정지로 이어지는 이유와 해결 흐름(확인→수정→처리)을 정리합니다." />
-  <meta property="og:url" content="https://temuforyou.github.io/Temu_Free_/posts/temu-customs-code-one-letter-shipping-stop.html" />
+  <meta property="og:description" content="배송이 멈춘 것처럼 보일 때 최다 원인: 개인통관고유번호 1글자 오타. 확인/수정/재처리 루트까지 기사형 정리." />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop.html" />
 
-  <meta name="twitter:card" content="summary" />
+  <!-- ✅ 폰트 고정: Apple SD Gothic Neo -->
+  <style>
+    :root{
+      --tfx-orange:#ff7a00;
+      --tfx-orange-2:#ff8f2b;
+      --tfx-bg:#f6f7f9;
+      --tfx-card:#ffffff;
+      --tfx-ink:#111827;
+      --tfx-muted:#6b7280;
+      --tfx-line:rgba(17,24,39,.10);
+      --tfx-soft:rgba(255,122,0,.10);
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="stylesheet" href="../styles.css" />
+      --radius-xl:24px;
+      --radius-lg:18px;
+      --radius-md:14px;
+
+      --shadow-sm:0 10px 26px rgba(17,24,39,.08);
+      --shadow-md:0 18px 42px rgba(17,24,39,.10);
+      --shadow-in:inset 0 1px 0 rgba(255,255,255,.55);
+
+      --max:1160px;
+    }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    body{
+      margin:0;
+      font-family: "Apple SD Gothic Neo","Apple SD 산돌고딕 Neo","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      color:var(--tfx-ink);
+      background:var(--tfx-bg);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+    }
+    a{ color:inherit; text-decoration:none; }
+    button{ font-family:inherit; }
+
+    /* ===== Topbar (메인과 동일 톤) ===== */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      height:56px;
+      display:flex; align-items:center;
+      background:linear-gradient(90deg,var(--tfx-orange),var(--tfx-orange-2));
+      box-shadow:0 10px 26px rgba(0,0,0,.10);
+    }
+    .topbar-inner{
+      width:min(var(--max),calc(100% - 28px));
+      margin:0 auto;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:16px;
+    }
+
+    /* Logo (TFY) - 클릭 이동 X, hover 간지럼 */
+    .logo{ display:flex; align-items:center; gap:10px; color:#fff; user-select:none; }
+    .logo-badge{
+      width:34px;height:34px;border-radius:12px;
+      background:rgba(255,255,255,.18);
+      box-shadow:var(--shadow-in);
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.22);
+      backdrop-filter: blur(6px);
+    }
+    .logo-mark{ font-weight:800; font-size:18px; line-height:1; transform: translateY(-.5px); }
+    .logo-text{ font-size:20px; font-weight:800; letter-spacing:.2px; font-style:italic; }
+    @keyframes tickle {
+      0% { transform: translateX(0); }
+      15% { transform: translateX(-2px) rotate(-1deg); }
+      30% { transform: translateX(2px) rotate(1deg); }
+      45% { transform: translateX(-2px) rotate(-1deg); }
+      60% { transform: translateX(2px) rotate(1deg); }
+      75% { transform: translateX(-1px) rotate(-.5deg); }
+      100% { transform: translateX(0); }
+    }
+    .logo:hover .logo-badge,
+    .logo:hover .logo-text{ animation: tickle .55s ease-in-out; }
+
+    .pill{
+      padding:8px 12px; border-radius:999px;
+      border:1px solid rgba(255,255,255,.22);
+      background:rgba(255,255,255,.16);
+      box-shadow:var(--shadow-in);
+      backdrop-filter: blur(6px);
+      color:#fff;
+      font-size:13px; font-weight:800;
+      white-space:nowrap;
+    }
+
+    /* ===== Layout ===== */
+    .wrap{
+      width:min(var(--max),calc(100% - 28px));
+      margin:24px auto 110px;
+      display:grid;
+      grid-template-columns: 1fr 340px;
+      gap:18px;
+      align-items:start;
+    }
+
+    /* Article card */
+    .article{
+      background:var(--tfx-card);
+      border:1px solid var(--tfx-line);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-sm);
+      padding:26px;
+    }
+    .crumbs{
+      display:flex; flex-wrap:wrap; gap:10px;
+      font-size:12px; color:var(--tfx-muted);
+      margin-bottom:10px;
+      font-weight:800;
+    }
+    .crumbs a{ color:var(--tfx-muted); }
+    .crumbs .dot{ opacity:.6; }
+
+    h1{
+      margin:0 0 10px;
+      font-size:30px;
+      letter-spacing:-.5px;
+      line-height:1.22;
+    }
+    .meta{
+      display:flex; flex-wrap:wrap; gap:10px;
+      align-items:center;
+      color:var(--tfx-muted);
+      font-size:12px;
+      font-weight:800;
+      margin-bottom:18px;
+    }
+    .meta .tag{
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,0,.20);
+      background: rgba(255,122,0,.10);
+      color:#b54300;
+      font-weight:900;
+    }
+
+    .lead{
+      background: linear-gradient(180deg, rgba(255,122,0,.10), rgba(255,122,0,.04));
+      border:1px solid rgba(255,122,0,.18);
+      border-radius:18px;
+      padding:14px 14px;
+      color:#1f2937;
+      line-height:1.7;
+      font-size:14px;
+      margin: 0 0 18px;
+    }
+
+    /* In-article quick coupons (간단히, 메인과 톤 동일) */
+    .coupon-inline{
+      border:1px solid rgba(17,24,39,.10);
+      border-radius:18px;
+      background:#fff;
+      box-shadow: 0 12px 26px rgba(17,24,39,.06);
+      overflow:hidden;
+      margin: 0 0 22px;
+    }
+    .coupon-inline-head{
+      padding:14px;
+      background: linear-gradient(180deg, rgba(255,122,0,.12), rgba(255,122,0,.03));
+      border-bottom:1px solid rgba(17,24,39,.06);
+      display:flex; align-items:flex-end; justify-content:space-between; gap:12px;
+    }
+    .coupon-inline-head .t{
+      font-weight:900; letter-spacing:-.2px; font-size:14px;
+    }
+    .coupon-inline-head .s{
+      color:var(--tfx-muted); font-size:12px; font-weight:800; line-height:1.35; text-align:right;
+    }
+    .coupon-inline-body{
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+
+    /* Coupon card shared */
+    .tfx-coupon-card{
+      position:relative;
+      padding:12px 12px 44px;
+      border-radius:18px;
+      border:1px solid rgba(17,24,39,.10);
+      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
+      box-shadow: 0 12px 24px rgba(17,24,39,.07);
+      overflow:hidden;
+    }
+    .tfx-coupon-card:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(circle at 20% 0%, rgba(255,122,0,.22), transparent 45%),
+                  radial-gradient(circle at 100% 20%, rgba(255,122,0,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .tfx-coupon-left{
+      display:flex; align-items:flex-start; gap:10px;
+      position:relative; z-index:1;
+    }
+    .tfx-coupon-icon{
+      width:38px;height:38px;border-radius:14px;
+      display:grid;place-items:center;
+      background: rgba(255,122,0,.14);
+      border:1px solid rgba(255,122,0,.18);
+      box-shadow: var(--shadow-in);
+      flex:0 0 auto;
+      font-size:16px;
+    }
+    .tfx-coupon-meta{ min-width:0; }
+    .tfx-coupon-title{
+      font-weight:900; font-size:13px;
+      letter-spacing:-.15px; line-height:1.25;
+      display:flex; gap:8px; align-items:center; flex-wrap:wrap;
+    }
+    .tfx-badge{
+      font-size:11px;font-weight:900;
+      padding:4px 8px;border-radius:999px;
+      border:1px solid rgba(255,122,0,.20);
+      background: rgba(255,122,0,.12);
+      color:#b54300;
+      white-space:nowrap;
+    }
+    .tfx-coupon-desc{
+      margin-top:4px;
+      color:var(--tfx-muted);
+      font-size:12px;
+      line-height:1.35;
+      letter-spacing:-.1px;
+    }
+    .tfx-coupon-right{
+      position:absolute; right:10px; top:10px;
+      display:flex; gap:8px; z-index:2;
+    }
+    .tfx-btn{
+      border:0; cursor:pointer;
+      padding:8px 10px; border-radius:12px;
+      font-weight:900; font-size:12px;
+      letter-spacing:-.1px;
+      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
+      user-select:none;
+      display:inline-flex; align-items:center; justify-content:center;
+      min-width:54px;
+    }
+    .tfx-btn:active{ transform: translateY(1px); }
+    .tfx-btn-ghost{
+      background:#fff; border:1px solid rgba(17,24,39,.10);
+      box-shadow: 0 10px 18px rgba(17,24,39,.06);
+    }
+    .tfx-btn-solid{
+      background: linear-gradient(180deg,var(--tfx-orange),var(--tfx-orange-2));
+      color:#fff;
+      box-shadow: 0 14px 22px rgba(255,122,0,.22);
+    }
+    .tfx-coupon-codechip{
+      position:absolute; left:12px; bottom:10px; z-index:2;
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid rgba(255,122,0,.22);
+      background: rgba(255,122,0,.10);
+      font-weight:900;
+      letter-spacing:.2px;
+      font-size:12px;
+      cursor:pointer;
+      user-select:none;
+    }
+    .copied{ opacity:.75; transform: translateY(1px); }
+
+    /* Article typography */
+    .content{ line-height:1.85; font-size:15px; color:#111827; }
+    .content p{ margin: 0 0 14px; }
+    .content h2{
+      margin: 24px 0 10px;
+      font-size:18px;
+      letter-spacing:-.2px;
+    }
+    .content h2 .k{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,122,0,.20);
+      background: rgba(255,122,0,.10);
+      color:#b54300;
+      font-weight:900;
+      font-size:13px;
+      margin-bottom:8px;
+    }
+    .note{
+      margin: 10px 0 16px;
+      padding:12px 14px;
+      border-radius:16px;
+      border:1px solid rgba(17,24,39,.10);
+      background:#fff;
+      box-shadow: 0 12px 26px rgba(17,24,39,.05);
+      color:#374151;
+      font-size:14px;
+      line-height:1.75;
+    }
+    .list{
+      padding-left:18px;
+      margin: 0 0 14px;
+    }
+    .list li{ margin-bottom:8px; }
+    .divider{
+      height:1px;
+      background: rgba(17,24,39,.08);
+      margin: 18px 0;
+    }
+
+    /* Sidebar */
+    .sidebar-shell{ position:relative; height:100%; min-height: 420px; }
+    .sidebar{ position:sticky; top:86px; will-change:transform; transform:translate3d(0,0,0); }
+
+    .side-card{
+      background:rgba(255,255,255,.92);
+      border:1px solid rgba(17,24,39,.10);
+      border-radius:var(--radius-xl);
+      box-shadow:var(--shadow-md);
+      backdrop-filter: blur(10px);
+      overflow:hidden;
+    }
+    .side-head{
+      padding:14px 14px 12px;
+      background: linear-gradient(180deg, rgba(255,122,0,.12), rgba(255,122,0,.04));
+      border-bottom:1px solid rgba(17,24,39,.06);
+    }
+    .side-head-title{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .side-head-title .left{
+      font-weight:900; letter-spacing:-.2px; font-size:14px;
+    }
+    .side-head-title .right{
+      font-size:12px; color:var(--tfx-muted); font-weight:800;
+    }
+    .side-desc{
+      margin-top:6px;
+      font-size:12px;
+      color:var(--tfx-muted);
+      line-height:1.35;
+    }
+    #couponSidebarList{
+      padding:12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height: 560px;
+      overflow:auto;
+    }
+    #couponSidebarList::-webkit-scrollbar{ width:10px; }
+    #couponSidebarList::-webkit-scrollbar-thumb{
+      background: rgba(17,24,39,.12);
+      border-radius:999px;
+      border:3px solid rgba(255,255,255,.75);
+    }
+
+    /* Floating coupon button */
+    .floating-coupon{
+      position:fixed; right:22px; bottom:22px;
+      width:56px;height:56px;border-radius:999px;
+      background: rgba(255,255,255,.65);
+      border: 1px solid rgba(17,24,39,.10);
+      box-shadow: 0 18px 46px rgba(17,24,39,.18);
+      backdrop-filter: blur(10px);
+      display:grid; place-items:center;
+      z-index:60;
+      cursor:pointer;
+      transition: transform .15s ease;
+      user-select:none;
+    }
+    .floating-coupon:hover{ transform: translateY(-2px); }
+    .floating-coupon:active{ transform: translateY(1px); }
+    .floating-coupon .ic{
+      width:34px;height:34px;border-radius:14px;
+      background: rgba(255,122,0,.12);
+      border:1px solid rgba(255,122,0,.18);
+      display:grid; place-items:center;
+      box-shadow: var(--shadow-in);
+      font-size:16px;
+    }
+
+    @media (max-width: 980px){
+      .wrap{ grid-template-columns: 1fr; }
+      .sidebar{ position:static; transform:none !important; }
+    }
+  </style>
+
+  <!-- ✅ 구조화 데이터(SEO) -->
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@type":"Article",
+    "headline":"테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
+    "datePublished":"2026-01-03",
+    "dateModified":"2026-01-03",
+    "author":{"@type":"Organization","name":"TFY"},
+    "publisher":{"@type":"Organization","name":"TFY"},
+    "mainEntityOfPage":"https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop.html",
+    "description":"테무 배송 멈춤처럼 보일 때 최다 원인: 개인통관고유번호 1글자 오타. 확인/수정/재처리 루트까지 기사형 정리."
+  }
+  </script>
 </head>
 
 <body>
-  <!-- 상단 고정 헤더(디자인 잠금 영역과 동일 구조 유지 권장) -->
-  <header class="site-header">
-    <div class="header-inner">
-      <a class="brand" href="../index.html" aria-label="TFY 홈">
-        <span class="brand-mark" id="tfyLogo" role="img" aria-label="TFY 로고">TFY</span>
-      </a>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="logo" aria-label="TFY Logo" title="TFY">
+        <div class="logo-badge"><div class="logo-mark">TFY</div></div>
+        <div class="logo-text">TFY</div>
+      </div>
 
-      <nav class="top-nav" aria-label="상단 메뉴">
-        <a href="../index.html" class="nav-link">홈</a>
-        <a href="../index.html#categories" class="nav-link">카테고리</a>
-        <a href="../index.html#popular" class="nav-link">인기글</a>
-      </nav>
+      <div class="pill">실수·문제 해결형 · 배송/통관</div>
     </div>
   </header>
 
-  <div class="layout">
-    <!-- 본문 -->
-    <main class="content">
-      <article class="article">
-        <div class="article-hero">
-          <div class="article-kicker">실수·문제 해결형</div>
-          <h1 class="article-title">테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다</h1>
-          <div class="article-meta">
-            <span>TFY 편집팀</span>
-            <span class="dot">•</span>
-            <time datetime="2026-01-03">2026.01.03</time>
-            <span class="dot">•</span>
-            <span>업데이트: 상시</span>
-          </div>
+  <main class="wrap">
+    <!-- LEFT: Article -->
+    <article class="article">
+      <nav class="crumbs" aria-label="breadcrumb">
+        <a href="../index.html">홈</a><span class="dot">·</span>
+        <span>실수·문제 해결형</span><span class="dot">·</span>
+        <span>배송/통관</span>
+      </nav>
 
-          <div class="article-intro">
-            <p>
-              테무(Temu)는 초저가·무료배송·쉬운 환불로 빠르게 커졌지만,
-              해외배송 구조상 <strong>통관 단계</strong>에서 막히면 “아무 일도 안 일어나는 것처럼” 보일 수 있습니다.
-              그중 가장 흔한 원인이 <strong>개인통관고유부호(통관번호) 1글자 오타</strong>입니다.
-            </p>
-            <p>
-              이 글은 “왜 멈추는지 → 어디서 확인하는지 → 어떤 흐름으로 수정/처리되는지”를
-              기준과 예시로 깔끔하게 정리합니다.
-            </p>
-          </div>
-        </div>
+      <h1>테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다</h1>
 
-        <!-- 쿠폰 CTA 박스(기사 상단에서는 과도한 초대 느낌을 줄이고, 정보 뒤에 자연스럽게 이어지게 설계) -->
-        <section class="coupon-cta">
-          <div class="coupon-cta-head">
-            <div class="coupon-cta-title">🎟️ 쿠폰 & 링크 빠른 이용</div>
-            <div class="coupon-cta-sub">필요할 때 바로 쓰도록 정리해두었습니다.</div>
-          </div>
-
-          <div class="coupon-grid">
-            <a class="coupon-card" href="https://temu.to/m/uotsq20netz" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">aak74594</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-
-            <a class="coupon-card" href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">frq027981</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-
-            <a class="coupon-card" href="https://temu.to/m/u3ckk6z4eku" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">acr804202</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-
-            <a class="coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">ack263361</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-
-            <a class="coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">frw419209</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-
-            <a class="coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
-              <div class="coupon-badge">CODE</div>
-              <div class="coupon-code">alf468043</div>
-              <div class="coupon-desc">쿠폰/혜택 링크</div>
-            </a>
-          </div>
-
-          <div class="coupon-cta-foot">
-            <span class="tip">팁:</span>
-            <span>오타/실수 해결 후에 적용하면 스트레스가 줄어듭니다.</span>
-          </div>
-        </section>
-
-        <section class="toc" aria-label="목차">
-          <h2 class="section-title">목차</h2>
-          <ol class="toc-list">
-            <li><a href="#sec-1">통관번호 한 글자 오타가 “배송 멈춤”으로 보이는 이유</a></li>
-            <li><a href="#sec-2">가장 많이 나오는 오타 유형 5가지</a></li>
-            <li><a href="#sec-3">내 주문이 지금 “통관 이슈”인지 확인하는 3단계</a></li>
-            <li><a href="#sec-4">수정 가능한 경우 vs 어려운 경우, 기준은 이것</a></li>
-            <li><a href="#sec-5">실전 해결 플로우: 가장 빠른 순서로 정리</a></li>
-            <li><a href="#sec-6">반송/지연을 줄이는 체크리스트</a></li>
-            <li><a href="#sec-7">FAQ: 가장 많이 묻는 질문</a></li>
-          </ol>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-1">
-          <h2 class="section-title">통관번호 한 글자 오타가 “배송 멈춤”으로 보이는 이유</h2>
-
-          <p>
-            테무는 해외 물류를 거쳐 국내 반입 후 통관 절차를 밟습니다.
-            여기서 <strong>수취인 정보(이름/휴대폰/개인통관고유부호)</strong>가
-            맞지 않으면 통관 단계에서 자동으로 보류되는 케이스가 많습니다.
-          </p>
-
-          <p>
-            문제는 이 보류가 사용자 입장에서는 “앱 화면이 멈춘 것 같다”로 체감된다는 점입니다.
-            배송 조회가 갱신되지 않거나, 며칠 동안 같은 문구로 고정되면 대부분 불안해집니다.
-            하지만 실제로는 <strong>‘처리 대기’</strong>가 길어지는 구조일 가능성이 큽니다.
-          </p>
-
-          <div class="callout warning">
-            <div class="callout-title">핵심 포인트</div>
-            <p>
-              통관번호가 100% 일치하지 않으면,
-              배송 자체가 사라지는 게 아니라 <strong>통관 단계에서 멈춰 서는 경우</strong>가 매우 흔합니다.
-            </p>
-          </div>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-2">
-          <h2 class="section-title">가장 많이 나오는 오타 유형 5가지</h2>
-
-          <p>
-            “한 글자”라고 해도 실제로는 특정 패턴이 반복됩니다.
-            아래 유형은 실제로 가장 흔하게 발생합니다.
-          </p>
-
-          <ul class="bullets">
-            <li><strong>숫자 0(영) ↔ 알파벳 O(오)</strong> 착각</li>
-            <li><strong>1 ↔ I ↔ l</strong>처럼 비슷한 글자 혼동</li>
-            <li>중간 자리 <strong>한 글자 누락</strong>(복사/붙여넣기 과정에서 잘림)</li>
-            <li><strong>이전 주문의 저장 정보</strong>가 남아 그대로 제출됨</li>
-            <li>통관번호는 맞지만 <strong>이름/휴대폰과 매칭 불일치</strong></li>
-          </ul>
-
-          <div class="callout info">
-            <div class="callout-title">체크</div>
-            <p>
-              “번호만 맞으면 끝”이 아니라,
-              <strong>이름/휴대폰/통관번호의 조합</strong>이 맞아야 정상적으로 다음 단계로 넘어갑니다.
-            </p>
-          </div>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-3">
-          <h2 class="section-title">내 주문이 지금 “통관 이슈”인지 확인하는 3단계</h2>
-
-          <p>
-            아래 3단계만 확인해도 “기다릴 문제인지 / 조치해야 하는 문제인지”가 빠르게 갈립니다.
-          </p>
-
-          <ol class="steps">
-            <li>
-              <strong>배송 조회 문구가 48~72시간 이상 동일</strong>한지 확인합니다.
-              단, 주말/공휴일에는 체감상 더 길게 느껴질 수 있습니다.
-            </li>
-            <li>
-              주문 상세에서 <strong>수취인 정보가 최신인지</strong> 확인합니다.
-              특히 자동완성/저장된 주소를 사용하면 과거 값이 남는 경우가 많습니다.
-            </li>
-            <li>
-              개인통관고유부호를 <strong>원본(문자/숫자 포함) 그대로</strong> 복사해 붙여넣고,
-              오타가 없는지 <strong>앞/중간/끝 3구간으로 나눠</strong> 대조합니다.
-            </li>
-          </ol>
-
-          <p>
-            이 단계에서 “한 글자라도 의심된다”면
-            바로 다음 섹션의 기준을 확인하고 조치하는 편이 전체 시간을 줄입니다.
-          </p>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-4">
-          <h2 class="section-title">수정 가능한 경우 vs 어려운 경우, 기준은 이것</h2>
-
-          <p>
-            통관번호 수정은 언제나 되는 게 아닙니다.
-            결정적인 기준은 보통 <strong>‘물류 단계가 어디까지 진행됐는지’</strong>입니다.
-          </p>
-
-          <div class="two-col">
-            <div class="panel ok">
-              <h3 class="panel-title">수정 가능성이 높은 케이스</h3>
-              <ul class="bullets">
-                <li>결제 직후 또는 출고 전/초기 상태</li>
-                <li>국내 반입 전 단계로 보이는 경우</li>
-                <li>정보가 저장된 채로 “대기”가 길게 지속</li>
-              </ul>
-            </div>
-            <div class="panel no">
-              <h3 class="panel-title">수정이 까다로운 케이스</h3>
-              <ul class="bullets">
-                <li>이미 통관 심사가 진행 중으로 표시되는 경우</li>
-                <li>반송/보류 상태로 확정된 후 시간이 꽤 지난 경우</li>
-                <li>수취인 정보 불일치가 복합적으로 얽힌 경우</li>
-              </ul>
-            </div>
-          </div>
-
-          <p>
-            다만 “까다롭다”는 것이 “불가능”과 동일하진 않습니다.
-            중요한 건 <strong>해결 흐름을 올바른 순서로</strong> 잡는 것입니다.
-          </p>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-5">
-          <h2 class="section-title">실전 해결 플로우: 가장 빠른 순서로 정리</h2>
-
-          <p>
-            아래 순서는 경험상 처리 시간을 가장 줄이는 쪽으로 정리했습니다.
-            먼저 확인하고, 수정 가능한 구간이면 즉시 수정하고, 이후에는 기다리는 구간을 분리하는 방식입니다.
-          </p>
-
-          <ol class="steps">
-            <li>
-              <strong>통관번호 원본을 준비</strong>합니다(복사/붙여넣기).
-              직접 타이핑은 오타 확률을 크게 올립니다.
-            </li>
-            <li>
-              주문 상세에서 <strong>수취인 이름/휴대폰/통관번호</strong>를 세트로 확인합니다.
-              하나만 맞아도 통관이 되는 구조가 아닙니다.
-            </li>
-            <li>
-              수정 메뉴가 보이면 <strong>즉시 업데이트</strong>합니다.
-              수정 후에는 “바로 움직이지 않는 것처럼” 보일 수 있으니, 다음 단계로 넘어갑니다.
-            </li>
-            <li>
-              수정 후 <strong>48시간</strong>은 상태 갱신 지연이 정상 범위일 수 있습니다.
-              이 기간에는 같은 작업을 반복하기보다 “처리 대기”로 두는 편이 좋습니다.
-            </li>
-            <li>
-              48시간 이후에도 동일하면, 오타 외에 <strong>이름/휴대폰 매칭</strong>을 다시 점검합니다.
-              특히 영문표기/띄어쓰기/저장된 정보가 문제를 만드는 경우가 있습니다.
-            </li>
-          </ol>
-
-          <div class="callout success">
-            <div class="callout-title">현실적인 기준</div>
-            <p>
-              “오늘 수정했는데 왜 내일도 그대로지?”가 정상인 구간이 있습니다.
-              중요한 건 <strong>수정 → 대기 → 재확인</strong>을 섞어 쓰는 것입니다.
-            </p>
-          </div>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-6">
-          <h2 class="section-title">반송/지연을 줄이는 체크리스트</h2>
-
-          <ul class="checklist">
-            <li><span class="check">✓</span> 통관번호는 항상 “원본 복사/붙여넣기”</li>
-            <li><span class="check">✓</span> 저장된 정보가 남아있지 않은지 주문마다 점검</li>
-            <li><span class="check">✓</span> 이름/휴대폰/통관번호 매칭 불일치 여부 확인</li>
-            <li><span class="check">✓</span> 배송 문구가 2~3일 동일해도 “통관 구간”이면 정상 지연일 수 있음</li>
-            <li><span class="check">✓</span> 같은 내용을 반복 수정하기보다 “수정 후 대기” 구간 분리</li>
-          </ul>
-
-          <p>
-            위 항목만 지켜도 “배송 멈춤처럼 보이는 체감”은 크게 줄어듭니다.
-          </p>
-        </section>
-
-        <hr class="divider" />
-
-        <section id="sec-7">
-          <h2 class="section-title">FAQ: 가장 많이 묻는 질문</h2>
-
-          <details class="faq" open>
-            <summary>Q. 통관번호를 수정했는데 배송이 바로 움직이지 않습니다.</summary>
-            <div class="faq-body">
-              <p>
-                수정 후에는 처리 반영까지 시간이 걸릴 수 있습니다.
-                특히 통관/물류 상태 갱신이 지연되면 “아무 변화가 없는 것처럼” 보일 수 있습니다.
-                일반적으로는 24~48시간은 지켜보고, 그 이후에도 동일하면 매칭 정보(이름/휴대폰)를 다시 점검하는 흐름이 효율적입니다.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq">
-            <summary>Q. 오타가 아닌데도 멈추는 경우가 있나요?</summary>
-            <div class="faq-body">
-              <p>
-                있습니다. 통관번호가 맞아도 이름/휴대폰과 매칭이 맞지 않거나,
-                저장된 정보가 섞여 들어가면 같은 현상이 발생할 수 있습니다.
-                그래서 “번호만”이 아니라 “세트”로 확인하는 것이 핵심입니다.
-              </p>
-            </div>
-          </details>
-
-          <details class="faq">
-            <summary>Q. 테무를 처음 쓰는데, 왜 이런 절차가 필요한가요?</summary>
-            <div class="faq-body">
-              <p>
-                테무는 해외배송 기반이라 국내 유통과 달리 통관을 거칩니다.
-                이 과정에서 수취인 식별이 필수이고, 개인통관고유부호는 그 식별을 돕는 핵심 정보입니다.
-                한 번만 정확히 세팅하면 이후에는 훨씬 편해집니다.
-              </p>
-            </div>
-          </details>
-        </section>
-
-        <hr class="divider" />
-
-        <section class="closing">
-          <h2 class="section-title">마무리</h2>
-          <p>
-            “통관번호 한 글자” 문제는 흔하지만, 해결 흐름을 알면 대부분 빠르게 정리됩니다.
-            오늘 주문이 멈춘 것처럼 보여도, 먼저 통관 구간인지 확인하고,
-            오타 패턴을 기준으로 점검한 뒤, 수정 가능 구간이라면 즉시 조치하는 게 핵심입니다.
-          </p>
-          <p>
-            다음 글에서도 실제로 가장 많이 막히는 포인트만 골라,
-            빠르게 해결할 수 있도록 기준 중심으로 정리해드리겠습니다.
-          </p>
-        </section>
-      </article>
-    </main>
-
-    <!-- 우측 사이드바(디자인 잠금 영역에서 공통으로 쓰는 구조와 동일하게 유지 권장) -->
-    <aside class="sidebar" aria-label="사이드바">
-      <div class="sidebar-sticky" id="sidebarSticky">
-        <section class="side-card">
-          <div class="side-card-title">📈 인기글</div>
-          <ul class="side-list">
-            <li><a href="../index.html#popular">인기글 목록에서 확인</a></li>
-            <li><a href="../index.html#popular">상승 중인 글 모음</a></li>
-            <li><a href="../index.html#popular">최근 업데이트</a></li>
-          </ul>
-        </section>
-
-        <section class="side-card">
-          <div class="side-card-title">🎟️ 쿠폰 목록</div>
-          <div class="side-coupons">
-            <a class="side-coupon" href="https://temu.to/m/uotsq20netz" target="_blank" rel="noopener"><span class="sc-code">aak74594</span><span class="sc-go">바로가기</span></a>
-            <a class="side-coupon" href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener"><span class="sc-code">frq027981</span><span class="sc-go">바로가기</span></a>
-            <a class="side-coupon" href="https://temu.to/m/u3ckk6z4eku" target="_blank" rel="noopener"><span class="sc-code">acr804202</span><span class="sc-go">바로가기</span></a>
-            <a class="side-coupon" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener"><span class="sc-code">ack263361</span><span class="sc-go">바로가기</span></a>
-            <a class="side-coupon" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener"><span class="sc-code">frw419209</span><span class="sc-go">바로가기</span></a>
-            <a class="side-coupon" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener"><span class="sc-code">alf468043</span><span class="sc-go">바로가기</span></a>
-          </div>
-          <div class="side-note">누르면 새 창으로 열립니다.</div>
-        </section>
+      <div class="meta">
+        <span class="tag">TFY 편집팀</span>
+        <span>·</span>
+        <span>2026.01.03</span>
+        <span>·</span>
+        <span>업데이트: 상시</span>
       </div>
 
-      <a class="floating-coupon" href="https://temu.to/m/u3ia9bomcaw" target="_blank" rel="noopener" aria-label="쿠폰 바로가기">
-        <span class="floating-coupon-icon">🎟️</span>
-      </a>
+      <p class="lead">
+        테무(Temu)는 “초저가 + 무료배송”이 빠르게 퍼졌지만, 해외배송 구조상 <b>통관 단계에서 한 번 막히면</b>
+        화면상으로는 “아무 일도 안 일어나는 것처럼” 보일 수 있습니다.<br/>
+        그중 가장 흔한 원인이 <b>개인통관고유번호(통관번호) 1글자 오타</b>예요.<br/>
+        이 글은 “왜 멈추는지 → 어디서 확인하는지 → 어떤 흐름으로 수정/재처리되는지”를
+        <b>막히는 지점 기준</b>으로 기사형으로 정리합니다.
+      </p>
+
+      <!-- Inline coupons (6개 중 3개 랜덤 노출) -->
+      <section class="coupon-inline" aria-label="쿠폰 바로 사용">
+        <div class="coupon-inline-head">
+          <div class="t">🎁 쿠폰 & 링크 빠른 이용</div>
+          <div class="s">필요할 때 바로 쓰도록<br/>핵심만 깔끔하게 정리했습니다</div>
+        </div>
+        <div class="coupon-inline-body" id="couponInlineList"></div>
+      </section>
+
+      <div class="content">
+        <h2><span class="k">🔍 1. “배송 멈춤”처럼 보이는 가장 흔한 이유</span></h2>
+        <p>
+          테무 배송조회가 멈춘 것처럼 보일 때, 많은 분들이 “테무가 늦나 보다” 정도로 생각하고 기다립니다.
+          그런데 일정 시간이 지나도 그대로라면, 단순 지연이 아니라 <b>통관 단계에서 ‘확인 대기’ 상태로 묶였을 가능성</b>이 큽니다.
+          해외직구는 국내 택배처럼 “출발 → 이동 → 도착”이 매끄럽게 이어지지 않고,
+          <b>세관 확인</b>이라는 관문을 반드시 거칩니다.
+        </p>
+        <p>
+          이때 통관번호가 정확하지 않으면, 시스템이 자동으로 “진행”을 못합니다.
+          특히 <b>영문 O(오)와 숫자 0(영)</b>, <b>영문 I(아이)와 숫자 1</b>,
+          혹은 <b>한 글자 누락</b> 같은 실수가 실제로 정말 많습니다.
+          화면에는 “진행중”처럼 보여도 내부적으로는 <b>서류/정보 불일치</b>로 처리 대기 상태가 되는 경우가 많아요.
+        </p>
+
+        <div class="note">
+          ✅ 핵심만 먼저 정리하면<br/>
+          <b>“배송이 멈춘 것처럼 보인다” → “통관번호 1글자 오타/불일치가 최다”</b><br/>
+          따라서 “배송사 문제”로 단정하기 전에, <b>통관정보(특히 통관번호)를 먼저 확인</b>하는 게 가장 빠릅니다.
+        </div>
+
+        <h2><span class="k">🧩 2. 통관번호 1글자 오타가 ‘치명적’인 이유</span></h2>
+        <p>
+          통관은 “상품”이 아니라 “사람(수취인)” 기준으로 진행됩니다.
+          즉, 내 이름으로 통관이 되려면 <b>이름 + 통관번호</b>가 일치해야 해요.
+          그런데 한 글자라도 틀리면, 세관 기준으로는 “다른 사람 정보”가 됩니다.
+          그럼 자동 진행이 아닌 <b>확인/보류</b> 흐름으로 넘어갈 수 있습니다.
+        </p>
+        <ul class="list">
+          <li><b>오타</b>: 숫자 하나가 다르거나 영문 혼동(0/O, 1/I)</li>
+          <li><b>불일치</b>: 수취인 이름(영문/한글)이 통관정보와 맞지 않음</li>
+          <li><b>예전 정보</b>: 예전에 저장된 통관번호가 자동 입력되어 그대로 결제</li>
+          <li><b>중복 입력</b>: 공백/하이픈 등 불필요한 문자로 인식 오류</li>
+        </ul>
+
+        <h2><span class="k">✅ 3. 지금 내 주문이 “통관 이슈”인지 확인하는 3단계</span></h2>
+        <p>
+          많은 분들이 여기에서 시간을 가장 많이 쓰십니다. “택배가 늦다”인지 “통관에서 막혔다”인지
+          구분이 안 되기 때문이죠. 아래 3단계만 하면 방향이 빨리 잡힙니다.
+        </p>
+        <div class="note">
+          <b>1)</b> 테무 주문 상세에서 배송 상태 문구를 확인합니다.<br/>
+          <b>2)</b> 배송조회 링크(또는 운송장)에서 “세관/통관 관련 문구”가 있는지 봅니다.<br/>
+          <b>3)</b> 주문 시 입력된 통관번호를 다시 확인합니다(특히 0/O, 1/I).
+        </div>
+        <p>
+          여기서 “세관” 혹은 “통관” 관련 안내가 보이거나, 일정 구간에서 상태가 장시간 고정되면
+          통관정보를 먼저 의심하는 것이 가장 빠릅니다.
+        </p>
+
+        <h2><span class="k">🛠️ 4. 통관번호 오타를 발견했을 때, 가장 빠른 해결 루트</span></h2>
+        <p>
+          중요한 포인트는 “오타를 발견했다고 바로 배송이 움직이진 않는다”는 점입니다.
+          통관번호가 틀린 주문은 대부분 <b>정보 수정 → 재확인 → 반영</b>의 흐름이 필요합니다.
+          그래서 아래 순서로 움직이면 헛수고가 줄어듭니다.
+        </p>
+        <ul class="list">
+          <li><b>Step A</b> : 테무 주문/배송 정보에서 통관번호가 어떻게 들어갔는지 확인</li>
+          <li><b>Step B</b> : 오타 유형(0/O, 1/I, 누락, 불일치)을 정확히 특정</li>
+          <li><b>Step C</b> : 수정 가능한 경로가 있다면 그 경로로 먼저 수정(저장 정보 포함)</li>
+          <li><b>Step D</b> : 수정 후에도 상태가 고정되면, 재확인(고객센터/가이드 경로) 진행</li>
+        </ul>
+        <div class="note">
+          ✅ “무작정 문의부터”보다<br/>
+          <b>오타 유형을 먼저 특정</b>하고, “어디에 들어간 정보가 틀렸는지”를 정리한 뒤 움직이면
+          해결이 훨씬 빨라집니다.
+        </div>
+
+        <h2><span class="k">⚠️ 5. 사람들이 가장 많이 하는 ‘공통 실수 5가지’</span></h2>
+        <p>
+          같은 문제를 반복하는 이유는 의외로 단순합니다. 대부분 “정확히 입력했다”고 믿는데,
+          실제로는 <b>자동 입력</b>이나 <b>눈에 잘 안 보이는 한 글자 차이</b>가 원인인 경우가 많습니다.
+          아래 5가지는 특히 자주 나옵니다.
+        </p>
+        <ul class="list">
+          <li><b>0과 O 혼동</b> : 폰트가 비슷하면 거의 100% 헷갈립니다s는 구간</li>
+          <li><b>1과 I 혼동</b> : 대문자 I가 숫자 1처럼 보임</li>
+          <li><b>복사/붙여넣기 공백</b> : 맨 앞/뒤 공백이 들어가 인식 실패</li>
+          <li><b>저장된 예전 통관번호</b> : 과거 정보가 자동 적용되어 그대로 결제</li>
+          <li><b>이름 불일치</b> : 통관번호는 맞는데 이름(영문/한글)이 다름</li>
+        </ul>
+
+        <h2><span class="k">🧠 6. “지금 당장 할 수 있는” 체크리스트</span></h2>
+        <p>
+          아래 체크리스트는 “통관번호 오타”가 의심될 때, 가장 현실적으로 도움이 되는 순서로 구성했습니다.
+          이 순서대로 하면 “불필요하게 오래 기다리기”를 크게 줄일 수 있어요.
+        </p>
+        <div class="note">
+          <b>체크 1)</b> 통관번호를 ‘한 글자씩’ 끊어서 재확인(0/O, 1/I 우선)<br/>
+          <b>체크 2)</b> 저장된 통관정보(자동 입력)를 확인하고 업데이트<br/>
+          <b>체크 3)</b> 주문 상세의 수취인 이름과 통관정보 이름이 같은지 확인<br/>
+          <b>체크 4)</b> 상태가 고정이면 “통관 단계” 문구/구간을 캡처해두기<br/>
+          <b>체크 5)</b> 수정 후 24~48시간 정도 반영 텀을 감안(바로 움직이지 않을 수 있음)
+        </div>
+
+        <h2><span class="k">💡 7. 테무를 ‘스트레스 없이’ 쓰는 요령</span></h2>
+        <p>
+          테무는 혜택이 좋은 대신, 이벤트/프로모션/쿠폰 노출 구조가 자주 바뀝니다.
+          그래서 “문제 해결”과 “혜택 적용”을 분리해두는 게 안정적입니다.
+          즉, <b>통관/배송 이슈는 정확히 해결</b>하고, 혜택은 <b>쿠폰/링크 루트로 깔끔하게 적용</b>하는 방식이
+          가장 스트레스가 적습니다.
+        </p>
+        <p>
+          그래서 TFY는 “되는 구조”를 과장 없이 정리하고, “막히는 지점”은 실전 기준으로 정리합니다.
+          이 글에서 통관번호 오타를 한 번 잡아두면, 다음부터는 배송 스트레스가 확 줄어들 거예요.
+        </p>
+
+        <div class="divider"></div>
+
+        <p>
+          🎯 한 줄 결론: <b>배송이 멈춘 것처럼 보이면, 통관번호 1글자부터 의심하세요.</b><br/>
+          해결은 “오타 유형 특정 → 수정/재처리 → 반영 확인” 순서로 가는 게 가장 빠릅니다.
+        </p>
+      </div>
+    </article>
+
+    <!-- RIGHT: Sidebar coupons -->
+    <aside class="sidebar-shell">
+      <div class="sidebar" id="sidebar">
+        <div class="side-card">
+          <div class="side-head">
+            <div class="side-head-title">
+              <div class="left">🔥 쿠폰 코드 · 링크</div>
+              <div class="right">관성 추적</div>
+            </div>
+            <div class="side-desc">
+              커서를 즉시 따라오지 않고,<br/>
+              부드럽게 뒤따라오면서 시선을 끄는 패널입니다.
+            </div>
+          </div>
+          <div id="couponSidebarList"></div>
+        </div>
+      </div>
     </aside>
+  </main>
+
+  <!-- Floating coupon button -->
+  <div class="floating-coupon" id="floatingCoupon" title="쿠폰으로 이동">
+    <div class="ic">🎟️</div>
   </div>
 
-  <script src="../app.js"></script>
-
-  <!-- 로고 hover 흔들림(디자인 잠금 JS와 충돌 안 나게 최소 적용) -->
   <script>
-    (function () {
-      const logo = document.getElementById("tfyLogo");
-      if (!logo) return;
+    // ✅ 로고 클릭 이동 금지
+    (function(){
+      const logo = document.querySelector('.logo');
+      if(!logo) return;
+      logo.addEventListener('click', (e)=>e.preventDefault());
+    })();
 
-      let t = 0;
-      let raf = null;
+    // ===== Sidebar inertia follow =====
+    (function(){
+      const sidebar = document.getElementById('sidebar');
+      if(!sidebar) return;
 
-      function wiggle() {
-        t += 1;
-        const x = Math.sin(t / 2.2) * 3;
-        logo.style.transform = "translateX(" + x + "px)";
-        raf = requestAnimationFrame(wiggle);
+      const mq = window.matchMedia("(max-width: 980px)");
+      if(mq.matches) return;
+
+      let currentY = 0, targetY = 0;
+      const ease = 0.09;
+      const maxOffset = 120;
+
+      function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
+
+      function onMove(e){
+        const center = window.innerHeight * 0.42;
+        const delta = (e.clientY - center) * 0.08;
+        targetY = clamp(delta, -maxOffset, maxOffset);
       }
 
-      logo.addEventListener("mouseenter", () => {
-        if (raf) cancelAnimationFrame(raf);
-        t = 0;
-        wiggle();
-      });
+      function tick(){
+        currentY += (targetY - currentY) * ease;
+        sidebar.style.transform = `translate3d(0, ${currentY}px, 0)`;
+        requestAnimationFrame(tick);
+      }
 
-      logo.addEventListener("mouseleave", () => {
-        if (raf) cancelAnimationFrame(raf);
-        raf = null;
-        logo.style.transform = "";
+      window.addEventListener('mousemove', onMove, { passive:true });
+      requestAnimationFrame(tick);
+    })();
+
+    // ===== Floating coupon button: inline 쿠폰 영역으로 이동 =====
+    (function(){
+      const btn = document.getElementById('floatingCoupon');
+      const anchor = document.getElementById('couponInlineList');
+      if(!btn || !anchor) return;
+
+      btn.addEventListener('click', () => {
+        const top = anchor.getBoundingClientRect().top + window.scrollY - 76;
+        window.scrollTo({ top, behavior: 'smooth' });
       });
+    })();
+
+    // ===== 쿠폰 데이터(고정 6개 + 링크 6개) =====
+    // ✅ 메모리 고정 세트(혜성님 확정)
+    const COUPONS = [
+      { title: "150,000원 쿠폰 묶음", badge: "신규 앱 사용자", icon:"🎟️", code:"aak74594", url:"https://temu.to/m/uotsq20netz", desc:"가장 기본 루트 / 신규 유리" },
+      { title: "사은품 0원개", badge: "신규 앱 사용자", icon:"🎁", code:"frq027981", url:"https://temu.to/m/u3ia9bomcaw", desc:"노출 때 빠르게 진행" },
+      { title: "30% 할인", badge: "신규 앱 사용자", icon:"🏷️", code:"acr804202", url:"https://temu.to/m/u3ckk6z4eku", desc:"적용 가능한 구간 확인" },
+      { title: "특별 세일", badge: "신규 앱 사용자", icon:"⚡", code:"ack263361", url:"https://temu.to/m/u6ndc7zl0v8", desc:"세일 루트로 진입" },
+      { title: "SAVE BIG", badge: "모든 사용자", icon:"💎", code:"frw419209", url:"https://temu.to/m/u0zwrhwzccf", desc:"상황에 따라 노출" },
+      { title: "추가 혜택", badge: "모든 사용자", icon:"✨", code:"alf468043", url:"https://temu.to/k/qgzxbhz73coe", desc:"보너스 루트" }
+    ];
+
+    function shuffle(arr){
+      const a = arr.slice();
+      for (let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
+      }
+      return a;
+    }
+
+    function el(tag, attrs={}, children=[]){
+      const n = document.createElement(tag);
+      Object.entries(attrs).forEach(([k,v])=>{
+        if(k==="class") n.className=v;
+        else if(k==="html") n.innerHTML=v;
+        else n.setAttribute(k,v);
+      });
+      children.forEach(c=> n.appendChild(c));
+      return n;
+    }
+
+    async function copyText(text, feedbackEl){
+      try{
+        await navigator.clipboard.writeText(text);
+        if(feedbackEl){
+          feedbackEl.classList.add("copied");
+          setTimeout(()=>feedbackEl.classList.remove("copied"), 900);
+        }
+      }catch(e){
+        // clipboard 실패 시 fallback
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        if(feedbackEl){
+          feedbackEl.classList.add("copied");
+          setTimeout(()=>feedbackEl.classList.remove("copied"), 900);
+        }
+      }
+    }
+
+    function renderCouponCard(item){
+      const card = el("div", { class:"tfx-coupon-card" });
+
+      const left = el("div", { class:"tfx-coupon-left" }, [
+        el("div", { class:"tfx-coupon-icon", html: item.icon }),
+        el("div", { class:"tfx-coupon-meta" }, [
+          el("div", { class:"tfx-coupon-title", html: `${item.title} <span class="tfx-badge">${item.badge}</span>` }),
+          el("div", { class:"tfx-coupon-desc", html: item.desc })
+        ])
+      ]);
+
+      const btnCopy = el("button", { class:"tfx-btn tfx-btn-ghost", type:"button" });
+      btnCopy.textContent = "복사";
+      btnCopy.addEventListener("click", ()=> copyText(item.code, btnCopy));
+
+      const btnGo = el("button", { class:"tfx-btn tfx-btn-solid", type:"button" });
+      btnGo.textContent = "이동";
+      btnGo.addEventListener("click", ()=> window.open(item.url, "_blank", "noopener,noreferrer"));
+
+      const right = el("div", { class:"tfx-coupon-right" }, [btnCopy, btnGo]);
+
+      const chip = el("div", { class:"tfx-coupon-codechip", role:"button", tabindex:"0" });
+      chip.innerHTML = `CODE <b>${item.code}</b>`;
+      chip.addEventListener("click", ()=> copyText(item.code, chip));
+
+      card.appendChild(left);
+      card.appendChild(right);
+      card.appendChild(chip);
+
+      return card;
+    }
+
+    // Inline(3개 랜덤) + Sidebar(6개 전체 랜덤순)
+    (function(){
+      const inlineBox = document.getElementById("couponInlineList");
+      const sideBox = document.getElementById("couponSidebarList");
+      if(!inlineBox || !sideBox) return;
+
+      const shuffled = shuffle(COUPONS);
+
+      // inline: 3개
+      shuffled.slice(0,3).forEach(c=> inlineBox.appendChild(renderCouponCard(c)));
+
+      // sidebar: 6개 전체
+      shuffled.forEach(c=> sideBox.appendChild(renderCouponCard(c)));
     })();
   </script>
 </body>
