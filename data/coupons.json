@@ -1,0 +1,53 @@
+{
+  "updatedAt": "2026-01-05",
+  "items": [
+    {
+      "id": "coupon_bundle_150k",
+      "title": "150,000원 쿠폰 묶음",
+      "desc": "가장 기본 루트 / 신규에 유리",
+      "code": "aak74594",
+      "link": "https://temu.to/m/uotsq20netz",
+      "badge": "추천"
+    },
+    {
+      "id": "free_gift_0won",
+      "title": "사은품 0원",
+      "desc": "신규 유저 이벤트 루트",
+      "code": "frq027981",
+      "link": "https://temu.to/m/u3ia9bomcaw",
+      "badge": "인기"
+    },
+    {
+      "id": "special_sale",
+      "title": "특별 세일",
+      "desc": "세일 페이지 루트",
+      "code": "acr804202",
+      "link": "https://temu.to/m/u3ckk6z4eku",
+      "badge": "세일"
+    },
+    {
+      "id": "coupon_bundle_alt",
+      "title": "쿠폰 묶음 (대체 루트)",
+      "desc": "다른 진입 루트",
+      "code": "ack263361",
+      "link": "https://temu.to/m/u6ndc7zl0v8",
+      "badge": "대체"
+    },
+    {
+      "id": "free_gift_alt",
+      "title": "사은품 0원 (대체 루트)",
+      "desc": "이벤트 페이지 루트",
+      "code": "frw419209",
+      "link": "https://temu.to/m/u0zwrhwzccf",
+      "badge": "대체"
+    },
+    {
+      "id": "save_big",
+      "title": "SAVE BIG",
+      "desc": "모든 사용자 루트",
+      "code": "alf468043",
+      "link": "https://temu.to/k/qgzxbhz73coe",
+      "badge": "전체"
+    }
+  ]
+}
