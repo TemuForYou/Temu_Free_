@@ -1,0 +1,133 @@
+{
+  "updatedAt": "2026-01-05",
+  "categories": [
+    {
+      "id": "coupon",
+      "title": "쿠폰/코드 💳",
+      "emoji": "💳",
+      "items": [
+        {
+          "title": "테무 2026 무료쿠폰 발급 및 사용방법 정리!",
+          "file": "temu-coupon-2026.html",
+          "trend": true
+        },
+        {
+          "title": "테무 쿠폰 코드 입력 위치, 대부분 여기서 막힙니다",
+          "file": "temu-coupon-code-input.html",
+          "trend": true
+        },
+        {
+          "title": "테무 쿠폰 적용 안 될 때, 원인 7가지만 보면 끝납니다",
+          "file": "temu-coupon-not-working.html",
+          "trend": false
+        },
+        {
+          "title": "테무 특별 세일 탭, ‘진짜 할인’만 남기는 확인법",
+          "file": "temu-special-sale.html",
+          "trend": false
+        },
+        {
+          "title": "테무 사은품 0원, 조건 충족 흐름만 정리했습니다",
+          "file": "temu-free-gift-0won.html",
+          "trend": true
+        }
+      ]
+    },
+    {
+      "id": "shipping",
+      "title": "배송/통관 🚚",
+      "emoji": "🚚",
+      "items": [
+        {
+          "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
+          "file": "temu-customs-code-one-letter-shipping-stop.html",
+          "trend": true
+        },
+        {
+          "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
+          "file": "temu-order-stuck-real-reason.html",
+          "trend": true
+        },
+        {
+          "title": "주소 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일",
+          "file": "temu-address-wrong-what-happens.html",
+          "trend": false
+        },
+        {
+          "title": "테무 배송조회가 안 될 때, 실제로는 이미 처리된 상태일 수도 있습니다",
+          "file": "temu-tracking-not-working-may-be-processed.html",
+          "trend": false
+        },
+        {
+          "title": "테무 배송이 멈춘 것처럼 보일 때, 기다릴지 조치할지 기준은 이것입니다",
+          "file": "temu-shipping-stuck-wait-or-act.html",
+          "trend": true
+        }
+      ]
+    },
+    {
+      "id": "payment",
+      "title": "환불/결제 💸",
+      "emoji": "💸",
+      "items": [
+        {
+          "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
+          "file": "temu-payment-error-most-common-step.html",
+          "trend": true
+        },
+        {
+          "title": "결제 완료 후 취소 버튼이 사라지는 이유, 내부 구조를 확인했습니다",
+          "file": "temu-cancel-button-missing-after-payment.html",
+          "trend": false
+        },
+        {
+          "title": "주문했는데 기록이 안 보일 때, 테무 시스템은 이렇게 작동합니다",
+          "file": "temu-order-history-missing-how-system-works.html",
+          "trend": false
+        },
+        {
+          "title": "테무 이벤트, 참여해도 되는 사람과 손해 보는 사람이 갈립니다",
+          "file": "temu-event-who-benefits-who-loses.html",
+          "trend": false
+        },
+        {
+          "title": "테무 0원 결제는 가능한가? 조건을 충족한 사례만 정리했습니다",
+          "file": "temu-zero-pay-possible-cases.html",
+          "trend": true
+        }
+      ]
+    },
+    {
+      "id": "info",
+      "title": "테무 ↔ 정보 🧠",
+      "emoji": "🧠",
+      "items": [
+        {
+          "title": "“테무 무료상품, 진짜 받는 사람은 따로 있었습니다”",
+          "file": "temu-free-item-who-really-gets-it.html",
+          "trend": true
+        },
+        {
+          "title": "테무 사기 논란, 실제 사용자 데이터로 확인해보니 결과는 달랐습니다",
+          "file": "temu-scam-controversy-data-check.html",
+          "trend": true
+        },
+        {
+          "title": "왜 이렇게 쌀까? 테무 가격 구조를 뜯어보니 숨겨진 방식이 보였습니다",
+          "file": "temu-price-structure-how-so-cheap.html",
+          "trend": true
+        },
+        {
+          "title": "테무 개인정보 논란, 불안해하는 지점과 실제 구조는 달랐습니다",
+          "file": "temu-privacy-concerns-vs-reality.html",
+          "trend": true
+        },
+        {
+          "title": "한국에서 테무 사용해도 괜찮을까? 실제 이용 흐름으로 확인해봤습니다",
+          "file": "temu-korea-use-flow-check.html",
+          "trend": true
+        }
+      ]
+    }
+  ]
+}
