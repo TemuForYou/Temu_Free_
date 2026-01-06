@@ -122,11 +122,11 @@ window.TFY_DATA = {
         {
           title: "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
           slug: "temu-customs-code-one-letter-shipping-stop",
-          ready: false
+          ready: true
         },
         {
-          title: "테무 배송이 멈춘 것처럼 보일 때, 정상 대기/문제 상황 구분법",
-          slug: "temu-shipping-stuck-normal-vs-issue",
+          title: "배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
+          slug: "temu-order-stuck-looks-like-delay",
           ready: false
         },
         {
