@@ -3,705 +3,619 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="theme-color" content="#ff7a00" />
-  <title>TFY — TemuForYou</title>
+  <title>TFY | TemuForYou</title>
 
-  <!-- ✅ 폰트 고정: Apple SD Gothic Neo -->
   <style>
     :root{
-      --tfx-orange:#ff7a00;
-      --tfx-orange-2:#ff8f2b;
-      --tfx-bg:#f6f7f9;
-      --tfx-card:#ffffff;
-      --tfx-ink:#111827;
-      --tfx-muted:#6b7280;
-      --tfx-line:rgba(17,24,39,.10);
-      --tfx-soft:rgba(255,122,0,.10);
-
-      --radius-xl:24px;
-      --radius-lg:18px;
-      --radius-md:14px;
-
-      --shadow-sm:0 10px 26px rgba(17,24,39,.08);
-      --shadow-md:0 18px 42px rgba(17,24,39,.10);
-      --shadow-in:inset 0 1px 0 rgba(255,255,255,.55);
-
-      --max:1160px;
+      --bg:#f6f7f9;
+      --card:#ffffff;
+      --line:#e9e9ee;
+      --text:#111827;
+      --muted:#6b7280;
+      --brand:#ff7a18;
+      --brand2:#ff9b4d;
+      --shadow: 0 14px 34px rgba(17,24,39,.10);
+      --shadow2: 0 10px 24px rgba(17,24,39,.08);
+      --radius: 20px;
+      --radius2: 16px;
     }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
+    *{box-sizing:border-box}
+    html,body{height:100%}
     body{
       margin:0;
-      font-family: "Apple SD Gothic Neo","Apple SD 산돌고딕 Neo","Noto Sans KR",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--tfx-ink);
-      background:var(--tfx-bg);
-      -webkit-font-smoothing:antialiased;
-      text-rendering:optimizeLegibility;
+      font-family:"Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Helvetica Neue",Arial,sans-serif;
+      background:var(--bg);
+      color:var(--text);
     }
-    a{ color:inherit; text-decoration:none; }
-    button{ font-family:inherit; }
 
-    /* ===== Topbar ===== */
     .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
+      position:sticky; top:0; z-index:50;
+      background: linear-gradient(90deg, var(--brand), #ff8a2e);
       height:56px;
-      display:flex;
-      align-items:center;
-      background:linear-gradient(90deg,var(--tfx-orange),var(--tfx-orange-2));
-      box-shadow:0 10px 26px rgba(0,0,0,.10);
+      display:flex; align-items:center;
+      padding:0 18px;
+      box-shadow: 0 10px 20px rgba(0,0,0,.10);
     }
-    .topbar-inner{
-      width:min(var(--max),calc(100% - 28px));
-      margin:0 auto;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-    }
-
-    /* Logo (TFY) */
-    .logo{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      color:#fff;
-      user-select:none;
-    }
-    .logo-badge{
-      width:34px;height:34px;
-      border-radius:12px;
-      background:rgba(255,255,255,.18);
-      box-shadow:var(--shadow-in);
-      display:grid;
-      place-items:center;
-      border:1px solid rgba(255,255,255,.22);
-      backdrop-filter: blur(6px);
-    }
+    .logo{display:inline-flex;align-items:center;cursor:pointer;user-select:none}
     .logo-mark{
-      font-weight:800;
-      font-size:18px;
-      line-height:1;
-      transform: translateY(-.5px);
-    }
-    .logo-text{
-      font-size:20px;
-      font-weight:800;
-      letter-spacing:.2px;
-      font-style:italic; /* 캘리 느낌(가벼운) */
-    }
-
-    /* hover: 간지럼(좌우 흔들) */
-    @keyframes tickle {
-      0% { transform: translateX(0); }
-      15% { transform: translateX(-2px) rotate(-1deg); }
-      30% { transform: translateX(2px) rotate(1deg); }
-      45% { transform: translateX(-2px) rotate(-1deg); }
-      60% { transform: translateX(2px) rotate(1deg); }
-      75% { transform: translateX(-1px) rotate(-.5deg); }
-      100% { transform: translateX(0); }
-    }
-    .logo:hover .logo-badge,
-    .logo:hover .logo-text{
-      animation: tickle .55s ease-in-out;
-    }
-
-    .topbar-right{
-      display:flex;
-      align-items:center;
-      gap:10px;
+      font-weight:900;
+      font-size:22px;
+      letter-spacing:.5px;
       color:#fff;
-      opacity:.95;
-      font-size:13px;
+      font-style:italic;
+      text-shadow: 0 8px 18px rgba(0,0,0,.25);
+      transform-origin:center;
     }
-    .pill{
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.22);
-      background:rgba(255,255,255,.16);
-      box-shadow:var(--shadow-in);
-      backdrop-filter: blur(6px);
-      white-space:nowrap;
+    .logo:hover .logo-mark{animation: tickle 650ms ease-in-out both;}
+    @keyframes tickle{
+      0%{transform:translateX(0) rotate(0deg)}
+      15%{transform:translateX(-3px) rotate(-2deg)}
+      30%{transform:translateX(3px) rotate(2deg)}
+      45%{transform:translateX(-2px) rotate(-1deg)}
+      60%{transform:translateX(2px) rotate(1deg)}
+      100%{transform:translateX(0) rotate(0deg)}
     }
 
-    /* ===== Layout ===== */
     .wrap{
-      width:min(var(--max),calc(100% - 28px));
-      margin:24px auto 110px; /* 하단 쿠폰 버튼 공간 */
+      max-width:1160px;
+      margin:0 auto;
+      padding: 26px 18px 60px;
       display:grid;
-      grid-template-columns: 1fr 340px;
+      grid-template-columns: 1fr 360px;
       gap:18px;
       align-items:start;
     }
 
-    /* Left main */
     .hero{
-      background:var(--tfx-card);
-      border:1px solid var(--tfx-line);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-sm);
-      padding:26px 26px 18px;
+      background:#fff1e8;
+      border:1px solid #ffd9c0;
+      border-radius: 28px;
+      padding: 26px;
+      box-shadow: var(--shadow2);
     }
-    .hero h1{
-      margin:0 0 8px;
-      font-size:28px;
-      letter-spacing:-.4px;
-      line-height:1.25;
-    }
-    .hero p{
-      margin:0;
-      color:var(--tfx-muted);
-      line-height:1.6;
-      font-size:14px;
-    }
+    .hero h1{margin:0;font-size:30px;line-height:1.2;letter-spacing:-.5px}
+    .hero p{margin:10px 0 0;color:var(--muted);line-height:1.6;max-width:62ch}
 
-    .quick-tabs{
+    .couponSlots{
       margin-top:16px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:12px;
+    }
+    .slot{
+      border-radius: 18px;
+      border:1px solid var(--line);
+      background:#fff;
+      padding:14px;
+      box-shadow: 0 10px 22px rgba(17,24,39,.06);
+      min-height:86px;
       display:flex;
-      flex-wrap:wrap;
+      flex-direction:column;
+      justify-content:space-between;
+      overflow:hidden;
+    }
+    .slot .cap{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;font-weight:800}
+    .slot .cap i{width:10px;height:10px;border-radius:999px;display:inline-block}
+    .slot .title{margin-top:10px;font-weight:900;letter-spacing:-.2px}
+    .slot .hint{margin-top:8px;font-size:12px;color:#9ca3af}
+    .slot.blue .cap i{background:#3b82f6}
+    .slot.mint .cap i{background:#10b981}
+    .slot.purple .cap i{background:#8b5cf6}
+
+    .section{
+      margin-top:18px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius: 26px;
+      padding: 18px;
+      box-shadow: var(--shadow2);
+    }
+    .sectionHead{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      padding: 2px 6px 10px;
+    }
+    .sectionHead h2{margin:0;font-size:18px;letter-spacing:-.2px}
+    .sectionHead .sub{color:var(--muted);font-size:12.5px}
+
+    .catGrid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:8px;
+    }
+    .cat{
+      border:1px solid var(--line);
+      border-radius: 18px;
+      padding:12px;
+      background:#fff;
+      box-shadow: 0 10px 18px rgba(17,24,39,.05);
+      min-height: 280px;
+      display:flex;
+      flex-direction:column;
       gap:10px;
     }
-    .tab{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid rgba(255,122,0,.26);
-      background:#fff;
-      color:#c85200;
-      box-shadow:0 10px 18px rgba(255,122,0,.10);
-      font-weight:700;
-      font-size:13px;
+    .catTitle{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:10px;
+      font-weight:900;
+    }
+    .catTitle small{color:#9ca3af;font-size:12px;font-weight:800}
+
+    .scrollList{
+      margin:0; padding:0;
+      list-style:none;
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+      overflow:auto;
+      padding-right: 4px;
+      flex:1;
+    }
+    .scrollList::-webkit-scrollbar{width:8px}
+    .scrollList::-webkit-scrollbar-thumb{background:#f0f1f4;border-radius:999px}
+
+    .item{
+      border:1px solid #eef0f5;
+      border-radius: 14px;
+      padding:10px;
       display:flex;
       align-items:center;
-      gap:8px;
-    }
-
-    /* Coupon 3 cards area (메인 좌측 중상단 네모칸) */
-    .coupon-panel{
-      margin-top:18px;
-      background:linear-gradient(180deg, rgba(255,122,0,.10), rgba(255,122,0,.05));
-      border:1px solid rgba(255,122,0,.18);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-sm);
-      padding:16px;
-    }
-    .coupon-panel-head{
-      display:flex;
-      align-items:flex-end;
       justify-content:space-between;
-      gap:14px;
-      margin-bottom:12px;
+      gap:10px;
+      background:#fff;
+      transition: transform .15s ease, box-shadow .15s ease;
     }
-    .coupon-panel-title{
-      font-size:15px;
+    .item:hover{transform: translateY(-1px);box-shadow: 0 12px 20px rgba(17,24,39,.06)}
+    .item a{
+      color:var(--text);
+      text-decoration:none;
       font-weight:900;
-      letter-spacing:-.2px;
-    }
-    .coupon-panel-sub{
-      font-size:12px;
-      color:var(--tfx-muted);
-      line-height:1.35;
-    }
-
-    /* 메인 쿠폰 카드 컨테이너( app.js 가 채움 ) */
-    #couponCardsMain{
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      min-height: 260px; /* 공백 대비(카드 없을 때도 안정) */
+      line-height:1.25;
+      font-size:13.5px;
+      display:inline-block;
+      max-width:100%;
+      white-space:normal;
+      word-break:keep-all;
     }
 
-    /* Category list area */
-    .cats{
-      margin-top:18px;
-      background:var(--tfx-card);
-      border:1px solid var(--tfx-line);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-sm);
-      padding:18px;
-    }
-    .cats-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:12px;
-      margin-bottom:12px;
-    }
-    .cats-title{
-      font-size:16px;
+    .badge{
+      font-size:11px;
+      padding:6px 8px;
+      border-radius: 999px;
+      border:1px solid #ffe1cd;
+      background:#fff7f1;
+      color:#c2410c;
+      white-space:nowrap;
       font-weight:900;
-      letter-spacing:-.2px;
+      flex:0 0 auto;
     }
-    .cats-sub{
-      font-size:12px;
-      color:var(--tfx-muted);
-      line-height:1.35;
-      text-align:right;
+    .badge.miss{
+      border:1px solid #e5e7eb;
+      background:#f9fafb;
+      color:#6b7280;
+      font-weight:800;
     }
 
-    /* categoryLists: app.js가 만들어줌 */
-    #categoryLists{
-      display:flex;
-      flex-direction:column;
-      gap:14px;
+    .sidebarWrap{position:relative;min-height: 60vh;}
+    .sidebar{
+      width:360px;
+      max-width:100%;
+      position: sticky;
+      top: 78px;
+      will-change: transform;
     }
-    .tfx-cat{
-      border:1px solid rgba(17,24,39,.10);
-      border-radius:18px;
-      background: #fff;
-      box-shadow: 0 12px 26px rgba(17,24,39,.06);
+
+    @media (max-width: 980px){
+      .wrap{grid-template-columns:1fr}
+      .sidebar{
+        width: min(420px, calc(100vw - 36px));
+        margin: 0 auto;
+      }
+    }
+    @media (max-width: 560px){
+      .couponSlots{grid-template-columns:1fr}
+      .catGrid{grid-template-columns:1fr}
+      .hero h1{font-size:26px}
+      .sidebar{width: min(420px, calc(100vw - 24px));}
+    }
+
+    .couponPanel{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
       overflow:hidden;
     }
-    .tfx-cat-head{
-      padding:14px 14px 10px;
-      border-bottom:1px solid rgba(17,24,39,.06);
-      background: linear-gradient(180deg, rgba(255,122,0,.07), rgba(255,122,0,.02));
-    }
-    .tfx-cat-title{
-      font-weight:900;
-      letter-spacing:-.2px;
-      font-size:14px;
-    }
-    .tfx-cat-sub{
-      margin-top:4px;
-      font-size:12px;
-      color:var(--tfx-muted);
-      line-height:1.35;
-    }
-    .tfx-cat-list{
-      max-height: 230px; /* ✅ 스크롤 */
-      overflow:auto;
-      padding:10px 12px 12px;
-    }
-    .tfx-cat-list::-webkit-scrollbar{ width:10px; }
-    .tfx-cat-list::-webkit-scrollbar-thumb{
-      background: rgba(17,24,39,.12);
-      border-radius:999px;
-      border:3px solid rgba(255,255,255,.75);
-    }
-
-    .tfx-post-row{
+    .couponHead{
+      padding:14px;
+      background: linear-gradient(180deg, #fff3ea, #ffffff);
+      border-bottom:1px solid #f1f2f6;
       display:flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 10px;
-      border-radius:14px;
-      border:1px solid rgba(17,24,39,.08);
-      background:#fff;
-      transition: transform .15s ease, box-shadow .15s ease, border-color .15s ease;
-      margin-bottom:10px;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
     }
-    .tfx-post-row:last-child{ margin-bottom:0; }
-    .tfx-post-row.ready:hover{
-      transform: translateY(-1px);
-      box-shadow: 0 16px 30px rgba(17,24,39,.08);
-      border-color: rgba(255,122,0,.25);
-    }
-    .tfx-post-row.soon{
-      opacity:.82;
-      cursor:default;
-    }
-    .tfx-post-title{
-      flex:1;
-      font-size:13px;
-      line-height:1.35;
-      font-weight:800;
-      letter-spacing:-.15px;
-    }
-    .tfx-trend{ font-size:14px; }
-    .tfx-soon{
+    .couponHead .t{font-weight:900;display:flex;gap:8px;align-items:center}
+    .couponHead .d{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.4}
+    .chip{
       font-size:12px;
-      color:#c2410c;
       font-weight:900;
-      background: rgba(255,122,0,.12);
-      border:1px solid rgba(255,122,0,.18);
-      padding:5px 9px;
+      padding:8px 10px;
       border-radius:999px;
+      border:1px solid #ffd9c0;
+      background:#fff7f1;
+      color:#c2410c;
       white-space:nowrap;
     }
-
-    /* ===== Right sidebar (관성 추적 + 고급 리스트) ===== */
-    .sidebar-shell{
-      position:relative;
-      height:100%;
-      min-height: 400px;
-    }
-    .sidebar{
-      position: sticky; /* 기본은 sticky지만 JS로 관성 이동 */
-      top:86px;
-      will-change: transform;
-      transform: translate3d(0,0,0);
-    }
-
-    .side-card{
-      background:rgba(255,255,255,.92);
-      border:1px solid rgba(17,24,39,.10);
-      border-radius:var(--radius-xl);
-      box-shadow:var(--shadow-md);
-      backdrop-filter: blur(10px);
-      overflow:hidden;
-    }
-
-    .side-head{
-      padding:14px 14px 12px;
-      background: linear-gradient(180deg, rgba(255,122,0,.12), rgba(255,122,0,.04));
-      border-bottom:1px solid rgba(17,24,39,.06);
-    }
-    .side-head-title{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .side-head-title .left{
-      font-weight:900;
-      letter-spacing:-.2px;
-      font-size:14px;
-    }
-    .side-head-title .right{
-      font-size:12px;
-      color:var(--tfx-muted);
-      font-weight:800;
-    }
-    .side-desc{
-      margin-top:6px;
-      font-size:12px;
-      color:var(--tfx-muted);
-      line-height:1.35;
-    }
-
-    #couponSidebarList{
+    .couponList{
       padding:12px;
       display:flex;
       flex-direction:column;
       gap:10px;
-      max-height: 520px;
-      overflow:auto;
     }
-    #couponSidebarList::-webkit-scrollbar{ width:10px; }
-    #couponSidebarList::-webkit-scrollbar-thumb{
-      background: rgba(17,24,39,.12);
-      border-radius:999px;
-      border:3px solid rgba(255,255,255,.75);
-    }
-
-    /* ===== Coupon card (공용: app.js가 생성하는 클래스들) ===== */
-    .tfx-coupon-card{
+    .couponCard{
+      border-radius: 18px;
+      border:1px solid #eef0f5;
+      background: linear-gradient(180deg, #ffffff, #fff7f1);
+      box-shadow: 0 10px 20px rgba(17,24,39,.06);
+      padding: 12px;
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap:10px;
+      align-items:center;
       position:relative;
-      padding:12px 12px 44px;
-      border-radius:18px;
-      border:1px solid rgba(17,24,39,.10);
-      background: linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.92));
-      box-shadow: 0 12px 24px rgba(17,24,39,.07);
       overflow:hidden;
     }
-    .tfx-coupon-card:before{
+    .couponCard:before{
       content:"";
       position:absolute;
-      inset:-2px;
-      background: radial-gradient(circle at 20% 0%, rgba(255,122,0,.22), transparent 45%),
-                  radial-gradient(circle at 100% 20%, rgba(255,122,0,.12), transparent 55%);
-      pointer-events:none;
+      inset:-40% auto auto -40%;
+      width:180px;height:180px;
+      background: radial-gradient(circle, rgba(255,122,24,.18), transparent 62%);
+      transform: rotate(15deg);
     }
-    .tfx-coupon-left{
-      display:flex;
-      align-items:flex-start;
-      gap:10px;
+    .couponMeta{
       position:relative;
-      z-index:1;
-    }
-    .tfx-coupon-icon{
-      width:38px;height:38px;
-      border-radius:14px;
-      display:grid;
-      place-items:center;
-      background: rgba(255,122,0,.14);
-      border:1px solid rgba(255,122,0,.18);
-      box-shadow: var(--shadow-in);
-      flex:0 0 auto;
-    }
-    .tfx-coupon-meta{ min-width:0; }
-    .tfx-coupon-title{
-      font-weight:900;
-      font-size:13px;
-      letter-spacing:-.15px;
-      line-height:1.25;
       display:flex;
-      gap:8px;
-      align-items:center;
-      flex-wrap:wrap;
+      flex-direction:column;
+      gap:6px;
+      min-width:0;
     }
-    .tfx-badge{
-      font-size:11px;
+    .couponMeta .name{
       font-weight:900;
+      display:flex;
+      align-items:center;
+      gap:8px;
+      min-width:0;
+    }
+    .couponMeta .small{
+      font-size:11px;
+      color:#9ca3af;
+      font-weight:800;
+      border:1px solid #eef0f5;
       padding:4px 8px;
       border-radius:999px;
-      border:1px solid rgba(255,122,0,.20);
-      background: rgba(255,122,0,.12);
-      color:#b54300;
+      background:#fff;
+      flex:0 0 auto;
       white-space:nowrap;
     }
-    .tfx-coupon-desc{
-      margin-top:4px;
-      color:var(--tfx-muted);
-      font-size:12px;
-      line-height:1.35;
-      letter-spacing:-.1px;
-    }
-    .tfx-coupon-right{
-      position:absolute;
-      right:10px;
-      top:10px;
-      display:flex;
-      gap:8px;
-      z-index:2;
-    }
-    .tfx-btn{
-      border:0;
-      cursor:pointer;
-      padding:8px 10px;
-      border-radius:12px;
+    .codePill{
       font-weight:900;
-      font-size:12px;
-      letter-spacing:-.1px;
-      transition: transform .12s ease, box-shadow .12s ease, opacity .12s ease;
-      user-select:none;
+      border-radius: 14px;
+      border:1px solid #ffd9c0;
+      background:#fff;
+      padding:8px 10px;
       display:inline-flex;
+      align-items:center;
+      gap:8px;
+      box-shadow: inset 0 -2px 0 rgba(255,122,24,.12);
+      max-width:100%;
+    }
+    .codePill b{letter-spacing:.4px}
+    .miniBtn{
+      border:0;
+      border-radius: 12px;
+      font-weight:900;
+      padding:10px 12px;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(17,24,39,.08);
+    }
+    .miniBtn.copy{background:#fff;border:1px solid #e9e9ee;color:#111827}
+    .miniBtn.go{background: linear-gradient(180deg, var(--brand2), var(--brand));color:#fff}
+
+    .toast{
+      position: fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%);
+      background:#111827;
+      color:#fff;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight:900;
+      font-size:13px;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:1000;
+    }
+    .toast.show{opacity:1;transform: translateX(-50%) translateY(-6px);}
+
+    .fab{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      width:58px;height:58px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.55);
+      backdrop-filter: blur(8px);
+      box-shadow: 0 18px 34px rgba(17,24,39,.16);
+      display:flex;
       align-items:center;
       justify-content:center;
-      min-width:54px;
+      cursor:pointer;
+      z-index:200;
+      transition: transform .12s ease;
     }
-    .tfx-btn:active{ transform: translateY(1px); }
-    .tfx-btn-ghost{
-      background:#fff;
-      border:1px solid rgba(17,24,39,.10);
-      box-shadow: 0 10px 18px rgba(17,24,39,.06);
+    .fab:hover{transform: translateY(-2px)}
+    .fab span{
+      width:24px;height:24px;border-radius:8px;
+      background: linear-gradient(180deg, var(--brand2), var(--brand));
+      display:inline-block;
+      position:relative;
+      box-shadow: 0 10px 18px rgba(255,122,24,.22);
     }
-    .tfx-btn-solid{
-      background: linear-gradient(180deg,var(--tfx-orange),var(--tfx-orange-2));
-      color:#fff;
-      box-shadow: 0 14px 22px rgba(255,122,0,.22);
-    }
-    .tfx-btn.copied,
-    .tfx-coupon-codechip.copied{
-      opacity:.75;
-      transform: translateY(1px);
-    }
-
-    .tfx-coupon-codechip{
+    .fab span:before{
+      content:"";
       position:absolute;
-      left:12px;
-      bottom:10px;
-      z-index:2;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,122,0,.22);
-      background: rgba(255,122,0,.10);
-      font-weight:900;
-      letter-spacing:.2px;
-      font-size:12px;
-      cursor:pointer;
-      user-select:none;
-    }
-
-    /* ===== Floating coupon button (우측 하단 원형, 반투명) ===== */
-    .floating-coupon{
-      position:fixed;
-      right:22px;
-      bottom:22px;
-      width:56px;height:56px;
-      border-radius:999px;
-      background: rgba(255,255,255,.65);
-      border: 1px solid rgba(17,24,39,.10);
-      box-shadow: 0 18px 46px rgba(17,24,39,.18);
-      backdrop-filter: blur(10px);
-      display:grid;
-      place-items:center;
-      z-index:60;
-      cursor:pointer;
-      transition: transform .15s ease;
-      user-select:none;
-    }
-    .floating-coupon:hover{ transform: translateY(-2px); }
-    .floating-coupon:active{ transform: translateY(1px); }
-    .floating-coupon .ic{
-      width:34px;height:34px;
-      border-radius:14px;
-      background: rgba(255,122,0,.12);
-      border:1px solid rgba(255,122,0,.18);
-      display:grid;
-      place-items:center;
-      box-shadow: var(--shadow-in);
-      font-size:16px;
-    }
-
-    /* ===== Responsive ===== */
-    @media (max-width: 980px){
-      .wrap{ grid-template-columns: 1fr; }
-      .sidebar{ position:static; transform:none !important; }
-      .sidebar-shell{ order:2; }
+      inset:6px;
+      border-radius: 5px;
+      border:2px solid rgba(255,255,255,.9);
     }
   </style>
 </head>
 
 <body>
-  <!-- Topbar -->
   <header class="topbar">
-    <div class="topbar-inner">
-      <!-- ✅ 로고: 클릭하면 이동 X, hover 시 흔들 -->
-      <div class="logo" aria-label="TFY Logo" title="TFY">
-        <div class="logo-badge"><div class="logo-mark">TFY</div></div>
-        <div class="logo-text">TFY</div>
-      </div>
-
-      <div class="topbar-right">
-        <div class="pill">Temu 혜택 · 문제해결 · 기사형 정리</div>
-      </div>
+    <div class="logo" id="logoBtn" title="TFY">
+      <div class="logo-mark">TFY</div>
     </div>
   </header>
 
-  <!-- Main layout -->
   <main class="wrap">
-    <!-- LEFT -->
     <section>
       <div class="hero">
         <h1>테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
         <p>
-          테무는 프로모션 노출이 계속 바뀝니다.<br/>
-          “쿠폰·사은품·특별세일”은 ‘되는 구조’가 있고, 배송·통관·환불·결제 문제는 ‘막히는 지점’이 있습니다.<br/>
-          이 사이트는 과장이 아닌, 실제 적용 기준으로 정리합니다.
+          쿠폰/사은품/특별세일은 ‘되는 구조’가 있고, 배송·통관·환불·결제 문제는 ‘막히는 지점’이 있습니다.
+          이 사이트는 과장이 아니라, <b>실제 적용 기준</b>으로 정리합니다.
         </p>
 
-        <div class="quick-tabs" aria-label="Quick tabs">
-          <div class="tab">💳 쿠폰·코드</div>
-          <div class="tab">🚚 배송·통관</div>
-          <div class="tab">💸 환불·결제</div>
-          <div class="tab">🧠 테무 ↔ 정보</div>
-        </div>
-
-        <!-- ✅ 메인 좌측 중상단 네모칸: 쿠폰 카드 3개 자리 -->
-        <div class="coupon-panel">
-          <div class="coupon-panel-head">
-            <div>
-              <div class="coupon-panel-title">🎁 지금 바로 혜택 받기</div>
-              <div class="coupon-panel-sub">
-                아래 3개 쿠폰 카드는 <b>랜덤</b>으로 구성됩니다.<br/>
-                카드에서 <b>코드 복사</b> → 링크 이동 → 적용 순서로 진행하세요.
-              </div>
-            </div>
-            <div class="coupon-panel-sub" style="text-align:right">
-              * 코드/링크는 우측에도 동일하게 노출됩니다
-            </div>
+        <div class="couponSlots">
+          <div class="slot blue">
+            <div class="cap"><i></i> 쿠폰 슬롯 1</div>
+            <div class="title">비워둠</div>
+            <div class="hint">요청대로 공백 유지</div>
           </div>
-
-          <!-- app.js가 랜덤 3개 쿠폰카드를 채웁니다 -->
-          <div id="couponCardsMain"></div>
+          <div class="slot mint">
+            <div class="cap"><i></i> 쿠폰 슬롯 2</div>
+            <div class="title">비워둠</div>
+            <div class="hint">요청대로 공백 유지</div>
+          </div>
+          <div class="slot purple">
+            <div class="cap"><i></i> 쿠폰 슬롯 3</div>
+            <div class="title">비워둠</div>
+            <div class="hint">요청대로 공백 유지</div>
+          </div>
         </div>
       </div>
 
-      <!-- ✅ 카테고리별 글 목록(스크롤) -->
-      <div class="cats">
-        <div class="cats-head">
-          <div class="cats-title">TFT(캘리 표현) 포스팅 카테고리 (+이모지)</div>
-          <div class="cats-sub">
-            카테고리당 최대 5개가 먼저 보이며,<br/>스크롤하면 아래 글을 더 확인할 수 있습니다.
-          </div>
+      <div class="section">
+        <div class="sectionHead">
+          <h2>🔥 TFT(캘리 표현) 포스팅 카테고리 (+이모지)</h2>
+          <div class="sub">각 카테고리 5개 표시 · 스크롤로 전체 확인</div>
         </div>
 
-        <!-- app.js가 data/posts.json 기반으로 카테고리 4개/목록을 채웁니다 -->
-        <div id="categoryLists"></div>
+        <div class="catGrid" id="categoryGrid"></div>
       </div>
     </section>
 
-    <!-- RIGHT (sidebar inertia follow) -->
-    <aside class="sidebar-shell">
+    <aside class="sidebarWrap">
       <div class="sidebar" id="sidebar">
-        <div class="side-card">
-          <div class="side-head">
-            <div class="side-head-title">
-              <div class="left">🔥 인기글 · 쿠폰 목록</div>
-              <div class="right">스크롤 따라옴</div>
+        <div class="couponPanel">
+          <div class="couponHead">
+            <div>
+              <div class="t">🔥 쿠폰 코드 · 링크</div>
+              <div class="d">부드럽게 뒤따라오며 시선을 끄는 패널</div>
             </div>
-            <div class="side-desc">
-              이 패널은 커서를 즉시 따라오지 않고,<br/>
-              관성처럼 부드럽게 뒤따라오는 느낌으로 움직입니다.
-            </div>
+            <div class="chip">관성 추적</div>
           </div>
-
-          <!-- app.js가 6개 쿠폰을 랜덤 순서로 채웁니다 -->
-          <div id="couponSidebarList"></div>
+          <div class="couponList" id="couponList"></div>
         </div>
       </div>
     </aside>
   </main>
 
-  <!-- ✅ 우측 하단 따라오는 쿠폰 버튼 (반투명 원형) -->
-  <div class="floating-coupon" id="floatingCoupon" title="쿠폰 패널로 이동">
-    <div class="ic">🎟️</div>
-  </div>
+  <button class="fab" id="fabBtn" title="쿠폰"><span></span></button>
+  <div class="toast" id="toast">복사 완료</div>
+
+  <!-- ✅ 글 목록/쿠폰 데이터는 여기서만 불러옴 -->
+  <script src="./posts/posts-data.js"></script>
 
   <script>
-    // ===== Sidebar inertia follow (관성 트래킹) =====
-    (function(){
-      const sidebar = document.getElementById('sidebar');
-      if(!sidebar) return;
+    const $ = (s)=>document.querySelector(s);
 
-      // 모바일/좁은 화면에서는 비활성
-      const mq = window.matchMedia("(max-width: 980px)");
-      if(mq.matches) return;
-
-      let currentY = 0;
-      let targetY = 0;
-
-      const ease = 0.09;      // 추적 민감도(작을수록 더 느림)
-      const maxOffset = 120;  // 과도한 흔들림 제한
-
-      function clamp(v, min, max){ return Math.max(min, Math.min(max, v)); }
-
-      function onMove(e){
-        const center = window.innerHeight * 0.42;
-        const delta = (e.clientY - center) * 0.08; // 커서 위치에 따른 목표 offset
-        targetY = clamp(delta, -maxOffset, maxOffset);
+    function shuffle(arr){
+      const a = arr.slice();
+      for(let i=a.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [a[i],a[j]]=[a[j],a[i]];
       }
+      return a;
+    }
+
+    function showToast(msg){
+      const t = $("#toast");
+      t.textContent = msg || "복사 완료";
+      t.classList.add("show");
+      setTimeout(()=>t.classList.remove("show"), 900);
+    }
+
+    async function copyText(text){
+      try{
+        await navigator.clipboard.writeText(text);
+        showToast("복사 완료");
+      }catch(e){
+        const ta=document.createElement("textarea");
+        ta.value=text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        showToast("복사 완료");
+      }
+    }
+
+    function renderCoupons(){
+      const list = $("#couponList");
+      list.innerHTML = "";
+
+      const items = shuffle(window.TFY_COUPONS || []);
+      for(const c of items){
+        const card = document.createElement("div");
+        card.className = "couponCard";
+
+        const meta = document.createElement("div");
+        meta.className = "couponMeta";
+
+        const name = document.createElement("div");
+        name.className = "name";
+        name.innerHTML = `<span>${c.name}</span><span class="small">${c.who}</span>`;
+        meta.appendChild(name);
+
+        const pill = document.createElement("div");
+        pill.className = "codePill";
+        pill.innerHTML = `<span style="font-weight:900;color:#fb923c;">CODE</span> <b>${c.code}</b>`;
+        meta.appendChild(pill);
+
+        const btns = document.createElement("div");
+        btns.style.display="flex";
+        btns.style.gap="8px";
+
+        const b1 = document.createElement("button");
+        b1.className = "miniBtn copy";
+        b1.textContent = "복사";
+        b1.onclick = ()=>copyText(c.code);
+
+        const b2 = document.createElement("button");
+        b2.className = "miniBtn go";
+        b2.textContent = "이동";
+        b2.onclick = ()=>window.open(c.link, "_blank", "noopener,noreferrer");
+
+        btns.appendChild(b1);
+        btns.appendChild(b2);
+
+        card.appendChild(meta);
+        card.appendChild(btns);
+        list.appendChild(card);
+      }
+    }
+
+    function enableInertiaFollow(){
+      const sidebar = $("#sidebar");
+      let targetY = 0;
+      let currentY = 0;
+
+      window.addEventListener("mousemove", (e)=>{
+        const center = window.innerHeight/2;
+        const dy = (e.clientY - center) * 0.12;
+        targetY = Math.max(-40, Math.min(120, dy));
+      }, { passive:true });
 
       function tick(){
-        currentY += (targetY - currentY) * ease;
-        sidebar.style.transform = `translate3d(0, ${currentY}px, 0)`;
+        currentY += (targetY - currentY) * 0.08;
+        sidebar.style.transform = `translateY(${currentY}px)`;
         requestAnimationFrame(tick);
       }
+      tick();
+    }
 
-      window.addEventListener('mousemove', onMove, { passive:true });
-      requestAnimationFrame(tick);
-    })();
+    function renderCategories(){
+      const grid = $("#categoryGrid");
+      grid.innerHTML = "";
 
-    // ===== Floating coupon button: 메인 쿠폰 패널로 스크롤 =====
-    (function(){
-      const btn = document.getElementById('floatingCoupon');
-      const anchor = document.getElementById('couponCardsMain');
-      if(!btn || !anchor) return;
+      const cats = window.TFY_CATEGORIES || [];
+      const posts = window.TFY_POSTS || [];
 
-      btn.addEventListener('click', () => {
-        const top = anchor.getBoundingClientRect().top + window.scrollY - 76;
-        window.scrollTo({ top, behavior: 'smooth' });
-      });
-    })();
+      const grouped = {};
+      for(const c of cats) grouped[c.key] = [];
+      for(const p of posts) grouped[p.cat].push(p);
 
-    // ✅ 로고는 "이동"하지 않음 (요청사항)
-    // 클릭 막기(혹시 링크로 바뀌어도 안전)
-    (function(){
-      const logo = document.querySelector('.logo');
-      if(!logo) return;
-      logo.addEventListener('click', (e) => {
-        e.preventDefault();
-      });
-    })();
+      for(const cat of cats){
+        const box = document.createElement("div");
+        box.className = "cat";
+
+        const head = document.createElement("div");
+        head.className = "catTitle";
+        head.innerHTML = `<span>${cat.title}</span><small>최대 5개 표시</small>`;
+        box.appendChild(head);
+
+        const list = document.createElement("ul");
+        list.className = "scrollList";
+
+        for(const post of grouped[cat.key]){
+          const li = document.createElement("li");
+          li.className = "item";
+
+          const left = document.createElement("div");
+          left.style.minWidth = "0";
+
+          const a = document.createElement("a");
+          a.textContent = post.title;
+
+          // ✅ ready=true면 링크 활성, 아니면 '업로드 예정'
+          if(post.ready){
+            a.href = `./posts/${post.file}`;
+          }else{
+            a.href = "javascript:void(0)";
+            a.style.cursor = "default";
+            a.style.opacity = ".75";
+          }
+
+          left.appendChild(a);
+
+          const right = document.createElement("div");
+          right.className = "badge " + (post.ready ? "" : "miss");
+          right.textContent = post.ready ? "보기" : "곧 업로드 예정입니다!";
+
+          li.appendChild(left);
+          li.appendChild(right);
+
+          list.appendChild(li);
+        }
+
+        box.appendChild(list);
+        grid.appendChild(box);
+      }
+    }
+
+    // 로고 클릭: 이동 X, 흔들기만
+    $("#logoBtn").addEventListener("click", ()=>{
+      const mark = document.querySelector(".logo-mark");
+      mark.style.animation = "none";
+      void mark.offsetWidth;
+      mark.style.animation = "tickle 650ms ease-in-out both";
+    });
+
+    $("#fabBtn").addEventListener("click", ()=>{
+      document.querySelector(".couponPanel").scrollIntoView({ behavior:"smooth", block:"start" });
+    });
+
+    renderCoupons();
+    renderCategories();
+    enableInertiaFollow();
   </script>
-
-  <!-- ✅ 데이터 로딩/랜덤 쿠폰/카테고리 렌더 -->
-  <script src="./app.js"></script>
 </body>
 </html>
