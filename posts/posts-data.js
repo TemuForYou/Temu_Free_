@@ -127,7 +127,7 @@ window.TFY_DATA = {
         {
           title: "배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
           slug: "temu-order-stuck-looks-like-delay",
-          ready: false
+          ready: true
         },
         {
           title: "테무 배송조회가 안 맞을 때, 업데이트 지연 때문에 생기는 착시",
