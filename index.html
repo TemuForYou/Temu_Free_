@@ -2,620 +2,784 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>TFY | TemuForYou</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TemuForYou</title>
 
+  <!-- 폰트: Apple SD Gothic Neo 고정 -->
   <style>
     :root{
       --bg:#f6f7f9;
       --card:#ffffff;
-      --line:#e9e9ee;
-      --text:#111827;
+      --ink:#121316;
       --muted:#6b7280;
-      --brand:#ff7a18;
-      --brand2:#ff9b4d;
-      --shadow: 0 14px 34px rgba(17,24,39,.10);
-      --shadow2: 0 10px 24px rgba(17,24,39,.08);
-      --radius: 20px;
-      --radius2: 16px;
+      --line:rgba(15, 23, 42, .08);
+
+      --orange:#ff7a00;
+      --orange2:#ff8f1f;
+
+      --shadow: 0 18px 40px rgba(15, 23, 42, .10);
+      --shadow2: 0 10px 24px rgba(15, 23, 42, .10);
+
+      --radius-xl: 26px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 12px;
+
+      --max: 1100px;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
+
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
       margin:0;
-      font-family:"Apple SD Gothic Neo",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans KR","Helvetica Neue",Arial,sans-serif;
-      background:var(--bg);
-      color:var(--text);
+      font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Helvetica Neue", Arial, sans-serif;
+      color:var(--ink);
+      background: var(--bg);
     }
 
+    a{ color:inherit; text-decoration:none; }
+    button{ font-family:inherit; }
+
+    /* Top bar */
     .topbar{
-      position:sticky; top:0; z-index:50;
-      background: linear-gradient(90deg, var(--brand), #ff8a2e);
-      height:56px;
-      display:flex; align-items:center;
-      padding:0 18px;
-      box-shadow: 0 10px 20px rgba(0,0,0,.10);
+      position:sticky;
+      top:0;
+      z-index:50;
+      height:54px;
+      background: linear-gradient(90deg, var(--orange), var(--orange2));
+      box-shadow: 0 10px 18px rgba(0,0,0,.10);
+      display:flex;
+      align-items:center;
     }
-    .logo{display:inline-flex;align-items:center;cursor:pointer;user-select:none}
-    .logo-mark{
-      font-weight:900;
-      font-size:22px;
-      letter-spacing:.5px;
-      color:#fff;
-      font-style:italic;
-      text-shadow: 0 8px 18px rgba(0,0,0,.25);
-      transform-origin:center;
-    }
-    .logo:hover .logo-mark{animation: tickle 650ms ease-in-out both;}
-    @keyframes tickle{
-      0%{transform:translateX(0) rotate(0deg)}
-      15%{transform:translateX(-3px) rotate(-2deg)}
-      30%{transform:translateX(3px) rotate(2deg)}
-      45%{transform:translateX(-2px) rotate(-1deg)}
-      60%{transform:translateX(2px) rotate(1deg)}
-      100%{transform:translateX(0) rotate(0deg)}
+    .topbar-inner{
+      width:min(var(--max), calc(100% - 44px));
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
     }
 
+    .logo{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:.3px;
+      color:#fff;
+      cursor:pointer;
+      user-select:none;
+      padding:8px 10px;
+      border-radius:12px;
+    }
+    .logo .mark{
+      font-weight:900;
+      font-size:20px;
+      line-height:1;
+      transform: translateZ(0);
+    }
+    .logo .name{
+      font-weight:800;
+      font-size:14px;
+      opacity:.95;
+    }
+
+    /* hover wiggle */
+    @keyframes wiggleX {
+      0%{ transform: translateX(0) rotate(0deg); }
+      15%{ transform: translateX(-2px) rotate(-1deg); }
+      30%{ transform: translateX(3px) rotate(1deg); }
+      45%{ transform: translateX(-3px) rotate(-1deg); }
+      60%{ transform: translateX(2px) rotate(1deg); }
+      75%{ transform: translateX(-1px) rotate(0deg); }
+      100%{ transform: translateX(0) rotate(0deg); }
+    }
+    .logo:hover .mark{
+      animation: wiggleX .55s ease-in-out;
+    }
+
+    /* Layout */
     .wrap{
-      max-width:1160px;
-      margin:0 auto;
-      padding: 26px 18px 60px;
+      width:min(var(--max), calc(100% - 44px));
+      margin: 26px auto 70px;
+      position:relative;
+    }
+
+    .grid{
       display:grid;
-      grid-template-columns: 1fr 360px;
-      gap:18px;
+      grid-template-columns: 1fr 320px;
+      gap: 22px;
       align-items:start;
     }
 
-    .hero{
-      background:#fff1e8;
-      border:1px solid #ffd9c0;
-      border-radius: 28px;
-      padding: 26px;
-      box-shadow: var(--shadow2);
-    }
-    .hero h1{margin:0;font-size:30px;line-height:1.2;letter-spacing:-.5px}
-    .hero p{margin:10px 0 0;color:var(--muted);line-height:1.6;max-width:62ch}
-
-    .couponSlots{
-      margin-top:16px;
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:12px;
-    }
-    .slot{
-      border-radius: 18px;
-      border:1px solid var(--line);
-      background:#fff;
-      padding:14px;
-      box-shadow: 0 10px 22px rgba(17,24,39,.06);
-      min-height:86px;
-      display:flex;
-      flex-direction:column;
-      justify-content:space-between;
-      overflow:hidden;
-    }
-    .slot .cap{font-size:13px;color:var(--muted);display:flex;align-items:center;gap:8px;font-weight:800}
-    .slot .cap i{width:10px;height:10px;border-radius:999px;display:inline-block}
-    .slot .title{margin-top:10px;font-weight:900;letter-spacing:-.2px}
-    .slot .hint{margin-top:8px;font-size:12px;color:#9ca3af}
-    .slot.blue .cap i{background:#3b82f6}
-    .slot.mint .cap i{background:#10b981}
-    .slot.purple .cap i{background:#8b5cf6}
-
-    .section{
-      margin-top:18px;
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius: 26px;
-      padding: 18px;
-      box-shadow: var(--shadow2);
-    }
-    .sectionHead{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-      padding: 2px 6px 10px;
-    }
-    .sectionHead h2{margin:0;font-size:18px;letter-spacing:-.2px}
-    .sectionHead .sub{color:var(--muted);font-size:12.5px}
-
-    .catGrid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-top:8px;
-    }
-    .cat{
-      border:1px solid var(--line);
-      border-radius: 18px;
-      padding:12px;
-      background:#fff;
-      box-shadow: 0 10px 18px rgba(17,24,39,.05);
-      min-height: 280px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
-    }
-    .catTitle{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-      font-weight:900;
-    }
-    .catTitle small{color:#9ca3af;font-size:12px;font-weight:800}
-
-    .scrollList{
-      margin:0; padding:0;
-      list-style:none;
-      display:flex;
-      flex-direction:column;
-      gap:8px;
-      overflow:auto;
-      padding-right: 4px;
-      flex:1;
-    }
-    .scrollList::-webkit-scrollbar{width:8px}
-    .scrollList::-webkit-scrollbar-thumb{background:#f0f1f4;border-radius:999px}
-
-    .item{
-      border:1px solid #eef0f5;
-      border-radius: 14px;
-      padding:10px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:10px;
-      background:#fff;
-      transition: transform .15s ease, box-shadow .15s ease;
-    }
-    .item:hover{transform: translateY(-1px);box-shadow: 0 12px 20px rgba(17,24,39,.06)}
-    .item a{
-      color:var(--text);
-      text-decoration:none;
-      font-weight:900;
-      line-height:1.25;
-      font-size:13.5px;
-      display:inline-block;
-      max-width:100%;
-      white-space:normal;
-      word-break:keep-all;
-    }
-
-    .badge{
-      font-size:11px;
-      padding:6px 8px;
-      border-radius: 999px;
-      border:1px solid #ffe1cd;
-      background:#fff7f1;
-      color:#c2410c;
-      white-space:nowrap;
-      font-weight:900;
-      flex:0 0 auto;
-    }
-    .badge.miss{
-      border:1px solid #e5e7eb;
-      background:#f9fafb;
-      color:#6b7280;
-      font-weight:800;
-    }
-
-    .sidebarWrap{position:relative;min-height: 60vh;}
-    .sidebar{
-      width:360px;
-      max-width:100%;
-      position: sticky;
-      top: 78px;
-      will-change: transform;
-    }
-
     @media (max-width: 980px){
-      .wrap{grid-template-columns:1fr}
-      .sidebar{
-        width: min(420px, calc(100vw - 36px));
-        margin: 0 auto;
+      .grid{
+        grid-template-columns: 1fr;
       }
     }
-    @media (max-width: 560px){
-      .couponSlots{grid-template-columns:1fr}
-      .catGrid{grid-template-columns:1fr}
-      .hero h1{font-size:26px}
-      .sidebar{width: min(420px, calc(100vw - 24px));}
+
+    /* Hero card */
+    .hero{
+      background: linear-gradient(180deg, rgba(255, 122, 0, .09), rgba(255, 122, 0, .04));
+      border: 1px solid rgba(255, 122, 0, .18);
+      border-radius: var(--radius-xl);
+      padding: 26px;
+      box-shadow: var(--shadow);
+    }
+    .hero h1{
+      margin:0 0 10px;
+      font-size: 30px;
+      letter-spacing:-.6px;
+      line-height:1.25;
+    }
+    .hero p{
+      margin:0 0 18px;
+      color: rgba(17, 24, 39, .72);
+      line-height:1.6;
+      font-size: 14.5px;
     }
 
-    .couponPanel{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius: 26px;
-      box-shadow: var(--shadow);
-      overflow:hidden;
+    .coupon-slots{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 16px;
     }
-    .couponHead{
-      padding:14px;
-      background: linear-gradient(180deg, #fff3ea, #ffffff);
-      border-bottom:1px solid #f1f2f6;
+    @media (max-width: 720px){
+      .coupon-slots{ grid-template-columns: 1fr; }
+    }
+    .slot{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      padding: 14px 14px 13px;
+      box-shadow: 0 8px 16px rgba(15, 23, 42, .06);
+      min-height: 92px;
       display:flex;
-      align-items:flex-start;
+      flex-direction:column;
+      justify-content:space-between;
+    }
+    .slot .top{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:99px;
+      background: #3b82f6;
+      flex:0 0 auto;
+    }
+    .dot.g{ background:#10b981; }
+    .dot.p{ background:#8b5cf6; }
+    .slot .label{
+      font-size:12px;
+      color: rgba(17, 24, 39, .65);
+      font-weight:700;
+    }
+    .slot .value{
+      margin-top:8px;
+      font-size:16px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .slot .sub{
+      margin-top:4px;
+      font-size:12px;
+      color: rgba(107, 114, 128, .92);
+    }
+
+    /* Categories block */
+    .block{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      padding: 18px 18px 14px;
+      box-shadow: var(--shadow2);
+      margin-top: 18px;
+    }
+    .block-h{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:12px;
+      padding: 6px 6px 14px;
+    }
+    .block-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:-.3px;
+      font-size:16px;
+    }
+    .block-sub{
+      color: rgba(107, 114, 128, .92);
+      font-size:12px;
+      white-space:nowrap;
+    }
+
+    .cats{
+      display:grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 6px;
+    }
+    @media (max-width: 720px){
+      .cats{ grid-template-columns: 1fr; }
+    }
+
+    .cat{
+      border: 1px solid var(--line);
+      border-radius: var(--radius-lg);
+      overflow:hidden;
+      background: linear-gradient(180deg, rgba(255, 122, 0, .04), rgba(255, 122, 0, .02));
+    }
+    .cat-head{
+      display:flex;
+      align-items:center;
       justify-content:space-between;
       gap:10px;
+      padding: 12px 12px 10px;
+      background: rgba(255,255,255,.75);
+      border-bottom: 1px solid var(--line);
     }
-    .couponHead .t{font-weight:900;display:flex;gap:8px;align-items:center}
-    .couponHead .d{margin-top:4px;font-size:12px;color:var(--muted);line-height:1.4}
-    .chip{
-      font-size:12px;
+    .cat-name{
       font-weight:900;
-      padding:8px 10px;
-      border-radius:999px;
-      border:1px solid #ffd9c0;
-      background:#fff7f1;
-      color:#c2410c;
+      letter-spacing:-.2px;
+      font-size:14px;
+      display:flex;
+      align-items:center;
+      gap:8px;
+    }
+    .pill{
+      font-size:11px;
+      font-weight:800;
+      padding: 5px 9px;
+      border-radius: 999px;
+      background: rgba(255, 122, 0, .12);
+      border: 1px solid rgba(255, 122, 0, .22);
+      color: #b45309;
       white-space:nowrap;
     }
-    .couponList{
-      padding:12px;
-      display:flex;
-      flex-direction:column;
-      gap:10px;
+
+    .cat-body{
+      padding: 10px 10px 12px;
+      max-height: 206px;
+      overflow:auto;
     }
-    .couponCard{
-      border-radius: 18px;
-      border:1px solid #eef0f5;
-      background: linear-gradient(180deg, #ffffff, #fff7f1);
-      box-shadow: 0 10px 20px rgba(17,24,39,.06);
-      padding: 12px;
-      display:grid;
-      grid-template-columns: 1fr auto;
-      gap:10px;
+    .post{
+      display:flex;
       align-items:center;
-      position:relative;
+      justify-content:space-between;
+      gap:10px;
+      padding: 10px 10px;
+      border-radius: 14px;
+      border: 1px solid transparent;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .post:hover{
+      background: rgba(255, 122, 0, .06);
+      border-color: rgba(255, 122, 0, .18);
+      transform: translateY(-1px);
+    }
+    .post-title{
+      font-weight:800;
+      font-size:13px;
+      line-height:1.25;
+      color: rgba(17, 24, 39, .92);
+      display:-webkit-box;
+      -webkit-line-clamp:2;
+      -webkit-box-orient: vertical;
       overflow:hidden;
     }
-    .couponCard:before{
-      content:"";
-      position:absolute;
-      inset:-40% auto auto -40%;
-      width:180px;height:180px;
-      background: radial-gradient(circle, rgba(255,122,24,.18), transparent 62%);
-      transform: rotate(15deg);
-    }
-    .couponMeta{
-      position:relative;
-      display:flex;
-      flex-direction:column;
-      gap:6px;
-      min-width:0;
-    }
-    .couponMeta .name{
-      font-weight:900;
-      display:flex;
-      align-items:center;
-      gap:8px;
-      min-width:0;
-    }
-    .couponMeta .small{
+    .post-meta{
       font-size:11px;
-      color:#9ca3af;
+      color: rgba(107, 114, 128, .92);
+      white-space:nowrap;
+      margin-left: 8px;
+    }
+    .badge-ready{
+      font-size:11px;
       font-weight:800;
-      border:1px solid #eef0f5;
-      padding:4px 8px;
-      border-radius:999px;
-      background:#fff;
-      flex:0 0 auto;
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(107, 114, 128, .10);
+      border: 1px solid rgba(107, 114, 128, .18);
+      color: rgba(107, 114, 128, .95);
       white-space:nowrap;
     }
-    .codePill{
-      font-weight:900;
-      border-radius: 14px;
-      border:1px solid #ffd9c0;
-      background:#fff;
-      padding:8px 10px;
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      box-shadow: inset 0 -2px 0 rgba(255,122,24,.12);
-      max-width:100%;
-    }
-    .codePill b{letter-spacing:.4px}
-    .miniBtn{
-      border:0;
-      border-radius: 12px;
-      font-weight:900;
-      padding:10px 12px;
-      cursor:pointer;
-      box-shadow: 0 10px 18px rgba(17,24,39,.08);
-    }
-    .miniBtn.copy{background:#fff;border:1px solid #e9e9ee;color:#111827}
-    .miniBtn.go{background: linear-gradient(180deg, var(--brand2), var(--brand));color:#fff}
 
-    .toast{
+    /* Right floating sidebar (inertia follow) */
+    .float-wrap{
+      position: relative;
+      min-height: 1px;
+    }
+    .float{
       position: fixed;
-      left:50%;
-      bottom:18px;
-      transform: translateX(-50%);
-      background:#111827;
-      color:#fff;
-      padding: 10px 14px;
-      border-radius: 999px;
+      width: 320px;
+      right: max(22px, calc((100vw - var(--max)) / 2));
+      top: 120px; /* will be animated */
+      z-index: 30;
+      pointer-events: none; /* allow page interaction */
+    }
+    @media (max-width: 980px){
+      .float{
+        position: static;
+        width: 100%;
+        right:auto;
+        top:auto;
+        pointer-events:auto;
+        margin-top:18px;
+      }
+    }
+    .side{
+      pointer-events:auto;
+      background: rgba(255,255,255,.88);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      backdrop-filter: blur(10px);
+    }
+    .side-h{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding: 14px 14px 12px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 122, 0, .07), rgba(255,255,255,.55));
+    }
+    .side-title{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:900;
+      letter-spacing:-.2px;
+      font-size:14px;
+    }
+
+    .side-body{
+      padding: 12px;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      max-height: 520px;
+      overflow:auto;
+    }
+
+    .citem{
+      border-radius: 18px;
+      border: 1px solid rgba(255, 122, 0, .18);
+      background: linear-gradient(180deg, rgba(255, 122, 0, .07), rgba(255,255,255,.75));
+      padding: 12px;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, .08);
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 10px;
+    }
+    .citem .t{
       font-weight:900;
       font-size:13px;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
-      z-index:1000;
+      letter-spacing:-.2px;
+      margin-bottom: 4px;
+      display:flex;
+      align-items:center;
+      gap:8px;
     }
-    .toast.show{opacity:1;transform: translateX(-50%) translateY(-6px);}
+    .citem .d{
+      color: rgba(107, 114, 128, .95);
+      font-size:12px;
+      line-height:1.4;
+    }
+    .citem .code{
+      margin-top: 8px;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid var(--line);
+      font-weight:900;
+      letter-spacing:.3px;
+      font-size:12px;
+      width: fit-content;
+    }
 
+    .btns{
+      display:flex;
+      gap:8px;
+      justify-content:flex-end;
+      align-items:flex-start;
+    }
+    .btn{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.92);
+      border-radius: 999px;
+      padding: 9px 12px;
+      font-weight:900;
+      font-size:12px;
+      cursor:pointer;
+      transition: transform .12s ease, background .12s ease, border-color .12s ease;
+      box-shadow: 0 10px 18px rgba(15, 23, 42, .08);
+      white-space:nowrap;
+    }
+    .btn:hover{ transform: translateY(-1px); }
+    .btn.primary{
+      background: linear-gradient(90deg, var(--orange), var(--orange2));
+      border-color: rgba(255, 122, 0, .25);
+      color:#fff;
+    }
+
+    /* Bottom-right floating coupon circle button */
     .fab{
-      position:fixed;
-      right:16px;
-      bottom:16px;
-      width:58px;height:58px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.7);
-      background: rgba(255,255,255,.55);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 18px 34px rgba(17,24,39,.16);
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 58px;
+      height: 58px;
+      border-radius: 999px;
+      border: 1px solid rgba(15,23,42,.12);
+      background: rgba(255,255,255,.72);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 18px 40px rgba(15,23,42,.14);
       display:flex;
       align-items:center;
       justify-content:center;
       cursor:pointer;
-      z-index:200;
-      transition: transform .12s ease;
+      z-index: 60;
+      user-select:none;
     }
-    .fab:hover{transform: translateY(-2px)}
-    .fab span{
-      width:24px;height:24px;border-radius:8px;
-      background: linear-gradient(180deg, var(--brand2), var(--brand));
-      display:inline-block;
-      position:relative;
-      box-shadow: 0 10px 18px rgba(255,122,24,.22);
+    .fab svg{
+      width: 26px; height: 26px;
+      opacity:.92;
     }
-    .fab span:before{
-      content:"";
-      position:absolute;
-      inset:6px;
-      border-radius: 5px;
-      border:2px solid rgba(255,255,255,.9);
-    }
+    .fab:active{ transform: translateY(1px); }
   </style>
+
+  <!-- 데이터 파일(1차): posts-data.js (window.TFY_DATA) -->
+  <script src="./posts/posts-data.js"></script>
 </head>
 
 <body>
-  <header class="topbar">
-    <div class="logo" id="logoBtn" title="TFY">
-      <div class="logo-mark">TFY</div>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="logo" id="logoBtn" aria-label="TemuForYou">
+        <div class="mark">TFY</div>
+        <div class="name"></div>
+      </div>
+      <div style="height:1px;"></div>
     </div>
-  </header>
+  </div>
 
-  <main class="wrap">
-    <section>
-      <div class="hero">
-        <h1>테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
-        <p>
-          쿠폰/사은품/특별세일은 ‘되는 구조’가 있고, 배송·통관·환불·결제 문제는 ‘막히는 지점’이 있습니다.
-          이 사이트는 과장이 아니라, <b>실제 적용 기준</b>으로 정리합니다.
-        </p>
+  <div class="wrap">
+    <div class="grid">
+      <main>
+        <section class="hero">
+          <h1>테무 혜택과 문제 해결을<br/>한 곳에서 정리합니다</h1>
+          <p>
+            쿠폰/사은품/세일 정보부터 결제·배송·통관·환불 같은 자주 막히는 구간까지,
+            실제 흐름 기준으로 빠르게 확인할 수 있게 구성했습니다.
+          </p>
 
-        <div class="couponSlots">
-          <div class="slot blue">
-            <div class="cap"><i></i> 쿠폰 슬롯 1</div>
-            <div class="title">비워둠</div>
-            <div class="hint">요청대로 공백 유지</div>
-          </div>
-          <div class="slot mint">
-            <div class="cap"><i></i> 쿠폰 슬롯 2</div>
-            <div class="title">비워둠</div>
-            <div class="hint">요청대로 공백 유지</div>
-          </div>
-          <div class="slot purple">
-            <div class="cap"><i></i> 쿠폰 슬롯 3</div>
-            <div class="title">비워둠</div>
-            <div class="hint">요청대로 공백 유지</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="section">
-        <div class="sectionHead">
-          <h2>🔥 TFT(캘리 표현) 포스팅 카테고리 (+이모지)</h2>
-          <div class="sub">각 카테고리 5개 표시 · 스크롤로 전체 확인</div>
-        </div>
-
-        <div class="catGrid" id="categoryGrid"></div>
-      </div>
-    </section>
-
-    <aside class="sidebarWrap">
-      <div class="sidebar" id="sidebar">
-        <div class="couponPanel">
-          <div class="couponHead">
-            <div>
-              <div class="t">🔥 쿠폰 코드 · 링크</div>
-              <div class="d">부드럽게 뒤따라오며 시선을 끄는 패널</div>
+          <div class="coupon-slots" id="couponSlots">
+            <div class="slot">
+              <div class="top"><span class="dot"></span><div class="label">쿠폰 슬롯 1</div></div>
+              <div class="value">비워둠</div>
+              <div class="sub">필요 시 자동 반영</div>
             </div>
-            <div class="chip">관성 추적</div>
+            <div class="slot">
+              <div class="top"><span class="dot g"></span><div class="label">쿠폰 슬롯 2</div></div>
+              <div class="value">비워둠</div>
+              <div class="sub">필요 시 자동 반영</div>
+            </div>
+            <div class="slot">
+              <div class="top"><span class="dot p"></span><div class="label">쿠폰 슬롯 3</div></div>
+              <div class="value">비워둠</div>
+              <div class="sub">필요 시 자동 반영</div>
+            </div>
           </div>
-          <div class="couponList" id="couponList"></div>
+        </section>
+
+        <section class="block" style="margin-top:18px;">
+          <div class="block-h">
+            <div class="block-title">🔥 포스팅 카테고리</div>
+            <div class="block-sub">각 카테고리 5개 표시 · 스크롤로 전체 확인</div>
+          </div>
+
+          <div class="cats" id="cats">
+            <!-- injected -->
+          </div>
+        </section>
+      </main>
+
+      <aside class="float-wrap">
+        <div class="float" id="floatBox">
+          <div class="side">
+            <div class="side-h">
+              <div class="side-title">🔥 쿠폰 코드 · 링크</div>
+              <div class="pill">따라오는</div>
+            </div>
+            <div class="side-body" id="couponList">
+              <!-- injected -->
+            </div>
+          </div>
         </div>
-      </div>
-    </aside>
-  </main>
+      </aside>
+    </div>
+  </div>
 
-  <button class="fab" id="fabBtn" title="쿠폰"><span></span></button>
-  <div class="toast" id="toast">복사 완료</div>
-
-  <!-- ✅ 글 목록/쿠폰 데이터는 여기서만 불러옴 -->
-  <script src="./posts/posts-data.js"></script>
+  <div class="fab" id="fabBtn" aria-label="쿠폰 열기">
+    <!-- simple coupon icon -->
+    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M4.5 8.5c1.1 0 2-.9 2-2V5.8c0-.7.6-1.3 1.3-1.3h12.4c.7 0 1.3.6 1.3 1.3v.7c0 1.1.9 2 2 2v6.9c-1.1 0-2 .9-2 2v.7c0 .7-.6 1.3-1.3 1.3H7.8c-.7 0-1.3-.6-1.3-1.3v-.7c0-1.1-.9-2-2-2V8.5Z" stroke="rgba(17,24,39,.75)" stroke-width="1.6" />
+      <path d="M12 7v10" stroke="rgba(17,24,39,.35)" stroke-width="1.6" stroke-dasharray="2.2 2.2" />
+    </svg>
+  </div>
 
   <script>
-    const $ = (s)=>document.querySelector(s);
+    /* -----------------------------
+       Safe data loader (2-level)
+       1) window.TFY_DATA  (posts-data.js)
+       2) ./posts/posts.json (optional)
+    ------------------------------ */
+    async function loadTFYData(){
+      if (window.TFY_DATA && typeof window.TFY_DATA === "object") return window.TFY_DATA;
+
+      // optional JSON fallback
+      try{
+        const res = await fetch("./posts/posts.json", { cache: "no-store" });
+        if (res.ok){
+          const json = await res.json();
+          if (json && typeof json === "object") return json;
+        }
+      }catch(e){ /* ignore */ }
+
+      // final fallback (minimal safe defaults)
+      return {
+        coupons: [
+          { title:"150,000원 쿠폰 묶음", tag:"신규 앱 사용자", code:"aak74594", link:"https://temu.to/m/uotsq20netz" },
+          { title:"사은품 0원", tag:"신규 앱 사용자", code:"frq027981", link:"https://temu.to/m/u3ia9bomcaw" },
+          { title:"30% 할인", tag:"신규 앱 사용자", code:"acr804202", link:"https://temu.to/m/u3ckk6z4eku" },
+          { title:"특별 세일", tag:"신규 앱 사용자", code:"ack263361", link:"https://temu.to/m/u6ndc7zl0v8" },
+          { title:"SAVE BIG", tag:"모든 사용자", code:"frw419209", link:"https://temu.to/m/u0zwrhwzccf" },
+          { title:"추가 혜택", tag:"모든 사용자", code:"alf468043", link:"https://temu.to/k/qgzxbhz73coe" }
+        ],
+        categories: [
+          {
+            id:"benefit",
+            emoji:"🎁",
+            name:"혜택 · 쿠폰",
+            posts: [
+              { title:"테무 쿠폰코드 입력, 이 순서로 하면 적용이 제일 깔끔합니다", slug:"temu-coupon-code-input", ready:false },
+              { title:"테무 2026 쿠폰, 실제로 먹히는 계정 조건이 따로 있습니다", slug:"temu-coupon-2026", ready:false },
+              { title:"테무 쿠폰 적용이 안 될 때, 확인해야 할 7가지", slug:"temu-coupon-not-working", ready:false },
+              { title:"테무 스페셜 세일, 진짜 싸게 잡는 타이밍 정리", slug:"temu-special-sale", ready:false },
+              { title:"테무 사은품 0원, 가능한 구조와 안 되는 케이스", slug:"temu-free-gift-0won", ready:false }
+            ]
+          },
+          {
+            id:"pay",
+            emoji:"💳",
+            name:"결제 · 계정",
+            posts: [
+              { title:"테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다", slug:"temu-payment-error-most-stuck", ready:false },
+              { title:"테무 결제 실패 반복, 카드 문제보다 계정 설정이 원인인 경우", slug:"temu-payment-fail-account", ready:false },
+              { title:"테무 결제 승인만 되고 주문이 안 뜰 때 확인 순서", slug:"temu-payment-approved-no-order", ready:false },
+              { title:"테무 결제 오류, 앱/웹 차이로 생기는 대표 케이스", slug:"temu-payment-app-web-diff", ready:false },
+              { title:"테무 결제 오류를 줄이는 필수 기본 설정 5가지", slug:"temu-payment-prevent-5", ready:false }
+            ]
+          },
+          {
+            id:"ship",
+            emoji:"🚚",
+            name:"배송 · 통관",
+            posts: [
+              { title:"테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다", slug:"temu-customs-code-one-letter-shipping-stop", ready:false },
+              { title:"테무 배송이 멈춘 것처럼 보일 때, ‘정상 대기’와 ‘문제’ 구분법", slug:"temu-shipping-stuck-normal-vs-issue", ready:false },
+              { title:"테무 통관 단계에서 오래 걸릴 때, 확인해야 할 화면 3곳", slug:"temu-customs-long-check-3", ready:false },
+              { title:"테무 배송조회가 안 맞을 때, 업데이트 주기 때문에 생기는 착시", slug:"temu-tracking-lag", ready:false },
+              { title:"테무 주소 입력 실수, 수정 가능/불가가 갈리는 기준", slug:"temu-address-fix-rule", ready:false }
+            ]
+          },
+          {
+            id:"cs",
+            emoji:"🧾",
+            name:"환불 · 고객센터",
+            posts: [
+              { title:"테무 환불 처리 속도, 빨라지는 요청 방식이 따로 있습니다", slug:"temu-refund-fast-way", ready:false },
+              { title:"테무 환불 상태가 멈춘 것처럼 보일 때, 실제 진행 흐름", slug:"temu-refund-status-flow", ready:false },
+              { title:"테무 환불 ‘크레딧’으로 들어올 때 꼭 알아야 할 포인트", slug:"temu-refund-credit-point", ready:false },
+              { title:"테무 반품 없이 환불되는 케이스, 조건 정리", slug:"temu-refund-without-return", ready:false },
+              { title:"테무 고객센터 답이 늦을 때, 문의를 통과시키는 작성법", slug:"temu-cs-message-format", ready:false }
+            ]
+          }
+        ]
+      };
+    }
 
     function shuffle(arr){
       const a = arr.slice();
-      for(let i=a.length-1;i>0;i--){
+      for (let i=a.length-1;i>0;i--){
         const j = Math.floor(Math.random()*(i+1));
         [a[i],a[j]]=[a[j],a[i]];
       }
       return a;
     }
 
-    function showToast(msg){
-      const t = $("#toast");
-      t.textContent = msg || "복사 완료";
-      t.classList.add("show");
-      setTimeout(()=>t.classList.remove("show"), 900);
-    }
-
-    async function copyText(text){
-      try{
-        await navigator.clipboard.writeText(text);
-        showToast("복사 완료");
-      }catch(e){
-        const ta=document.createElement("textarea");
-        ta.value=text;
-        document.body.appendChild(ta);
-        ta.select();
-        document.execCommand("copy");
-        document.body.removeChild(ta);
-        showToast("복사 완료");
+    function el(tag, attrs={}, children=[]){
+      const n = document.createElement(tag);
+      for (const [k,v] of Object.entries(attrs)){
+        if (k === "class") n.className = v;
+        else if (k === "html") n.innerHTML = v;
+        else if (k.startsWith("on") && typeof v === "function") n.addEventListener(k.slice(2), v);
+        else n.setAttribute(k, v);
       }
+      (Array.isArray(children) ? children : [children]).forEach(c=>{
+        if (c == null) return;
+        if (typeof c === "string") n.appendChild(document.createTextNode(c));
+        else n.appendChild(c);
+      });
+      return n;
     }
 
-    function renderCoupons(){
-      const list = $("#couponList");
-      list.innerHTML = "";
+    async function boot(){
+      const data = await loadTFYData();
 
-      const items = shuffle(window.TFY_COUPONS || []);
-      for(const c of items){
-        const card = document.createElement("div");
-        card.className = "couponCard";
+      // normalize coupons
+      const coupons = Array.isArray(data.coupons) ? data.coupons : [];
+      const shuffledCoupons = shuffle(coupons);
 
-        const meta = document.createElement("div");
-        meta.className = "couponMeta";
-
-        const name = document.createElement("div");
-        name.className = "name";
-        name.innerHTML = `<span>${c.name}</span><span class="small">${c.who}</span>`;
-        meta.appendChild(name);
-
-        const pill = document.createElement("div");
-        pill.className = "codePill";
-        pill.innerHTML = `<span style="font-weight:900;color:#fb923c;">CODE</span> <b>${c.code}</b>`;
-        meta.appendChild(pill);
-
-        const btns = document.createElement("div");
-        btns.style.display="flex";
-        btns.style.gap="8px";
-
-        const b1 = document.createElement("button");
-        b1.className = "miniBtn copy";
-        b1.textContent = "복사";
-        b1.onclick = ()=>copyText(c.code);
-
-        const b2 = document.createElement("button");
-        b2.className = "miniBtn go";
-        b2.textContent = "이동";
-        b2.onclick = ()=>window.open(c.link, "_blank", "noopener,noreferrer");
-
-        btns.appendChild(b1);
-        btns.appendChild(b2);
-
-        card.appendChild(meta);
-        card.appendChild(btns);
-        list.appendChild(card);
-      }
-    }
-
-    function enableInertiaFollow(){
-      const sidebar = $("#sidebar");
-      let targetY = 0;
-      let currentY = 0;
-
-      window.addEventListener("mousemove", (e)=>{
-        const center = window.innerHeight/2;
-        const dy = (e.clientY - center) * 0.12;
-        targetY = Math.max(-40, Math.min(120, dy));
-      }, { passive:true });
-
-      function tick(){
-        currentY += (targetY - currentY) * 0.08;
-        sidebar.style.transform = `translateY(${currentY}px)`;
-        requestAnimationFrame(tick);
-      }
-      tick();
-    }
-
-    function renderCategories(){
-      const grid = $("#categoryGrid");
-      grid.innerHTML = "";
-
-      const cats = window.TFY_CATEGORIES || [];
-      const posts = window.TFY_POSTS || [];
-
-      const grouped = {};
-      for(const c of cats) grouped[c.key] = [];
-      for(const p of posts) grouped[p.cat].push(p);
-
-      for(const cat of cats){
-        const box = document.createElement("div");
-        box.className = "cat";
-
-        const head = document.createElement("div");
-        head.className = "catTitle";
-        head.innerHTML = `<span>${cat.title}</span><small>최대 5개 표시</small>`;
-        box.appendChild(head);
-
-        const list = document.createElement("ul");
-        list.className = "scrollList";
-
-        for(const post of grouped[cat.key]){
-          const li = document.createElement("li");
-          li.className = "item";
-
-          const left = document.createElement("div");
-          left.style.minWidth = "0";
-
-          const a = document.createElement("a");
-          a.textContent = post.title;
-
-          // ✅ ready=true면 링크 활성, 아니면 '업로드 예정'
-          if(post.ready){
-            a.href = `./posts/${post.file}`;
-          }else{
-            a.href = "javascript:void(0)";
-            a.style.cursor = "default";
-            a.style.opacity = ".75";
-          }
-
-          left.appendChild(a);
-
-          const right = document.createElement("div");
-          right.className = "badge " + (post.ready ? "" : "miss");
-          right.textContent = post.ready ? "보기" : "곧 업로드 예정입니다!";
-
-          li.appendChild(left);
-          li.appendChild(right);
-
-          list.appendChild(li);
+      // Fill top 3 slots
+      const slots = document.getElementById("couponSlots");
+      if (slots && shuffledCoupons.length >= 3){
+        const dots = ["dot","dot g","dot p"];
+        slots.innerHTML = "";
+        for (let i=0;i<3;i++){
+          const c = shuffledCoupons[i];
+          slots.appendChild(
+            el("div",{class:"slot"},[
+              el("div",{class:"top"},[
+                el("span",{class:dots[i]}),
+                el("div",{class:"label"},[`쿠폰 슬롯 ${i+1}`])
+              ]),
+              el("div",{class:"value"},[c.code]),
+              el("div",{class:"sub"},[c.title])
+            ])
+          );
         }
+      }
 
-        box.appendChild(list);
-        grid.appendChild(box);
+      // Right coupon list (6 items)
+      const list = document.getElementById("couponList");
+      list.innerHTML = "";
+      shuffle(coupons).slice(0,6).forEach(c=>{
+        const copyBtn = el("button",{class:"btn", type:"button", onClick: async ()=>{
+          try{
+            await navigator.clipboard.writeText(c.code);
+          }catch(e){}
+        }},["복사"]);
+
+        const goBtn = el("button",{class:"btn primary", type:"button", onClick: ()=>{
+          window.open(c.link, "_blank", "noopener,noreferrer");
+        }},["이동"]);
+
+        list.appendChild(
+          el("div",{class:"citem"},[
+            el("div",{},[
+              el("div",{class:"t"},[c.title]),
+              el("div",{class:"d"},[c.tag || ""]),
+              el("div",{class:"code"},[`CODE  ${c.code}`]),
+            ]),
+            el("div",{class:"btns"},[copyBtn, goBtn])
+          ])
+        );
+      });
+
+      // Categories + posts
+      const cats = document.getElementById("cats");
+      cats.innerHTML = "";
+
+      const categories = Array.isArray(data.categories) ? data.categories : [];
+      categories.forEach(cat=>{
+        const body = el("div",{class:"cat-body"});
+        const posts = Array.isArray(cat.posts) ? cat.posts : [];
+        // show first 5, scroll shows more
+        posts.forEach(p=>{
+          const href = (p && p.slug) ? `./posts/${p.slug}.html` : "#";
+          const ready = !!p.ready;
+
+          const left = el("div",{},[
+            el("div",{class:"post-title"},[p.title || "제목"]),
+          ]);
+
+          const right = ready
+            ? el("div",{class:"post-meta"},[""])
+            : el("div",{class:"badge-ready"},["준비중"]);
+
+          const row = el("a",{
+            class:"post",
+            href: ready ? href : href, // keep link shape; if not ready, user may upload later
+            onClick: (e)=>{
+              // if not ready, still allow link (user may have file). remove hard-block to avoid confusion
+            }
+          },[
+            left,
+            right
+          ]);
+
+          body.appendChild(row);
+        });
+
+        const card = el("div",{class:"cat", id: cat.id || ""},[
+          el("div",{class:"cat-head"},[
+            el("div",{class:"cat-name"},[`${cat.emoji || "📌"} ${cat.name || "카테고리"}`]),
+            el("div",{class:"pill"},["스크롤"])
+          ]),
+          body
+        ]);
+
+        cats.appendChild(card);
+      });
+
+      // Logo click: do not navigate, just wiggle
+      const logoBtn = document.getElementById("logoBtn");
+      logoBtn.addEventListener("click", ()=>{
+        const mark = logoBtn.querySelector(".mark");
+        mark.style.animation = "none";
+        mark.offsetHeight; // reflow
+        mark.style.animation = "wiggleX .55s ease-in-out";
+      });
+
+      // FAB click -> scroll to top smoothly
+      document.getElementById("fabBtn").addEventListener("click", ()=>{
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+
+      // Inertia follow sidebar
+      const floatBox = document.getElementById("floatBox");
+      if (floatBox && window.matchMedia("(min-width: 981px)").matches){
+        let targetY = 120;
+        let currentY = 120;
+
+        window.addEventListener("mousemove", (e)=>{
+          // follow cursor, but keep safe range
+          targetY = Math.min(Math.max(e.clientY - 120, 90), window.innerHeight - 360);
+        }, { passive:true });
+
+        function tick(){
+          currentY += (targetY - currentY) * 0.08; // inertia
+          floatBox.style.top = `${currentY}px`;
+          requestAnimationFrame(tick);
+        }
+        tick();
       }
     }
 
-    // 로고 클릭: 이동 X, 흔들기만
-    $("#logoBtn").addEventListener("click", ()=>{
-      const mark = document.querySelector(".logo-mark");
-      mark.style.animation = "none";
-      void mark.offsetWidth;
-      mark.style.animation = "tickle 650ms ease-in-out both";
-    });
-
-    $("#fabBtn").addEventListener("click", ()=>{
-      document.querySelector(".couponPanel").scrollIntoView({ behavior:"smooth", block:"start" });
-    });
-
-    renderCoupons();
-    renderCategories();
-    enableInertiaFollow();
+    // Boot with error safety (do not break page)
+    boot().catch((e)=>{ console.error("[TFY] boot error:", e); });
   </script>
 </body>
 </html>
