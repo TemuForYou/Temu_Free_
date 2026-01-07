@@ -1,10 +1,10 @@
 {
   "coupons": [
-    { "label": "150,000원 쿠폰 묶음", "code": "aak74594", "url": "https://temu.to/m/uotsq20netz", "badge": "신규 앱 사용자" },
-    { "label": "사은품 0원", "code": "frq027981", "url": "https://temu.to/m/u3ia9bomcaw", "badge": "신규 앱 사용자" },
-    { "label": "30% 할인", "code": "acr804202", "url": "https://temu.to/m/u3ckk6z4eku", "badge": "신규 앱 사용자" },
-    { "label": "추가 혜택", "code": "ack263361", "url": "https://temu.to/m/u6ndc7zl0v8", "badge": "모든 사용자" },
-    { "label": "SAVE BIG", "code": "frw419209", "url": "https://temu.to/m/u0zwrhwzccf", "badge": "모든 사용자" },
-    { "label": "특별 세일", "code": "alf468043", "url": "https://temu.to/k/qgzxbhz73coe", "badge": "모든 사용자" }
+    { "key": "aak74594", "url": "https://temu.to/m/uotsq20netz", "title": "150,000원 쿠폰 묶음", "note": "신규 앱 사용자" },
+    { "key": "frq027981", "url": "https://temu.to/m/u3ia9bomcaw", "title": "사은품 0원개", "note": "신규 앱 사용자" },
+    { "key": "acr804202", "url": "https://temu.to/m/u3ckk6z4eku", "title": "특별 세일", "note": "신규 앱 사용자" },
+    { "key": "ack263361", "url": "https://temu.to/m/u6ndc7zl0v8", "title": "추가 혜택", "note": "모든 사용자" },
+    { "key": "frw419209", "url": "https://temu.to/m/u0zwrhwzccf", "title": "SAVE BIG", "note": "모든 사용자" },
+    { "key": "alf468043", "url": "https://temu.to/k/qgzxbhz73coe", "title": "30% 할인", "note": "신규 앱 사용자" }
   ]
 }
