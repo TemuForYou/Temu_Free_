@@ -1,1 +1,47 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TFY</title>
 
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/post.css" />
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand" role="button" tabindex="0" aria-label="TFY 로고">
+        <span class="brand__badge">TFY</span>
+        <span class="brand__text">TFY</span>
+      </div>
+      <div class="topbar__pill" id="postBreadcrumb">실수·문제 해결형 · 배송/통관</div>
+    </div>
+  </header>
+
+  <main class="page postpage">
+    <article class="post">
+      <header class="post__head">
+        <div class="post__kicker" id="postKicker">TFY</div>
+        <h1 class="post__title" id="postTitle">제목</h1>
+        <div class="post__meta" id="postMeta">TFY 편집팀 · 업데이트: 상시</div>
+      </header>
+
+      <!-- 여기(content)에 글 내용이 들어갑니다 -->
+      <div class="post__content" id="postContent"></div>
+    </article>
+
+    <aside class="side">
+      <div class="side__head">
+        <div class="side__title">🔥 쿠폰 코드 · 링크</div>
+        <div class="side__chip">따라오는</div>
+      </div>
+      <div id="couponPanel" class="coupon-panel"></div>
+    </aside>
+  </main>
+
+  <script src="./assets/js/ui-coupons.js" defer></script>
+  <script src="./assets/js/post-renderer.js" defer></script>
+</body>
+</html>
