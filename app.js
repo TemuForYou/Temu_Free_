@@ -1,264 +1,263 @@
-/* app.js
-   - index.html 인라인 스크립트를 대체하는 "단일 진입점"
-   - 디자인(HTML/CSS)은 건드리지 않고, DOM 채우기만 수행
-*/
+(() => {
+  // ====== helpers ======
+  const $ = (sel) => document.querySelector(sel);
+  const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const CACHE = new Map();
+  const escapeHtml = (s) =>
+    String(s)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
 
-async function safeFetchJSON(url) {
-  try {
+  async function fetchJSON(url) {
     const res = await fetch(url, { cache: "no-store" });
-    if (!res.ok) return null;
-    return await res.json();
-  } catch {
-    return null;
-  }
-}
-
-// GitHub Pages에서도 보통 HEAD가 됩니다. 안 되면 GET으로 폴백.
-async function existsURL(url) {
-  if (CACHE.has(url)) return CACHE.get(url);
-
-  let ok = false;
-  try {
-    const head = await fetch(url, { method: "HEAD", cache: "no-store" });
-    ok = head.ok;
-  } catch {
-    ok = false;
+    if (!res.ok) throw new Error(`Failed to load ${url}: ${res.status}`);
+    return res.json();
   }
 
-  if (!ok) {
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // ====== IMPORTANT FIX ======
+  async function checkFileExists(url) {
+    // GitHub Pages / 일부 정적 호스팅은 HEAD 요청을 405로 막는 경우가 있어,
+    // HEAD → (실패/405 등) → GET Range(0-0) 순으로 "존재 여부"만 빠르게 확인합니다.
+    const bust = (u) => {
+      const sep = u.includes("?") ? "&" : "?";
+      return `${u}${sep}v=${Date.now()}`;
+    };
+
+    // 1) HEAD (가능하면 가장 빠름)
     try {
-      const get = await fetch(url, { method: "GET", cache: "no-store" });
-      ok = get.ok;
+      const res = await fetch(bust(url), { method: "HEAD", cache: "no-store" });
+      if (res.ok) return true;
+      // 405/403 등은 서버 정책일 수 있으니 GET으로 한 번 더 확인
+      if (![403, 405].includes(res.status)) return false;
     } catch {
-      ok = false;
+      // ignore and fallthrough
+    }
+
+    // 2) GET + Range (파일을 전부 받지 않도록 1바이트만 요청)
+    try {
+      const res = await fetch(bust(url), {
+        method: "GET",
+        cache: "no-store",
+        headers: { Range: "bytes=0-0" },
+      });
+      // 200(전체) 또는 206(부분)면 존재
+      return res.status === 200 || res.status === 206;
+    } catch {
+      return false;
     }
   }
 
-  CACHE.set(url, ok);
-  return ok;
-}
+  // ====== UI render (Index) ======
+  function renderCouponSlots(coupons) {
+    const wrap = $("#couponSlots");
+    if (!wrap) return;
 
-// 1) window.TFY_DATA (posts-data.js)
-// 2) data/posts.json + data/coupons.json
-// 3) fallback minimal
-async function loadTFYData() {
-  if (window.TFY_DATA && typeof window.TFY_DATA === "object") return window.TFY_DATA;
+    const slots = $$("#couponSlots .slot");
+    if (!slots.length) return;
 
-  const posts = await safeFetchJSON("./data/posts.json");
-  const coupons = await safeFetchJSON("./data/coupons.json");
-  if (posts && coupons) return { posts, coupons };
+    // 3개 슬롯은 "섞은 뒤 상위 3개"로 노출
+    const picked = shuffle(coupons).slice(0, 3);
 
-  // fallback
-  return {
-    coupons: [
-      { title: "150,000원 쿠폰 묶음", tag: "신규 앱 사용자", code: "aak74594", link: "https://temu.to/m/uotsq20netz" },
-      { title: "사은품 0원 이벤트", tag: "신규 앱 사용자", code: "frq027981", link: "https://temu.to/m/u3ia9bomcaw" },
-      { title: "30% 할인", tag: "신규 앱 사용자", code: "ack263361", link: "https://temu.to/m/u6ndc7zl0v8" },
-      { title: "특별 세일", tag: "신규 앱 사용자", code: "acr804202", link: "https://temu.to/m/u3ckk6z4eku" },
-      { title: "SAVE BIG", tag: "모든 사용자", code: "frw419209", link: "https://temu.to/m/u0zwrhwzccf" },
-      { title: "추가 혜택", tag: "모든 사용자", code: "alf468043", link: "https://temu.to/k/qgzxbhz73coe" },
-    ],
-    posts: [],
-  };
-}
+    slots.forEach((slotEl, idx) => {
+      const c = picked[idx];
+      if (!c) return;
 
-function el(tag, attrs = {}, children = []) {
-  const node = document.createElement(tag);
-  Object.entries(attrs).forEach(([k, v]) => {
-    if (k === "class") node.className = v;
-    else if (k === "html") node.innerHTML = v;
-    else node.setAttribute(k, v);
-  });
-  (Array.isArray(children) ? children : [children]).forEach((c) => {
-    if (c == null) return;
-    node.appendChild(typeof c === "string" ? document.createTextNode(c) : c);
-  });
-  return node;
-}
+      const label = slotEl.querySelector(".label");
+      const value = slotEl.querySelector(".value");
+      const sub = slotEl.querySelector(".sub");
 
-function getEls() {
-  return {
-    couponSlots: document.getElementById("couponSlots"),
-    cats: document.getElementById("cats"),
-    couponList: document.getElementById("couponList"),
-  };
-}
+      if (label) label.textContent = c.title || `쿠폰 슬롯 ${idx + 1}`;
+      if (value) value.textContent = c.code || "";
+      if (sub) sub.textContent = c.subtitle || "";
+      slotEl.dataset.code = c.code || "";
+      slotEl.dataset.link = c.link || "";
+    });
+  }
 
-/* -----------------------------
-   쿠폰 렌더
-   - 상단 3슬롯(couponSlots): 첫 3개만
-   - 우측 패널(couponList): 6개 전부
------------------------------- */
-function renderTopCouponSlots(coupons) {
-  const { couponSlots } = getEls();
-  if (!couponSlots) return;
-  couponSlots.innerHTML = "";
+  function renderCouponSidebar(coupons) {
+    const list = $("#couponList");
+    if (!list) return;
 
-  const top3 = coupons.slice(0, 3);
-  top3.forEach((c, i) => {
-    // 기존 디자인 클래스/구조를 "최대한 덜 건드리기" 위해 단순 DOM만
-    const card = el("div", { class: "coupon-slot" }, [
-      el("div", { class: "dot dot-" + (i + 1) }),
-      el("div", { class: "coupon-slot-title" }, c.title || ""),
-      el("div", { class: "coupon-slot-code" }, c.code || ""),
-      el("div", { class: "coupon-slot-sub" }, c.tag || ""),
-    ]);
-    couponSlots.appendChild(card);
-  });
-}
+    const items = shuffle(coupons).slice(0, 6);
 
-function renderFloatingCouponPanel(coupons) {
-  const { couponList } = getEls();
-  if (!couponList) return;
-  couponList.innerHTML = "";
+    list.innerHTML = items
+      .map((c) => {
+        const title = escapeHtml(c.title || "혜택");
+        const badge = escapeHtml(c.badge || "");
+        const code = escapeHtml(c.code || "");
+        const link = escapeHtml(c.link || "");
 
-  coupons.slice(0, 6).forEach((c) => {
-    const code = (c.code || "").trim();
-    const link = (c.link || "").trim();
+        return `
+          <div class="coupon-card" data-code="${code}" data-link="${link}">
+            <div class="coupon-left">
+              <div class="coupon-title">${title}</div>
+              ${badge ? `<div class="coupon-badge">${badge}</div>` : ""}
+              <div class="coupon-code">CODE <b>${code}</b></div>
+            </div>
+            <div class="coupon-actions">
+              <button class="btn-copy" type="button">복사</button>
+              <button class="btn-go" type="button">이동</button>
+            </div>
+          </div>
+        `;
+      })
+      .join("");
 
-    const copyBtn = el("button", { class: "btn btn-ghost btn-copy", type: "button" }, "복사");
-    copyBtn.addEventListener("click", async () => {
-      try {
-        await navigator.clipboard.writeText(code);
-        copyBtn.textContent = "복사됨";
-        setTimeout(() => (copyBtn.textContent = "복사"), 900);
-      } catch {
-        copyBtn.textContent = "실패";
-        setTimeout(() => (copyBtn.textContent = "복사"), 900);
+    // actions
+    list.addEventListener("click", async (e) => {
+      const card = e.target.closest(".coupon-card");
+      if (!card) return;
+
+      const code = card.dataset.code || "";
+      const link = card.dataset.link || "";
+
+      if (e.target.classList.contains("btn-copy")) {
+        try {
+          await navigator.clipboard.writeText(code);
+          e.target.textContent = "완료";
+          setTimeout(() => (e.target.textContent = "복사"), 900);
+        } catch {
+          // fallback
+          const ta = document.createElement("textarea");
+          ta.value = code;
+          document.body.appendChild(ta);
+          ta.select();
+          document.execCommand("copy");
+          ta.remove();
+          e.target.textContent = "완료";
+          setTimeout(() => (e.target.textContent = "복사"), 900);
+        }
+      }
+
+      if (e.target.classList.contains("btn-go")) {
+        if (link) window.open(link, "_blank", "noopener,noreferrer");
       }
     });
+  }
 
-    const goBtn = el("a", { class: "btn btn-primary btn-go", href: link || "#", target: "_blank", rel: "noopener noreferrer" }, "이동");
+  async function renderCategories(data) {
+    const cats = $("#cats");
+    if (!cats) return;
 
-    const item = el("div", { class: "coupon-item" }, [
-      el("div", { class: "coupon-item-left" }, [
-        el("div", { class: "coupon-item-title" }, c.title || ""),
-        el("div", { class: "coupon-item-meta" }, c.tag || ""),
-        el("div", { class: "coupon-item-code" }, [
-          el("span", { class: "label" }, "CODE"),
-          el("span", { class: "value" }, code),
-        ]),
-      ]),
-      el("div", { class: "coupon-item-right" }, [copyBtn, goBtn]),
-    ]);
+    // data.categories: [{ id, title, items: [{ title, file, status }] }]
+    const categories = Array.isArray(data.categories) ? data.categories : [];
 
-    couponList.appendChild(item);
-  });
-}
+    // 각 아이템이 실제로 존재하는지 확인(업로드 완료 표시/링크 활성)
+    // - posts.json의 status가 ready여도 실제 파일이 없다면 준비중 처리
+    // - 반대로 파일이 있는데 HEAD 막힘으로 false 되던 문제는 checkFileExists 개선으로 해결
+    const checks = [];
+    const itemMeta = []; // (catIdx, itemIdx, url)
 
-/* -----------------------------
-   포스트 렌더
-   - posts.json / TFY_DATA 구조가 어떤 형태든 최대한 유연하게 처리
-   - slug -> ./posts/{slug}.html
-   - 파일 존재하면 자동으로 "완료" 배지로 전환
------------------------------- */
-function normalizePosts(posts) {
-  // 허용 형태:
-  // 1) [{...}, {...}]
-  // 2) { categories:[{key,title,items:[...]}] }
-  // 3) { posts:[...], categories:[...] } 등
-  if (Array.isArray(posts)) return { categories: null, flat: posts };
+    categories.forEach((cat, ci) => {
+      (cat.items || []).forEach((it, ii) => {
+        const file = it.file || "";
+        const url = `./posts/${file}`;
+        itemMeta.push({ ci, ii, url });
+        checks.push(checkFileExists(url));
+      });
+    });
 
-  if (posts && Array.isArray(posts.categories)) return { categories: posts.categories, flat: null };
+    const existsArr = await Promise.all(checks);
+    let k = 0;
 
-  if (posts && Array.isArray(posts.posts)) return { categories: null, flat: posts.posts };
+    const catHtml = categories
+      .map((cat, ci) => {
+        const items = (cat.items || []).map((it, ii) => {
+          const exists = existsArr[k++];
+          const file = it.file || "";
+          const href = `./posts/${file}`;
 
-  return { categories: null, flat: [] };
-}
+          // status 기준 + 파일 존재 여부 기준을 함께 사용
+          const isReady = (it.status || "").toLowerCase() === "ready" && exists;
 
-function ensureCategoriesFromFlat(flat) {
-  // flat에 category가 있다면 4개로 묶기
-  const map = new Map();
-  flat.forEach((p) => {
-    const cat = p.category || "정보";
-    if (!map.has(cat)) map.set(cat, []);
-    map.get(cat).push(p);
-  });
+          // 화면 문구는 "준비중" 대신 요청하신 톤으로 통일
+          const badgeHtml = isReady
+            ? `<span class="chip done">완료</span>`
+            : `<span class="chip soon">곧 업로드 예정입니다!</span>`;
 
-  const order = ["혜택·쿠폰", "결제·계정", "배송·통관", "환불·고객센터"];
-  const cats = order.map((name) => ({
-    key: name,
-    title: name,
-    items: map.get(name) || [],
-  }));
+          const title = escapeHtml(it.title || "");
+          const sub = escapeHtml(it.sub || "");
 
-  // 기타 카테고리는 "정보"로 흡수
-  map.forEach((items, k) => {
-    if (!order.includes(k)) {
-      const info = cats.find((c) => c.key === "혜택·쿠폰") || cats[0];
-      info.items.push(...items);
-    }
-  });
+          // 준비중이면 링크 막고, 완료면 링크 활성
+          const titleHtml = isReady
+            ? `<a class="post-link" href="${href}">${title}</a>`
+            : `<span class="post-link disabled">${title}</span>`;
 
-  return cats;
-}
+          return `
+            <div class="post-row">
+              <div class="post-title">
+                ${titleHtml}
+                ${sub ? `<div class="post-sub">${sub}</div>` : ""}
+              </div>
+              <div class="post-badge">${badgeHtml}</div>
+            </div>
+          `;
+        });
 
-async function renderCategories(dataPosts) {
-  const { cats } = getEls();
-  if (!cats) return;
-  cats.innerHTML = "";
+        const catTitle = escapeHtml(cat.title || "");
+        const catEmoji = escapeHtml(cat.emoji || "");
+        const catHeader = catEmoji ? `${catEmoji} ${catTitle}` : catTitle;
 
-  const norm = normalizePosts(dataPosts);
-  const categories = norm.categories || ensureCategoriesFromFlat(norm.flat || []);
+        return `
+          <section class="cat-card" data-cat="${escapeHtml(cat.id || String(ci))}">
+            <header class="cat-head">
+              <h3 class="cat-title">${catHeader}</h3>
+              <button class="cat-scroll" type="button">스크롤</button>
+            </header>
+            <div class="cat-body">
+              ${items.join("")}
+            </div>
+          </section>
+        `;
+      })
+      .join("");
 
-  for (const cat of categories) {
-    const col = el("div", { class: "cat-col" }, [
-      el("div", { class: "cat-head" }, [
-        el("div", { class: "cat-title" }, cat.title || cat.key || ""),
-        el("div", { class: "cat-pill" }, "스크롤"),
-      ]),
-    ]);
+    cats.innerHTML = catHtml;
 
-    const list = el("div", { class: "cat-list" });
-    col.appendChild(list);
+    // 각 카테고리 스크롤 버튼
+    cats.addEventListener("click", (e) => {
+      const btn = e.target.closest(".cat-scroll");
+      if (!btn) return;
+      const card = btn.closest(".cat-card");
+      const body = card?.querySelector(".cat-body");
+      if (!body) return;
+      body.scrollTo({ top: body.scrollTop + 260, behavior: "smooth" });
+    });
+  }
 
-    // 최대 5개만 기본 노출 + 스크롤로 더 보기 (CSS가 스크롤 처리)
-    for (const p of (cat.items || [])) {
-      const slug = (p.slug || "").trim();
-      const href = slug ? `./posts/${slug}.html` : "#";
-
-      // “준비중/완료” 자동 판정:
-      // - p.ready === true 이면 완료
-      // - 아니면 실제 파일 존재 체크로 완료로 승격
-      let ready = !!p.ready;
-      if (!ready && slug) {
-        ready = await existsURL(href);
-      }
-
-      const badge = ready ? el("span", { class: "badge badge-done" }, "완료")
-                          : el("span", { class: "badge badge-soon" }, "준비중");
-
-      const a = el("a", { class: "post-row", href: ready ? href : "#", "data-slug": slug }, [
-        el("div", { class: "post-row-title" }, p.title || ""),
-        badge,
+  // ====== init ======
+  async function init() {
+    try {
+      const [postsData, couponsData] = await Promise.all([
+        fetchJSON("./data/posts.json"),
+        fetchJSON("./data/coupons.json"),
       ]);
 
-      if (!ready) {
-        a.addEventListener("click", (e) => e.preventDefault());
-      }
+      const coupons = Array.isArray(couponsData?.coupons)
+        ? couponsData.coupons
+        : Array.isArray(couponsData)
+        ? couponsData
+        : [];
 
-      list.appendChild(a);
+      renderCouponSlots(coupons);
+      renderCouponSidebar(coupons);
+      await renderCategories(postsData);
+    } catch (err) {
+      console.error(err);
     }
-
-    cats.appendChild(col);
   }
-}
 
-/* -----------------------------
-   부팅
------------------------------- */
-async function boot() {
-  const data = await loadTFYData();
-
-  const coupons = Array.isArray(data.coupons) ? data.coupons : [];
-  renderTopCouponSlots(coupons);
-  renderFloatingCouponPanel(coupons);
-
-  // posts가 TFY_DATA에 {posts:...} 형태일 수도 있으니 안전 처리
-  const postsData = data.posts ?? data;
-  await renderCategories(postsData);
-}
-
-document.addEventListener("DOMContentLoaded", boot);
+  document.addEventListener("DOMContentLoaded", init);
+})();
