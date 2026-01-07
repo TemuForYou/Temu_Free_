@@ -104,17 +104,16 @@ button{font-family:inherit}
   white-space: nowrap;
 }
 
-.page{
-  max-width: 1200px;
+.page {
+  width: min(1180px, calc(100% - 48px));
   margin: 0 auto;
-  padding: 26px 18px 60px;
 }
 
-.hero{
-  display:grid;
-  grid-template-columns: 1.6fr 0.9fr;
-  gap: 22px;
-  align-items:start;
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+  align-items: start;
 }
 
 .hero__card{
@@ -413,10 +412,9 @@ button{font-family:inherit}
 }
 
 /* 반응형 */
-@media (max-width: 980px){
-  .hero{grid-template-columns: 1fr}
-  .coupon-panel{position: relative; top:0; max-height:none}
-  .cats__grid{grid-template-columns: 1fr}
+@media (max-width: 980px) {
+  .hero { grid-template-columns: 1fr; }
+  .side { position: relative; top: 0; }
 }
 
 @media (max-width: 520px){
