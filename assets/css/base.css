@@ -422,3 +422,24 @@ button{font-family:inherit}
   .coupon-slots{grid-template-columns: 1fr}
   .topbar__pill{display:none}
 }
+
+/* ✅ hero: 좌(쿠폰) / 우(본문) 고정 */
+.hero{
+  display:grid;
+  grid-template-columns: 360px 1fr;
+  gap:24px;
+  align-items:start;
+}
+
+/* ✅ 쿠폰 패널: 스크롤 따라오기(Sticky) */
+.side{
+  position: sticky;
+  top: 92px; /* 상단바 높이에 맞춰서 */
+  height: fit-content;
+}
+
+/* 모바일에서는 1열 */
+@media (max-width: 980px){
+  .hero{ grid-template-columns: 1fr; }
+  .side{ position: relative; top: 0; }
+}
