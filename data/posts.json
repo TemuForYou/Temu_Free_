@@ -1,59 +1,216 @@
 {
-  "coupons": [
-    { "title": "150,000원 쿠폰 묶음", "tag": "신규 앱 사용자", "code": "aak74594", "link": "https://temu.to/m/uotsq20netz" },
-    { "title": "사은품 0원", "tag": "신규 앱 사용자", "code": "frq027981", "link": "https://temu.to/m/u3ia9bomcaw" },
-    { "title": "30% 할인", "tag": "신규 앱 사용자", "code": "acr804202", "link": "https://temu.to/m/u3ckk6z4eku" },
-    { "title": "특별 세일", "tag": "신규 앱 사용자", "code": "ack263361", "link": "https://temu.to/m/u6ndc7zl0v8" },
-    { "title": "SAVE BIG", "tag": "모든 사용자", "code": "frw419209", "link": "https://temu.to/m/u0zwrhwzccf" },
-    { "title": "추가 혜택", "tag": "모든 사용자", "code": "alf468043", "link": "https://temu.to/k/qgzxbhz73coe" }
-  ],
+  "site": {
+    "name": "TemuForYou",
+    "baseUrl": "https://temuforyou.github.io",
+    "updatedAt": "2026-01-06"
+  },
   "categories": [
     {
-      "id": "benefit",
-      "emoji": "🎁",
-      "name": "혜택 · 쿠폰",
-      "posts": [
-        { "title": "테무 쿠폰코드 입력, 이 순서로 하면 적용이 제일 깔끔합니다", "slug": "temu-coupon-code-input", "ready": false },
-        { "title": "테무 2026 쿠폰, 실제로 먹히는 계정 조건이 따로 있습니다", "slug": "temu-coupon-2026", "ready": false },
-        { "title": "테무 쿠폰 적용이 안 될 때, 확인해야 할 7가지", "slug": "temu-coupon-not-working", "ready": false },
-        { "title": "테무 스페셜 세일, 진짜 싸게 잡는 타이밍 정리", "slug": "temu-special-sale", "ready": false },
-        { "title": "테무 사은품 0원, 가능한 구조와 안 되는 케이스", "slug": "temu-free-gift-0won", "ready": false }
+      "id": "fix",
+      "title": "실수·문제 해결형",
+      "emoji": "🧩",
+      "items": [
+        {
+          "id": "customs-code-one-letter",
+          "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많습니다",
+          "file": "temu-customs-code-one-letter-shipping-stop.html",
+          "status": "ready",
+          "tag": "배송·통관",
+          "date": "2026-01-03",
+          "trend": true
+        },
+        {
+          "id": "order-stuck-real-reason",
+          "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
+          "file": "temu-order-stuck-looks-like-delivery.html",
+          "status": "ready",
+          "tag": "배송·통관",
+          "date": "2026-01-04",
+          "trend": true
+        },
+        {
+          "id": "customs-code-typo",
+          "title": "테무 개인통관고유번호 오타: 딱 이 3가지 패턴이 제일 많습니다",
+          "file": "temu-customs-code-typo.html",
+          "status": "soon",
+          "tag": "배송·통관",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "address-mistake",
+          "title": "테무 주소 잘못 입력했을 때: 변경 가능한 경우와 불가능한 경우",
+          "file": "temu-address-mistake-change-possible.html",
+          "status": "soon",
+          "tag": "배송·통관",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "tracking-not-updating",
+          "title": "테무 배송조회가 멈춘 것처럼 보일 때: 정상 흐름 vs 비정상 신호",
+          "file": "temu-tracking-not-updating-normal-vs-issue.html",
+          "status": "soon",
+          "tag": "배송·통관",
+          "date": "",
+          "trend": false
+        }
       ]
     },
     {
-      "id": "pay",
-      "emoji": "💳",
-      "name": "결제 · 계정",
-      "posts": [
-        { "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다", "slug": "temu-payment-error-most-stuck", "ready": false },
-        { "title": "테무 결제 실패 반복, 카드 문제보다 계정 설정이 원인인 경우", "slug": "temu-payment-fail-account", "ready": false },
-        { "title": "테무 결제 승인만 되고 주문이 안 뜰 때 확인 순서", "slug": "temu-payment-approved-no-order", "ready": false },
-        { "title": "테무 결제 오류, 앱/웹 차이로 생기는 대표 케이스", "slug": "temu-payment-app-web-diff", "ready": false },
-        { "title": "테무 결제 오류인데 고객센터 탭이 안 열릴 때 우회 루트", "slug": "temu-payment-support-tab-not-open", "ready": false }
+      "id": "verify",
+      "title": "진위 검증형",
+      "emoji": "🕵️",
+      "items": [
+        {
+          "id": "free-gift-real",
+          "title": "테무 무료선물, 진짜냐? “가능한 조건”과 “불가능한 착각”을 분리합니다",
+          "file": "temu-free-gift-real-conditions.html",
+          "status": "soon",
+          "tag": "혜택·진실검증",
+          "date": "",
+          "trend": true
+        },
+        {
+          "id": "0won-event-real",
+          "title": "테무 0원 이벤트: “0원”이 성립하는 구조를 숫자로 설명합니다",
+          "file": "temu-0won-event-how-it-works.html",
+          "status": "soon",
+          "tag": "혜택·진실검증",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "credit-disappeared-real",
+          "title": "테무 크레딧이 사라졌다고 느낄 때: 실제로는 이 화면에서 ‘보관’됩니다",
+          "file": "temu-credit-disappeared-where-it-is.html",
+          "status": "soon",
+          "tag": "혜택·진실검증",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "coupon-bundle-real",
+          "title": "테무 쿠폰묶음(번들), 진짜 더 이득일까? 적용 순서가 결과를 바꿉니다",
+          "file": "temu-coupon-bundle-worth-it.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "special-sale-real",
+          "title": "테무 ‘특별 세일’은 정말 더 싸질까? 같은 상품인데 가격이 달라지는 이유",
+          "file": "temu-special-sale-price-difference.html",
+          "status": "soon",
+          "tag": "혜택·진실검증",
+          "date": "",
+          "trend": false
+        }
       ]
     },
     {
-      "id": "ship",
-      "emoji": "📦",
-      "name": "배송 · 통관",
-      "posts": [
-        { "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다", "slug": "temu-customs-code-one-letter-shipping-stop", "ready": true },
-        { "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유", "slug": "temu-order-stuck-looks-like-delay-real-reason", "ready": false },
-        { "title": "테무 통관번호 오타 수정, 이 방식이 제일 안전합니다", "slug": "temu-customs-code-fix-safest", "ready": false },
-        { "title": "테무 배송조회가 안 뜰 때, 정상/비정상 구분 기준", "slug": "temu-tracking-not-updating-normal-vs-issue", "ready": false },
-        { "title": "테무 주소 수정, 수정 가능/불가가 갈리는 기준", "slug": "temu-address-fix-rule", "ready": false }
+      "id": "coupon",
+      "title": "쿠폰·코드",
+      "emoji": "🎟️",
+      "items": [
+        {
+          "id": "coupon-2026",
+          "title": "테무 2026 쿠폰: ‘지금 되는 코드’만 남기고 정리합니다",
+          "file": "temu-coupon-2026.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": true
+        },
+        {
+          "id": "coupon-code-input",
+          "title": "테무 쿠폰코드 입력: 사람들이 제일 많이 헷갈리는 위치는 여기입니다",
+          "file": "temu-coupon-code-input.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "coupon-not-working",
+          "title": "테무 쿠폰이 안 먹힐 때: 실패 원인은 90%가 ‘이 조건’입니다",
+          "file": "temu-coupon-not-working.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "first-purchase-bonus",
+          "title": "테무 첫 구매 혜택: 같은 할인인데 ‘새 계정’에서만 폭발하는 이유",
+          "file": "temu-first-purchase-bonus-how-to-get.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "coupon-credit-order",
+          "title": "쿠폰+크레딧 적용 순서: 이 순서대로 해야 체감이 달라집니다",
+          "file": "temu-coupon-credit-apply-order.html",
+          "status": "soon",
+          "tag": "쿠폰·코드",
+          "date": "",
+          "trend": false
+        }
       ]
     },
     {
-      "id": "cs",
-      "emoji": "🧾",
-      "name": "환불 · 고객센터",
-      "posts": [
-        { "title": "테무 환불 처리 속도, 빨라지는 요청 방식이 따로 있습니다", "slug": "temu-refund-fast-way", "ready": false },
-        { "title": "테무 환불 상태가 멈춘 것처럼 보일 때, 실제 진행 흐름", "slug": "temu-refund-status-flow", "ready": false },
-        { "title": "테무 환불 ‘크레딧’으로 들어올 때 꼭 알아야 할 포인트", "slug": "temu-refund-credit-point", "ready": false },
-        { "title": "테무 반품 없이 환불되는 케이스, 조건 정리", "slug": "temu-refund-without-return", "ready": false },
-        { "title": "테무 고객센터 답이 늦을 때, 문의를 통과시키는 작성법", "slug": "temu-cs-message-format", "ready": false }
+      "id": "info",
+      "title": "테무 ↔ 정보",
+      "emoji": "📌",
+      "items": [
+        {
+          "id": "payment-error-where-stuck",
+          "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
+          "file": "temu-payment-error-most-stuck-step.html",
+          "status": "soon",
+          "tag": "결제·계정",
+          "date": "",
+          "trend": true
+        },
+        {
+          "id": "refund-policy-basic",
+          "title": "테무 환불 정책: ‘가능/불가능’ 기준만 딱 정리합니다",
+          "file": "temu-refund-policy-basic-criteria.html",
+          "status": "soon",
+          "tag": "환불·CS",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "customer-service-fast-route",
+          "title": "테무 고객센터 빠른 루트: 상담이 이어지는 사람들의 공통 동선",
+          "file": "temu-customer-service-fast-route.html",
+          "status": "soon",
+          "tag": "환불·CS",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "account-multi-device",
+          "title": "테무 계정이 꼬이는 이유: 기기/국가/앱 상태가 ‘조건’이 됩니다",
+          "file": "temu-account-issue-multi-device-country.html",
+          "status": "soon",
+          "tag": "결제·계정",
+          "date": "",
+          "trend": false
+        },
+        {
+          "id": "sitemap-search-console-basics",
+          "title": "구글/네이버 노출 기본: 사이트맵·색인·검색 반영이 느린 이유",
+          "file": "seo-sitemap-indexing-why-slow.html",
+          "status": "soon",
+          "tag": "SEO",
+          "date": "",
+          "trend": false
+        }
       ]
     }
   ]
