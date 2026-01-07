@@ -5,82 +5,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>TFY</title>
 
-  <!-- 폰트 고정 -->
-  <meta name="color-scheme" content="light">
+  <!-- 폰트 고정 (Apple SD Gothic Neo) -->
+  <style>
+    :root { --font-sans: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif; }
+    html, body { font-family: var(--font-sans); }
+  </style>
+
+  <!-- 디자인 CSS (상대경로로 고정) -->
   <link rel="stylesheet" href="./assets/css/base.css" />
 </head>
 
 <body>
+  <!-- Top Bar -->
   <header class="topbar">
-    <div class="topbar__inner">
-      <!-- 로고: 클릭 이동 X / hover 시 간지럼(좌우 흔들림) -->
-      <div class="brand" role="button" tabindex="0" aria-label="TFY 로고">
-        <span class="brand__badge">TFY</span>
-        <span class="brand__text">TFY</span>
-      </div>
+    <div class="topbar-inner">
+      <!-- 로고: 클릭 시 이동 X / 간지럼(좌우) 애니메이션 -->
+      <button class="brand" id="brandWiggle" type="button" aria-label="TFY">
+        <span class="brand-mark">TFY</span>
+      </button>
 
-      <!-- 우측 상단 작은 라벨 -->
-      <div class="topbar__pill">실수·문제 해결형 · 배송/통관</div>
+      recall: <span class="topbar-pill" id="topbarPill">실수·문제 해결형</span>
     </div>
   </header>
 
   <main class="page">
     <section class="hero">
-      <div class="hero__card">
-        <h1 class="hero__title">테무 혜택과 문제 해결을<br/>한 곳에서 정리합니다</h1>
-        <p class="hero__desc">
-          쿠폰/사은품/세일 정보부터 결제·배송·통관·환불처럼 자주 막히는 구간까지,
-          실제 흐름 기준으로 빠르게 확인할 수 있게 구성했습니다.
+      <div class="hero-card">
+        <h1 class="hero-title">테무 혜택과 문제 해결을<br/>한 곳에서 정리합니다</h1>
+        <p class="hero-desc">
+          쿠폰/사은품/세일부터 결제·배송·통관·환불까지, 자주 막히는 구간을 “실제 흐름 기준”으로 정리했습니다.
         </p>
 
-        <!-- 좌측 중상단 네모칸: 쿠폰 슬롯 3개(요청: 주황이 아닌 포인트색), 기본은 공백 -->
-        <div class="coupon-slots">
+        <!-- 쿠폰 슬롯 3개: “공백 유지” 요청 반영(제목/설명만 두고 실제 코드는 JS로 주입) -->
+        <div class="coupon-slots" id="couponSlots">
+          <div class="slot" data-slot="0">
+            <div class="slot-dot dot-a"></div>
+            <div class="slot-title">쿠폰 슬롯 1</div>
+            <div class="slot-code" data-slot-code> </div>
+            <div class="slot-sub" data-slot-sub> </div>
+          </div>
           <div class="slot" data-slot="1">
-            <div class="slot__dot dot-blue"></div>
-            <div class="slot__meta">쿠폰 슬롯 1</div>
-            <div class="slot__code">비워둠</div>
-            <div class="slot__sub">요청대로 공백 유지</div>
+            <div class="slot-dot dot-b"></div>
+            <div class="slot-title">쿠폰 슬롯 2</div>
+            <div class="slot-code" data-slot-code> </div>
+            <div class="slot-sub" data-slot-sub> </div>
           </div>
-
           <div class="slot" data-slot="2">
-            <div class="slot__dot dot-green"></div>
-            <div class="slot__meta">쿠폰 슬롯 2</div>
-            <div class="slot__code">비워둠</div>
-            <div class="slot__sub">요청대로 공백 유지</div>
-          </div>
-
-          <div class="slot" data-slot="3">
-            <div class="slot__dot dot-purple"></div>
-            <div class="slot__meta">쿠폰 슬롯 3</div>
-            <div class="slot__code">비워둠</div>
-            <div class="slot__sub">요청대로 공백 유지</div>
+            <div class="slot-dot dot-c"></div>
+            <div class="slot-title">쿠폰 슬롯 3</div>
+            <div class="slot-code" data-slot-code> </div>
+            <div class="slot-sub" data-slot-sub> </div>
           </div>
         </div>
       </div>
 
-      <!-- 우측 따라오는 쿠폰 패널 -->
-      <aside class="side">
-        <div class="side__head">
-          <div class="side__title">🔥 쿠폰 코드 · 링크</div>
-          <div class="side__chip">따라오는</div>
+      <!-- 우측 사이드 패널(메인에서도 표시) -->
+      <aside class="side" id="sidePanel">
+        <div class="side-head">
+          <div class="side-title">쿠폰 코드 · 링크</div>
+          <div class="side-chip">추적</div>
         </div>
 
-        <div id="couponPanel" class="coupon-panel" aria-label="쿠폰 패널"></div>
+        <div class="side-list" id="sideCoupons"></div>
+
+        <button class="floating-cta" id="floatingCta" type="button">
+          쿠폰 열기
+        </button>
       </aside>
     </section>
 
-    <section class="cats">
-      <div class="cats__head">
-        <div class="cats__title">🔥 포스팅 카테고리</div>
-        <div class="cats__sub">각 카테고리 5개 표시 · 스크롤로 전체 확인</div>
+    <!-- 카테고리 -->
+    <section class="category-wrap">
+      <div class="category-head">
+        <h2 class="category-title">포스팅 카테고리</h2>
+        <div class="category-sub">각 카테고리 기본 5개 표시 · 스크롤로 전체 확인</div>
       </div>
 
-      <div id="catsGrid" class="cats__grid"></div>
+      <div class="category-grid" id="categoryGrid">
+        <!-- JS 렌더 -->
+      </div>
     </section>
   </main>
 
-  <script src="./assets/js/ui-coupons.js" defer></script>
-  <script src="./assets/js/app-index.js" defer></script>
+  <script src="./assets/js/app.js" defer></script>
 </body>
 </html>
- 
