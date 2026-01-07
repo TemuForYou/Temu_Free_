@@ -3,7 +3,12 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>TFY</title>
+  <title>TFY Post</title>
+
+  <style>
+    :root { --font-sans: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", Arial, sans-serif; }
+    html, body { font-family: var(--font-sans); }
+  </style>
 
   <link rel="stylesheet" href="./assets/css/base.css" />
   <link rel="stylesheet" href="./assets/css/post.css" />
@@ -11,38 +16,29 @@
 
 <body>
   <header class="topbar">
-    <div class="topbar__inner">
-      <div class="brand" role="button" tabindex="0" aria-label="TFY 로고">
-        <span class="brand__badge">TFY</span>
-        <span class="brand__text">TFY</span>
-      </div>
-      <div class="topbar__pill" id="postBreadcrumb">실수·문제 해결형 · 배송/통관</div>
+    <div class="topbar-inner">
+      <a class="brand-link" href="./index.html" aria-label="Home">
+        <span class="brand-mark">TFY</span>
+      </a>
+      <span class="topbar-pill" id="postPill">실수·문제 해결형</span>
     </div>
   </header>
 
-  <main class="page postpage">
-    <article class="post">
-      <header class="post__head">
-        <div class="post__kicker" id="postKicker">TFY</div>
-        <h1 class="post__title" id="postTitle">제목</h1>
-        <div class="post__meta" id="postMeta">TFY 편집팀 · 업데이트: 상시</div>
-      </header>
-
-      <!-- 여기(content)에 글 내용이 들어갑니다 -->
-      <div class="post__content" id="postContent"></div>
+  <main class="post-page">
+    <article class="post-card" id="postRoot">
+      <!-- JS 렌더 -->
     </article>
 
-    <aside class="side">
-      <div class="side__head">
-        <div class="side__title">🔥 쿠폰 코드 · 링크</div>
-        <div class="side__chip">따라오는</div>
+    <aside class="post-side" id="postSide">
+      <div class="side-head">
+        <div class="side-title">쿠폰 코드 · 링크</div>
+        <div class="side-chip">추적</div>
       </div>
-      <div id="couponPanel" class="coupon-panel"></div>
+      <div class="side-list" id="postSideCoupons"></div>
+      <button class="floating-cta" id="postFloatingCta" type="button">쿠폰 열기</button>
     </aside>
   </main>
 
-  <script src="./assets/js/ui-coupons.js" defer></script>
-  <script src="./assets/js/post-renderer.js" defer></script>
+  <script src="./assets/js/app.js" defer></script>
 </body>
 </html>
- 
