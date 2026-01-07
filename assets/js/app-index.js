@@ -74,3 +74,4 @@
     renderCats(grid, data.categories || []);
   });
 })();
+ 
