@@ -1,0 +1,239 @@
+{
+  "categories": [
+    {
+      "name": "실수·문제 해결형",
+      "items": [
+        {
+          "id": 1,
+          "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
+          "category": "실수·문제 해결형",
+          "slug": "temu-customs-code-one-letter-shipping-stop",
+          "href": "./posts/temu-customs-code-one-letter-shipping-stop.html",
+          "status": "done",
+          "date": "2026.01.03",
+          "description": "통관번호 1글자 오타로 멈춘 케이스를 흐름대로 정리합니다."
+        },
+        {
+          "id": 2,
+          "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
+          "category": "실수·문제 해결형",
+          "slug": "temu-order-stuck-looks-like-delayed-real-reason",
+          "href": "./posts/temu-order-stuck-looks-like-delayed-real-reason.html",
+          "status": "draft",
+          "date": "2026.01.04",
+          "description": "진짜로 멈춘 건지, 확인 대기인지, 지금 해야 할 체크를 정리합니다."
+        },
+        {
+          "id": 3,
+          "title": "테무 개인통관고유번호 오타: 딱 이 3가지 패턴이 제일 많습니다",
+          "category": "실수·문제 해결형",
+          "slug": "post-03",
+          "href": "./posts/post-03.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 4,
+          "title": "테무 주소 잘못 입력했을 때: 변경 가능한 경우와 불가능한 경우",
+          "category": "실수·문제 해결형",
+          "slug": "post-04",
+          "href": "./posts/post-04.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 5,
+          "title": "테무 배송조회가 멈춘 것처럼 보일 때: 정상 흐름 vs 비정상 신호",
+          "category": "실수·문제 해결형",
+          "slug": "post-05",
+          "href": "./posts/post-05.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        }
+      ]
+    },
+    {
+      "name": "진위 검증형",
+      "items": [
+        {
+          "id": 17,
+          "title": "테무 무료선물, 진짜냐? ‘가능한 조건’과 ‘불가능한 착각’",
+          "category": "진위 검증형",
+          "slug": "post-17",
+          "href": "./posts/post-17.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 18,
+          "title": "테무 0원 이벤트: ‘0원’이 성립하는 구조를 숫자로 설명합니다",
+          "category": "진위 검증형",
+          "slug": "post-18",
+          "href": "./posts/post-18.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 19,
+          "title": "테무 크레딧이 사라졌다고 느낄 때: 실제로는 이 화면에서 보관됩니다",
+          "category": "진위 검증형",
+          "slug": "post-19",
+          "href": "./posts/post-19.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 20,
+          "title": "테무 쿠폰묶음(번들), 진짜 더 이득일까? 적용 순서가 결과를 바꿉니다",
+          "category": "진위 검증형",
+          "slug": "post-20",
+          "href": "./posts/post-20.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 21,
+          "title": "테무 ‘특별 세일’은 정말 더 싸질까? 같은 상품인데 가격이 달라지는 이유",
+          "category": "진위 검증형",
+          "slug": "post-21",
+          "href": "./posts/post-21.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        }
+      ]
+    },
+    {
+      "name": "쿠폰·코드",
+      "items": [
+        {
+          "id": 6,
+          "title": "테무 쿠폰코드 입력, 이 순서로 하면 적용이 제일 깔끔합니다",
+          "category": "쿠폰·코드",
+          "slug": "post-06",
+          "href": "./posts/post-06.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 7,
+          "title": "테무 2026 쿠폰: ‘지금 되는 코드’만 남기고 정리합니다",
+          "category": "쿠폰·코드",
+          "slug": "post-07",
+          "href": "./posts/post-07.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 8,
+          "title": "테무 쿠폰 적용이 안 될 때, 확인해야 할 7가지",
+          "category": "쿠폰·코드",
+          "slug": "post-08",
+          "href": "./posts/post-08.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        }
+      ]
+    },
+    {
+      "name": "결제·계정",
+      "items": [
+        {
+          "id": 9,
+          "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
+          "category": "결제·계정",
+          "slug": "post-09",
+          "href": "./posts/post-09.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 10,
+          "title": "테무 결제 실패 반복, 카드 문제보다 계정 설정이 원인인 경우",
+          "category": "결제·계정",
+          "slug": "post-10",
+          "href": "./posts/post-10.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 11,
+          "title": "테무 결제 승인만 되고 주문이 안 될 때 확인 순서",
+          "category": "결제·계정",
+          "slug": "post-11",
+          "href": "./posts/post-11.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 12,
+          "title": "테무 앱/웹 차이로 생기는 결제 오류, 대표 케이스",
+          "category": "결제·계정",
+          "slug": "post-12",
+          "href": "./posts/post-12.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        }
+      ]
+    },
+    {
+      "name": "환불·고객센터",
+      "items": [
+        {
+          "id": 13,
+          "title": "테무 환불 처리 속도, 빨라지는 요청 방식이 따로 있습니다",
+          "category": "환불·고객센터",
+          "slug": "post-13",
+          "href": "./posts/post-13.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 14,
+          "title": "테무 환불 상태가 멈춘 것처럼 보일 때, 실제 진행 흐름",
+          "category": "환불·고객센터",
+          "slug": "post-14",
+          "href": "./posts/post-14.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 15,
+          "title": "테무 환불 ‘크레딧’으로 들어올 때 꼭 알아야 할 포인트",
+          "category": "환불·고객센터",
+          "slug": "post-15",
+          "href": "./posts/post-15.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        },
+        {
+          "id": 16,
+          "title": "테무 반품 없이 환불되는 케이스, 조건 정리",
+          "category": "환불·고객센터",
+          "slug": "post-16",
+          "href": "./posts/post-16.html",
+          "status": "planned",
+          "date": "2026.01.00",
+          "description": "업로드 예정"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title id="docTitle">TFY</title>
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/post.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="brand-link" href="./index.html" aria-label="TFY Home">
+          <span class="brand-badge">TFY</span>
+        </a>
+      </div>
+      <nav class="crumb" id="crumb"></nav>
+    </div>
+  </header>
+
+  <main class="post-page">
+    <div class="post-layout">
+      <aside class="post-aside" id="postAside">
+        <div class="coupon-panel coupon-panel-left" id="couponPanel">
+          <div class="coupon-panel-head">
+            <div>
+              <div class="coupon-panel-title">쿠폰 코드 · 링크</div>
+              <div class="coupon-panel-sub">스크롤을 따라오며 노출됩니다</div>
+            </div>
+            <button class="pill pill-ghost" id="couponPanelToggle" type="button">닫기</button>
+          </div>
+          <div class="coupon-panel-body" id="couponPanelBody"></div>
+        </div>
+      </aside>
+
+      <article class="post card" id="postRoot" aria-live="polite"></article>
+    </div>
+  </main>
+
+  <script src="./assets/js/ui-coupons.js" defer></script>
+  <script src="./assets/js/post-render.js" defer></script>
+</body>
+</html>

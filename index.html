@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TFY - TemuForYou</title>
+  <link rel="stylesheet" href="./assets/css/base.css" />
+  <meta name="description" content="테무 혜택/쿠폰/결제/배송/통관/환불 문제를 기사형으로 빠르게 정리합니다." />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="brand-link" href="./index.html" aria-label="TFY Home">
+          <span class="brand-badge">TFY</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="layout">
+      <section class="hero card card-soft">
+        <h1 class="hero-title">테무 혜택과 문제 해결을<br/>한 곳에서 정리합니다</h1>
+        <p class="hero-desc">
+          쿠폰/사은품/세일 정보부터 결제·배송·통관·환불까지,
+          자주 막히는 구간을 “실제 흐름 기준”으로 빠르게 확인할 수 있게 구성했습니다.
+        </p>
+
+        <div class="slot-row" id="couponSlots" aria-label="쿠폰 슬롯"></div>
+      </section>
+
+      <aside class="aside">
+        <div class="coupon-panel" id="couponPanel" aria-label="쿠폰 코드 · 링크 패널">
+          <div class="coupon-panel-head">
+            <div>
+              <div class="coupon-panel-title">쿠폰 코드 · 링크</div>
+              <div class="coupon-panel-sub">스크롤을 따라오며 노출됩니다</div>
+            </div>
+            <button class="pill pill-ghost" id="couponPanelToggle" type="button">열기</button>
+          </div>
+          <div class="coupon-panel-body" id="couponPanelBody"></div>
+        </div>
+      </aside>
+
+      <section class="card card-wide" id="categoriesCard">
+        <div class="card-head">
+          <div class="card-title">포스팅 카테고리</div>
+          <div class="card-note">각 카테고리 5개 표시 · 스크롤로 전체 확인</div>
+        </div>
+        <div class="cat-grid" id="categoryGrid"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="./assets/js/app.js" defer></script>
+  <script src="./assets/js/ui-coupons.js" defer></script>
+</body>
+</html>
