@@ -1,121 +1,122 @@
 <!doctype html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>TFY · TemuForYou</title>
-  <meta name="description" content="테무 혜택과 문제 해결을 기사형으로 빠르게 정리합니다."/>
-  <link rel="stylesheet" href="./assets/css/base.css"/>
+  <meta name="description" content="테무 혜택·쿠폰·문제해결을 기사형으로 빠르게 정리합니다." />
+
+  <!-- ✅ 사이트 기본 폰트 (고정) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="./assets/css/base.css" />
 </head>
-<body class="page-index">
+<body>
   <header class="topbar">
-    <div class="container topbar-inner">
-      <div class="brand" title="TFY">
-        <div class="brand-badge">TFY</div>
-        <div class="brand-name">TemuForYou</div>
-      </div>
-      <div class="nav-mini">
-        <span class="pill">실수·문제 해결형 · 배송/통관</span>
-      </div>
+    <div class="topbar-inner">
+      <a class="brand" href="./index.html" aria-label="TemuForYou 홈">
+        <span class="brand-badge">TFY</span>
+      </a>
+
+      <nav class="topnav">
+        <a class="topnav-link" href="./index.html">홈</a>
+        <a class="topnav-link" href="./post.html?slug=temu-customs-code-one-letter-shipping-stop">인기글</a>
+      </nav>
     </div>
   </header>
 
-  <main class="page">
-    <div class="container grid">
-      <!-- LEFT -->
-      <section>
-        <div class="card kv card-pad">
-          <h1 class="h1">테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
-          <p class="desc">
-            쿠폰·사은품·특별세일은 구조가 있고, 배송·통관·환불·결제 문제는 “막히는 지점”이 있습니다.
-            이 사이트는 과장이 아닌, 실제 적용 기준으로 정리합니다.
-          </p>
+  <main class="container">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-card">
+        <h1 class="hero-title">
+          테무 혜택 + 문제해결,<br />
+          기사형으로 빠르게 정리합니다
+        </h1>
+        <p class="hero-desc">
+          쿠폰/사은품/세일은 구조가 있고, 배송·통관·환불·결제 문제는 ‘막히는 지점’이 있습니다.
+          이 사이트는 과장이 아니라, 실제 적용 기준으로 정리합니다.
+        </p>
 
-          <div class="coupon-slots" id="couponSlots">
-  <div class="slot">
-    <div class="slot-dot blue"></div>
-    <div class="slot-body">
-      <div class="slot-head">30% 쿠폰</div>
-      <div class="slot-desc">코드 입력용</div>
-    </div>
-    <div class="slot-value">ack263361</div>
+        <!-- ✅ 메인 슬롯 3개 (요청 코드 고정 삽입) -->
+        <div class="coupon-slots" id="couponSlots">
+<div class="coupon-slot">
+  <div class="slot-top">
+    <span class="slot-dot blue"></span>
+    <span class="slot-label">쿠폰 슬롯 1</span>
   </div>
-
-  <div class="slot">
-    <div class="slot-dot green"></div>
-    <div class="slot-body">
-      <div class="slot-head">1원 상품</div>
-      <div class="slot-desc">코드 입력용</div>
-    </div>
-    <div class="slot-value">frw419209</div>
+  <div class="slot-title">30% 쿠폰</div>
+  <div class="slot-code">
+    <span class="code-pill">ack263361</span>
   </div>
-
-  <div class="slot">
-    <div class="slot-dot purple"></div>
-    <div class="slot-body">
-      <div class="slot-head">99% 할인</div>
-      <div class="slot-desc">코드 입력용</div>
-    </div>
-    <div class="slot-value">alf468043</div>
-  </div>
+  <div class="slot-sub">요청대로 고정 삽입</div>
 </div>
 
-        <div style="height:14px"></div>
+<div class="coupon-slot">
+  <div class="slot-top">
+    <span class="slot-dot green"></span>
+    <span class="slot-label">쿠폰 슬롯 2</span>
+  </div>
+  <div class="slot-title">1원 상품</div>
+  <div class="slot-code">
+    <span class="code-pill">frw419209</span>
+  </div>
+  <div class="slot-sub">요청대로 고정 삽입</div>
+</div>
 
-        <div class="card card-pad">
-          <div class="section-title">
-            <h3>포스팅 카테고리</h3>
-            <small>각 카테고리 5개 표시 · 스크롤로 전체 확인</small>
-          </div>
-
-          <div class="cat-wrap" data-categories>
-            <!-- JS render -->
-          </div>
+<div class="coupon-slot">
+  <div class="slot-top">
+    <span class="slot-dot purple"></span>
+    <span class="slot-label">쿠폰 슬롯 3</span>
+  </div>
+  <div class="slot-title">99% 할인 코드</div>
+  <div class="slot-code">
+    <span class="code-pill">alf468043</span>
+  </div>
+  <div class="slot-sub">요청대로 고정 삽입</div>
+</div>
         </div>
-      </section>
+      </div>
 
-      <!-- RIGHT -->
-      <aside class="sidebar">
-        <div class="sticky-track">
-          <div class="follow-panel" data-follow-panel>
-            <div class="panel-head">
-              <div>
-                <h4>쿠폰 코드 · 링크</h4>
-                <div class="hint">자연스럽게 따라오며 시선을 잡는 패널</div>
-              </div>
-              <button class="btn btn-ghost" data-open-coupons>전체</button>
-            </div>
-            <div class="coupon-list" data-coupons-sidebar>
-              <!-- JS mount -->
-            </div>
+      <!-- 우측 패널(쿠폰/링크) -->
+      <aside class="side-panel" id="sidePanel">
+        <div class="side-panel-head">
+          <div class="side-panel-title">
+            <span class="flame">🔥</span> 쿠폰 코드 · 링크
           </div>
+          <button class="chip" type="button" id="toggleInertia">관성 추적</button>
         </div>
+
+        <div class="side-panel-sub">
+          2026 TEMU의 <br />
+          최신 쿠폰들입니다!
+        </div>
+
+        <div class="coupon-list" id="floatingCouponList"></div>
       </aside>
-    </div>
+    </section>
+
+    <!-- 카테고리 -->
+    <section class="section">
+      <div class="section-head">
+        <div class="section-title">🔥 포스팅 카테고리</div>
+        <div class="section-sub">주제별 TEMU의 정보들이 담겨있어요!</div>
+      </div>
+
+      <!-- 카테고리 렌더 -->
+      <div class="category-wrap" id="categoryWrap"></div>
+    </section>
   </main>
 
-  <button class="floating-cta" title="쿠폰" aria-label="coupon" data-open-coupons>🎟️</button>
+  <!-- 우측 하단 고정 CTA -->
+  <button class="coupon-cta" type="button" id="couponCtaBtn" aria-label="쿠폰 바로 보기">
+    쿠폰
+  </button>
 
-  <!-- Modal -->
-  <div class="modal-backdrop" data-modal-backdrop>
-    <div class="modal" data-modal>
-      <div class="head">
-        <strong>쿠폰 코드 · 링크</strong>
-        <button class="btn btn-ghost" data-close-modal>닫기</button>
-      </div>
-      <div class="body">
-        <p>아래 쿠폰은 고정 6개 데이터를 기반으로 랜덤 순서로 노출됩니다.</p>
-        <div data-coupon-list></div>
-      </div>
-      <div class="foot">
-        <button class="btn btn-ghost" data-close-modal>닫기</button>
-      </div>
-    </div>
-  </div>
-
-  <script src="./assets/js/posts-data.js"></script>
-  <script src="./assets/js/post-renderer.js"></script>
+  <!-- scripts -->
   <script src="./assets/js/ui-coupons.js"></script>
+  <script src="./assets/js/post-renderer.js"></script>
   <script src="./app.js"></script>
 </body>
 </html>
