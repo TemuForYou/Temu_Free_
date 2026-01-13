@@ -1,133 +1,102 @@
-(async function () {
-  const listEl = document.getElementById("floatingCouponList");
-  const ctaBtn = document.getElementById("couponCtaBtn");
-  const toggleBtn = document.getElementById("toggleInertia");
-
-  if (!listEl) return;
-
-  // 관성(부드럽게 뒤따라오는) 기본 ON
-  let inertiaOn = true;
-
-  // 쿠폰 데이터 로드
-  async function loadCoupons() {
-    const res = await fetch("./data/coupons.json", { cache: "no-store" });
-    if (!res.ok) throw new Error("coupons.json load failed");
-    return await res.json();
+(() => {
+  function tfyShuffle(arr) {
+    return arr
+      .map(v => ({ v, r: Math.random() }))
+      .sort((a, b) => a.r - b.r)
+      .map(o => o.v);
   }
 
-  // 간단한 셔플
-  function shuffle(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
-    }
-    return a;
+  function tfyWeightedPick(arr, n) {
+    const pool = [];
+    arr.forEach(c => {
+      const w = Math.max(1, Number(c.weight || 1));
+      for (let i = 0; i < w; i++) pool.push(c);
+    });
+    return tfyShuffle(pool).slice(0, n);
   }
 
-  // 복사
-  async function copyText(text) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return true;
-    } catch (e) {
-      // fallback
-      const ta = document.createElement("textarea");
+  function tfyNormalizeCoupons(raw) {
+    const arr = Array.isArray(raw) ? raw : [];
+    const norm = arr.map(c => ({
+      title: c.title ?? c.label ?? '',
+      link: c.link ?? c.url ?? '',
+      code: c.code ?? '',
+      tag: c.tag ?? '',
+      emoji: c.emoji ?? '🎁',
+      type: c.type ?? c.audience ?? 'all',
+      weight: c.weight ?? 1
+    }));
+    return norm.filter(c => c.title && c.code);
+  }
+
+  function tfyCopy(text) {
+    if (!text) return;
+    navigator.clipboard?.writeText(text).catch(() => {
+      const ta = document.createElement('textarea');
       ta.value = text;
       document.body.appendChild(ta);
       ta.select();
-      document.execCommand("copy");
+      document.execCommand('copy');
       ta.remove();
-      return true;
-    }
+    });
   }
 
-  function renderCard(item) {
-    const wrap = document.createElement("div");
-    wrap.className = "coupon-card";
+  function tfyRenderCouponCard(c) {
+    const el = document.createElement('div');
+    el.className = 'coupon-card';
 
-    wrap.innerHTML = `
-      <div class="coupon-row">
-        <div class="coupon-left">
-          <div class="coupon-ico">${item.icon || "🎁"}</div>
-          <div class="coupon-text">
-            <div class="coupon-title">${item.title}</div>
-            <div class="coupon-sub">${item.note || ""}</div>
+    const audienceLabel = (c.type === 'new')
+      ? '신규 앱 사용자'
+      : (c.type === 'all' ? '모든 사용자' : c.type);
+
+    el.innerHTML = `
+      <div class="coupon-left">
+        <div class="coupon-icon" aria-hidden="true">${c.emoji || '🎁'}</div>
+        <div class="coupon-meta">
+          <div class="coupon-title">${c.title}</div>
+          <div class="coupon-sub">
+            <span class="code-pill">CODE&nbsp;${c.code}</span>
+            ${c.tag ? `<span class="tag ${c.tag.includes('신규') ? 'todo' : ''}">${c.tag}</span>` : ''}
+            ${audienceLabel ? `<span class="tag">${audienceLabel}</span>` : ''}
           </div>
         </div>
-        <div class="coupon-right">
-          <span class="code-badge">CODE ${item.code}</span>
-          <button class="btn btn-ghost" type="button" data-act="copy">복사</button>
-          <button class="btn btn-primary" type="button" data-act="go">이동</button>
-        </div>
+      </div>
+
+      <div class="coupon-actions">
+        <button class="btn" data-copy>복사</button>
+        <button class="btn primary" data-go>이동</button>
       </div>
     `;
 
-    wrap.querySelector('[data-act="copy"]').addEventListener("click", async () => {
-      const ok = await copyText(item.code);
-      if (ok) {
-        // 가벼운 피드백 (텍스트는 UI에 넣지 않음)
-        wrap.style.transform = "translateY(-1px)";
-        setTimeout(() => (wrap.style.transform = "translateY(0)"), 140);
-      }
+    el.querySelector('[data-copy]').addEventListener('click', () => tfyCopy(c.code));
+    el.querySelector('[data-go]').addEventListener('click', () => {
+      if (!c.link) return;
+      window.open(c.link, '_blank', 'noopener,noreferrer');
     });
 
-    wrap.querySelector('[data-act="go"]').addEventListener("click", () => {
-      if (item.url) window.open(item.url, "_blank", "noopener,noreferrer");
-    });
-
-    return wrap;
+    return el;
   }
 
-  function mountCoupons(items) {
-    listEl.innerHTML = "";
-    items.forEach((it) => listEl.appendChild(renderCard(it)));
+  async function tfyLoadCouponsJson(path) {
+    const res = await fetch(path, { cache: 'no-store' });
+    if (!res.ok) throw new Error('Failed to load coupons json');
+    return res.json();
   }
 
-  // 패널이 커서를 “즉시” 따라오지 않고 부드럽게 뒤따라오는 느낌
-  let targetY = 0;
-  let currentY = 0;
+  async function tfyMountCouponPanel(listSel = '[data-coupon-list]', jsonPath = './data/coupons.json') {
+    const list = document.querySelector(listSel);
+    if (!list) return;
 
-  function onMove(e) {
-    const y = e.clientY;
-    // 화면 중앙 기준으로 약간만 반응
-    targetY = Math.max(-140, Math.min(140, (y - window.innerHeight / 2) * 0.25));
+    const raw = await tfyLoadCouponsJson(jsonPath);
+    const coupons = tfyNormalizeCoupons(raw);
+
+    // 우측 패널: 6개 고정 노출 (가중치 섞기)
+    const picked = tfyWeightedPick(coupons, 6);
+
+    list.innerHTML = '';
+    picked.forEach(c => list.appendChild(tfyRenderCouponCard(c)));
   }
 
-  function tick() {
-    if (inertiaOn) {
-      currentY += (targetY - currentY) * 0.08; // 관성
-    } else {
-      currentY = targetY; // 즉시
-    }
-
-    const panel = document.getElementById("sidePanel");
-    if (panel) panel.style.transform = `translateY(${currentY}px)`;
-
-    requestAnimationFrame(tick);
-  }
-
-  toggleBtn?.addEventListener("click", () => {
-    inertiaOn = !inertiaOn;
-    toggleBtn.classList.toggle("on", inertiaOn);
-  });
-
-  ctaBtn?.addEventListener("click", () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-
-  window.addEventListener("mousemove", onMove, { passive: true });
-
-  // 초기 렌더
-  try {
-    const all = await loadCoupons();
-    // 6개 랜덤 노출
-    const picks = shuffle(all).slice(0, 6);
-    mountCoupons(picks);
-  } catch (e) {
-    // fail-safe: 아무것도 안 보여도 레이아웃 깨지지 않게
-    listEl.innerHTML = "";
-  }
-
-  tick();
+  // 전역
+  window.tfyMountCouponPanel = tfyMountCouponPanel;
 })();
