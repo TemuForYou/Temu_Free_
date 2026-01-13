@@ -485,3 +485,68 @@ button{ font-family: inherit; }
   justify-content:flex-end;
   gap: 10px;
 }
+
+/* ===== Coupon UI: code pill + compact actions ===== */
+.coupon-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.code-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid rgba(255, 138, 0, 0.18);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.code-pill.small {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.coupon-actions {
+  margin-left: auto;
+  display: inline-flex;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.btn-chip {
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  white-space: nowrap;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.10);
+}
+
+.btn-chip.copy {
+  background: #ffffff;
+  color: #222;
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.btn-chip.go {
+  background: #ff8a00;
+  color: #fff;
+}
+
+.btn-chip.small { height: 30px; padding: 0 10px; font-size: 13px; }
+
+.btn-chip:active {
+  transform: translateY(1px);
+}
+
