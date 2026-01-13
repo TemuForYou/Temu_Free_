@@ -1,0 +1,148 @@
+{
+  "categories": [
+    {
+      "id": "fix",
+      "title": "실수·문제 해결형",
+      "items": [
+        {
+          "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
+          "status": "ready",
+          "slug": "temu-customs-code-one-letter-shipping-stop",
+          "href": "./posts/temu-customs-code-one-letter-shipping-stop.html"
+        },
+        {
+          "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
+          "status": "ready",
+          "slug": "temu-order-stuck-looks-like-delayed-real-reason",
+          "href": "./posts/temu-order-stuck-looks-like-delayed-real-reason.html"
+        },
+        {
+          "title": "테무 개인통관고유번호 오타: 딱 이 3가지 패턴이 제일 많습니다",
+          "status": "soon",
+          "slug": "temu-customs-code-typo-top3",
+          "href": ""
+        },
+        {
+          "title": "테무 주소 잘못 입력했을 때: 변경 가능한 경우와 불가한 경우",
+          "status": "soon",
+          "slug": "temu-address-wrong-change-possible-vs-impossible",
+          "href": ""
+        },
+        {
+          "title": "테무 배송조회가 안 맞을 때: 업데이트 주기와 정상/비정상 신호",
+          "status": "soon",
+          "slug": "temu-tracking-update-cycle-normal-vs-abnormal",
+          "href": ""
+        }
+      ]
+    },
+    {
+      "id": "verify",
+      "title": "진위 검증형",
+      "items": [
+        {
+          "title": "테무 무료선물, 진짜냐? “가능한 조건”과 “불가능한 착각”을 분리합니다",
+          "status": "soon",
+          "slug": "temu-free-gift-possible-vs-myth",
+          "href": ""
+        },
+        {
+          "title": "테무 0원 이벤트: “0원”이 성립하는 구조를 숫자로 설명합니다",
+          "status": "soon",
+          "slug": "temu-zero-won-structure-by-numbers",
+          "href": ""
+        },
+        {
+          "title": "테무 크레딧이 사라졌다고 느낄 때: 실제로는 이 화면에 보관됩니다",
+          "status": "soon",
+          "slug": "temu-credit-not-gone-where-to-check",
+          "href": ""
+        },
+        {
+          "title": "테무 쿠폰묶음(번들), 진짜 더 이득일까? 적용 순서가 결과를 바꿉니다",
+          "status": "soon",
+          "slug": "temu-bundle-coupon-order-changes-result",
+          "href": ""
+        },
+        {
+          "title": "테무 ‘특별 세일’은 정말 더 싸질까? 같은 상품인데 가격이 달라지는 이유",
+          "status": "soon",
+          "slug": "temu-special-sale-why-price-differs",
+          "href": ""
+        }
+      ]
+    },
+    {
+      "id": "coupon",
+      "title": "쿠폰·코드",
+      "items": [
+        {
+          "title": "테무 쿠폰코드 입력, 이 순서로 하면 적용이 제일 깔끔합니다",
+          "status": "soon",
+          "slug": "temu-coupon-code-best-order",
+          "href": ""
+        },
+        {
+          "title": "테무 2026 쿠폰: ‘지금 되는 코드’만 남기고 정리합니다",
+          "status": "soon",
+          "slug": "temu-2026-working-codes-only",
+          "href": ""
+        },
+        {
+          "title": "테무 쿠폰 적용이 안 될 때, 확인해야 할 7가지 체크리스트",
+          "status": "soon",
+          "slug": "temu-coupon-not-applying-7-checks",
+          "href": ""
+        },
+        {
+          "title": "테무 크레딧·쿠폰·무료배송, 한 번에 겹쳐 쓰는 핵심 규칙",
+          "status": "soon",
+          "slug": "temu-credit-coupon-free-shipping-stack-rules",
+          "href": ""
+        },
+        {
+          "title": "테무 추천 코드: 입력 타이밍이 ‘혜택 크기’를 바꾸는 이유",
+          "status": "soon",
+          "slug": "temu-referral-code-timing-matters",
+          "href": ""
+        }
+      ]
+    },
+    {
+      "id": "info",
+      "title": "테무 → 정보",
+      "items": [
+        {
+          "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
+          "status": "soon",
+          "slug": "temu-payment-error-most-blocked-step",
+          "href": ""
+        },
+        {
+          "title": "테무 결제 실패 반복: 카드 문제보다 ‘계정 설정’이 원인인 경우",
+          "status": "soon",
+          "slug": "temu-payment-fail-account-settings",
+          "href": ""
+        },
+        {
+          "title": "테무 결제 승인만 되고 주문이 안 될 때 확인 순서",
+          "status": "soon",
+          "slug": "temu-payment-approved-order-not-placed-checklist",
+          "href": ""
+        },
+        {
+          "title": "테무 결제 오류, 앱/웹 차이로 생기는 대표 케이스",
+          "status": "soon",
+          "slug": "temu-payment-error-app-vs-web",
+          "href": ""
+        },
+        {
+          "title": "테무 환불 처리 속도: 빨라지는 요청 방식이 따로 있습니다",
+          "status": "soon",
+          "slug": "temu-refund-speed-request-method",
+          "href": ""
+        }
+      ]
+    }
+  ]
+}
