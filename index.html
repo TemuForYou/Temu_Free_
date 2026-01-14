@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TFY - TemuForYou</title>
+  <link rel="stylesheet" href="assets/css/base.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-badge"><span style="color:#fff;font-weight:900;">TFY</span></span>
+        <span class="brand-text">TFY</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">홈</a>
+        <a href="#categories">인기글</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="grid">
+      <!-- LEFT -->
+      <section>
+        <div class="card hero-card">
+          <h1 class="hero-title">테무 혜택 + 문제해결,<br/>기사형으로 빠르게 정리합니다</h1>
+          <p class="hero-desc">
+            쿠폰/사은품/세일은 구조가 있고, 배송·통관·환불·결제 문제는 ‘막히는 지점’이 있습니다.
+            과장 없이, 실제 적용 기준으로 정리합니다.
+          </p>
+
+          <div class="slots" aria-label="메인 쿠폰 슬롯">
+            <div id="slot1" class="slot" role="button" tabindex="0">
+              <div class="slot-top">
+                <div class="slot-ico" aria-hidden="true">💎</div>
+                <div class="slot-title">30% 쿠폰</div>
+              </div>
+              <div class="slot-sub" id="slot1Sub">요청대로 고정 삽입</div>
+              <div style="margin-top:10px;">
+                <span class="slot-code">CODE <b id="slot1Code">ack263361</b></span>
+              </div>
+            </div>
+
+            <div id="slot2" class="slot" role="button" tabindex="0">
+              <div class="slot-top">
+                <div class="slot-ico" aria-hidden="true">🎁</div>
+                <div class="slot-title">1원 상품</div>
+              </div>
+              <div class="slot-sub" id="slot2Sub">요청대로 고정 삽입</div>
+              <div style="margin-top:10px;">
+                <span class="slot-code">CODE <b id="slot2Code">frw419209</b></span>
+              </div>
+            </div>
+
+            <div id="slot3" class="slot" role="button" tabindex="0">
+              <div class="slot-top">
+                <div class="slot-ico" aria-hidden="true">🔥</div>
+                <div class="slot-title">99% 할인 코드</div>
+              </div>
+              <div class="slot-sub" id="slot3Sub">요청대로 고정 삽입</div>
+              <div style="margin-top:10px;">
+                <span class="slot-code">CODE <b id="slot3Code">alf468043</b></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="categories" class="section card cat-card">
+          <div class="cat-head">
+            <div class="cat-title">🔥 포스팅 카테고리</div>
+            <div class="cat-tabs" id="catTabs"></div>
+          </div>
+          <div class="post-list" id="catWrap"></div>
+        </div>
+      </section>
+
+      <!-- RIGHT -->
+      <aside class="card coupon-panel" id="couponPanel">
+        <div class="panel-head">
+          <div>
+            <div class="panel-title">🔥 쿠폰 코드 · 링크</div>
+            <p class="panel-note">클릭 → 코드복사 → 이동 순서로 진행하세요.</p>
+          </div>
+        </div>
+        <div class="coupon-list" id="couponList"></div>
+      </aside>
+    </div>
+  </main>
+
+  <button class="fab" id="fabCta" title="쿠폰 바로가기" aria-label="쿠폰 바로가기">🎟️</button>
+
+  <script src="assets/js/posts-data.js"></script>
+  <script src="assets/js/ui-coupons.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
