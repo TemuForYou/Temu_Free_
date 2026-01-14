@@ -9,7 +9,7 @@
       "slug": "temu-customs-code-one-letter-shipping-stop",
       "date": "2026-01-03",
       "hasCoupon": true,
-      "status": "done",
+      "status": "true",
       "summary": "통관번호 오타/불일치로 '확인 대기'에 묶이는 대표 케이스와 바로 점검 순서.",
       "file": "posts/temu-customs-code-one-letter-shipping-stop.html",
       "updated": "2026-01-03"
