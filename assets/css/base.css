@@ -18,7 +18,7 @@
 
 /* Font lock: Apple SD Gothic Neo */
 html,body{
-  font-family: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans KR", "Noto Sans", Arial, sans-serif;
+  font-family: "Apple SD Gothic Neo", -apple-system, "Segoe UI", Roboto, "Noto Sans KR", "Noto Sans", Arial, sans-serif;
   color:var(--ink);
   background:var(--bg);
   margin:0;
