@@ -78,7 +78,7 @@
         const badge = safeText(c.badge); // "신규 앱 사용" / "모든 사용자" 등
         const code = safeText(c.code);
         const link = safeText(c.link);
-        const icon = safeText(c.icon || "🎁");
+        const icon = safeText(c.icon || "2026 최신 할인쿠폰들 입니다!");
 
         // 긴 텍스트가 세로로 '끊기는' 현상 방지:
         // - 마크업을 한 줄 컬럼에 가두지 않고, 본문 영역(.coupon-main) 안에서 자연스럽게 줄바꿈되게 구성
