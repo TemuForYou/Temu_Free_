@@ -1,271 +1,236 @@
-/* TFY - app.js
-   - index.html: 쿠폰 패널 + 포스팅 카테고리 렌더링
-   - post.html: 글 페이지에서 쿠폰 패널 렌더링(선택)
-   주의: "..." 같은 요약표현을 파일 안에 절대 넣지 마세요(스크립트 즉시 깨짐).
-*/
-(() => {
-  "use strict";
+/* app.js */
 
-  const $ = (sel, root = document) => root.querySelector(sel);
-  const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const $ = (sel) => document.querySelector(sel);
 
-  // ====== Utils ======
-  const withCacheBust = (url) => {
-    const u = new URL(url, window.location.href);
-    u.searchParams.set("v", String(Date.now()));
-    return u.toString();
-  };
+function escapeHtml(str = "") {
+  return String(str)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-  async function fetchJSON(url) {
-    const res = await fetch(withCacheBust(url), { cache: "no-store" });
-    if (!res.ok) throw new Error(`Fetch failed: ${url} (${res.status})`);
-    return await res.json();
-  }
+function toYmd(dateStr) {
+  // dateStr: "2026.01.05" or "2026-01-05" etc.
+  const s = String(dateStr || "").trim();
+  if (!s) return "";
+  if (s.includes(".")) return s;
+  if (s.includes("-")) return s.replaceAll("-", ".");
+  return s;
+}
 
-  async function copyText(text) {
-    try {
-      if (navigator.clipboard && window.isSecureContext) {
-        await navigator.clipboard.writeText(text);
-        return true;
+function uniq(arr) {
+  return Array.from(new Set(arr));
+}
+
+async function loadJson(path) {
+  const res = await fetch(path, { cache: "no-store" });
+  if (!res.ok) throw new Error(`Failed to load ${path}`);
+  return res.json();
+}
+
+/* ===== Coupons (right panel + main 3 slots) ===== */
+
+function renderCoupons(coupons) {
+  const wrap = $("#couponList");
+  if (!wrap) return;
+
+  // coupons.json 구조: { items: [...] } 또는 [...] 둘 다 대응
+  const items = Array.isArray(coupons) ? coupons : (coupons.items || []);
+
+  // 우측 카드: 현재 남겨둔 3개만 유지(요청대로)
+  const allowed = new Set(["alf468043", "frw419209", "ack263361"]);
+  const filtered = items.filter(c => allowed.has(String(c.code || "").trim()));
+
+  wrap.innerHTML = filtered.map((c) => {
+    const title = escapeHtml(c.title || "");
+    const desc = escapeHtml(c.desc || "");
+    const code = escapeHtml(c.code || "");
+    const link = escapeHtml(c.link || "#");
+
+    return `
+      <div class="coupon-item">
+        <div class="coupon-item-top">
+          <div class="coupon-title">${title}</div>
+          <div class="coupon-desc">${desc}</div>
+        </div>
+
+        <div class="coupon-actions">
+          <div class="coupon-code-pill">CODE ${code}</div>
+
+          <button class="btn btn-copy" data-copy="${code}">복사</button>
+
+          <a class="btn btn-go" href="${link}" target="_blank" rel="noopener">이동</a>
+        </div>
+      </div>
+    `;
+  }).join("");
+
+  // copy handler
+  wrap.querySelectorAll("[data-copy]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const v = btn.getAttribute("data-copy") || "";
+      try {
+        await navigator.clipboard.writeText(v);
+        btn.textContent = "복사됨";
+        setTimeout(() => (btn.textContent = "복사"), 900);
+      } catch (e) {
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = v;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        document.body.removeChild(ta);
+        btn.textContent = "복사됨";
+        setTimeout(() => (btn.textContent = "복사"), 900);
       }
-    } catch (_) {}
-    // fallback
-    try {
-      const ta = document.createElement("textarea");
-      ta.value = text;
-      ta.style.position = "fixed";
-      ta.style.left = "-9999px";
-      ta.style.top = "-9999px";
-      document.body.appendChild(ta);
-      ta.focus();
-      ta.select();
-      const ok = document.execCommand("copy");
-      document.body.removeChild(ta);
-      return ok;
-    } catch (_) {
-      return false;
-    }
-  }
+    });
+  });
+}
 
-  function safeText(v) {
-    return (v ?? "").toString();
-  }
+function renderMainSlots(coupons) {
+  const wrap = $("#mainSlots");
+  if (!wrap) return;
 
-  function formatDateYYYYMMDD(d) {
-    // input: "2026-01-03" -> "2026.01.03"
-    const s = safeText(d).trim();
-    if (!/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
-    return s.replaceAll("-", ".");
-  }
+  const items = Array.isArray(coupons) ? coupons : (coupons.items || []);
 
-  // ====== Coupons ======
-  function renderCoupons(listEl, coupons) {
-    if (!listEl) return;
+  // 메인 3슬롯: ack263361, frw419209, alf468043
+  const wanted = ["ack263361", "frw419209", "alf468043"];
+  const map = new Map(items.map(x => [String(x.code || "").trim(), x]));
+  const slotItems = wanted.map(code => map.get(code)).filter(Boolean);
 
-    const items = Array.isArray(coupons?.items) ? coupons.items : [];
-    if (!items.length) {
-      listEl.innerHTML = `<div class="muted">쿠폰 데이터가 없습니다.</div>`;
-      return;
-    }
+  wrap.innerHTML = slotItems.map((c) => {
+    const icon = escapeHtml(c.icon || "🎁");
+    const title = escapeHtml(c.slotTitle || c.title || "");
+    const sub = escapeHtml(c.slotSub || "요청대로 고정 삽입");
+    const code = escapeHtml(c.code || "");
 
-    // 안정적으로 6개만(원하면 늘리면 됨)
-    const display = items.slice(0, 6);
-
-    listEl.innerHTML = display
-      .map((c, idx) => {
-        const title = safeText(c.title);
-        const desc = safeText(c.desc);
-        const badge = safeText(c.badge); // "신규 앱 사용" / "모든 사용자" 등
-        const code = safeText(c.code);
-        const link = safeText(c.link);
-        const icon = safeText(c.icon || "2026 최신 할인쿠폰들 입니다!");
-
-        // 긴 텍스트가 세로로 '끊기는' 현상 방지:
-        // - 마크업을 한 줄 컬럼에 가두지 않고, 본문 영역(.coupon-main) 안에서 자연스럽게 줄바꿈되게 구성
-        return `
-          <div class="coupon-item" data-idx="${idx}">
-            <div class="coupon-left">
-              <div class="coupon-ico" aria-hidden="true">${icon}</div>
-            </div>
-
-            <div class="coupon-main">
-              <div class="coupon-title-row">
-                <div class="coupon-title">${title}</div>
-                ${badge ? `<span class="coupon-badge">${badge}</span>` : ``}
-              </div>
-              ${desc ? `<div class="coupon-desc">${desc}</div>` : ``}
-
-              <div class="coupon-actions">
-                <span class="coupon-code-pill">CODE <b>${code}</b></span>
-                <a class="coupon-link-pill" href="${link}" target="_blank" rel="noopener">다운로드</a>
-                <button class="btn btn-ghost js-copy" type="button" data-code="${code}">복사</button>
-                <button class="btn btn-primary js-go" type="button" data-link="${link}">이동</button>
-              </div>
-            </div>
+    return `
+      <div class="slot">
+        <div class="slot-top">
+          <div class="slot-ic">${icon}</div>
+          <div class="slot-txt">
+            <div class="slot-title">${title}</div>
+            <div class="slot-sub">${sub}</div>
           </div>
-        `;
-      })
-      .join("");
+        </div>
 
-    // 이벤트 위임
-    listEl.addEventListener("click", async (e) => {
-      const t = e.target;
-      if (!(t instanceof HTMLElement)) return;
+        <div class="slot-code">CODE ${code}</div>
+      </div>
+    `;
+  }).join("");
+}
 
-      const copyBtn = t.closest(".js-copy");
-      if (copyBtn) {
-        const code = safeText(copyBtn.getAttribute("data-code"));
-        if (!code) return;
-        const ok = await copyText(code);
-        copyBtn.classList.add("is-copied");
-        copyBtn.textContent = ok ? "복사됨" : "복사 실패";
-        setTimeout(() => {
-          copyBtn.classList.remove("is-copied");
-          copyBtn.textContent = "복사";
-        }, 1000);
-        return;
-      }
+/* ===== Posts + Categories ===== */
 
-      const goBtn = t.closest(".js-go");
-      if (goBtn) {
-        const link = safeText(goBtn.getAttribute("data-link"));
-        if (!link) return;
-        window.open(link, "_blank", "noopener,noreferrer");
-      }
+function groupByCategory(items) {
+  const map = new Map();
+  for (const it of items) {
+    const cat = it.category || "기타";
+    if (!map.has(cat)) map.set(cat, []);
+    map.get(cat).push(it);
+  }
+  return map;
+}
+
+function renderCatTabs(categories, activeCat, onClick) {
+  const wrap = $("#catTabs");
+  if (!wrap) return;
+
+  wrap.innerHTML = categories.map((cat) => {
+    const isActive = cat === activeCat;
+    return `<button class="pill ${isActive ? "is-active" : ""}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`;
+  }).join("");
+
+  wrap.querySelectorAll("[data-cat]").forEach(btn => {
+    btn.addEventListener("click", () => onClick(btn.getAttribute("data-cat")));
+  });
+}
+
+function renderPostsList(items, activeCat) {
+  const wrapEl = $("#postsWrap");
+  if (!wrapEl) return;
+
+  const list = activeCat ? items.filter(x => x.category === activeCat) : items;
+
+  wrapEl.innerHTML = list.map((p) => {
+    const title = escapeHtml(p.title || "");
+    const date = toYmd(p.date || "");
+    const done = Boolean(p.done);
+    const hasCoupon = Boolean(p.hasCoupon);
+    const slug = escapeHtml(p.slug || "");
+    const href = `posts/${slug}.html`;
+
+    // ✅ 디자인만: "날짜 / 쿠폰 포함"을 뱃지형으로
+    const metaPills = [
+      `<span class="meta-pill meta-date">${escapeHtml(date)}</span>`,
+      hasCoupon ? `<span class="meta-pill meta-coupon">쿠폰 포함</span>` : ""
+    ].filter(Boolean).join("");
+
+    // ✅ 디자인만: 준비중 글에는 '업로드 예정'을 별도 뱃지로 표시
+    const soon = done ? "" : "업로드 예정";
+
+    return `
+      <a class="post-row" href="${done ? href : "#"}" ${done ? "" : 'aria-disabled="true"'} data-done="${done ? "1" : "0"}">
+        <div class="post-main">
+          <div class="post-title">${title}</div>
+
+          <div class="post-meta">
+            <div class="meta-line">${metaPills}</div>
+            ${soon ? `<div class="meta-line"><span class="meta-pill meta-soon">${soon}</span></div>` : ""}
+          </div>
+
+          ${p.summary ? `<div class="post-summary">${escapeHtml(p.summary)}</div>` : ""}
+        </div>
+
+        <div class="post-badge ${done ? "is-done" : "is-wait"}">${done ? "완료" : "준비중"}</div>
+      </a>
+    `;
+  }).join("");
+
+  // 준비중 클릭 방지(동작 유지)
+  wrapEl.querySelectorAll('a.post-row[data-done="0"]').forEach(a => {
+    a.addEventListener("click", (e) => e.preventDefault());
+  });
+}
+
+/* ===== Boot ===== */
+
+async function boot() {
+  try {
+    const [postsJson, couponsJson] = await Promise.all([
+      loadJson("data/posts.json"),
+      loadJson("data/coupons.json"),
+    ]);
+
+    const posts = postsJson.items || [];
+    const cats = uniq(posts.map(p => p.category)).filter(Boolean);
+
+    let activeCat = cats[0] || "";
+
+    renderCatTabs(cats, activeCat, (cat) => {
+      activeCat = cat;
+      renderCatTabs(cats, activeCat, () => {});
+      renderPostsList(posts, activeCat);
+      // 다시 이벤트 붙이기
+      renderCatTabs(cats, activeCat, (next) => {
+        activeCat = next;
+        renderCatTabs(cats, activeCat, () => {});
+        renderPostsList(posts, activeCat);
+      });
     });
+
+    renderPostsList(posts, activeCat);
+
+    // coupons
+    renderCoupons(couponsJson);
+    renderMainSlots(couponsJson);
+
+  } catch (e) {
+    console.error(e);
   }
+}
 
-  // ====== Posts / Categories ======
-  function groupByCategory(posts) {
-    const map = new Map();
-    for (const p of posts) {
-      const cat = safeText(p.category || "기타");
-      if (!map.has(cat)) map.set(cat, []);
-      map.get(cat).push(p);
-    }
-    return map;
-  }
-
-  function renderCategoryTabs(tabsEl, categories, activeCat) {
-    if (!tabsEl) return;
-
-    tabsEl.innerHTML = categories
-      .map((cat) => {
-        const isActive = cat === activeCat;
-        return `<button type="button" class="cat-tab ${isActive ? "is-active" : ""}" data-cat="${cat}">${cat}</button>`;
-      })
-      .join("");
-
-    tabsEl.addEventListener("click", (e) => {
-      const btn = e.target instanceof HTMLElement ? e.target.closest(".cat-tab") : null;
-      if (!btn) return;
-      const cat = safeText(btn.getAttribute("data-cat"));
-      if (!cat) return;
-      // active 상태 변경 + 렌더 트리거
-      window.dispatchEvent(new CustomEvent("tfy:category", { detail: { cat } }));
-    });
-  }
-
-  function renderPosts(wrapEl, posts, activeCat) {
-    if (!wrapEl) return;
-
-    const filtered = activeCat ? posts.filter((p) => safeText(p.category) === activeCat) : posts;
-
-    wrapEl.innerHTML = filtered
-      .map((p) => {
-        const title = safeText(p.title);
-        const summary = safeText(p.summary);
-        const date = formatDateYYYYMMDD(p.updated || p.date);
-        const hasCoupon = !!p.hasCoupon;
-        const done = !!p.done;
-        const href = safeText(p.file || (p.slug ? `posts/${p.slug}.html` : ""));
-
-        const meta = `${date}${hasCoupon ? " · 쿠폰 포함" : ""}`;
-        const statusText = done ? "완료" : "준비중";
-
-        // (대기) 버튼 같은 불필요 UI를 만들지 않고,
-        // 카드 전체를 클릭 가능하게 + 상태만 배지로 표시
-        return `
-          <a class="post-row ${done ? "" : "is-disabled"}" href="${done ? href : "#"}" data-done="${done ? "1" : "0"}" data-href="${href}">
-            <div class="post-main">
-              <div class="post-title">${title}</div>
-              <div class="post-meta">${meta}</div>
-              ${summary ? `<div class="post-summary">${summary}</div>` : ``}
-            </div>
-            <div class="post-right">
-              <span class="post-badge ${done ? "is-done" : "is-wait"}">${statusText}</span>
-            </div>
-          </a>
-        `;
-      })
-      .join("");
-
-    // 준비중 글 클릭 방지
-    wrapEl.addEventListener("click", (e) => {
-      const a = e.target instanceof HTMLElement ? e.target.closest(".post-row") : null;
-      if (!a) return;
-      const done = a.getAttribute("data-done") === "1";
-      if (!done) {
-        e.preventDefault();
-        e.stopPropagation();
-      }
-    });
-  }
-
-  // ====== Init ======
-  async function initIndex() {
-    const couponList = $("#couponList");
-    const catTabs = $("#catTabs");
-    const catWrap = $("#catWrap");
-
-    // index.html이 아닐 수도 있으니(예: post.html)
-    const onIndex = !!catTabs && !!catWrap;
-
-    try {
-      const [coupons, posts] = await Promise.all([
-        fetchJSON("data/coupons.json"),
-        fetchJSON("data/posts.json"),
-      ]);
-
-      renderCoupons(couponList, coupons);
-
-      if (onIndex) {
-        const items = Array.isArray(posts?.items) ? posts.items : [];
-
-        // 최신 글이 위로 오도록 정렬(업데이트 우선)
-        items.sort((a, b) => safeText(b.updated || b.date).localeCompare(safeText(a.updated || a.date)));
-
-        const grouped = groupByCategory(items);
-        const categories = Array.from(grouped.keys());
-
-        // 활성 카테고리: 첫 번째 카테고리
-        let activeCat = categories[0] || "";
-
-        renderCategoryTabs(catTabs, categories, activeCat);
-        renderPosts(catWrap, items, activeCat);
-
-        // 탭 클릭 이벤트 처리
-        window.addEventListener("tfy:category", (ev) => {
-          const cat = ev?.detail?.cat;
-          if (!cat) return;
-          activeCat = cat;
-          // 탭 active 갱신
-          $$(".cat-tab", catTabs).forEach((b) => b.classList.toggle("is-active", b.getAttribute("data-cat") === activeCat));
-          renderPosts(catWrap, items, activeCat);
-        });
-      }
-    } catch (err) {
-      console.error(err);
-
-      // 화면에 최소 힌트라도 표시(디자인 큰 훼손 없이)
-      if (couponList) {
-        couponList.innerHTML = `<div class="muted">쿠폰을 불러오지 못했습니다. (data/coupons.json)</div>`;
-      }
-      if (catWrap) {
-        catWrap.innerHTML = `<div class="muted">카테고리를 불러오지 못했습니다. (data/posts.json)</div>`;
-      }
-    }
-  }
-
-  document.addEventListener("DOMContentLoaded", initIndex);
-})();
+document.addEventListener("DOMContentLoaded", boot);
