@@ -1,0 +1,458 @@
+:root{
+  --bg:#F5F6FA;
+  --card:#FFFFFF;
+  --ink:#111827;
+  --muted:#6B7280;
+  --brand1:#FF7A00;
+  --brand2:#FFA94D;
+  --peach:#FFF3EA;
+  --stroke: rgba(17,24,39,0.08);
+  --shadow: 0 18px 50px rgba(17,24,39,0.10);
+  --radius: 20px;
+  --radius2: 28px;
+  --font: "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, "Noto Sans KR", "Malgun Gothic", sans-serif;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(1200px 400px at 40% -10%, rgba(255,122,0,0.12), transparent 60%),
+    radial-gradient(900px 400px at 90% 10%, rgba(255,169,77,0.12), transparent 60%),
+    var(--bg);
+}
+
+a{color:inherit;text-decoration:none}
+button{font-family:inherit}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  background: linear-gradient(90deg, var(--brand1), var(--brand2));
+  box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+}
+.topbar-inner{
+  max-width:1200px;
+  margin:0 auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-weight:900;
+  letter-spacing:-0.02em;
+}
+.brand-badge{
+  width:34px;height:34px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.22);
+  display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,0.25);
+}
+.brand-text{color:#fff;font-size:18px}
+.nav{
+  display:flex;gap:14px;align-items:center;
+  color:#fff;font-weight:700;
+}
+.nav a{
+  padding:8px 10px;
+  border-radius:12px;
+  background: rgba(255,255,255,0.0);
+}
+.nav a:hover{background: rgba(255,255,255,0.14)}
+
+.page{
+  max-width:1200px;
+  margin:0 auto;
+  padding:24px 18px 80px;
+}
+.grid{
+  display:grid;
+  grid-template-columns: 1.55fr 0.95fr;
+  gap:22px;
+  align-items:start;
+}
+@media (max-width: 980px){
+  .grid{grid-template-columns:1fr; }
+  .coupon-panel{position:static!important; top:auto!important}
+}
+
+.card{
+  background: var(--card);
+  border:1px solid var(--stroke);
+  border-radius: var(--radius2);
+  box-shadow: var(--shadow);
+}
+
+.hero-card{
+  padding:26px 26px 22px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.92), rgba(255,255,255,0.92)),
+    radial-gradient(600px 220px at 20% 0%, rgba(255,122,0,0.18), transparent 60%),
+    radial-gradient(520px 220px at 90% 30%, rgba(255,169,77,0.20), transparent 65%);
+}
+.hero-title{
+  font-size:32px;
+  line-height:1.18;
+  margin:0 0 10px;
+  letter-spacing:-0.03em;
+}
+.hero-desc{
+  margin:0 0 18px;
+  color: var(--muted);
+  line-height:1.7;
+}
+
+.slots{
+  display:grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap:14px;
+}
+@media (max-width: 720px){
+  .slots{grid-template-columns:1fr;}
+}
+
+.slot{
+  border-radius: 18px;
+  border:1px solid rgba(255,122,0,0.25);
+  background: linear-gradient(180deg, #FFF7F0, #FFFFFF);
+  padding:14px 14px;
+  box-shadow: 0 10px 25px rgba(255,122,0,0.10);
+  transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+  cursor:pointer;
+  position:relative;
+  overflow:hidden;
+}
+.slot:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 38px rgba(255,122,0,0.16);
+  filter: brightness(0.98);
+}
+.slot-top{
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:10px;
+}
+.slot-ico{
+  width:36px;height:36px;border-radius:14px;
+  background: linear-gradient(180deg, rgba(255,122,0,0.22), rgba(255,169,77,0.18));
+  display:grid;place-items:center;
+  border:1px solid rgba(255,122,0,0.18);
+}
+.slot-title{
+  font-weight:900;
+  letter-spacing:-0.02em;
+}
+.slot-sub{
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.4;
+  max-height: calc(1.4em * 2);
+  overflow:hidden;
+}
+.slot-code{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius: 999px;
+  border:1px solid rgba(255,122,0,0.25);
+  background:#FFF;
+  font-weight:900;
+}
+.slot-code b{letter-spacing:0.02em}
+
+.section{margin-top:18px}
+
+.cat-card{
+  padding:16px 16px;
+  background: linear-gradient(180deg, #FFFFFF, #FFF8F1);
+}
+.cat-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:10px;
+}
+
+/* ✅ 요청: "포스팅 카테고리" 글자 아래에 탭(1~4) */
+.cat-head{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.cat-title{
+  font-size:18px;
+  font-weight:900;
+  letter-spacing:-0.02em;
+  display:flex;align-items:center;gap:10px;
+  width:100%;
+}
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;width:100%}
+
+.post-list{display:flex;flex-direction:column;gap:12px}
+.post-row{
+  border-radius: 18px;
+  border:1px solid rgba(17,24,39,0.08);
+  background:#fff;
+  padding:14px 16px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  cursor:pointer;
+  transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  min-height:86px;
+}
+.post-row:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(17,24,39,0.10);
+  filter: brightness(0.98);
+}
+.post-title{
+  font-weight:900;
+  letter-spacing:-0.02em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:clip;
+  max-width:100%;
+}
+.post-meta{
+  margin-top:8px;
+  display:flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.post-meta .meta-line{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  align-items:center;
+}
+
+/* ---------- Right coupon panel ---------- */
+.coupon-panel{
+  padding:16px 16px;
+  position:sticky;
+  top:88px;
+}
+.coupon-panel .panel-head{
+  display:flex;align-items:center;justify-content:space-between;
+  border-bottom: 1px solid rgba(17,24,39,0.06);
+  padding-bottom:10px;
+  margin-bottom:12px;
+}
+.panel-title{
+  font-weight:900;
+  letter-spacing:-0.02em;
+  display:flex;align-items:center;gap:8px;
+}
+.panel-note{
+  font-size:12px;color:var(--muted);
+  line-height:1.4;margin:0;
+}
+.coupon-list{display:flex;flex-direction:column;gap:10px}
+
+/* ---------- Fix: right coupon panel text should never look 'vertical' ---------- */
+.coupon-item{
+  border-radius: 18px;
+  background: linear-gradient(180deg, #FFF1E4, #FFFFFF);
+  border:1px solid rgba(255,122,0,0.18);
+  padding:12px 12px 18px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+.coupon-title-row{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.coupon-title{
+  font-weight:800;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  white-space:normal;
+  word-break:keep-all;
+}
+.coupon-desc{
+  margin-top:4px;
+  color:#6b7280;
+  font-size:12px;
+  line-height:1.35;
+  white-space:normal;
+  word-break:keep-all;
+}
+.coupon-actions{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.coupon-code-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:999px;
+  background:rgba(255,255,255,0.75);
+  border:1px solid rgba(255,165,0,0.35);
+}
+.coupon-code-pill .pill-label{
+  font-weight:900;
+  font-size:12px;
+  opacity:0.8;
+}
+.coupon-code-pill .pill-code{
+  font-weight:900;
+  letter-spacing:0.3px;
+}
+
+.btn{
+  border:none;
+  padding:10px 14px;
+  border-radius: 999px;
+  font-weight:900;
+  cursor:pointer;
+}
+.btn:hover{filter: brightness(0.98)}
+.btn:active{transform: translateY(1px)}
+
+.fab{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:56px;height:56px;border-radius:20px;
+  border:none;
+  background: linear-gradient(90deg, var(--brand1), var(--brand2));
+  color:#fff;
+  font-size:20px;
+  box-shadow: 0 18px 40px rgba(255,122,0,0.35);
+  cursor:pointer;
+  z-index:60;
+}
+.fab:hover{filter: brightness(0.98)}
+
+/* ==== Download pill (URL 숨김 + 네온 주황 테두리 + "길게") ==== */
+.coupon-link-pill{
+  margin-top:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:100%;
+  height:44px;
+  padding:0 16px;
+  border-radius:999px;
+  border:2px solid rgba(255, 132, 0, 0.9);
+  color:#111;
+  background:rgba(255,255,255,0.78);
+  text-decoration:none;
+  font-weight:900;
+  font-size:13px;
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.08),
+    0 0 18px rgba(255, 132, 0, 0.25);
+}
+.coupon-link-pill:hover{
+  filter:brightness(0.98);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.12),
+    0 0 22px rgba(255, 132, 0, 0.32);
+}
+
+/* === CATEGORY UI: "다운로드 버튼"과 같은 계열 외형으로 통일 === */
+
+/* 카테고리 탭 버튼(1~4) = 다운로드 버튼 느낌 */
+.pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:2px solid rgba(255, 132, 0, 0.55);
+  background:rgba(255,255,255,0.78);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.06),
+    0 10px 22px rgba(0,0,0,0.08);
+  transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
+  white-space:nowrap;
+  font-weight:900;
+}
+.pill:hover{
+  transform: translateY(-1px);
+  filter: brightness(.97);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.10),
+    0 14px 28px rgba(0,0,0,0.12);
+}
+.pill.is-active{
+  border-color: rgba(255, 132, 0, 0.90);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.12),
+    0 0 18px rgba(255, 132, 0, 0.18);
+}
+
+/* 준비중/완료 뱃지 = 다운로드 버튼 느낌(완료는 그린 톤 유지) */
+.post-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:2px solid rgba(255, 132, 0, 0.55);
+  background:rgba(255,255,255,0.78);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.06),
+    0 10px 22px rgba(0,0,0,0.08);
+  font-weight:900;
+  white-space:nowrap;
+}
+.post-badge.is-wait{
+  color:#FF7A00;
+}
+.post-badge.is-done{
+  color:#1a7f3f;
+  border-color: rgba(26,127,63,.55);
+  box-shadow:
+    0 0 0 2px rgba(26,127,63,.08),
+    0 10px 22px rgba(0,0,0,0.08);
+}
+
+/* 날짜/쿠폰 포함/업로드 예정(네모 테두리 유지) */
+.meta-pill{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.75);
+  color: rgba(0,0,0,.62);
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
+}
+.meta-pill.meta-soon{
+  border-color: rgba(255, 132, 0, .35);
+  color: rgba(0,0,0,.68);
+}
+
+/* 클릭 방지된 준비중은 기존 동작 유지 */
+.post-row[aria-disabled="true"]{
+  cursor:default;
+  opacity:0.60;
+}
+.post-row[aria-disabled="true"]:hover{
+  transform:none;
+  filter:none;
+  box-shadow:none;
+}
