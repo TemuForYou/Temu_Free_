@@ -1,44 +1,19 @@
 {
-  "version": 1,
-  "updated": "2026-01-14",
   "items": [
     {
-      "id": "coupon_99",
-      "label": "추가 혜택",
-      "audience": "모든 사용자",
-      "code": "alf468043",
-      "url": "https://temu.to/k/gzxbhz73coe",
-      "tag": "99% 할인 코드"
-    },
-    {
-      "id": "coupon_1won",
-      "label": "사은품 1원",
-      "audience": "모든 사용자",
-      "code": "frw419209",
-      "url": "https://temu.to/k/gzxbhz73coe",
-      "tag": "1원 상품"
-    },
-    {
-      "id": "coupon_30",
-      "label": "30% 할인",
-      "audience": "신규 앱 사용자",
       "code": "ack263361",
-      "url": "https://temu.to/m/u6ndc7zl0v8",
-      "tag": "30% 쿠폰"
-    }
-  ],
-  "mainSlots": [
-    {
-      "title": "30% 쿠폰",
-      "code": "ack263361"
+      "label": "30% 쿠폰",
+      "link": "https://temu.to/m/u6ndc7zl0v8"
     },
     {
-      "title": "1원 상품",
-      "code": "frw419209"
+      "code": "frw419209",
+      "label": "1원 상품",
+      "link": "https://temu.to/k/gzxbhz73coe"
     },
     {
-      "title": "99% 할인 코드",
-      "code": "alf468043"
+      "code": "alf468043",
+      "label": "99% 할인 코드",
+      "link": "https://temu.to/k/gzxbhz73coe"
     }
   ]
 }
