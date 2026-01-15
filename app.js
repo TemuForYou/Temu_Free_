@@ -1,269 +1,227 @@
-/* app.js */
+/* app.js - 카테고리/글목록/쿠폰 렌더 핵심 */
+(function () {
+  const $ = (sel) => document.querySelector(sel);
 
-const $ = (sel) => document.querySelector(sel);
+  function uniq(arr) {
+    return Array.from(new Set(arr));
+  }
 
-function escapeHtml(str = "") {
-  return String(str)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+  function safeText(s) {
+    return (s ?? "").toString();
+  }
 
-function toYmd(dateStr) {
-  // dateStr: "2026.01.05" or "2026-01-05" etc.
-  const s = String(dateStr || "").trim();
-  if (!s) return "";
-  if (s.includes(".")) return s;
-  if (s.includes("-")) return s.replaceAll("-", ".");
-  return s;
-}
+  function byOrder(categories, orderList) {
+    // orderList에 있는 순서대로 정렬, 없는 건 뒤로
+    const idx = new Map(orderList.map((c, i) => [c, i]));
+    return [...categories].sort((a, b) => (idx.get(a) ?? 9999) - (idx.get(b) ?? 9999));
+  }
 
-function uniq(arr) {
-  return Array.from(new Set(arr));
-}
+  async function fetchJson(path) {
+    const res = await fetch(path, { cache: "no-store" });
+    if (!res.ok) throw new Error(`${path} fetch failed: ${res.status}`);
+    return await res.json();
+  }
 
-async function loadJson(path) {
-  const res = await fetch(path, { cache: "no-store" });
-  if (!res.ok) throw new Error(`Failed to load ${path}`);
-  return res.json();
-}
+  function renderMainSlots(coupons) {
+    const el = $("#mainSlots");
+    if (!el) return;
 
-/* ===== Coupons (right panel + main 3 slots) ===== */
+    // ✅ 메인 3개 슬롯 고정: ack263361, frw419209, alf468043
+    const want = ["ack263361", "frw419209", "alf468043"];
+    const map = new Map(coupons.map((c) => [c.code, c]));
+    const picked = want.map((code) => map.get(code)).filter(Boolean);
 
-// ✅ 코드별 "다운로드" 링크 고정 매핑 (URL은 화면에 노출하지 않고 버튼 클릭으로만 이동)
-const DOWNLOAD_BY_CODE = {
-  alf468043: "https://temu.to/k/gzxbhz73coe",
-  frw419209: "https://temu.to/m/u6ndc7zl0v8",
-  ack263361: "https://temu.to/k/gzxbhz73coe",
-};
+    el.innerHTML = picked.map((c) => {
+      return `
+        <div class="slot">
+          <div class="slot__top">
+            <div class="slot__label">${safeText(c.label)}</div>
+          </div>
+          <div class="slot__code">CODE <b>${safeText(c.code)}</b></div>
+        </div>
+      `;
+    }).join("");
+  }
 
-function renderCoupons(coupons) {
-  const wrap = $("#couponList");
-  if (!wrap) return;
+  function renderCouponPanel(coupons) {
+    const el = $("#couponPanel");
+    if (!el) return;
 
-  // coupons.json 구조: { items: [...] } 또는 [...] 둘 다 대응
-  const items = Array.isArray(coupons) ? coupons : (coupons.items || []);
+    // ✅ 우측 패널에는 3개만 노출 (원하신 3개만)
+    const want = ["alf468043", "frw419209", "ack263361"];
+    const map = new Map(coupons.map((c) => [c.code, c]));
+    const list = want.map((code, i) => ({ c: map.get(code), i })).filter(x => x.c);
 
-  // 우측 카드: 요청대로 3개만 유지
-  const allowed = new Set(["alf468043", "frw419209", "ack263361"]);
-  const filtered = items.filter((c) => allowed.has(String(c.code || "").trim()));
-
-  wrap.innerHTML = filtered
-    .map((c) => {
-      const title = escapeHtml(c.title || "");
-      const desc = escapeHtml(c.desc || "");
-      const codeRaw = String(c.code || "").trim();
-      const code = escapeHtml(codeRaw);
-
-      // 이동 링크는 기존 데이터(c.link) 유지 (원래 동작 보존)
-      const link = escapeHtml(c.link || "#");
-
-      // 다운로드 링크는 코드별 고정
-      const dl = escapeHtml(DOWNLOAD_BY_CODE[codeRaw] || "#");
+    el.innerHTML = list.map(({ c }) => {
+      const code = safeText(c.code);
+      const link = safeText(c.link);
 
       return `
-      <div class="coupon-item">
-        <div class="coupon-item-top">
-          <div class="coupon-title">${title}</div>
-          <div class="coupon-desc">${desc}</div>
-        </div>
-
-        <!-- ✅ 1줄: 코드/복사/이동 -->
-        <div class="coupon-actions">
-          <div class="coupon-code-pill">
-            <span class="pill-label">CODE</span>
-            <span class="pill-code">${code}</span>
+        <div class="coupon-card">
+          <div class="coupon-card__row">
+            <div class="coupon-card__code">
+              <span class="pill">CODE</span>
+              <span class="code">${code}</span>
+            </div>
+            <button class="btn copy" data-copy="${code}">복사</button>
+            <a class="btn go" href="${link}" target="_blank" rel="noopener">이동</a>
           </div>
 
-          <button class="btn btn-copy" data-copy="${code}">복사</button>
-
-          <a class="btn btn-go" href="${link}" target="_blank" rel="noopener">이동</a>
+          <!-- ✅ 다운로드(링크)는 화면에 글자로 노출시키지 않고, 버튼으로만 이동 -->
+          <div class="coupon-card__download">
+            <a class="btn download" href="${link}" target="_blank" rel="noopener">
+              다운로드
+            </a>
+          </div>
         </div>
+      `;
+    }).join("");
 
-        <!-- ✅ 2줄: 다운로드(길게) / URL은 노출하지 않음 -->
-        <a class="coupon-link-pill coupon-download"
-           href="${dl}"
-           target="_blank"
-           rel="noopener"
-           aria-label="다운로드 링크로 이동">
-          다운로드
-        </a>
-      </div>
-    `;
-    })
-    .join("");
-
-  // copy handler
-  wrap.querySelectorAll("[data-copy]").forEach((btn) => {
-    btn.addEventListener("click", async () => {
-      const v = btn.getAttribute("data-copy") || "";
+    // copy handler
+    el.addEventListener("click", async (e) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      const btn = t.closest("button[data-copy]");
+      if (!btn) return;
+      const text = btn.getAttribute("data-copy") || "";
       try {
-        await navigator.clipboard.writeText(v);
+        await navigator.clipboard.writeText(text);
         btn.textContent = "복사됨";
         setTimeout(() => (btn.textContent = "복사"), 900);
-      } catch (e) {
+      } catch {
         // fallback
         const ta = document.createElement("textarea");
-        ta.value = v;
+        ta.value = text;
         document.body.appendChild(ta);
         ta.select();
         document.execCommand("copy");
-        document.body.removeChild(ta);
+        ta.remove();
         btn.textContent = "복사됨";
         setTimeout(() => (btn.textContent = "복사"), 900);
       }
-    });
-  });
-}
-
-function renderMainSlots(coupons) {
-  const wrap = $("#mainSlots");
-  if (!wrap) return;
-
-  const items = Array.isArray(coupons) ? coupons : (coupons.items || []);
-
-  // 메인 3슬롯: ack263361, frw419209, alf468043
-  const wanted = ["ack263361", "frw419209", "alf468043"];
-  const map = new Map(items.map((x) => [String(x.code || "").trim(), x]));
-  const slotItems = wanted.map((code) => map.get(code)).filter(Boolean);
-
-  wrap.innerHTML = slotItems
-    .map((c) => {
-      const icon = escapeHtml(c.icon || "🎁");
-      const title = escapeHtml(c.slotTitle || c.title || "");
-      const sub = escapeHtml(c.slotSub || "요청대로 고정 삽입");
-      const code = escapeHtml(c.code || "");
-
-      return `
-      <div class="slot">
-        <div class="slot-top">
-          <div class="slot-ic">${icon}</div>
-          <div class="slot-txt">
-            <div class="slot-title">${title}</div>
-            <div class="slot-sub">${sub}</div>
-          </div>
-        </div>
-
-        <div class="slot-code">CODE ${code}</div>
-      </div>
-    `;
-    })
-    .join("");
-}
-
-/* ===== Posts + Categories ===== */
-
-function groupByCategory(items) {
-  const map = new Map();
-  for (const it of items) {
-    const cat = it.category || "기타";
-    if (!map.has(cat)) map.set(cat, []);
-    map.get(cat).push(it);
+    }, { passive: true });
   }
-  return map;
-}
 
-function renderCatTabs(categories, activeCat, onClick) {
-  const wrap = $("#catTabs");
-  if (!wrap) return;
+  function renderCatTabs(categories, active, onPick) {
+    const el = $("#catTabs");
+    if (!el) return;
 
-  wrap.innerHTML = categories
-    .map((cat) => {
-      const isActive = cat === activeCat;
-      return `<button class="pill ${isActive ? "is-active" : ""}" data-cat="${escapeHtml(cat)}">${escapeHtml(cat)}</button>`;
-    })
-    .join("");
+    el.innerHTML = categories.map((cat) => {
+      const isOn = cat === active;
+      return `
+        <button class="cat-btn ${isOn ? "is-active" : ""}" data-cat="${cat}">
+          ${cat}
+        </button>
+      `;
+    }).join("");
 
-  wrap.querySelectorAll("[data-cat]").forEach((btn) => {
-    btn.addEventListener("click", () => onClick(btn.getAttribute("data-cat")));
-  });
-}
+    el.onclick = (e) => {
+      const t = e.target;
+      if (!(t instanceof HTMLElement)) return;
+      const btn = t.closest("button[data-cat]");
+      if (!btn) return;
+      const cat = btn.getAttribute("data-cat");
+      if (!cat) return;
+      onPick(cat);
+    };
+  }
 
-function renderPostsList(items, activeCat) {
-  const wrapEl = $("#postsWrap");
-  if (!wrapEl) return;
+  function renderPostsList(allPosts, activeCat) {
+    const el = $("#postsWrap");
+    if (!el) return;
 
-  const list = activeCat ? items.filter((x) => x.category === activeCat) : items;
+    const posts = allPosts.filter((p) => p.category === activeCat);
 
-  wrapEl.innerHTML = list
-    .map((p) => {
-      const title = escapeHtml(p.title || "");
-      const date = toYmd(p.date || "");
-      const done = Boolean(p.done);
-      const hasCoupon = Boolean(p.hasCoupon);
-      const slug = escapeHtml(p.slug || "");
-      const href = `posts/${slug}.html`;
+    el.innerHTML = posts.map((p) => {
+      const title = safeText(p.title);
+      const date = safeText(p.date);
+      const hasCoupon = p.hasCoupon ? "쿠폰 포함" : "";
+      const statusText = p.done ? "완료" : "준비중";
+      const sub = p.done ? safeText(p.summary || "") : "업로드 예정";
+      const slug = safeText(p.slug);
 
-      const metaPills = [
-        `<span class="meta-pill meta-date">${escapeHtml(date)}</span>`,
-        hasCoupon ? `<span class="meta-pill meta-coupon">쿠폰 포함</span>` : "",
-      ]
-        .filter(Boolean)
-        .join("");
-
-      const soon = done ? "" : "업로드 예정";
+      // ✅ done이면 글로 이동, 아니면 이동 없음
+      const href = p.done ? `./posts/${slug}.html` : "#";
+      const clickable = p.done ? "is-clickable" : "is-disabled";
 
       return `
-      <a class="post-row" href="${done ? href : "#"}" ${done ? "" : 'aria-disabled="true"'} data-done="${done ? "1" : "0"}">
-        <div class="post-main">
-          <div class="post-title">${title}</div>
-
-          <div class="post-meta">
-            <div class="meta-line">${metaPills}</div>
-            ${soon ? `<div class="meta-line"><span class="meta-pill meta-soon">${soon}</span></div>` : ""}
+        <a class="post-row ${clickable}" href="${href}" ${p.done ? "" : 'onclick="return false;"'}>
+          <div class="post-row__left">
+            <div class="post-row__title">${title}</div>
+            <div class="post-row__meta">${date}${hasCoupon ? " · " + hasCoupon : ""}</div>
+            <div class="post-row__sub">${sub}</div>
           </div>
+          <div class="post-row__right">
+            <span class="badge ${p.done ? "done" : "wait"}">${statusText}</span>
+          </div>
+        </a>
+      `;
+    }).join("");
+  }
 
-          ${p.summary ? `<div class="post-summary">${escapeHtml(p.summary)}</div>` : ""}
-        </div>
-
-        <div class="post-badge ${done ? "is-done" : "is-wait"}">${done ? "완료" : "준비중"}</div>
-      </a>
-    `;
-    })
-    .join("");
-
-  // 준비중 클릭 방지(동작 유지)
-  wrapEl.querySelectorAll('a.post-row[data-done="0"]').forEach((a) => {
-    a.addEventListener("click", (e) => e.preventDefault());
-  });
-}
-
-/* ===== Boot ===== */
-
-async function boot() {
-  try {
+  async function boot() {
+    // ✅ 경로 고정: 아래 2개가 반드시 존재해야 합니다
     const [postsJson, couponsJson] = await Promise.all([
-      loadJson("data/posts.json"),
-      loadJson("data/coupons.json"),
+      fetchJson("./data/posts.json"),
+      fetchJson("./data/coupons.json"),
     ]);
 
     const posts = postsJson.items || [];
-    const cats = uniq(posts.map((p) => p.category)).filter(Boolean);
+    const coupons = couponsJson.items || [];
 
-    let activeCat = cats[0] || "";
+    // 1) 쿠폰
+    renderMainSlots(coupons);
+    renderCouponPanel(coupons);
 
-    renderCatTabs(cats, activeCat, (cat) => {
-      activeCat = cat;
-      renderCatTabs(cats, activeCat, () => {});
-      renderPostsList(posts, activeCat);
-      // 다시 이벤트 붙이기
-      renderCatTabs(cats, activeCat, (next) => {
-        activeCat = next;
-        renderCatTabs(cats, activeCat, () => {});
-        renderPostsList(posts, activeCat);
-      });
-    });
+    // 2) 카테고리/글 목록
+    const catsRaw = uniq(posts.map((p) => p.category)).filter(Boolean);
 
-    renderPostsList(posts, activeCat);
+    // ✅ “정해진 순서”를 유지하려면 여기 order 배열을 ‘고정’으로 둡니다.
+    // (원하신 4개 카테고리 이름이 정확히 이것과 일치해야 합니다.)
+    const catOrder = [
+      "실수·문제 해결형 ① 통관·배송",
+      "실수·문제 해결형 ② 주문·결제",
+      "진위 검증형 ③ 안전·신뢰",
+      "진위 검증형 ④ 혜택·추천",
+    ];
 
-    // coupons
-    renderCoupons(couponsJson);
-    renderMainSlots(couponsJson);
-  } catch (e) {
-    console.error(e);
+    const cats = byOrder(catsRaw, catOrder);
+
+    // ✅ 카테고리가 비면 이유를 화면에 보여줌(원인 추적용)
+    if (!cats.length) {
+      const wrapEl = $("#postsWrap");
+      const tabEl = $("#catTabs");
+      if (tabEl) tabEl.innerHTML = "";
+      if (wrapEl) {
+        wrapEl.innerHTML = `
+          <div style="padding:14px 16px;color:#6B7280;">
+            posts.json에서 category가 없거나 items가 비어 있어 카테고리를 만들 수 없습니다.<br>
+            data/posts.json 경로와 JSON 구조(items/category)를 확인해주세요.
+          </div>`;
+      }
+      return;
+    }
+
+    let active = cats[0];
+    const setActive = (cat) => {
+      active = cat;
+      renderCatTabs(cats, active, setActive);
+      renderPostsList(posts, active);
+    };
+
+    setActive(active);
   }
-}
 
-document.addEventListener("DOMContentLoaded", boot);
+  boot().catch((err) => {
+    // 콘솔에서 바로 원인 확인 가능
+    console.error(err);
+    const wrapEl = document.querySelector("#postsWrap");
+    if (wrapEl) {
+      wrapEl.innerHTML = `
+        <div style="padding:14px 16px;color:#B91C1C;">
+          데이터 로딩 오류가 발생했습니다.<br>
+          콘솔(Console)에서 에러 메시지를 확인해주세요.
+        </div>`;
+    }
+  });
+})();
