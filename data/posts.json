@@ -1,187 +1,229 @@
 {
+  "version": 1,
+  "updated": "2026.01.05",
   "items": [
     {
-      "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많습니다",
+      "title": "테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다",
       "date": "2026.01.03",
       "category": "실수·문제 해결형 ① 통관·배송",
+      "status": "done",
       "done": true,
       "hasCoupon": true,
       "slug": "temu-customs-code-one-letter-shipping-stop",
-      "summary": "통관번호 오타/불일치로 ‘확인 대기’에 묶일 때 바로 점검하는 순서."
+      "summary": "통관번호 오타/불일치로 확인 대기에 묶일 때 바로 점검하는 순서.",
+      "group": "실수·문제 해결형 ① 통관·배송"
     },
     {
       "title": "“배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유",
       "date": "2026.01.04",
       "category": "실수·문제 해결형 ① 통관·배송",
+      "status": "done",
       "done": true,
       "hasCoupon": true,
-      "slug": "temu-order-stuck-looks-like-delivery-stopped",
-      "summary": "결제·출고·통관·현지배송 단계별로 ‘멈춘 것처럼’ 보이는 흔한 원인과 확인 순서."
+      "slug": "temu-order-stuck-looks-like-delayed",
+      "summary": "결제/출고/통관/현지배송 단계별로 ‘멈춘 것처럼’ 보이는 흔한 원인과 확인 순서.",
+      "group": "실수·문제 해결형 ① 통관·배송"
     },
     {
       "title": "테무 배송조회가 안 될 때, 실제로는 이미 처리된 상태일 수도 있습니다",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ① 통관·배송",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-tracking-not-updating-already-processed",
-      "summary": "조회 미반영/갱신 지연이 생기는 조건과 ‘기다려야 할 때 vs 조치할 때’ 구분."
+      "slug": "temu-tracking-not-updating",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ① 통관·배송"
     },
     {
       "title": "주소 한 번 잘못 입력했을 뿐인데… 테무 배송에서 벌어지는 일",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ① 통관·배송",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-address-wrong-what-happens",
-      "summary": "주소 오류가 있을 때 생기는 반송/보류/재확인 흐름과 최소 손실로 정리하는 방법."
+      "slug": "temu-wrong-address-what-happens",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ① 통관·배송"
     },
     {
-      "title": "테무 배송이 ‘출발/이동’에서 멈췄을 때 가장 먼저 확인할 3가지",
+      "title": "테무 배송/통관 문제를 ‘고객센터 없이’ 해결하는 체크리스트",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ① 통관·배송",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-shipping-stuck-first-3-checks",
-      "summary": "통관정보/이름불일치/내부 확인대기 등 핵심 체크포인트 3가지만 먼저 보는 빠른 진단."
+      "slug": "temu-shipping-customs-checklist",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ① 통관·배송"
     },
 
     {
       "title": "테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ② 주문·결제",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-payment-error-where-it-stops",
-      "summary": "카드/간편결제/해외결제 차단 등 결제 실패가 나는 지점과 해결 순서."
+      "slug": "temu-payment-error-most-common-step",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ② 주문·결제"
     },
     {
-      "title": "테무 주문 취소가 안 될 때: ‘취소 버튼이 사라지는’ 조건이 있습니다",
+      "title": "테무 주문 취소가 안 될 때, ‘이 조건’이면 막힙니다",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ② 주문·결제",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-cancel-button-missing-conditions",
-      "summary": "취소 가능 타이밍/출고 상태에 따라 버튼이 사라지는 이유와 우회 루트."
+      "slug": "temu-cancel-not-working-conditions",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ② 주문·결제"
     },
     {
-      "title": "테무 환불이 늦을 때: ‘환불 승인’ 이후에 더 오래 걸리는 이유",
+      "title": "테무 환불이 늦어질 때 확인해야 할 3가지 (대부분 이거였습니다)",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ② 주문·결제",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-refund-delayed-after-approval",
-      "summary": "승인 이후 카드사/결제수단 처리 지연과 언제부터 재문의해야 하는지 기준."
+      "slug": "temu-refund-delayed-3-checks",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ② 주문·결제"
     },
     {
-      "title": "테무 주문이 자동 취소되는 경우: 내가 뭘 잘못한 게 아닐 수 있어요",
+      "title": "테무 쿠폰이 적용이 안 되는 이유, ‘순서’ 문제인 경우가 많습니다",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ② 주문·결제",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-order-auto-cancel-not-your-fault",
-      "summary": "재고/결제검증/리스크 체크로 자동취소가 나는 패턴과 다시 주문할 때 주의점."
+      "slug": "temu-coupon-not-applying-order-issue",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ② 주문·결제"
     },
     {
-      "title": "테무 쿠폰 적용이 안 될 때: 대부분 ‘순서’ 문제입니다",
+      "title": "테무 장바구니 가격이 갑자기 바뀌는 이유 (할인/쿠폰 구조)",
       "date": "2026.01.05",
       "category": "실수·문제 해결형 ② 주문·결제",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-coupon-not-applied-order-of-steps",
-      "summary": "쿠폰·크레딧·무료배송이 먹히는 입력/적용 순서와 실패하는 전형적인 실수."
+      "slug": "temu-cart-price-changes-discount-logic",
+      "summary": "업로드 예정",
+      "group": "실수·문제 해결형 ② 주문·결제"
     },
 
     {
-      "title": "테무 무료선물, 진짜인가요? ‘가능한 구조’와 ‘불가능한 착각’을 나눠봅니다",
+      "title": "테무 사기냐 아니냐, 딱 1분만에 판별하는 기준",
       "date": "2026.01.05",
       "category": "진위 검증형 ③ 안전·신뢰",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-free-gift-real-structure-vs-misunderstanding",
-      "summary": "무료선물이 성립되는 조건과 과장처럼 느껴지는 이유를 분리해서 검증."
+      "slug": "temu-scam-or-not-1-minute-check",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ③ 안전·신뢰"
     },
     {
-      "title": "테무 사기 논란, 왜 계속 나오나: 실제 ‘사기’와 ‘오해’의 경계",
+      "title": "테무 개인정보 이슈, 실제로 위험한 포인트는 여기입니다",
       "date": "2026.01.05",
       "category": "진위 검증형 ③ 안전·신뢰",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-scam-controversy-borderline",
-      "summary": "환불/배송/개인정보 이슈에서 ‘오해’가 커지는 지점과 안전하게 이용하는 기준."
+      "slug": "temu-privacy-what-really-matters",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ③ 안전·신뢰"
     },
     {
-      "title": "테무 개인정보 이슈: ‘위험하게 쓰는 방식’이 따로 있습니다",
+      "title": "테무 카드 결제 괜찮을까? 안전하게 쓰는 설정 5가지",
       "date": "2026.01.05",
       "category": "진위 검증형 ③ 안전·신뢰",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-privacy-risky-usage-patterns",
-      "summary": "계정/결제/권한 설정에서 피해야 하는 습관과 최소 설정 체크리스트."
+      "slug": "temu-card-payment-safety-5-settings",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ③ 안전·신뢰"
     },
     {
-      "title": "테무 정품 논란: 정품/비정품을 ‘구매 전에’ 구분하는 현실적인 방법",
+      "title": "테무 후기 조작 논란, ‘이런 후기’는 거르세요",
       "date": "2026.01.05",
       "category": "진위 검증형 ③ 안전·신뢰",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-authenticity-check-before-buying",
-      "summary": "리뷰·셀러·상세페이지에서 ‘리스크 신호’를 걸러내는 구매 전 점검 루틴."
+      "slug": "temu-review-fake-signals",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ③ 안전·신뢰"
     },
     {
-      "title": "테무 후기, 믿어도 되나요? ‘진짜 후기’가 많은 상품의 공통점",
+      "title": "테무 품질이 복불복인 이유, 구조적으로 설명하면 이렇습니다",
       "date": "2026.01.05",
       "category": "진위 검증형 ③ 안전·신뢰",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-reviews-how-to-trust",
-      "summary": "후기 신뢰도를 높여주는 패턴(사진/반복구매/상세 피드백) 중심으로 보는 법."
+      "slug": "temu-quality-why-hit-or-miss",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ③ 안전·신뢰"
     },
 
     {
-      "title": "테무 99% 할인, 실제로 가능한가요? ‘보이는 가격’과 ‘적용 후 가격’의 차이",
+      "title": "테무 쿠폰 ‘진짜’로 크게 받는 루트, 가장 안정적인 1가지",
       "date": "2026.01.05",
       "category": "진위 검증형 ④ 혜택·추천",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-99-percent-discount-real-or-not",
-      "summary": "할인 표시가 크게 보이는 구조와, 실제 체감가를 만드는 쿠폰/크레딧 조합."
+      "slug": "temu-best-coupon-route-stable",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ④ 혜택·추천"
     },
     {
-      "title": "테무 1원 상품, 진짜 잡히는 사람과 안 잡히는 사람의 차이",
+      "title": "테무 1원 상품 이벤트, 되는 사람만 되는 이유(조건 정리)",
       "date": "2026.01.05",
       "category": "진위 검증형 ④ 혜택·추천",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-1won-item-who-gets-it",
-      "summary": "노출/참여 타이밍/계정 상태에 따라 결과가 갈리는 이유와 성공 확률 올리는 루틴."
+      "slug": "temu-1won-event-conditions",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ④ 혜택·추천"
     },
     {
-      "title": "테무 쿠폰팩, 실제로 ‘최대치’ 받으려면 이 경로로 들어가야 합니다",
+      "title": "테무 99% 할인 코드, 적용이 되는 케이스/안되는 케이스",
       "date": "2026.01.05",
       "category": "진위 검증형 ④ 혜택·추천",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-coupon-pack-best-entry-path",
-      "summary": "쿠폰팩이 커지는 진입 경로/순서/조건을 기준으로 ‘최대 혜택’ 받는 흐름 정리."
+      "slug": "temu-99off-code-works-or-not",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ④ 혜택·추천"
     },
     {
-      "title": "테무 추천템, 실패 확률 낮추는 카테고리 5가지",
+      "title": "테무 첫 구매 혜택, ‘처음 설치 후 5분’이 제일 중요합니다",
       "date": "2026.01.05",
       "category": "진위 검증형 ④ 혜택·추천",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-recommendations-5-low-risk-categories",
-      "summary": "가성비가 ‘진짜’로 나오는 품목군과 피해야 할 품목군을 빠르게 구분."
+      "slug": "temu-first-purchase-5-minutes",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ④ 혜택·추천"
     },
     {
-      "title": "테무 첫 구매 혜택, ‘처음 한 번’이라서 더 중요한 사용 순서",
+      "title": "테무 추천템 고르는 법: 실패 확률 줄이는 체크 기준",
       "date": "2026.01.05",
       "category": "진위 검증형 ④ 혜택·추천",
+      "status": "pending",
       "done": false,
       "hasCoupon": true,
-      "slug": "temu-first-purchase-benefit-order",
-      "summary": "첫 구매 보너스를 놓치지 않는 쿠폰/크레딧 적용 순서와 결제 전 최종 점검."
+      "slug": "temu-picks-how-to-avoid-fails",
+      "summary": "업로드 예정",
+      "group": "진위 검증형 ④ 혜택·추천"
     }
   ]
 }
