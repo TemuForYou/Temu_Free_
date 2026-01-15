@@ -154,7 +154,6 @@ button{font-family:inherit}
   color:var(--muted);
   font-size:13px;
   line-height:1.4;
-  /* 2줄까지만, '...' 없이 잘라냄 */
   max-height: calc(1.4em * 2);
   overflow:hidden;
 }
@@ -183,28 +182,21 @@ button{font-family:inherit}
   gap:12px;
   margin-bottom:10px;
 }
+
+/* ✅ 요청: "포스팅 카테고리" 글자 아래에 탭(1~4) */
+.cat-head{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
 .cat-title{
   font-size:18px;
   font-weight:900;
   letter-spacing:-0.02em;
   display:flex;align-items:center;gap:10px;
+  width:100%;
 }
-.cat-tabs{display:flex;gap:8px;flex-wrap:wrap}
-.tab{
-  border:1px solid rgba(255,122,0,0.22);
-  background:#FFF;
-  padding:9px 12px;
-  border-radius: 999px;
-  font-weight:800;
-  font-size:13px;
-  color:#7C2D12;
-  cursor:pointer;
-  transition: transform .16s ease, filter .16s ease;
-}
-.tab:hover{transform: translateY(-1px); filter: brightness(0.98)}
-.tab.active{
-  background: linear-gradient(90deg, rgba(255,122,0,0.18), rgba(255,169,77,0.16));
-}
+.cat-tabs{display:flex;gap:8px;flex-wrap:wrap;width:100%}
 
 .post-list{display:flex;flex-direction:column;gap:12px}
 .post-row{
@@ -218,64 +210,35 @@ button{font-family:inherit}
   gap:14px;
   cursor:pointer;
   transition: transform .16s ease, box-shadow .16s ease, filter .16s ease;
+  min-height:86px;
 }
 .post-row:hover{
   transform: translateY(-2px);
   box-shadow: 0 18px 40px rgba(17,24,39,0.10);
   filter: brightness(0.98);
 }
-.post-left{min-width:0}
 .post-title{
   font-weight:900;
   letter-spacing:-0.02em;
   white-space:nowrap;
   overflow:hidden;
-  text-overflow:clip; /* ... 금지 */
+  text-overflow:clip;
+  max-width:100%;
 }
 .post-meta{
-  margin-top:6px;
+  margin-top:8px;
   display:flex;
-  gap:10px;
+  flex-direction: column;
+  gap: 6px;
+}
+.post-meta .meta-line{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
   align-items:center;
-  color:var(--muted);
-  font-size:12px;
-}
-.badge{
-  display:inline-flex;align-items:center;
-  padding:6px 10px;border-radius:999px;
-  border:1px solid rgba(255,122,0,0.20);
-  background: rgba(255,122,0,0.08);
-  color:#7C2D12;
-  font-weight:900;
-}
-.badge.pending{
-  border-color: rgba(107,114,128,0.20);
-  background: rgba(107,114,128,0.10);
-  color:#374151;
 }
 
-.post-cta{
-  display:flex;align-items:center;gap:10px;flex-shrink:0;
-}
-.btn{
-  border:none;
-  padding:10px 14px;
-  border-radius: 999px;
-  font-weight:900;
-  cursor:pointer;
-}
-.btn.primary{
-  background: linear-gradient(90deg, var(--brand1), var(--brand2));
-  color:#fff;
-  box-shadow: 0 10px 24px rgba(255,122,0,0.22);
-}
-.btn.ghost{
-  background: #fff;
-  border:1px solid rgba(17,24,39,0.10);
-}
-.btn:hover{filter: brightness(0.98)}
-.btn:active{transform: translateY(1px)}
-
+/* ---------- Right coupon panel ---------- */
 .coupon-panel{
   padding:16px 16px;
   position:sticky;
@@ -297,74 +260,17 @@ button{font-family:inherit}
   line-height:1.4;margin:0;
 }
 .coupon-list{display:flex;flex-direction:column;gap:10px}
+
+/* ---------- Fix: right coupon panel text should never look 'vertical' ---------- */
 .coupon-item{
   border-radius: 18px;
   background: linear-gradient(180deg, #FFF1E4, #FFFFFF);
   border:1px solid rgba(255,122,0,0.18);
-  padding:12px 12px;
-  display:grid;
-  grid-template-columns: 1fr auto;
-  gap:10px;
-  align-items:center;
-}
-.coupon-left{min-width:0}
-.coupon-name{
-  font-weight:900;
-  letter-spacing:-0.02em;
-}
-.coupon-sub{
-  margin-top:4px;
-  color:var(--muted);
-  font-size:12px;
-  line-height:1.35;
-  max-height: calc(1.35em * 2);
-  overflow:hidden; /* ... 없이 자르기 */
-}
-.coupon-actions{display:flex;gap:8px;align-items:center;justify-content:flex-end}
-.pill{
-  display:inline-flex;align-items:center;justify-content:center;
-  min-width:84px;
-  padding:10px 12px;
-  border-radius: 999px;
-  border:1px solid rgba(17,24,39,0.10);
-  background:#fff;
-  font-weight:900;
-}
-.pill.orange{
-  border:none;
-  background: linear-gradient(90deg, var(--brand1), var(--brand2));
-  color:#fff;
-}
-.pill.code{
-  min-width:auto;
-  padding:10px 14px;
-  border:1px solid rgba(255,122,0,0.22);
-}
-.pill.code b{letter-spacing:0.02em}
-
-.fab{
-  position:fixed;
-  right:20px;
-  bottom:20px;
-  width:56px;height:56px;border-radius:20px;
-  border:none;
-  background: linear-gradient(90deg, var(--brand1), var(--brand2));
-  color:#fff;
-  font-size:20px;
-  box-shadow: 0 18px 40px rgba(255,122,0,0.35);
-  cursor:pointer;
-  z-index:60;
-}
-.fab:hover{filter: brightness(0.98)}
-
-
-/* ---------- Fix: right coupon panel text should never look 'vertical' ---------- */
-.coupon-item{
+  padding:12px 12px 18px;
   display:flex;
   flex-direction:column;
   gap:10px;
 }
-.coupon-main{ min-width:0; }
 .coupon-title-row{
   display:flex;
   align-items:center;
@@ -412,92 +318,46 @@ button{font-family:inherit}
   letter-spacing:0.3px;
 }
 
-/* ---------- Fix: categories not showing + clickable rows ---------- */
-#catWrap{ display:block; }
-.cat-block{
-  background:rgba(255,255,255,0.85);
-  border:1px solid rgba(255,165,0,0.20);
-  border-radius:18px;
-  box-shadow:0 18px 45px rgba(15,23,42,0.08);
-  padding:14px;
-  margin-top:14px;
-}
-.cat-head{
-  display:flex;
-  align-items:baseline;
-  justify-content:space-between;
-  gap:10px;
-  padding:4px 6px 12px 6px;
-}
-.cat-title{ font-weight:900; }
-.cat-sub{ font-size:12px; color:#6b7280; }
-
-.cat-body{ display:flex; flex-direction:column; gap:10px; }
-
-.post-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-  padding:14px 14px;
-  border-radius:16px;
-  background:linear-gradient(90deg, rgba(255,255,255,0.95), rgba(255,245,235,0.95));
-  border:1px solid rgba(255,165,0,0.20);
+.btn{
+  border:none;
+  padding:10px 14px;
+  border-radius: 999px;
+  font-weight:900;
   cursor:pointer;
-  transform:scale(1);
-  transition:transform .16s ease, filter .16s ease, box-shadow .16s ease;
 }
-.post-row:hover{
-  transform:scale(1.02);
-  filter:brightness(0.97);
-  box-shadow:0 16px 30px rgba(15,23,42,0.10);
-}
-.post-row[data-disabled="1"]{
-  cursor:default;
-  opacity:0.60;
-}
-.post-row[data-disabled="1"]:hover{
-  transform:none;
-  filter:none;
-  box-shadow:none;
-}
-.post-title{
-  font-weight:850;
-  line-height:1.25;
-  word-break:keep-all;
-}
-.post-sub{
-  margin-top:6px;
-  font-size:12px;
-  color:#6b7280;
-}
-.post-right .tag{
-  font-size:12px;
-  font-weight:800;
-  padding:6px 10px;
-  border-radius:999px;
-  border:1px solid rgba(255,165,0,0.30);
-  background:rgba(255,255,255,0.75);
-}
-.post-right .tag.todo{ opacity:0.85; }
+.btn:hover{filter: brightness(0.98)}
+.btn:active{transform: translateY(1px)}
 
+.fab{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  width:56px;height:56px;border-radius:20px;
+  border:none;
+  background: linear-gradient(90deg, var(--brand1), var(--brand2));
+  color:#fff;
+  font-size:20px;
+  box-shadow: 0 18px 40px rgba(255,122,0,0.35);
+  cursor:pointer;
+  z-index:60;
+}
+.fab:hover{filter: brightness(0.98)}
 
-
-
-/* ==== Coupon link pill (URL 숨김 + 네온 주황 테두리) ==== */
+/* ==== Download pill (URL 숨김 + 네온 주황 테두리 + "길게") ==== */
 .coupon-link-pill{
   margin-top:10px;
-  display:inline-flex;
+  display:flex;
   align-items:center;
   justify-content:center;
-  height:38px;
-  padding:0 14px;
+  width:100%;
+  height:44px;
+  padding:0 16px;
   border-radius:999px;
   border:2px solid rgba(255, 132, 0, 0.9);
   color:#111;
-  background:rgba(255,255,255,0.75);
+  background:rgba(255,255,255,0.78);
   text-decoration:none;
-  font-weight:700;
+  font-weight:900;
   font-size:13px;
   box-shadow:
     0 0 0 2px rgba(255, 132, 0, 0.08),
@@ -509,130 +369,90 @@ button{font-family:inherit}
     0 0 0 2px rgba(255, 132, 0, 0.12),
     0 0 22px rgba(255, 132, 0, 0.32);
 }
-.coupon-item{
-  padding-bottom:18px; /* 링크 버튼 들어가도 여유 */
-}
 
-/* ==== Post meta chips ==== */
-.post-title-row{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-}
-.post-meta{
-  margin-top:8px;
-  display:flex;
-  gap:8px;
-  flex-wrap:wrap;
-  color:#8a8a8a;
-}
-.meta-chip{
+/* === CATEGORY UI: "다운로드 버튼"과 같은 계열 외형으로 통일 === */
+
+/* 카테고리 탭 버튼(1~4) = 다운로드 버튼 느낌 */
+.pill{
   display:inline-flex;
   align-items:center;
-  padding:4px 8px;
-  border-radius:8px;
-  border:1px solid rgba(0,0,0,0.10);
-  background:rgba(255,255,255,0.6);
-  font-size:12px;
-  line-height:1;
-}
-.post-title{
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  max-width:100%;
-}
-.post-row{
-  min-height:86px; /* 더 길고 한 줄 제목 유지 */
-}
-
-/* === CATEGORY UI POLISH (layout + pill style) === */
-/* 카테고리 헤더: 제목 아래에 버튼(1~4) 배치 */
-.cat-head{
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-.cat-head .cat-title{
-  width: 100%;
-}
-.cat-head .cat-tabs{
-  width: 100%;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-
-/* 공통 '필(Pill)' 버튼 - 기존 기능은 유지, 디자인만 통일 */
-.pill{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 135, 0, .55);
-  background: #fff;
-  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:2px solid rgba(255, 132, 0, 0.55);
+  background:rgba(255,255,255,0.78);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.06),
+    0 10px 22px rgba(0,0,0,0.08);
   transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
-  white-space: nowrap;
+  white-space:nowrap;
+  font-weight:900;
 }
 .pill:hover{
   transform: translateY(-1px);
   filter: brightness(.97);
-  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.10),
+    0 14px 28px rgba(0,0,0,0.12);
 }
 .pill.is-active{
-  background: linear-gradient(135deg, rgba(255,142,0,.16), rgba(255,255,255,1));
-  border-color: rgba(255, 135, 0, .75);
+  border-color: rgba(255, 132, 0, 0.90);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.12),
+    0 0 18px rgba(255, 132, 0, 0.18);
 }
 
-/* 포스팅 리스트: '준비중/완료' 뱃지 + 메타(날짜/쿠폰 포함/업로드 예정) */
+/* 준비중/완료 뱃지 = 다운로드 버튼 느낌(완료는 그린 톤 유지) */
 .post-badge{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 14px;
-  border-radius: 999px;
-  border: 1px solid rgba(255, 135, 0, .55);
-  background: #fff;
-  box-shadow: 0 6px 16px rgba(0,0,0,.06);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  white-space: nowrap;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px 14px;
+  border-radius:999px;
+  border:2px solid rgba(255, 132, 0, 0.55);
+  background:rgba(255,255,255,0.78);
+  box-shadow:
+    0 0 0 2px rgba(255, 132, 0, 0.06),
+    0 10px 22px rgba(0,0,0,0.08);
+  font-weight:900;
+  white-space:nowrap;
 }
 .post-badge.is-wait{
-  color: #ff7a00;
+  color:#FF7A00;
 }
 .post-badge.is-done{
-  color: #1a7f3f;
-  border-color: rgba(26,127,63,.35);
+  color:#1a7f3f;
+  border-color: rgba(26,127,63,.55);
+  box-shadow:
+    0 0 0 2px rgba(26,127,63,.08),
+    0 10px 22px rgba(0,0,0,0.08);
 }
 
-/* 날짜/쿠폰/업로드 예정: 네모(rounded) 테두리 */
-.post-meta{
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-.post-meta .meta-line{
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  align-items: center;
-}
+/* 날짜/쿠폰 포함/업로드 예정(네모 테두리 유지) */
 .meta-pill{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 10px;
-  border: 1px solid rgba(0,0,0,.08);
-  background: rgba(255,255,255,.75);
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:10px;
+  border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.75);
   color: rgba(0,0,0,.62);
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
+  font-size:12px;
+  font-weight:800;
+  white-space:nowrap;
 }
 .meta-pill.meta-soon{
-  border-color: rgba(255, 135, 0, .35);
+  border-color: rgba(255, 132, 0, .35);
   color: rgba(0,0,0,.68);
+}
+
+/* 클릭 방지된 준비중은 기존 동작 유지 */
+.post-row[aria-disabled="true"]{
+  cursor:default;
+  opacity:0.60;
+}
+.post-row[aria-disabled="true"]:hover{
+  transform:none;
+  filter:none;
+  box-shadow:none;
 }
