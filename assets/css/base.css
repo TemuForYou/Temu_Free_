@@ -546,3 +546,93 @@ button{font-family:inherit}
 .post-row{
   min-height:86px; /* 더 길고 한 줄 제목 유지 */
 }
+
+/* === CATEGORY UI POLISH (layout + pill style) === */
+/* 카테고리 헤더: 제목 아래에 버튼(1~4) 배치 */
+.cat-head{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+.cat-head .cat-title{
+  width: 100%;
+}
+.cat-head .cat-tabs{
+  width: 100%;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* 공통 '필(Pill)' 버튼 - 기존 기능은 유지, 디자인만 통일 */
+.pill{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 135, 0, .55);
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  transition: transform .14s ease, filter .14s ease, box-shadow .14s ease;
+  white-space: nowrap;
+}
+.pill:hover{
+  transform: translateY(-1px);
+  filter: brightness(.97);
+  box-shadow: 0 10px 22px rgba(0,0,0,.10);
+}
+.pill.is-active{
+  background: linear-gradient(135deg, rgba(255,142,0,.16), rgba(255,255,255,1));
+  border-color: rgba(255, 135, 0, .75);
+}
+
+/* 포스팅 리스트: '준비중/완료' 뱃지 + 메타(날짜/쿠폰 포함/업로드 예정) */
+.post-badge{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 135, 0, .55);
+  background: #fff;
+  box-shadow: 0 6px 16px rgba(0,0,0,.06);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+}
+.post-badge.is-wait{
+  color: #ff7a00;
+}
+.post-badge.is-done{
+  color: #1a7f3f;
+  border-color: rgba(26,127,63,.35);
+}
+
+/* 날짜/쿠폰/업로드 예정: 네모(rounded) 테두리 */
+.post-meta{
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.post-meta .meta-line{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.meta-pill{
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(0,0,0,.08);
+  background: rgba(255,255,255,.75);
+  color: rgba(0,0,0,.62);
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.meta-pill.meta-soon{
+  border-color: rgba(255, 135, 0, .35);
+  color: rgba(0,0,0,.68);
+}
