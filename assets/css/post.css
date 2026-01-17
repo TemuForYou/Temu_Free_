@@ -110,3 +110,515 @@
   color:#9a3412;
   margin-bottom: 8px;
 }
+
+/* =========================
+   TFY Trendy Post (ADD ONLY)
+   기존 디자인/구조는 건드리지 않음
+========================= */
+
+.tfx-post-shell{
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 34px 16px 60px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 18px;
+}
+
+@media (max-width: 980px){
+  .tfx-post-shell{
+    grid-template-columns: 1fr;
+  }
+  .tfx-sidebar{
+    position: static !important;
+  }
+}
+
+.tfx-post{
+  min-width: 0;
+}
+
+.tfx-post-hero{
+  background: #fff;
+  border-radius: 28px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.08);
+  padding: 28px 28px 18px;
+}
+
+.tfx-post-kicker{
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 10px;
+}
+
+.tfx-pill{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 12px;
+  background: #fff3ea;
+  border: 1px solid rgba(255, 122, 0, .25);
+}
+
+.tfx-pill-soft{
+  background: #fff;
+}
+
+.tfx-post-title{
+  font-size: 30px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  margin: 0 0 12px;
+}
+
+.tfx-post-lead{
+  margin: 0 0 16px;
+  color: rgba(0,0,0,.70);
+  font-size: 15.5px;
+  line-height: 1.75;
+}
+
+.tfx-meta-row{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.tfx-meta{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(0,0,0,.55);
+  font-size: 12.5px;
+}
+
+.tfx-dot{
+  width: 8px;
+  height: 8px;
+  border-radius: 99px;
+  background: #ff7a00;
+  box-shadow: 0 0 10px rgba(255, 122, 0, .55);
+}
+
+.tfx-sep{ opacity: .6; }
+
+.tfx-hero-actions{
+  display: inline-flex;
+  gap: 10px;
+}
+
+.tfx-btn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 9px 14px;
+  border-radius: 14px;
+  font-weight: 800;
+  font-size: 13px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.tfx-btn-ghost{
+  color: #ff7a00;
+  background: #fff;
+  border: 1px solid rgba(255, 122, 0, .35);
+}
+
+.tfx-btn-primary{
+  color: #fff;
+  background: linear-gradient(90deg, #ff7a00, #ff9a3d);
+  box-shadow: 0 10px 22px rgba(255, 122, 0, .18);
+}
+
+.tfx-section{
+  background: #fff;
+  border-radius: 26px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.08);
+  padding: 22px 26px;
+  margin-top: 14px;
+}
+
+.tfx-h2{
+  margin: 0 0 12px;
+  font-size: 20px;
+  letter-spacing: -0.01em;
+}
+
+.tfx-card{
+  background: #fff;
+  border-radius: 26px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.08);
+  padding: 18px 22px;
+  margin-top: 14px;
+}
+
+.tfx-card-accent{
+  border: 1px solid rgba(255, 122, 0, .25);
+  box-shadow: 0 14px 40px rgba(0,0,0,.08), 0 0 0 1px rgba(255,122,0,.08) inset;
+}
+
+.tfx-card-title{
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 900;
+}
+
+.tfx-grid-2{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+@media (max-width: 720px){
+  .tfx-grid-2{ grid-template-columns: 1fr; }
+}
+
+.tfx-mini{
+  background: #fff7f0;
+  border: 1px solid rgba(255, 122, 0, .20);
+  border-radius: 20px;
+  padding: 14px 14px;
+}
+
+.tfx-mini-title{
+  font-weight: 900;
+  margin-bottom: 8px;
+}
+
+.tfx-list{
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.7;
+  color: rgba(0,0,0,.75);
+}
+
+.tfx-bullets{
+  display: grid;
+  gap: 10px;
+}
+
+.tfx-bullet{
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.tfx-bullet-dot{
+  width: 10px;
+  height: 10px;
+  border-radius: 99px;
+  background: #ff7a00;
+  margin-top: 4px;
+  box-shadow: 0 0 12px rgba(255, 122, 0, .55);
+}
+
+.tfx-bullet-head{
+  font-weight: 900;
+  margin-bottom: 4px;
+}
+.tfx-bullet-sub{
+  color: rgba(0,0,0,.65);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+
+.tfx-timeline{
+  margin-top: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.tfx-step{
+  display: grid;
+  grid-template-columns: 34px 1fr;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.tfx-step-glow{
+  border-color: rgba(255, 122, 0, .35);
+  box-shadow: 0 0 0 1px rgba(255,122,0,.12) inset, 0 12px 26px rgba(255,122,0,.10);
+}
+
+.tfx-step-badge{
+  width: 34px;
+  height: 34px;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-weight: 1000;
+  color: #fff;
+  background: linear-gradient(90deg, #ff7a00, #ff9a3d);
+}
+
+.tfx-step-title{ font-weight: 900; }
+.tfx-step-desc{
+  color: rgba(0,0,0,.65);
+  font-size: 13.5px;
+  margin-top: 2px;
+}
+
+.tfx-callout{
+  margin-top: 14px;
+  border-radius: 20px;
+  padding: 14px 14px;
+  background: #fff7f0;
+  border: 1px solid rgba(255, 122, 0, .22);
+}
+
+.tfx-callout-strong{
+  box-shadow: 0 0 0 1px rgba(255,122,0,.10) inset;
+}
+
+.tfx-callout-title{
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.tfx-callout-text{
+  margin: 0;
+  color: rgba(0,0,0,.72);
+  line-height: 1.7;
+}
+
+.tfx-table-card{
+  margin-top: 14px;
+  border-radius: 22px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 122, 0, .22);
+  box-shadow: 0 14px 34px rgba(0,0,0,.06);
+}
+
+.tfx-table-head{
+  padding: 12px 14px;
+  font-weight: 1000;
+  background: linear-gradient(90deg, rgba(255,122,0,.14), rgba(255,255,255,.90));
+}
+
+.tfx-table{
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.tfx-table th, .tfx-table td{
+  padding: 12px 14px;
+  border-top: 1px solid rgba(0,0,0,.06);
+  vertical-align: top;
+}
+
+.tfx-table th{
+  text-align: left;
+  font-weight: 900;
+  background: #fff;
+}
+
+.tfx-checkgrid{
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tfx-check{
+  border-radius: 20px;
+  padding: 14px 14px;
+  background: #fff;
+  border: 1px solid rgba(255, 122, 0, .18);
+  box-shadow: 0 0 0 1px rgba(255,122,0,.06) inset;
+}
+
+.tfx-check-title{
+  font-weight: 1000;
+  margin-bottom: 6px;
+}
+
+.tfx-check-desc{
+  color: rgba(0,0,0,.68);
+  line-height: 1.7;
+}
+
+.tfx-split{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 14px;
+}
+@media (max-width: 720px){
+  .tfx-split{ grid-template-columns: 1fr; }
+}
+
+.tfx-split-card{
+  border-radius: 22px;
+  padding: 14px 14px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.tfx-split-card-warn{
+  border-color: rgba(255, 122, 0, .28);
+  background: linear-gradient(180deg, rgba(255,122,0,.08), #fff);
+}
+
+.tfx-split-title{
+  font-weight: 1000;
+  margin-bottom: 8px;
+}
+
+.tfx-footer-note{
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px dashed rgba(0,0,0,.12);
+  color: rgba(0,0,0,.70);
+}
+
+/* Sidebar */
+.tfx-sidebar{
+  position: sticky;
+  top: 18px;
+  align-self: start;
+}
+
+.tfx-side-card{
+  background: #fff;
+  border-radius: 26px;
+  box-shadow: 0 14px 40px rgba(0,0,0,.08);
+  padding: 14px 14px;
+  border: 1px solid rgba(0,0,0,.05);
+}
+
+.tfx-side-head{
+  padding: 10px 10px 8px;
+  border-bottom: 1px solid rgba(0,0,0,.06);
+  margin-bottom: 10px;
+}
+
+.tfx-side-title{
+  font-weight: 1000;
+  font-size: 16px;
+}
+.tfx-side-sub{
+  margin-top: 4px;
+  color: rgba(0,0,0,.60);
+  font-size: 12.5px;
+}
+
+.tfx-coupon-card{
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 22px;
+  padding: 14px 14px;
+  background: linear-gradient(180deg, #fff7f0, #fff);
+  border: 1px solid rgba(255, 122, 0, .22);
+  box-shadow: 0 0 0 1px rgba(255,122,0,.06) inset;
+  margin-top: 10px;
+  transition: transform .18s ease, filter .18s ease;
+}
+
+.tfx-coupon-card:hover{
+  transform: translateY(-2px);
+  filter: brightness(.985);
+}
+
+.tfx-coupon-left{
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: 10px;
+  align-items: center;
+}
+
+.tfx-coupon-badge{
+  width: 56px;
+  height: 56px;
+  border-radius: 18px;
+  display: grid;
+  place-items: center;
+  font-weight: 1000;
+  color: #fff;
+  background: linear-gradient(90deg, #ff7a00, #ff9a3d);
+  box-shadow: 0 0 16px rgba(255,122,0,.22);
+}
+
+.tfx-coupon-name{
+  font-weight: 900;
+  color: rgba(0,0,0,.72);
+  margin-bottom: 3px;
+}
+
+.tfx-coupon-code{
+  font-weight: 1000;
+  letter-spacing: .02em;
+  font-size: 16px;
+}
+
+.tfx-coupon-actions{
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.tfx-chip{
+  border: 0;
+  cursor: pointer;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 1000;
+  font-size: 13px;
+  background: #fff;
+  color: #ff7a00;
+  border: 1px solid rgba(255, 122, 0, .35);
+}
+
+.tfx-chip-ghost{
+  color: rgba(0,0,0,.70);
+  border-color: rgba(0,0,0,.10);
+}
+
+.tfx-download-row{
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px dashed rgba(255, 122, 0, .22);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.tfx-download-pill{
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-weight: 1000;
+  font-size: 12.5px;
+  color: #ff7a00;
+  border: 1px solid rgba(255, 122, 0, .45);
+  box-shadow: 0 0 12px rgba(255, 122, 0, .20);
+}
+
+.tfx-download-hint{
+  font-size: 12px;
+  color: rgba(0,0,0,.55);
+}
+
+.tfx-side-foot{
+  margin-top: 12px;
+  padding: 10px;
+  border-radius: 18px;
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.06);
+}
+
+.tfx-side-mini{
+  font-size: 12.5px;
+  color: rgba(0,0,0,.60);
+  line-height: 1.6;
+}
