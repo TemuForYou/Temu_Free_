@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다</title>
+
+  <!-- 사이트 공통 -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <!-- 글 전용 -->
+  <link rel="stylesheet" href="../assets/css/post.css" />
+</head>
+
+<body>
+  <!-- 상단바는 기존 index/post 템플릿과 동일하다면 유지(있으면 중복 금지)
+       이 글 파일이 단독 페이지로 열리는 구조라면 아래 헤더는 살려도 됩니다. -->
+  <header class="tfx-topbar">
+    <div class="tfx-topbar-inner">
+      <a class="tfx-brand" href="../index.html">
+        <span class="tfx-badge">TFY</span>
+        <span class="tfx-brand-text">TFY</span>
+      </a>
+
+      <nav class="tfx-nav">
+        <a href="../index.html">홈</a>
+        <a href="../index.html#popular">인기글</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="tfx-post-shell">
+    <!-- 왼쪽: 본문 -->
+    <article class="tfx-post">
+      <div class="tfx-post-hero">
+        <div class="tfx-post-kicker">
+          <span class="tfx-pill">실수·문제 해결형</span>
+          <span class="tfx-pill tfx-pill-soft">배송·통관</span>
+          <span class="tfx-pill tfx-pill-soft">쿠폰 포함</span>
+        </div>
+
+        <h1 class="tfx-post-title">테무 통관번호 한 글자 때문에 배송이 멈춘 사례, 실제로 가장 많았습니다</h1>
+
+        <p class="tfx-post-lead">
+          “배송이 멈춘 것 같은데요?”라는 문의 중,
+          실제로는 <strong>배송 지연이 아니라 ‘통관 확인 대기’</strong>에 걸려 있는 경우가 훨씬 많습니다.
+          특히 가장 자주 터지는 원인은 의외로 단순합니다.
+          <strong>통관번호 한 글자 오타</strong>입니다.
+        </p>
+
+        <div class="tfx-meta-row">
+          <div class="tfx-meta">
+            <span class="tfx-dot"></span>
+            <span>TFY 편집팀</span>
+            <span class="tfx-sep">·</span>
+            <span>2026.01.03</span>
+            <span class="tfx-sep">·</span>
+            <span>업데이트: 상시</span>
+          </div>
+
+          <div class="tfx-hero-actions">
+            <a class="tfx-btn tfx-btn-ghost" href="#quick">3분 점검표</a>
+            <a class="tfx-btn tfx-btn-primary" href="#fix">바로 해결 순서</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- QUICK SUMMARY -->
+      <section id="quick" class="tfx-card tfx-card-accent">
+        <h2 class="tfx-card-title">3분 점검표 (배송이 멈춘 것처럼 보일 때)</h2>
+        <div class="tfx-grid-2">
+          <div class="tfx-mini">
+            <div class="tfx-mini-title">먼저 확인할 3가지</div>
+            <ul class="tfx-list">
+              <li><strong>통관번호</strong> 1글자 오타(0/O, 1/I, 8/B) 여부</li>
+              <li><strong>이름</strong> (영문/한글) 주문정보와 통관정보 일치 여부</li>
+              <li><strong>주소</strong> 공백/특수문자/오래된 자동입력 흔적</li>
+            </ul>
+          </div>
+
+          <div class="tfx-mini">
+            <div class="tfx-mini-title">이렇게 보이면 통관쪽 가능성 ↑</div>
+            <div class="tfx-bullets">
+              <div class="tfx-bullet">
+                <span class="tfx-bullet-dot"></span>
+                <div>
+                  <div class="tfx-bullet-head">상태가 며칠째 “진행중”인데 변화가 거의 없음</div>
+                  <div class="tfx-bullet-sub">실물 이동은 하고 있어도 “확인 대기”에서 멈춘 경우가 많습니다.</div>
+                </div>
+              </div>
+
+              <div class="tfx-bullet">
+                <span class="tfx-bullet-dot"></span>
+                <div>
+                  <div class="tfx-bullet-head">국내 택배처럼 ‘출발→이동→도착’이 매끄럽지 않음</div>
+                  <div class="tfx-bullet-sub">해외배송은 통관 단계에서 화면이 멈춘 듯 보일 수 있습니다.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4개의 소제목 유지(요청 조건 충족) -->
+      <section class="tfx-section">
+        <h2 class="tfx-h2">1) “배송 멈춤” 착각이 생기는 구조</h2>
+
+        <p>
+          테무 배송은 국내 쇼핑몰과 달리 “보이는 화면”과 “실제 처리”가 완벽히 같은 속도로 움직이지 않습니다.
+          특히 해외 물류는 단계가 길고, 중간에 통관 확인을 위해 <strong>데이터 검증 구간</strong>이 끼어 있습니다.
+          이 구간에서는 물류가 이동 중이어도 앱/조회 화면이 즉시 반영되지 않아
+          <strong>멈춘 것처럼 보이는</strong> 상황이 발생합니다.
+        </p>
+
+        <div class="tfx-timeline">
+          <div class="tfx-step">
+            <div class="tfx-step-badge">1</div>
+            <div class="tfx-step-body">
+              <div class="tfx-step-title">해외 출고</div>
+              <div class="tfx-step-desc">판매자/물류센터에서 출고 처리</div>
+            </div>
+          </div>
+          <div class="tfx-step">
+            <div class="tfx-step-badge">2</div>
+            <div class="tfx-step-body">
+              <div class="tfx-step-title">국제 이동</div>
+              <div class="tfx-step-desc">항공/해상 + 중간 허브 이동</div>
+            </div>
+          </div>
+          <div class="tfx-step tfx-step-glow">
+            <div class="tfx-step-badge">3</div>
+            <div class="tfx-step-body">
+              <div class="tfx-step-title">통관 확인 대기</div>
+              <div class="tfx-step-desc">통관번호/이름/주소 검증 — 여기서 ‘멈춘 것처럼’ 보임</div>
+            </div>
+          </div>
+          <div class="tfx-step">
+            <div class="tfx-step-badge">4</div>
+            <div class="tfx-step-body">
+              <div class="tfx-step-title">국내 배송</div>
+              <div class="tfx-step-desc">통관 완료 후 국내 택배사 인계</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tfx-callout">
+          <div class="tfx-callout-title">핵심 결론</div>
+          <p class="tfx-callout-text">
+            화면이 멈춘 것처럼 보여도, 실제로는 <strong>“확인 대기”</strong>로 정상 처리 중일 수 있습니다.
+            다만 <strong>통관번호/이름 불일치</strong>가 있으면 자동 진행이 멈추므로,
+            기다리기 전에 “정확한 점검”이 가장 빠릅니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">2) 통관번호 한 글자 오타가 치명적인 이유</h2>
+
+        <p>
+          통관은 “상품”이 아니라 “사람(수취인)” 기준으로 처리됩니다.
+          즉, 통관번호가 수취인 정보와 <strong>정확히 매칭</strong>되어야 합니다.
+          한 글자라도 다르면 시스템이 자동으로 통관을 밀어붙이지 못하고,
+          <strong>확인/보류</strong>로 넘어가는 경우가 많습니다.
+        </p>
+
+        <div class="tfx-table-card">
+          <div class="tfx-table-head">실제로 자주 발생하는 오타 패턴</div>
+          <table class="tfx-table">
+            <thead>
+              <tr>
+                <th>유형</th>
+                <th>예시</th>
+                <th>결과</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>0 / O 혼동</td>
+                <td>숫자 0을 영문 O로 입력</td>
+                <td>통관번호 불일치 → 확인 대기</td>
+              </tr>
+              <tr>
+                <td>1 / I 혼동</td>
+                <td>숫자 1을 대문자 I로 입력</td>
+                <td>시스템 검증 실패 → 자동 진행 중단</td>
+              </tr>
+              <tr>
+                <td>자동입력</td>
+                <td>예전 번호가 그대로 남아 입력됨</td>
+                <td>개인정보 불일치 → 보류/지연</td>
+              </tr>
+              <tr>
+                <td>이름 불일치</td>
+                <td>주문자/수취인 이름이 다름</td>
+                <td>본인 확인 단계에서 멈춤</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <p>
+          여기서 중요한 점은, “테무가 느려서”가 아니라
+          <strong>통관 시스템이 ‘정합성’을 우선한다</strong>는 것입니다.
+          그래서 오타를 빨리 찾으면,
+          배송은 다시 정상 흐름으로 돌아갈 가능성이 큽니다.
+        </p>
+      </section>
+
+      <section id="fix" class="tfx-section">
+        <h2 class="tfx-h2">3) 지금 당장 해결하는 순서 (가장 빠른 루트)</h2>
+
+        <p>
+          “기다려볼까?”가 아니라,
+          아래 순서대로 1번씩만 확인해도 대부분은 빠르게 정리됩니다.
+          특히 통관번호가 원인일 때는 <strong>초반 점검이 곧 해결</strong>입니다.
+        </p>
+
+        <div class="tfx-checkgrid">
+          <div class="tfx-check">
+            <div class="tfx-check-title">Step 1. 주문정보에서 통관번호 확인</div>
+            <div class="tfx-check-desc">
+              통관번호를 복사해 메모장에 붙여넣고 <strong>0/O, 1/I</strong>를 눈으로 체크합니다.
+              한 글자라도 애매하면 “다시 입력”이 안전합니다.
+            </div>
+          </div>
+
+          <div class="tfx-check">
+            <div class="tfx-check-title">Step 2. 수취인 이름 일치</div>
+            <div class="tfx-check-desc">
+              주문자/수취인이 다르면 통관에서 멈추는 경우가 있습니다.
+              가능하면 <strong>수취인을 본인 이름</strong>으로 맞춰두는 편이 안정적입니다.
+            </div>
+          </div>
+
+          <div class="tfx-check">
+            <div class="tfx-check-title">Step 3. 주소 표기 정리</div>
+            <div class="tfx-check-desc">
+              불필요한 특수문자, 과도한 괄호, 자동완성 잔여 문구는 지연 요인이 됩니다.
+              주소는 깔끔하게 “기본 정보 + 상세”만 남기는 방식이 좋습니다.
+            </div>
+          </div>
+
+          <div class="tfx-check">
+            <div class="tfx-check-title">Step 4. 24~48시간 관찰</div>
+            <div class="tfx-check-desc">
+              수정 후 바로 반영되지 않을 수 있습니다.
+              통관 확인은 “즉시”가 아니라 “일정 주기”로 갱신되는 경우가 많습니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="tfx-callout tfx-callout-strong">
+          <div class="tfx-callout-title">팁</div>
+          <p class="tfx-callout-text">
+            “멈춘 것처럼 보일 때”는 대개 한 군데에서 걸려 있는 경우가 많습니다.
+            체크를 넓게 하기보다, <strong>통관번호 → 이름 → 주소</strong> 순서로 좁혀가면 시간이 확 줄어듭니다.
+          </p>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">4) 기다려야 할 때 vs 바로 조치해야 할 때</h2>
+
+        <p>
+          모든 정체가 문제는 아닙니다.
+          다만 “통관 확인 대기”가 길어지면 그때는 점검이 필요합니다.
+          아래 기준으로 판단하면 불필요한 불안도 줄고, 필요한 조치도 놓치지 않습니다.
+        </p>
+
+        <div class="tfx-split">
+          <div class="tfx-split-card">
+            <div class="tfx-split-title">기다려도 되는 경우</div>
+            <ul class="tfx-list">
+              <li>정체 기간이 <strong>2~3일</strong> 이내</li>
+              <li>상태가 “진행중”이지만 간헐적으로 업데이트됨</li>
+              <li>연휴/주말 직후라 통관 처리량이 많을 때</li>
+            </ul>
+          </div>
+
+          <div class="tfx-split-card tfx-split-card-warn">
+            <div class="tfx-split-title">바로 점검 권장</div>
+            <ul class="tfx-list">
+              <li>정체가 <strong>5일 이상</strong> 동일하게 유지</li>
+              <li>통관번호를 다시 봤더니 글자가 애매함 (0/O, 1/I)</li>
+              <li>수취인/주소를 이전 주문 그대로 자동입력한 기억이 있음</li>
+            </ul>
+          </div>
+        </div>
+
+        <p>
+          테무는 배송 자체보다 “입력 정보”에서 막히는 비중이 큰 편입니다.
+          그래서 한 번만 정확히 점검해두면 이후 주문도 훨씬 편해집니다.
+        </p>
+
+        <div class="tfx-footer-note">
+          <strong>다음 글 예고</strong>:
+          “배송이 안 옵니다” 테무 주문이 멈춰 보이는 진짜 이유 — 단계별 체크 포인트를 더 구체적으로 정리합니다.
+        </div>
+      </section>
+    </article>
+
+    <!-- 오른쪽: 쿠폰 사이드바 -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <!-- 카드 1 -->
+        <a class="tfx-coupon-card" href="https://temu.to/k/gzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div class="tfx-coupon-name">할인 코드</div>
+            <div class="tfx-coupon-code">ack263361</div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <!-- 카드 2 -->
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div class="tfx-coupon-name">상품 이벤트</div>
+            <div class="tfx-coupon-code">frw419209</div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <!-- 카드 3 -->
+        <a class="tfx-coupon-card" href="https://temu.to/k/gzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div class="tfx-coupon-name">할인 코드</div>
+            <div class="tfx-coupon-code">alf468043</div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    // 복사 버튼만 안전하게 동작(기존 ui-coupons.js 안 건드리고도 작동)
+    document.addEventListener("click", async (e) => {
+      const btn = e.target.closest("[data-copy]");
+      if (!btn) return;
+      e.preventDefault();
+      e.stopPropagation();
+      const code = btn.getAttribute("data-copy") || "";
+      try {
+        await navigator.clipboard.writeText(code);
+        btn.textContent = "복사됨";
+        setTimeout(() => (btn.textContent = "복사"), 900);
+      } catch {
+        btn.textContent = "실패";
+        setTimeout(() => (btn.textContent = "복사"), 900);
+      }
+    });
+  </script>
+</body>
+</html>
