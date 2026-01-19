@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TFY 글</title>
+  <link rel="stylesheet" href="assets/css/base.css" />
+  <link rel="stylesheet" href="assets/css/post.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="홈으로">
+        <span class="brand-badge"><span style="color:#fff;font-weight:900;">TFY</span></span>
+        <span class="brand-text">TFY</span>
+      </a>
+      <nav class="nav">
+        <a href="index.html">홈</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <article class="card" style="padding:18px;">
+      <!-- 로딩 상태 -->
+      <div id="postLoading">
+        <div style="font-weight:900; font-size:18px;">글을 여는 중입니다…</div>
+        <div style="margin-top:8px; color:#6B7280;">잠시만 기다려 주세요.</div>
+      </div>
+
+      <!-- 렌더링 대상(필수 ID) -->
+      <header style="margin-top:6px; display:none;" id="postHeader">
+        <div class="badge" id="postCategory" style="display:inline-flex; gap:8px; align-items:center; margin-bottom:10px;"></div>
+        <h1 id="postTitle" style="margin:0; font-size:28px; line-height:1.25; font-weight:900;"></h1>
+        <div id="postMeta" style="margin-top:10px; color:#6B7280; font-size:14px;"></div>
+      </header>
+
+      <div id="postContent" style="display:none;"></div>
+    </article>
+  </main>
+
+  <script>
+    (async () => {
+      const params = new URLSearchParams(location.search);
+      const slug = params.get("slug");
+      if (!slug) {
+        location.replace("index.html");
+        return;
+      }
+
+      try {
+        const postsRes = await fetch("data/posts.json", { cache: "no-store" });
+        if (!postsRes.ok) throw new Error("posts.json load failed");
+        const posts = await postsRes.json();
+        const item = (posts.items || []).find(p => p.slug === slug);
+
+        const titleEl = document.getElementById("postTitle");
+        const metaEl = document.getElementById("postMeta");
+        const contentEl = document.getElementById("postContent");
+
+        if (item) {
+          titleEl.textContent = item.title || "글";
+          metaEl.textContent = `${item.date || ""}${item.hasCoupon ? " · 쿠폰 포함" : ""}`;
+        }
+
+        const htmlRes = await fetch(`posts/${slug}.html`, { cache: "no-store" });
+        if (!htmlRes.ok) throw new Error("post html load failed");
+        const postHtml = await htmlRes.text();
+        contentEl.innerHTML = postHtml;
+
+        // 로딩 제거 + 본문 표시
+        const loadingEl = document.getElementById("postLoading");
+        const headerEl = document.getElementById("postHeader");
+        if (loadingEl) loadingEl.style.display = "none";
+        if (headerEl) headerEl.style.display = "block";
+        if (contentEl) contentEl.style.display = "block";
+      } catch (e) {
+        console.error(e);
+        const loadingEl = document.getElementById("postLoading");
+        const headerEl = document.getElementById("postHeader");
+        const contentEl = document.getElementById("postContent");
+        if (loadingEl) loadingEl.style.display = "none";
+        if (headerEl) headerEl.style.display = "none";
+        if (contentEl) {
+          contentEl.style.display = "block";
+          contentEl.innerHTML = `<div class="data-error">글을 불러오지 못했습니다.<br/>콘솔(Console)을 확인해주세요.</div>`;
+        }
+      }
+    })();
+  </script>
+
+</body>
+</html>
