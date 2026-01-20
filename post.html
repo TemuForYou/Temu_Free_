@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/post.css" />
   <link rel="stylesheet" href="assets/css/post-fix.css" />
+
+  <!-- ✅ (사이즈만) 메인 카드 내부 2컬럼 충돌 제거: 1컬럼으로 강제 -->
+  <style>
+    /* post.css의 .tfx-post-shell은 원래 "본문+사이드바(360px)" 2컬럼 그리드용입니다.
+       하지만 post.html 템플릿에서는 이미 우측 aside가 따로 있으니,
+       왼쪽 메인 카드(.left 안의 .card.tfx-post-shell)만 1컬럼으로 덮어씁니다. */
+    .left .card.tfx-post-shell{
+      grid-template-columns: 1fr !important;
+      gap: 0 !important;
+    }
+  </style>
 </head>
 <body>
   <!-- TOPBAR (기존 유지) -->
@@ -28,6 +39,7 @@
     <div class="grid">
       <!-- LEFT: Post -->
       <section class="left">
+        <!-- 기존 구조 유지 -->
         <article class="card tfx-post-shell">
           <h1 id="postTitle" class="tfx-post-title">글을 여는 중입니다…</h1>
           <div id="postMeta" class="tfx-post-meta">잠시만 기다려 주세요.</div>
@@ -75,11 +87,8 @@
       }
 
       function removeBadWrappers(node) {
-        // 혹시 글 파일이 통째로 들어오면서 같이 들어오는 헤더/탑바가 있으면 제거(중복 방지)
         if (!node) return;
         node.querySelectorAll(".topbar, .topbar-inner, header, nav").forEach(el => {
-          // 글 본문에 들어있는 “사이트 전체 헤더/네비” 성격만 제거
-          // (본문 안의 일반적인 h2/h3는 건드리지 않음)
           const cls = (el.className || "").toString();
           if (cls.includes("topbar") || el.tagName.toLowerCase() === "header" || el.tagName.toLowerCase() === "nav") {
             el.remove();
@@ -88,41 +97,26 @@
       }
 
       function extractBestArticle(doc) {
-        // ✅ 핵심: posts/*.html이 “전체 문서”여도
-        // 페이지 레이아웃(main/grid/sidebars)을 넣지 않고,
-        // 본문(article)만 뽑아서 post.html의 글 상자에 꽂는다.
-
-        // 1) 글 파일에서 실제 본문으로 쓰는 article(프로젝트에서 많이 쓰는 클래스)
+        // ✅ 레이아웃(main/grid)은 버리고, 본문(article)만 가져옵니다.
         let article =
           doc.querySelector("article.tfx-post") ||
           doc.querySelector("article.post") ||
           doc.querySelector("article") ||
           null;
 
-        // 2) 그래도 없으면 main 안의 본문 영역을 대체로 잡아옴
         if (!article) {
           const main = doc.querySelector("main");
-          if (main) {
-            // main 안에서 가장 큰 컨텐츠 블록을 잡기(안전하게)
-            article = main.querySelector("article") || main;
-          } else {
-            article = doc.body || null;
-          }
+          if (main) article = main.querySelector("article") || main;
+          else article = doc.body || null;
         }
 
         const imported = document.importNode(article, true);
-
-        // (중복 방지용) 본문 조각 안에 전체 페이지 UI가 섞여 있으면 제거
         removeBadWrappers(imported);
-
         return imported;
       }
 
       function moveCouponAreaFromDocToSidebar(doc) {
-        // ✅ posts/*.html 안에 있던 우측 쿠폰 영역을 rightSlot으로 이동
-        // (우측 패널 정상화)
         // 우선순위: .coupon-panel -> .tfx-sidebar -> .tfx-side-card
-
         const candidates = [
           doc.querySelector(".coupon-panel"),
           doc.querySelector(".tfx-sidebar"),
@@ -140,7 +134,6 @@
         return true;
       }
 
-      // (선택) 글 본문에 쿠폰 패널이 섞여 들어오는 경우 제거(중복/레이아웃 꼬임 예방)
       function stripCouponFromArticle(articleNode) {
         if (!articleNode) return;
         articleNode.querySelectorAll(".coupon-panel, .tfx-sidebar, .tfx-side-card").forEach(el => el.remove());
@@ -182,7 +175,7 @@
         // 1) 우측 쿠폰 영역 이동(있으면)
         moveCouponAreaFromDocToSidebar(doc);
 
-        // 2) 본문(article)만 추출해서 넣기 (✅ 레이아웃 중첩 제거)
+        // 2) 본문(article)만 추출해서 넣기
         const articleNode = extractBestArticle(doc);
 
         // 3) 본문 안에 쿠폰/사이드바가 섞여있으면 제거(우측으로 갔으니 본문에서는 제거)
