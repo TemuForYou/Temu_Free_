@@ -32,7 +32,7 @@
           <h1 id="postTitle" class="tfx-post-title">글을 여는 중입니다…</h1>
           <div id="postMeta" class="tfx-post-meta">잠시만 기다려 주세요.</div>
 
-          <!-- ✅ JS가 여기로 글 내용을 꽂습니다 -->
+          <!-- ✅ JS가 여기로 “본문(article)”만 꽂습니다 -->
           <div id="postContent" class="tfx-post-content">
             <div style="font-weight:900; font-size:16px; margin-bottom:6px;">글을 여는 중입니다…</div>
             <div style="color:#6B7280;">잠시만 기다려 주세요.</div>
@@ -47,7 +47,7 @@
           <div class="card coupon-panel">
             <div class="coupon-head">
               <div class="coupon-title">🔥 쿠폰 코드 · 링크</div>
-              <div class="coupon-desc">클릭 → 코드복사 → 이동 순서로 진행하세요.</div>
+              <div class="coupon-desc">클릭 → 코드복사 → 이동/다운로드 순서</div>
             </div>
             <div style="color:#6B7280; font-size:13px;">표시할 쿠폰이 없습니다.</div>
           </div>
@@ -66,65 +66,84 @@
       const contentEl = document.getElementById("postContent");
       const rightSlot = document.getElementById("rightSlot");
 
-      // GitHub Pages 서브폴더 대응용 basePath
+      // GitHub Pages 서브폴더(/repo/) 배포 경로 대응
       const basePath = location.pathname.replace(/[^/]*$/, "");
 
-      function importMainOnly(htmlText){
-        // ✅ 핵심: posts/*.html이 "전체 문서(doctype/html/body)"여도
-        // <main class="tfx-post-shell">만 뽑아서 본문에 넣으면 글 상자가 정상으로 돌아옵니다.
+      function parseHtmlToDoc(htmlText) {
         const parser = new DOMParser();
-        const doc = parser.parseFromString(htmlText, "text/html");
-
-        // 1순위: 글 본문용 main
-        let main = doc.querySelector("main.tfx-post-shell");
-        if (main) return document.importNode(main, true);
-
-        // 2순위: body 전체 (그래도 full 문서가 오면 body만이라도)
-        if (doc.body) return document.importNode(doc.body, true);
-
-        // 최후: 그냥 문자열
-        const wrap = document.createElement("div");
-        wrap.innerHTML = htmlText;
-        return wrap;
+        return parser.parseFromString(htmlText, "text/html");
       }
 
-      function moveEmbeddedCouponPanelToSidebar(){
-        if (!contentEl || !rightSlot) return false;
-
-        // 1) 예전 구조: .coupon-panel
-        const legacy = contentEl.querySelector(".coupon-panel");
-        if (legacy) {
-          legacy.remove();
-          rightSlot.innerHTML = "";
-          rightSlot.appendChild(legacy);
-          return true;
-        }
-
-        // 2) 현재 글 파일 구조: aside.tfx-sidebar
-        const tfxSidebar = contentEl.querySelector(".tfx-sidebar");
-        if (tfxSidebar) {
-          tfxSidebar.remove();
-          rightSlot.innerHTML = "";
-          rightSlot.appendChild(tfxSidebar);
-          return true;
-        }
-
-        // 3) 카드만 있는 경우
-        const tfxSideCard = contentEl.querySelector(".tfx-side-card");
-        if (tfxSideCard) {
-          tfxSideCard.remove();
-          rightSlot.innerHTML = "";
-          rightSlot.appendChild(tfxSideCard);
-          return true;
-        }
-
-        return false;
+      function removeBadWrappers(node) {
+        // 혹시 글 파일이 통째로 들어오면서 같이 들어오는 헤더/탑바가 있으면 제거(중복 방지)
+        if (!node) return;
+        node.querySelectorAll(".topbar, .topbar-inner, header, nav").forEach(el => {
+          // 글 본문에 들어있는 “사이트 전체 헤더/네비” 성격만 제거
+          // (본문 안의 일반적인 h2/h3는 건드리지 않음)
+          const cls = (el.className || "").toString();
+          if (cls.includes("topbar") || el.tagName.toLowerCase() === "header" || el.tagName.toLowerCase() === "nav") {
+            el.remove();
+          }
+        });
       }
 
-      // (선택) 혹시 main 내부에 남아있던 헤더가 있으면 제거(중복 방지용)
-      function removeEmbeddedHeaderIfAny(){
-        const embeddedHeader = contentEl.querySelector(".tfx-topbar, header.tfx-topbar");
-        if (embeddedHeader) embeddedHeader.remove();
+      function extractBestArticle(doc) {
+        // ✅ 핵심: posts/*.html이 “전체 문서”여도
+        // 페이지 레이아웃(main/grid/sidebars)을 넣지 않고,
+        // 본문(article)만 뽑아서 post.html의 글 상자에 꽂는다.
+
+        // 1) 글 파일에서 실제 본문으로 쓰는 article(프로젝트에서 많이 쓰는 클래스)
+        let article =
+          doc.querySelector("article.tfx-post") ||
+          doc.querySelector("article.post") ||
+          doc.querySelector("article") ||
+          null;
+
+        // 2) 그래도 없으면 main 안의 본문 영역을 대체로 잡아옴
+        if (!article) {
+          const main = doc.querySelector("main");
+          if (main) {
+            // main 안에서 가장 큰 컨텐츠 블록을 잡기(안전하게)
+            article = main.querySelector("article") || main;
+          } else {
+            article = doc.body || null;
+          }
+        }
+
+        const imported = document.importNode(article, true);
+
+        // (중복 방지용) 본문 조각 안에 전체 페이지 UI가 섞여 있으면 제거
+        removeBadWrappers(imported);
+
+        return imported;
+      }
+
+      function moveCouponAreaFromDocToSidebar(doc) {
+        // ✅ posts/*.html 안에 있던 우측 쿠폰 영역을 rightSlot으로 이동
+        // (우측 패널 정상화)
+        // 우선순위: .coupon-panel -> .tfx-sidebar -> .tfx-side-card
+
+        const candidates = [
+          doc.querySelector(".coupon-panel"),
+          doc.querySelector(".tfx-sidebar"),
+          doc.querySelector(".tfx-side-card")
+        ].filter(Boolean);
+
+        if (!candidates.length) return false;
+
+        const node = candidates[0];
+        const imported = document.importNode(node, true);
+
+        rightSlot.innerHTML = "";
+        rightSlot.appendChild(imported);
+
+        return true;
+      }
+
+      // (선택) 글 본문에 쿠폰 패널이 섞여 들어오는 경우 제거(중복/레이아웃 꼬임 예방)
+      function stripCouponFromArticle(articleNode) {
+        if (!articleNode) return;
+        articleNode.querySelectorAll(".coupon-panel, .tfx-sidebar, .tfx-side-card").forEach(el => el.remove());
       }
 
       try {
@@ -135,8 +154,10 @@
           return;
         }
 
+        // posts.json 로드
         const postsRes = await fetch(`${basePath}data/posts.json`, { cache: "no-store" });
         if (!postsRes.ok) throw new Error("posts.json fetch failed");
+
         const postsJson = await postsRes.json();
         const items = Array.isArray(postsJson.items) ? postsJson.items : [];
         const item = items.find((x) => x.slug === slug);
@@ -156,17 +177,19 @@
         if (!htmlRes.ok) throw new Error(`post html fetch failed: ${htmlRes.status}`);
 
         const htmlText = await htmlRes.text();
+        const doc = parseHtmlToDoc(htmlText);
 
-        // ✅ 글 상자 정상화: 전체 문서가 와도 main만 추출해서 삽입
-        const mainNode = importMainOnly(htmlText);
+        // 1) 우측 쿠폰 영역 이동(있으면)
+        moveCouponAreaFromDocToSidebar(doc);
+
+        // 2) 본문(article)만 추출해서 넣기 (✅ 레이아웃 중첩 제거)
+        const articleNode = extractBestArticle(doc);
+
+        // 3) 본문 안에 쿠폰/사이드바가 섞여있으면 제거(우측으로 갔으니 본문에서는 제거)
+        stripCouponFromArticle(articleNode);
+
         contentEl.innerHTML = "";
-        contentEl.appendChild(mainNode);
-
-        // 중복 header 제거(있으면만)
-        removeEmbeddedHeaderIfAny();
-
-        // ✅ 우측 쿠폰/사이드바 이동
-        moveEmbeddedCouponPanelToSidebar();
+        contentEl.appendChild(articleNode);
 
       } catch (err) {
         titleEl.textContent = "오류가 발생했습니다";
