@@ -71,18 +71,40 @@
       const basePath = location.pathname.replace(/[^/]*$/, "");
 
       const moveEmbeddedCouponPanelToSidebar = () => {
-        // ✅ 글 본문 안에 있는 쿠폰 패널을 찾아서 우측으로 “이동”
-        // (디자인 유지 핵심)
-        const embedded = contentEl ? contentEl.querySelector(".coupon-panel") : null;
-        if (!embedded) return false;
+        // ✅ 글 본문 안에 있는 쿠폰 영역을 찾아서 우측으로 “이동”
+        // - 기존: .coupon-panel만 찾았음
+        // - 수정: 글 파일 내부 구조(.tfx-sidebar 등)도 함께 탐색
 
-        // 본문에서는 제거되고, 우측에 그대로 붙음
-        embedded.remove();
-        if (rightSlot) {
+        if (!contentEl || !rightSlot) return false;
+
+        // 1) 예전 구조: coupon-panel (있으면 그대로 우측으로 이동)
+        const legacyCouponPanel = contentEl.querySelector(".coupon-panel");
+        if (legacyCouponPanel) {
+          legacyCouponPanel.remove();
           rightSlot.innerHTML = "";
-          rightSlot.appendChild(embedded);
+          rightSlot.appendChild(legacyCouponPanel);
+          return true;
         }
-        return true;
+
+        // 2) 현재 글 파일 구조: aside.tfx-sidebar 자체가 포함된 경우
+        const tfxSidebar = contentEl.querySelector(".tfx-sidebar");
+        if (tfxSidebar) {
+          tfxSidebar.remove();
+          rightSlot.innerHTML = "";
+          rightSlot.appendChild(tfxSidebar);
+          return true;
+        }
+
+        // 3) 혹시 aside 없이 카드만 들어있는 경우 대비
+        const tfxSideCard = contentEl.querySelector(".tfx-side-card");
+        if (tfxSideCard) {
+          tfxSideCard.remove();
+          rightSlot.innerHTML = "";
+          rightSlot.appendChild(tfxSideCard);
+          return true;
+        }
+
+        return false;
       };
 
       try {
@@ -116,7 +138,7 @@
         const html = await htmlRes.text();
         contentEl.innerHTML = html;
 
-        // ✅ 핵심: 본문에 있던 쿠폰 패널을 우측 사이드바로 이동
+        // ✅ 핵심: 본문에 있던 쿠폰 패널(또는 tfx-sidebar)을 우측 사이드바로 이동
         moveEmbeddedCouponPanelToSidebar();
 
       } catch (err) {
