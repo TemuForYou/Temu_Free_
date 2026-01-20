@@ -8,7 +8,6 @@
   <!-- 기존 스타일 유지 -->
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/post.css" />
-  <!-- ✅ 레이아웃 깨짐 방지 전용(추가) -->
   <link rel="stylesheet" href="assets/css/post-fix.css" />
 </head>
 <body>
@@ -41,10 +40,10 @@
         </article>
       </section>
 
-      <!-- RIGHT: Sidebar (✅ 여기로 쿠폰 패널을 “이동”시킵니다) -->
+      <!-- RIGHT: Sidebar -->
       <aside class="right">
         <div id="rightSlot">
-          <!-- 기본 placeholder (쿠폰 패널을 못 찾았을 때만 보여줌) -->
+          <!-- 기본 placeholder (이동 실패/쿠폰 없음일 때만) -->
           <div class="card coupon-panel">
             <div class="coupon-head">
               <div class="coupon-title">🔥 쿠폰 코드 · 링크</div>
@@ -67,26 +66,41 @@
       const contentEl = document.getElementById("postContent");
       const rightSlot = document.getElementById("rightSlot");
 
-      // GitHub Pages 서브폴더(/Temu_Free_/) 대응용 basePath
+      // GitHub Pages 서브폴더 대응용 basePath
       const basePath = location.pathname.replace(/[^/]*$/, "");
 
-      const moveEmbeddedCouponPanelToSidebar = () => {
-        // ✅ 글 본문 안에 있는 쿠폰 영역을 찾아서 우측으로 “이동”
-        // - 기존: .coupon-panel만 찾았음
-        // - 수정: 글 파일 내부 구조(.tfx-sidebar 등)도 함께 탐색
+      function importMainOnly(htmlText){
+        // ✅ 핵심: posts/*.html이 "전체 문서(doctype/html/body)"여도
+        // <main class="tfx-post-shell">만 뽑아서 본문에 넣으면 글 상자가 정상으로 돌아옵니다.
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlText, "text/html");
 
+        // 1순위: 글 본문용 main
+        let main = doc.querySelector("main.tfx-post-shell");
+        if (main) return document.importNode(main, true);
+
+        // 2순위: body 전체 (그래도 full 문서가 오면 body만이라도)
+        if (doc.body) return document.importNode(doc.body, true);
+
+        // 최후: 그냥 문자열
+        const wrap = document.createElement("div");
+        wrap.innerHTML = htmlText;
+        return wrap;
+      }
+
+      function moveEmbeddedCouponPanelToSidebar(){
         if (!contentEl || !rightSlot) return false;
 
-        // 1) 예전 구조: coupon-panel (있으면 그대로 우측으로 이동)
-        const legacyCouponPanel = contentEl.querySelector(".coupon-panel");
-        if (legacyCouponPanel) {
-          legacyCouponPanel.remove();
+        // 1) 예전 구조: .coupon-panel
+        const legacy = contentEl.querySelector(".coupon-panel");
+        if (legacy) {
+          legacy.remove();
           rightSlot.innerHTML = "";
-          rightSlot.appendChild(legacyCouponPanel);
+          rightSlot.appendChild(legacy);
           return true;
         }
 
-        // 2) 현재 글 파일 구조: aside.tfx-sidebar 자체가 포함된 경우
+        // 2) 현재 글 파일 구조: aside.tfx-sidebar
         const tfxSidebar = contentEl.querySelector(".tfx-sidebar");
         if (tfxSidebar) {
           tfxSidebar.remove();
@@ -95,7 +109,7 @@
           return true;
         }
 
-        // 3) 혹시 aside 없이 카드만 들어있는 경우 대비
+        // 3) 카드만 있는 경우
         const tfxSideCard = contentEl.querySelector(".tfx-side-card");
         if (tfxSideCard) {
           tfxSideCard.remove();
@@ -105,7 +119,13 @@
         }
 
         return false;
-      };
+      }
+
+      // (선택) 혹시 main 내부에 남아있던 헤더가 있으면 제거(중복 방지용)
+      function removeEmbeddedHeaderIfAny(){
+        const embeddedHeader = contentEl.querySelector(".tfx-topbar, header.tfx-topbar");
+        if (embeddedHeader) embeddedHeader.remove();
+      }
 
       try {
         if (!slug) {
@@ -135,10 +155,17 @@
         const htmlRes = await fetch(`${basePath}posts/${slug}.html`, { cache: "no-store" });
         if (!htmlRes.ok) throw new Error(`post html fetch failed: ${htmlRes.status}`);
 
-        const html = await htmlRes.text();
-        contentEl.innerHTML = html;
+        const htmlText = await htmlRes.text();
 
-        // ✅ 핵심: 본문에 있던 쿠폰 패널(또는 tfx-sidebar)을 우측 사이드바로 이동
+        // ✅ 글 상자 정상화: 전체 문서가 와도 main만 추출해서 삽입
+        const mainNode = importMainOnly(htmlText);
+        contentEl.innerHTML = "";
+        contentEl.appendChild(mainNode);
+
+        // 중복 header 제거(있으면만)
+        removeEmbeddedHeaderIfAny();
+
+        // ✅ 우측 쿠폰/사이드바 이동
         moveEmbeddedCouponPanelToSidebar();
 
       } catch (err) {
