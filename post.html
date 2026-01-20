@@ -8,6 +8,8 @@
   <!-- 기존 스타일 유지 -->
   <link rel="stylesheet" href="assets/css/base.css" />
   <link rel="stylesheet" href="assets/css/post.css" />
+  <!-- ✅ 레이아웃 깨짐 방지 전용(추가) -->
+  <link rel="stylesheet" href="assets/css/post-fix.css" />
 </head>
 <body>
   <!-- TOPBAR (기존 유지) -->
@@ -31,7 +33,7 @@
           <h1 id="postTitle" class="tfx-post-title">글을 여는 중입니다…</h1>
           <div id="postMeta" class="tfx-post-meta">잠시만 기다려 주세요.</div>
 
-          <!-- ✅ JS가 여기로 내용을 꽂습니다 -->
+          <!-- ✅ JS가 여기로 글 내용을 꽂습니다 -->
           <div id="postContent" class="tfx-post-content">
             <div style="font-weight:900; font-size:16px; margin-bottom:6px;">글을 여는 중입니다…</div>
             <div style="color:#6B7280;">잠시만 기다려 주세요.</div>
@@ -39,16 +41,17 @@
         </article>
       </section>
 
-      <!-- RIGHT: Coupons (기존 구조 유지 + JS로 채움) -->
+      <!-- RIGHT: Sidebar (✅ 여기로 쿠폰 패널을 “이동”시킵니다) -->
       <aside class="right">
-        <div class="card coupon-panel">
-          <div class="coupon-head">
-            <div class="coupon-title">🔥 쿠폰 코드 · 링크</div>
-            <div class="coupon-desc">클릭 → 코드복사 → 이동 순서로 진행하세요.</div>
+        <div id="rightSlot">
+          <!-- 기본 placeholder (쿠폰 패널을 못 찾았을 때만 보여줌) -->
+          <div class="card coupon-panel">
+            <div class="coupon-head">
+              <div class="coupon-title">🔥 쿠폰 코드 · 링크</div>
+              <div class="coupon-desc">클릭 → 코드복사 → 이동 순서로 진행하세요.</div>
+            </div>
+            <div style="color:#6B7280; font-size:13px;">표시할 쿠폰이 없습니다.</div>
           </div>
-
-          <!-- ✅ JS가 여기로 쿠폰 목록을 꽂습니다 -->
-          <div class="coupon-list" id="postCoupons"></div>
         </div>
       </aside>
     </div>
@@ -62,81 +65,31 @@
       const titleEl = document.getElementById("postTitle");
       const metaEl  = document.getElementById("postMeta");
       const contentEl = document.getElementById("postContent");
+      const rightSlot = document.getElementById("rightSlot");
 
-      // Base path for GitHub Pages subdir deployments (e.g. /Temu_Free_/)
+      // GitHub Pages 서브폴더(/Temu_Free_/) 대응용 basePath
       const basePath = location.pathname.replace(/[^/]*$/, "");
 
-      const renderCoupons = async () => {
-        const host = document.getElementById("postCoupons");
-        if (!host) return;
+      const moveEmbeddedCouponPanelToSidebar = () => {
+        // ✅ 글 본문 안에 있는 쿠폰 패널을 찾아서 우측으로 “이동”
+        // (디자인 유지 핵심)
+        const embedded = contentEl ? contentEl.querySelector(".coupon-panel") : null;
+        if (!embedded) return false;
 
-        try {
-          const r = await fetch(`${basePath}data/coupons.json`, { cache: "no-store" });
-          if (!r.ok) throw new Error("coupons.json fetch failed");
-          const json = await r.json();
-          const items = Array.isArray(json.items) ? json.items : [];
-
-          if (!items.length) {
-            host.innerHTML = `<div style="color:#6B7280; font-size:13px;">표시할 쿠폰이 없습니다.</div>`;
-            return;
-          }
-
-          host.innerHTML = items.map((c) => {
-            const safeCode = String(c.code || "").replace(/[<>"']/g, "");
-            const link = String(c.link || "#").replace(/"/g, "&quot;");
-            const label = String(c.label || "").replace(/[<>"']/g, "");
-
-            return `
-              <div class="coupon-row">
-                <div class="coupon-chip">
-                  <div class="coupon-badge">${label}</div>
-                  <div class="coupon-code">CODE <b>${safeCode}</b></div>
-                </div>
-                <button class="btn btn-light" data-copy="${safeCode}">복사</button>
-                <a class="btn btn-primary" href="${link}" target="_blank" rel="noopener">이동</a>
-
-                <!-- ✅ 요청하신: 코드/복사/이동 아래에 길게 '다운로드' 버튼 -->
-                <a class="btn btn-primary"
-                   style="width:100%; margin-top:10px; justify-content:center;"
-                   href="${link}" target="_blank" rel="noopener">
-                  다운로드
-                </a>
-              </div>
-            `;
-          }).join("");
-
-          // copy handlers
-          host.querySelectorAll("[data-copy]").forEach((btn) => {
-            btn.addEventListener("click", async () => {
-              const txt = btn.getAttribute("data-copy") || "";
-              try {
-                await navigator.clipboard.writeText(txt);
-                btn.textContent = "복사됨";
-                setTimeout(() => (btn.textContent = "복사"), 900);
-              } catch {
-                // fallback
-                const ta = document.createElement("textarea");
-                ta.value = txt;
-                document.body.appendChild(ta);
-                ta.select();
-                document.execCommand("copy");
-                ta.remove();
-                btn.textContent = "복사됨";
-                setTimeout(() => (btn.textContent = "복사"), 900);
-              }
-            });
-          });
-        } catch (e) {
-          host.innerHTML = `<div style="color:#E11D48; font-size:13px;">쿠폰 로딩 실패: ${String(e.message || e)}</div>`;
+        // 본문에서는 제거되고, 우측에 그대로 붙음
+        embedded.remove();
+        if (rightSlot) {
+          rightSlot.innerHTML = "";
+          rightSlot.appendChild(embedded);
         }
+        return true;
       };
 
       try {
         if (!slug) {
-          if (titleEl) titleEl.textContent = "잘못된 접근";
-          if (metaEl) metaEl.textContent = "slug 파라미터가 없습니다.";
-          if (contentEl) contentEl.innerHTML = `<div style="color:#E11D48;">URL이 올바른지 확인해주세요.</div>`;
-          await renderCoupons();
+          titleEl.textContent = "잘못된 접근";
+          metaEl.textContent = "slug 파라미터가 없습니다.";
+          contentEl.innerHTML = `<div style="color:#E11D48;">URL이 올바른지 확인해주세요.</div>`;
           return;
         }
 
@@ -147,29 +100,29 @@
         const item = items.find((x) => x.slug === slug);
 
         if (!item) {
-          if (titleEl) titleEl.textContent = "글을 찾을 수 없습니다";
-          if (metaEl) metaEl.textContent = `slug: ${slug}`;
-          if (contentEl) contentEl.innerHTML = `<div style="color:#E11D48;">posts.json에 해당 slug가 없습니다.</div>`;
-          await renderCoupons();
+          titleEl.textContent = "글을 찾을 수 없습니다";
+          metaEl.textContent = `slug: ${slug}`;
+          contentEl.innerHTML = `<div style="color:#E11D48;">posts.json에 해당 slug가 없습니다.</div>`;
           return;
         }
 
-        if (titleEl) titleEl.textContent = item.title || "(제목 없음)";
-        if (metaEl) metaEl.textContent = `${item.date || ""}${item.hasCoupon ? " · 쿠폰 포함" : ""} · ${item.category || ""}`;
+        titleEl.textContent = item.title || "(제목 없음)";
+        metaEl.textContent = `${item.date || ""}${item.hasCoupon ? " · 쿠폰 포함" : ""} · ${item.category || ""}`;
 
         // posts/<slug>.html 로드
         const htmlRes = await fetch(`${basePath}posts/${slug}.html`, { cache: "no-store" });
         if (!htmlRes.ok) throw new Error(`post html fetch failed: ${htmlRes.status}`);
 
         const html = await htmlRes.text();
-        if (contentEl) contentEl.innerHTML = html;
+        contentEl.innerHTML = html;
 
-        await renderCoupons();
+        // ✅ 핵심: 본문에 있던 쿠폰 패널을 우측 사이드바로 이동
+        moveEmbeddedCouponPanelToSidebar();
+
       } catch (err) {
-        if (titleEl) titleEl.textContent = "오류가 발생했습니다";
-        if (metaEl) metaEl.textContent = "콘솔(Console)에서 에러 메시지를 확인해주세요.";
-        if (contentEl) contentEl.innerHTML = `<div style="color:#E11D48;">${String(err.message || err)}</div>`;
-        await renderCoupons();
+        titleEl.textContent = "오류가 발생했습니다";
+        metaEl.textContent = "콘솔(Console)에서 에러 메시지를 확인해주세요.";
+        contentEl.innerHTML = `<div style="color:#E11D48;">${String(err.message || err)}</div>`;
       }
     })();
   </script>
