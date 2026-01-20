@@ -1,0 +1,39 @@
+/* post-fix.css
+   - 기존 디자인 유지
+   - 레이아웃만 안정화(폭/사이드바/중복 쿠폰 방지)
+*/
+
+.page {
+  max-width: 1320px; /* 글 상자 가로를 더 길게 */
+  margin: 0 auto;
+  padding: 24px 20px;
+}
+
+/* 2컬럼: 본문 + 사이드바 */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 360px; /* 우측 사이드바 고정 폭 */
+  gap: 22px;
+  align-items: start;
+}
+
+/* 우측 사이드바가 항상 “옆”에서 유지되게 */
+.right {
+  position: sticky;
+  top: 92px; /* 상단바 높이에 맞춰 고정 */
+}
+
+/* 화면이 좁아지면 1컬럼으로 자연스럽게 내려오기 */
+@media (max-width: 980px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .right {
+    position: static;
+  }
+}
+
+/* 본문 안에 쿠폰 패널이 남아있으면 강제 숨김(혹시라도 이동 실패했을 때 대비) */
+#postContent .coupon-panel {
+  display: none !important;
+}
