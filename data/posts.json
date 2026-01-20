@@ -21,7 +21,7 @@
       "slug": "temu-order-stuck-looks-like-delivery-stop",
       "date": "2026-01-04",
       "hasCoupon": true,
-      "status": "done",
+      "status": "true",
       "summary": "배송 멈춤처럼 보이는 구간의 구조, 확인 대기/세관/택배사 단계에서의 체크 포인트.",
       "file": "posts/temu-order-stuck-looks-like-delivery-stop.html",
       "updated": "2026-01-04",
