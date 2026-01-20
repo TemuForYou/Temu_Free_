@@ -10,7 +10,7 @@
       "status": "true",
       "summary": "통관번호 오타/불일치로 '확인 대기'에 묶이는 대표 케이스와 바로 점검 순서.",
       "file": "posts/temu-customs-code-one-letter-shipping-stop.html",
-      "updated": "2026-01-03",
+      "updated": "2026-01-20",
       "tab": "실수·문제 해결형 ① 통관·배송",
       "done": true
     },
@@ -24,7 +24,7 @@
       "status": "true",
       "summary": "배송 멈춤처럼 보이는 구간의 구조, 확인 대기/세관/택배사 단계에서의 체크 포인트.",
       "file": "posts/temu-order-stuck-looks-like-delivery-stop.html",
-      "updated": "2026-01-04",
+      "updated": "2026-01-20",
       "tab": "실수·문제 해결형 ① 통관·배송",
       "done": true
     },
