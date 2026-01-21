@@ -1,0 +1,502 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 주소 잘못 입력했을 때, 지금 바로 해야 할 3가지</title>
+
+  <!-- TFY 공통 스타일 -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <!-- ✅ 6번 글 전용: 본문 쿠폰 카드(“1개만” 추가) -->
+  <style>
+    /* 본문 쿠폰 카드: 측면 패널의 톤을 그대로 가져오되, 페이지 전체 디자인은 건드리지 않음 */
+    .tfx-inline-coupon {
+      margin: 18px 0 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 140, 0, 0.25);
+      background: #fff7ef;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .tfx-inline-coupon .head {
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.75);
+      backdrop-filter: blur(6px);
+    }
+    .tfx-inline-coupon .title {
+      font-weight: 800;
+      letter-spacing: -0.2px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .tfx-inline-coupon .sub {
+      margin-top: 6px;
+      color: #666;
+      font-size: 13px;
+    }
+    .tfx-inline-coupon .body {
+      padding: 14px 16px 16px;
+    }
+    .tfx-inline-coupon .row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+    }
+    .tfx-inline-coupon .badge {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #ff8c00;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+      box-shadow: 0 10px 18px rgba(255, 140, 0, 0.25);
+      flex: 0 0 auto;
+    }
+    .tfx-inline-coupon .meta {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 220px;
+    }
+    .tfx-inline-coupon .meta .name {
+      font-weight: 800;
+      color: #222;
+    }
+    .tfx-inline-coupon .meta .code {
+      font-weight: 900;
+      color: #111;
+      letter-spacing: 0.4px;
+      font-size: 18px;
+    }
+    .tfx-inline-coupon .actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex: 0 0 auto;
+    }
+    .tfx-inline-coupon .btn {
+      border: 1px solid rgba(255, 140, 0, 0.55);
+      background: #fff;
+      color: #ff8c00;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform .05s ease, box-shadow .15s ease;
+      user-select: none;
+    }
+    .tfx-inline-coupon .btn:hover {
+      box-shadow: 0 10px 22px rgba(255, 140, 0, 0.18);
+    }
+    .tfx-inline-coupon .btn:active {
+      transform: translateY(1px);
+    }
+    .tfx-inline-coupon .btn-primary {
+      background: #ff8c00;
+      border-color: #ff8c00;
+      color: #fff;
+    }
+    .tfx-inline-coupon .hint {
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: #666;
+      font-size: 12.5px;
+      flex-wrap: wrap;
+    }
+    .tfx-inline-coupon .note {
+      margin-top: 10px;
+      background: rgba(255,255,255,0.7);
+      border: 1px dashed rgba(255, 140, 0, 0.35);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color: #555;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">주소·배송</span>
+        <span class="tfx-tag tfx-tag-accent">쿠폰 포함</span>
+      </div>
+
+      <h1 class="tfx-title">테무 주소 잘못 입력했을 때, 지금 바로 해야 할 3가지</h1>
+
+      <p class="tfx-lead">
+        테무 주문을 눌러놓고 나서 가장 식은땀이 나는 순간이 있습니다.<br />
+        “아… 주소를 잘못 넣었네.”<br />
+        이때부터는 <b>시간 싸움</b>입니다. 주소 수정이 가능한 구간과 불가능한 구간이 갈리고,
+        한 번 발송 단계로 넘어가면 체감 난이도가 확 올라가요.
+      </p>
+
+      <p class="tfx-lead">
+        그래서 이 글은 “지금 내 주문이 어디쯤인지”를 기준으로,
+        <b>테무 주소 수정</b>을 가장 빠르게 성공시키는 순서로 정리합니다.<br />
+        결론은 단순합니다. <b>상태 확인 → 가능한 액션 즉시 실행 → 안 되면 대체 루트로 전환</b>.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.01.07</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <div class="tfx-cta-row">
+        <a class="tfx-btn" href="#quick">3분 핵심 정리</a>
+        <a class="tfx-btn tfx-btn-primary" href="#steps">가장 빠른 해결 순서</a>
+      </div>
+
+      <section class="tfx-section" id="quick">
+        <h2 class="tfx-h2">3분 핵심: 테무 주소 수정은 “출고 전”이면 가능성이 높습니다</h2>
+
+        <p class="tfx-p">
+          많은 분들이 <b>테무 주소 수정</b>을 “고객센터가 해주는 일”로 생각하지만,
+          실제로는 주문 상태에 따라 앱에서 가능한 범위가 달라집니다.<br />
+          먼저 아래 3가지를 확인하면, 지금 할 수 있는 행동이 선명해집니다.
+        </p>
+
+        <div class="tfx-grid-3">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">① 주문 상태</h3>
+            <p class="tfx-p">
+              <b>처리 중/확인 중</b>이면 주소 변경 가능성이 높습니다.<br />
+              <b>출고 준비/발송 완료</b>부터는 어려워지는 경우가 많습니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">② 수정 버튼 유무</h3>
+            <p class="tfx-p">
+              주문 상세에 <b>주소 편집/변경</b> 버튼이 보이면 즉시 진행하세요.<br />
+              시간이 지나면 버튼이 사라질 수 있습니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">③ 대체 루트 준비</h3>
+            <p class="tfx-p">
+              수정이 안 되면 <b>취소 후 재주문</b>이 가장 빠를 수 있습니다.<br />
+              단, 쿠폰/조건은 재계산될 수 있어요.
+            </p>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip">
+          요약) <b>테무 주소 수정</b>은 “출고 전”일수록 빠르고,
+          “발송 이후”일수록 우회 루트가 필요해집니다.
+        </div>
+      </section>
+
+      <section class="tfx-section" id="steps">
+        <h2 class="tfx-h2">가장 빠른 해결 순서: 이 순서대로 하면 시간 낭비가 없습니다</h2>
+
+        <p class="tfx-p">
+          지금부터는 추측을 줄이고, 확인과 실행을 분리합니다.<br />
+          아래는 <b>테무 주소 수정</b>을 가장 빠르게 끝내는 순서입니다.
+        </p>
+
+        <ol class="tfx-ol">
+          <li><b>주문 상세</b>에서 현재 상태 확인 (처리 중/출고 준비/발송 완료)</li>
+          <li>상세 화면에 <b>주소 변경/편집</b>이 있으면 즉시 변경</li>
+          <li>버튼이 없으면 <b>취소 가능 여부</b> 확인 → 가능하면 취소 후 재주문</li>
+          <li>이미 발송이면 <b>수령 후 반품/환불</b> 또는 <b>배송사/현지 단계</b> 확인(가능한 범위만)</li>
+          <li>고객지원 문의 시: <b>주문번호 + 상태 + 바꿀 주소</b>를 한 번에 전달</li>
+        </ol>
+
+        <div class="tfx-card-tip">
+          포인트) “주소를 바꿔주세요”만 보내면 시간이 오래 걸립니다.<br />
+          <b>주문번호 / 현재 상태 / 변경할 주소(전체) / 변경 이유</b>를 같이 보내면 처리 속도가 체감상 빨라집니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">주소를 잘못 넣는 대표 패턴 5가지</h2>
+
+        <p class="tfx-p">
+          <b>테무 주소 수정</b>이 필요한 상황은 생각보다 비슷하게 반복됩니다.<br />
+          아래 패턴 중 하나라도 해당된다면, 바로 “상태 확인”부터 하시는 게 안전합니다.
+        </p>
+
+        <ul class="tfx-ul">
+          <li>동/호수 누락, 우편번호 오입력</li>
+          <li>예전 주소 자동완성 그대로 결제</li>
+          <li>수령인 이름/연락처 일부 누락</li>
+          <li>해외 직구 습관대로 영문 주소로 입력(국내 배송 기준과 충돌)</li>
+          <li>회사/집 주소를 바꿔 넣거나, 배송 메모에 주소를 적어버림</li>
+        </ul>
+
+        <p class="tfx-p">
+          주소 문제는 “나중에 연락 오겠지”라고 넘기면 확률적으로 손해가 커집니다.<br />
+          <b>테무 주소 수정</b>은 가능한 순간에 바로 처리하는 게 가장 싸게 끝납니다.
+        </p>
+      </section>
+
+      <!-- ✅ 본문 쿠폰 카드 1개 삽입(다운로드 유도) -->
+      <section class="tfx-section" id="coupon-inline">
+        <h2 class="tfx-h2">주소 수정 급할 때, 할인/이벤트는 “한 번에” 정리해두는 게 편합니다</h2>
+
+        <p class="tfx-p">
+          주소를 급하게 수정하거나 취소 후 재주문을 하게 되면,
+          할인/이벤트를 다시 챙겨야 해서 흐름이 끊기기 쉽습니다.<br />
+          그래서 아래처럼 <b>쿠폰 카드 1개</b>를 “바로 복사 + 다운로드”로 정리해두면,
+          재주문할 때 실수 확률이 확 내려갑니다.
+        </p>
+
+        <div class="tfx-inline-coupon" role="region" aria-label="쿠폰 다운로드 카드">
+          <div class="head">
+            <div class="title">🔥 빠른 적용 쿠폰 카드 <span style="color:#ff8c00; font-weight:900;">(다운로드 유도)</span></div>
+            <div class="sub">복사 → 다운로드(열기) → 주문 재진행 순서로 쓰세요.</div>
+          </div>
+
+          <div class="body">
+            <div class="row">
+              <div style="display:flex; gap:12px; align-items:center;">
+                <div class="badge">1원</div>
+                <div class="meta">
+                  <div class="name">상품 이벤트</div>
+                  <div class="code">frw419209</div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" data-copy="frw419209">코드 복사</button>
+                <a class="btn btn-primary" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+                  다운로드
+                </a>
+              </div>
+            </div>
+
+            <div class="hint">
+              <span>· 카드 클릭 대신 “다운로드” 버튼으로 열면 흐름이 덜 끊깁니다.</span>
+              <span>· 복사 버튼은 코드만 복사합니다.</span>
+            </div>
+
+            <div class="note">
+              주소 수정이 안 되어서 “취소 → 재주문” 루트로 갈 때,
+              재주문 화면에서 쿠폰을 다시 찾다가 실수(옵션/주소) 재발하는 경우가 많습니다.<br />
+              위 카드처럼 <b>한 번에 복사 + 다운로드</b>로 정리해두면 훨씬 편합니다.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">상태별로 달라지는 해결법: 여기서 갈립니다</h2>
+
+        <p class="tfx-p">
+          이제부터가 핵심입니다. <b>테무 주소 수정</b>은 상태별로 대응이 달라집니다.<br />
+          같은 “주소 오입력”이어도, 처리 중이냐 발송 완료냐에 따라 결과가 완전히 달라져요.
+        </p>
+
+        <div class="tfx-grid-3">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">처리 중/확인 중</h3>
+            <p class="tfx-p">
+              주소 변경 버튼이 뜰 확률이 높은 구간입니다.<br />
+              보이면 즉시 변경하고, 저장 후 다시 한 번 확인하세요.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">출고 준비/포장 단계</h3>
+            <p class="tfx-p">
+              주소 수정이 애매해지는 구간입니다.<br />
+              버튼이 없으면 취소 가능 여부를 먼저 확인하는 게 빠릅니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">발송 완료/배송 중</h3>
+            <p class="tfx-p">
+              이때는 주소 수정이 어려울 수 있습니다.<br />
+              가능한 범위만 확인하고, 필요하면 수령 후 환불/반품 루트로 전환합니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip">
+          요약) <b>테무 주소 수정</b>은 “처리 중일 때 해결”이 가장 쉽고,
+          늦어질수록 “취소/환불” 중심으로 전략이 바뀝니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">고객지원 문의할 때, 이렇게 보내면 처리 속도가 달라집니다</h2>
+
+        <p class="tfx-p">
+          주소 수정 문의는 “주소 바꿔주세요” 한 줄로 보내면 오래 걸립니다.<br />
+          아래 템플릿을 그대로 복사해서 보내시면, 커뮤니케이션이 훨씬 빨라집니다.
+        </p>
+
+        <div class="tfx-card-tip">
+          <b>문의 템플릿</b><br />
+          1) 주문번호: XXXXX<br />
+          2) 현재 상태: 처리 중/출고 준비/발송 완료 (앱 표시 그대로)<br />
+          3) 변경 전 주소: (전체)<br />
+          4) 변경 후 주소: (전체, 우편번호 포함)<br />
+          5) 수령인/연락처: (필요 시)<br />
+          6) 변경 사유: 주소 오입력/이사/회사·집 변경 등
+        </div>
+
+        <p class="tfx-p">
+          이 방식으로 보내면 <b>테무 주소 수정</b>이 가능한 케이스에서는
+          체감상 답변이 더 빠르게 돌아오는 편입니다.
+        </p>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리: 테무 주소 수정은 “지금 바로”가 정답입니다</h2>
+
+        <p class="tfx-p">
+          주소를 잘못 넣었다는 걸 알았을 때 가장 위험한 건,
+          “나중에 고치면 되겠지”라고 미루는 것입니다.<br />
+          <b>테무 주소 수정</b>은 시간이 지나면 선택지가 줄어듭니다.
+        </p>
+
+        <p class="tfx-p">
+          오늘 글의 핵심은 간단합니다.<br />
+          <b>상태 확인 → 가능한 액션 즉시 실행 → 안 되면 취소/환불 루트로 전환</b>.<br />
+          이 순서만 지켜도 대부분의 주소 문제는 훨씬 싸고 빠르게 끝납니다.
+        </p>
+
+        <p class="tfx-p">
+          다음 글에서는 “배송조회가 안 뜨거나 멈춰 보일 때”,
+          어디에서 막히는지(통관/허브/배차/스캔) 기준으로 빠르게 분해해서 정리해드리겠습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: ‘예쁜’ 디자인 고정 -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
