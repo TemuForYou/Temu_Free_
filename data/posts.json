@@ -46,15 +46,15 @@
       "id": "p04",
       "category": "실수·문제 해결형",
       "title": "테무 주문 취소, 되는 경우와 절대 안 되는 경우가 갈립니다",
-      "slug": "post-04",
-      "date": "2026-01-05",
+      "slug": "temu-order-cancel-possible-vs-impossible",
+      "date": "2026-01-21",
       "hasCoupon": true,
-      "status": "pending",
+      "status": "true",
       "summary": "업로드 예정",
-      "file": null,
-      "updated": "2026-01-05",
+      "file": "posts/temu-order-cancel-possible-vs-impossible.html",
+      "updated": "2026-01-21",
       "tab": "실수·문제 해결형 ① 통관·배송",
-      "done": false
+      "done": true
     },
     {
       "id": "p05",
