@@ -74,15 +74,15 @@
       "id": "p06",
       "category": "실수·문제 해결형",
       "title": "테무 배송조회 안됨, ‘진행중’인데 멈춘 것처럼 보일 때",
-      "slug": "post-06",
-      "date": "2026-01-05",
+      "slug": "temu-address-wrong-fix-fast",
+      "date": "2026-01-21",
       "hasCoupon": true,
-      "status": "pending",
-      "summary": "업로드 예정",
-      "file": null,
-      "updated": "2026-01-05",
+      "status": "true",
+      "summary": "배송 조회에 문제가 있을때, 100% 해결 가능한 방법",
+      "file": "posts/temu-address-wrong-fix-fast.html",
+      "updated": "2026-01-21",
       "tab": "실수·문제 해결형 ② 주문·결제",
-      "done": false
+      "done": true
     },
     {
       "id": "p07",
