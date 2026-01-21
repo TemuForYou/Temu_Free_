@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다</title>
+
+  <!-- TFY 공통 스타일 -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+</head>
+
+<body>
+  <!-- 단독 오픈 대비 -->
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <!-- ✅ 본문 -->
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">주문·결제</span>
+        <span class="tfx-tag tfx-tag-accent">쿠폰 포함</span>
+      </div>
+
+      <h1 class="tfx-title">
+        테무 결제 오류 발생 시, 대부분 이 단계에서 막힙니다
+      </h1>
+
+      <p class="tfx-lead">
+        테무에서 장바구니까지는 잘 됐는데,<br />
+        결제 버튼 누르는 순간 “오류”가 뜨면 당황스럽습니다.<br />
+        특히 첫 구매라면 “내 카드가 문제인가?”부터 의심하게 되죠.
+      </p>
+
+      <p class="tfx-lead">
+        그런데 실제로는 카드 자체 문제보다,<br />
+        <b>결제 과정 중 ‘검증 단계’에서 막히는 패턴</b>이 훨씬 더 많습니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.01.05</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <div class="tfx-cta-row">
+        <a class="tfx-btn" href="#quick">3분 점검표</a>
+        <a class="tfx-btn tfx-btn-primary" href="#fix">바로 해결 순서</a>
+      </div>
+
+      <section class="tfx-section" id="quick">
+        <h2 class="tfx-h2">결론부터: 결제 오류는 “3가지 구간”에서 반복됩니다</h2>
+
+        <p class="tfx-p">
+          결제 오류는 원인이 수십 개처럼 느껴지지만, 실제로는 크게 3가지 구간에서 반복됩니다.
+          그래서 “어디에서 막혔는지”만 분류하면 해결이 빨라집니다.
+        </p>
+
+        <div class="tfx-grid-3">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">① 결제수단 검증 단계</h3>
+            <p class="tfx-p">
+              카드/간편결제 인증, 해외결제 차단, 한도/보안 설정 때문에 막히는 구간입니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">② 주소·통관정보 연동 단계</h3>
+            <p class="tfx-p">
+              주소 형식/특수문자/이름 불일치, 통관정보 입력 누락 등 “정보 검증”에서 오류가 뜹니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">③ 쿠폰/가격 재계산 단계</h3>
+            <p class="tfx-p">
+              쿠폰 적용/중복/프로모션 충돌로 결제 직전 재계산에서 오류가 뜨는 패턴입니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip">
+          <b>핵심</b><br />
+          “카드가 안 되는 것 같아서” 결제수단만 계속 바꾸는 경우가 많은데,
+          실제로는 주소/통관/쿠폰 충돌 때문에 막히는 경우도 꽤 많습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section" id="fix">
+        <h2 class="tfx-h2">바로 해결 순서 (이대로만 해보시면 됩니다)</h2>
+
+        <ol class="tfx-ol">
+          <li>앱/웹을 <b>완전히 종료</b> 후 다시 실행합니다 (캐시/세션 오류가 생각보다 많습니다)</li>
+          <li>결제 화면에서 <b>쿠폰을 잠시 해제</b>하고 결제가 되는지 먼저 확인합니다</li>
+          <li>배송지에서 <b>특수문자/이모지/끝 공백</b>을 제거합니다</li>
+          <li>이름(영문/한글)과 <b>통관정보</b>가 일치하는지 확인합니다</li>
+          <li>해외결제 차단/한도/인증(3D Secure 등) 설정을 확인합니다</li>
+          <li>그래도 실패하면 결제수단을 1회만 변경(카드→간편결제)해서 테스트합니다</li>
+        </ol>
+
+        <p class="tfx-p">
+          중요한 건 “무작정 이것저것”이 아니라,<br />
+          <b>쿠폰 → 정보(주소/통관) → 결제수단</b> 순서로 좁혀가는 겁니다.
+        </p>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">원인 1) 앱/웹 세션 문제: 결제 직전 멈추거나 오류가 뜬다</h2>
+
+        <p class="tfx-p">
+          테무는 할인/프로모션이 자주 바뀌어서, 결제 직전에 가격이 재계산되는 경우가 많습니다.
+          이때 세션이 꼬이면 “다시 시도해 주세요” 류의 오류가 뜰 수 있어요.
+        </p>
+
+        <ul class="tfx-ul">
+          <li>해결: 앱 완전 종료 → 재실행</li>
+          <li>해결: 다른 네트워크(와이파이 ↔ 데이터)로 한 번 전환</li>
+          <li>해결: 장바구니에서 품목 1~2개만 남기고 테스트 결제</li>
+        </ul>
+
+        <div class="tfx-card-tip">
+          팁) 결제 오류가 “계속 같은 순간”에 뜬다면, 앱 문제일 가능성이 큽니다.<br />
+          반대로 “매번 다른 오류”가 뜨면, 정보 검증(주소/통관) 문제일 가능성이 큽니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">원인 2) 쿠폰/프로모션 충돌: 결제 직전 재계산에서 막힌다</h2>
+
+        <p class="tfx-p">
+          쿠폰을 적용했을 때만 오류가 나고, 쿠폰을 빼면 결제가 되는 경우가 있습니다.
+          이건 대부분 “중복/조건/적용 대상” 충돌이에요.
+        </p>
+
+        <p class="tfx-p"><b>이럴 땐 이렇게 확인하면 빠릅니다.</b></p>
+        <ul class="tfx-ul">
+          <li>쿠폰을 <b>완전히 해제</b>하고 결제가 되는지 먼저 확인</li>
+          <li>결제가 되면, 다시 쿠폰을 하나씩 적용해보기</li>
+          <li>특정 카테고리(디지털/특가/묶음) 상품이 섞이면 충돌이 생길 수 있음</li>
+        </ul>
+
+        <div class="tfx-card-tip">
+          결론) “쿠폰 때문에 막히는지”를 먼저 분리해보면 해결이 훨씬 빨라집니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">원인 3) 주소 입력 문제: 사소한 글자 하나로도 실패합니다</h2>
+
+        <p class="tfx-p">
+          결제는 “결제수단”만 검증하는 게 아니라, 배송지 정보도 같이 검증합니다.
+          그래서 주소 입력에 아래 요소가 있으면 결제 단계에서 막히는 경우가 있습니다.
+        </p>
+
+        <div class="tfx-grid-2">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">자주 터지는 패턴</h3>
+            <ul class="tfx-ul">
+              <li>상세주소 끝 공백</li>
+              <li>괄호/특수문자 과다</li>
+              <li>이모지/기호 포함</li>
+              <li>연락처 형식 오류</li>
+              <li>한글/영문 혼용이 과도</li>
+            </ul>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">권장 입력 방식</h3>
+            <ul class="tfx-ul">
+              <li>특수문자 최소화</li>
+              <li>상세주소는 간단히</li>
+              <li>연락처 숫자만 정확히</li>
+              <li>불필요한 안내문(메모) 제거</li>
+              <li>우편번호/기본주소 재확인</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip">
+          팁) 결제 오류가 계속 나면, 배송지를 “새로 추가”해서 같은 정보를 다시 넣는 게
+          생각보다 빨리 해결되는 경우가 많습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">원인 4) 통관정보/이름 불일치: 결제는 ‘승인’인데 주문이 실패한다</h2>
+
+        <p class="tfx-p">
+          간혹 결제 알림은 뜨는데 주문이 실패했다고 나오는 경우가 있습니다.
+          이럴 땐 통관정보/이름 불일치로 주문 생성 단계에서 막혔을 가능성이 있어요.
+        </p>
+
+        <ul class="tfx-ul">
+          <li>이름(한글/영문)과 통관정보 이름이 맞는지 확인</li>
+          <li>통관부호(개인통관고유부호) 오타/공백 확인</li>
+          <li>주문자/수령인이 다른 경우, 수령인 기준으로 맞추는 것이 안전</li>
+        </ul>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">원인 5) 해외결제 차단/한도/인증 문제: 진짜 ‘결제수단’에서 막힌다</h2>
+
+        <p class="tfx-p">
+          물론 결제수단 자체가 원인인 경우도 있습니다.
+          특히 국내 카드/간편결제는 보안 설정(해외결제 차단, 추가 인증)에 따라 실패할 수 있어요.
+        </p>
+
+        <div class="tfx-card-tip">
+          <b>체크 리스트</b><br />
+          1) 해외결제 차단 해제 여부<br />
+          2) 온라인 결제 한도 초과 여부<br />
+          3) 3D Secure/추가 인증 요청 여부<br />
+          4) 카드사 앱에서 “해외 온라인 결제 허용” 설정
+        </div>
+
+        <p class="tfx-p">
+          여기까지 했는데도 안 되면, 결제수단을 “무작정 여러 개” 바꾸기보다<br />
+          <b>하나만 바꿔서 테스트</b>하는 게 좋습니다. (원인 파악이 가능해집니다)
+        </p>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리: 가장 빠른 해결은 ‘분리 테스트’입니다</h2>
+
+        <p class="tfx-p">
+          결제 오류는 답답하게 느껴지지만,<br />
+          실제 해결은 단순합니다.
+        </p>
+
+        <ul class="tfx-ul">
+          <li>쿠폰 빼고 결제 → 되면 쿠폰 충돌</li>
+          <li>주소 새로 저장 → 되면 입력 형식 문제</li>
+          <li>통관/이름 확인 → 되면 검증 단계 문제</li>
+          <li>결제수단 설정 확인 → 진짜 결제수단 문제</li>
+        </ul>
+
+        <p class="tfx-p">
+          TFY는 앞으로도 “대부분이 막히는 지점” 위주로만 정리해서,
+          막히는 순간 바로 해결할 수 있게 만들어가겠습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널(1번/2번과 동일 구조) -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="coupon-head">
+          <div class="coupon-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="coupon-desc">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <div class="coupon-item">
+          <div class="coupon-row">
+            <div class="coupon-left">
+              <div class="coupon-badge">30%</div>
+              <div class="coupon-text">
+                <div class="coupon-name">할인 코드</div>
+                <div class="coupon-code">ack263361</div>
+              </div>
+            </div>
+            <div class="coupon-actions">
+              <button class="coupon-btn" data-copy="ack263361">복사</button>
+              <a class="coupon-btn coupon-btn-ghost" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener noreferrer">이동</a>
+            </div>
+          </div>
+          <a class="coupon-download" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener noreferrer">다운로드</a>
+        </div>
+
+        <div class="coupon-item">
+          <div class="coupon-row">
+            <div class="coupon-left">
+              <div class="coupon-badge">1원</div>
+              <div class="coupon-text">
+                <div class="coupon-name">이벤트 코드</div>
+                <div class="coupon-code">frw419209</div>
+              </div>
+            </div>
+            <div class="coupon-actions">
+              <button class="coupon-btn" data-copy="frw419209">복사</button>
+              <a class="coupon-btn coupon-btn-ghost" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener noreferrer">이동</a>
+            </div>
+          </div>
+          <a class="coupon-download" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener noreferrer">다운로드</a>
+        </div>
+
+        <div class="coupon-item">
+          <div class="coupon-row">
+            <div class="coupon-left">
+              <div class="coupon-badge">99%</div>
+              <div class="coupon-text">
+                <div class="coupon-name">할인 코드</div>
+                <div class="coupon-code">alf468043</div>
+              </div>
+            </div>
+            <div class="coupon-actions">
+              <button class="coupon-btn" data-copy="alf468043">복사</button>
+              <a class="coupon-btn coupon-btn-ghost" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener noreferrer">이동</a>
+            </div>
+          </div>
+          <a class="coupon-download" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener noreferrer">다운로드</a>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", () => copyText(btn.getAttribute("data-copy")));
+      });
+    })();
+  </script>
+</body>
+</html>
