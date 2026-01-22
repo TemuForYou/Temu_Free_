@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 배송조회 안됨, ‘진행중’인데 멈춘 것처럼 보일 때</title>
+
+  <!-- TFY 공통 스타일 -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <!-- ✅ 6번 글(p06) 전용: 본문 쿠폰 카드 1개(다운로드 유도) -->
+  <style>
+    /* 본문 쿠폰 카드: 측면 패널의 포인트 톤을 가져와 깔끔/세련되게 */
+    .tfx-inline-coupon{
+      margin: 18px 0 10px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 140, 0, 0.25);
+      background: #fff7ef;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.06);
+      overflow: hidden;
+    }
+    .tfx-inline-coupon .head{
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      background: rgba(255,255,255,0.78);
+      backdrop-filter: blur(6px);
+    }
+    .tfx-inline-coupon .title{
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      display:flex;
+      gap:8px;
+      align-items:center;
+    }
+    .tfx-inline-coupon .sub{
+      margin-top: 6px;
+      color:#666;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .tfx-inline-coupon .body{
+      padding: 14px 16px 16px;
+    }
+    .tfx-inline-coupon .row{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      justify-content:space-between;
+      flex-wrap:wrap;
+    }
+    .tfx-inline-coupon .badge{
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background:#ff8c00;
+      color:#fff;
+      display:grid;
+      place-items:center;
+      font-weight: 900;
+      box-shadow: 0 10px 18px rgba(255, 140, 0, 0.25);
+      flex:0 0 auto;
+    }
+    .tfx-inline-coupon .meta{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+      min-width: 240px;
+    }
+    .tfx-inline-coupon .meta .name{
+      font-weight: 800;
+      color:#222;
+    }
+    .tfx-inline-coupon .meta .code{
+      font-weight: 900;
+      color:#111;
+      letter-spacing: 0.5px;
+      font-size: 18px;
+    }
+    .tfx-inline-coupon .actions{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex:0 0 auto;
+    }
+    .tfx-inline-coupon .btn{
+      border: 1px solid rgba(255, 140, 0, 0.55);
+      background:#fff;
+      color:#ff8c00;
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-weight: 900;
+      cursor:pointer;
+      transition: transform .05s ease, box-shadow .15s ease;
+      user-select:none;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      line-height:1;
+    }
+    .tfx-inline-coupon .btn:hover{ box-shadow: 0 10px 22px rgba(255, 140, 0, 0.18); }
+    .tfx-inline-coupon .btn:active{ transform: translateY(1px); }
+    .tfx-inline-coupon .btn-primary{
+      background:#ff8c00;
+      border-color:#ff8c00;
+      color:#fff;
+    }
+    .tfx-inline-coupon .hint{
+      margin-top: 10px;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+      color:#666;
+      font-size: 12.5px;
+      flex-wrap:wrap;
+    }
+    .tfx-inline-coupon .note{
+      margin-top: 10px;
+      background: rgba(255,255,255,0.72);
+      border: 1px dashed rgba(255, 140, 0, 0.35);
+      border-radius: 14px;
+      padding: 10px 12px;
+      color:#555;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .tfx-bullets{
+      margin: 10px 0 0;
+      padding: 0 0 0 18px;
+    }
+    .tfx-bullets li{ margin: 6px 0; }
+    .tfx-kpi{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top: 12px;
+    }
+    .tfx-kpi .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background:#fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 10px 18px rgba(0,0,0,0.05);
+      font-weight: 800;
+      color:#222;
+    }
+    .tfx-kpi .dot{
+      width:10px; height:10px; border-radius: 999px;
+      background:#ff8c00;
+      box-shadow: 0 8px 14px rgba(255,140,0,.25);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">배송·조회</span>
+        <span class="tfx-tag tfx-tag-accent">쿠폰 포함</span>
+      </div>
+
+      <h1 class="tfx-title">테무 배송조회 안됨, ‘진행중’인데 멈춘 것처럼 보일 때</h1>
+
+      <p class="tfx-lead">
+        테무에서 주문하고 며칠 지났는데 배송조회가 “진행중” 그대로거나,
+        스캔 기록이 멈춘 것처럼 보이면 정말 불안해집니다.<br />
+        특히 <b>테무 배송조회 안됨</b>이라고 검색하기 시작한 순간부터는
+        “내 물건이 사라진 거 아닌가?”까지 생각이 가는 경우가 많아요.
+      </p>
+
+      <p class="tfx-lead">
+        결론부터 말씀드리면, <b>테무 배송조회 안됨</b> 현상은
+        실제 분실보다 “스캔/연동이 늦게 찍히는 구간”에서 더 많이 발생합니다.<br />
+        그래서 이 글은 추측을 줄이고, <b>어디에서 멈춰 보이는지</b>를 기준으로
+        현실적으로 확인할 것만 정리해드립니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.01.07</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <div class="tfx-cta-row">
+        <a class="tfx-btn" href="#quick">3분 진단표</a>
+        <a class="tfx-btn tfx-btn-primary" href="#steps">가장 빠른 해결 순서</a>
+      </div>
+
+      <section class="tfx-section" id="quick">
+        <h2 class="tfx-h2">3분 진단표: “멈춘 것처럼 보이는 구간”이 따로 있습니다</h2>
+
+        <p class="tfx-p">
+          <b>테무 배송조회 안됨</b>이라고 느껴지는 순간은 보통 아래 3구간 중 하나입니다.<br />
+          중요한 건 “배송이 멈춘 게 아니라, 업데이트가 멈춰 보일 뿐”인 경우가 꽤 많다는 점입니다.
+        </p>
+
+        <div class="tfx-grid-3">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">① 출고 직후</h3>
+            <p class="tfx-p">
+              운송장/조회 연동이 늦게 붙는 구간입니다.<br />
+              이때 <b>테무 배송조회 안됨</b>처럼 보여도 정상인 경우가 많습니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">② 통관/허브 구간</h3>
+            <p class="tfx-p">
+              스캔이 한 번에 몰려 찍히는 구간입니다.<br />
+              며칠 멈춘 듯하다가 갑자기 “쭉” 갱신되기도 합니다.
+            </p>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">③ 국내 인계 구간</h3>
+            <p class="tfx-p">
+              해외→국내로 넘어오면서 조회 화면이 바뀌는 구간입니다.<br />
+              이때도 <b>테무 배송조회 안됨</b>이 자주 검색됩니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="tfx-kpi">
+          <span class="pill"><span class="dot"></span> “진행중”만 뜨는 날이 있음</span>
+          <span class="pill"><span class="dot"></span> 스캔은 늦게 ‘한꺼번에’ 찍힘</span>
+          <span class="pill"><span class="dot"></span> 조회 화면이 바뀌는 구간이 있음</span>
+        </div>
+
+        <div class="tfx-card-tip" style="margin-top:14px;">
+          요약) <b>테무 배송조회 안됨</b>이라고 느껴질 때는,
+          먼저 “지금 어느 구간인지”를 잡으면 불필요한 불안이 크게 줄어듭니다.
+        </div>
+      </section>
+
+      <section class="tfx-section" id="steps">
+        <h2 class="tfx-h2">가장 빠른 해결 순서: 이 순서대로 확인하면 됩니다</h2>
+
+        <p class="tfx-p">
+          배송조회가 멈춘 것처럼 보일 때는 “여기저기 링크를 눌러보는 것”보다,
+          확인해야 할 지점을 순서대로 좁히는 게 훨씬 빠릅니다.<br />
+          아래 순서는 <b>테무 배송조회 안됨</b> 상황에서 가장 효율적인 루트입니다.
+        </p>
+
+        <ol class="tfx-ol">
+          <li><b>주문 상세</b>에서 상태 문구 확인(처리 중/발송/배송 중/도착 예정)</li>
+          <li>운송장(또는 추적번호)이 <b>아예 없는지</b>, 있는지 먼저 분리</li>
+          <li>추적번호가 있으면 <b>스캔 기록 마지막 시간</b>을 확인</li>
+          <li>통관/허브 구간이면 “정체”가 아니라 <b>스캔 몰림</b> 가능성 고려</li>
+          <li>국내 인계 후면 <b>조회 채널</b>이 바뀌는지 확인</li>
+          <li>이상 징후(반송/주소 오류/분실 의심)가 보이면 <b>주문번호로 문의</b></li>
+        </ol>
+
+        <div class="tfx-card-tip">
+          포인트) <b>테무 배송조회 안됨</b> 문의는 “안 움직여요”보다,<br />
+          <b>주문번호 + 마지막 스캔 시간 + 현재 문구</b>를 같이 보내면 처리 속도가 체감상 빨라집니다.
+        </div>
+      </section>
+
+      <!-- ✅ 본문 쿠폰 카드 1개(다운로드 유도) -->
+      <section class="tfx-section" id="coupon-inline">
+        <h2 class="tfx-h2">배송이 답답할 때, 할인/이벤트는 “다운로드로 한 번에” 정리해두세요</h2>
+
+        <p class="tfx-p">
+          <b>테무 배송조회 안됨</b> 상황에서 사람들이 가장 많이 하는 실수가 있습니다.<br />
+          배송만 붙잡고 있다가, 정작 “다음 주문/재주문” 때 쿠폰을 못 챙겨서 손해 보는 경우예요.<br />
+          아래 쿠폰 카드는 <b>코드 복사 + 다운로드(열기)</b>로 흐름을 끊지 않게 설계했습니다.
+        </p>
+
+        <div class="tfx-inline-coupon" role="region" aria-label="본문 쿠폰 다운로드 카드">
+          <div class="head">
+            <div class="title">
+              🔥 쿠폰 카드 (빠른 적용)
+              <span style="color:#ff8c00; font-weight:900;">다운로드 유도</span>
+            </div>
+            <div class="sub">복사 → 다운로드(열기) → 결제 화면에서 바로 적용하세요.</div>
+          </div>
+
+          <div class="body">
+            <div class="row">
+              <div style="display:flex; gap:12px; align-items:center;">
+                <div class="badge">30%</div>
+                <div class="meta">
+                  <div class="name">할인 코드</div>
+                  <div class="code">ack263361</div>
+                </div>
+              </div>
+
+              <div class="actions">
+                <button class="btn" type="button" data-copy="ack263361">코드 복사</button>
+                <a class="btn btn-primary" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+                  다운로드
+                </a>
+              </div>
+            </div>
+
+            <div class="hint">
+              <span>· “다운로드”는 링크 열기(이동) 용도로 사용하세요.</span>
+              <span>· 복사 버튼은 코드만 복사합니다.</span>
+            </div>
+
+            <div class="note">
+              배송조회가 답답해서 검색을 계속 하다 보면,
+              쿠폰/이벤트는 잊고 넘어가기 쉽습니다.<br />
+              위 카드처럼 <b>한 번에 복사 + 다운로드</b>로 정리해두면, 다음 주문에서 실수가 줄어듭니다.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">테무 배송조회 안됨처럼 보이는 “정상 패턴”</h2>
+
+        <p class="tfx-p">
+          먼저, 불안해하기 전에 “정상인데도 멈춘 것처럼 보이는 패턴”을 아셔야 합니다.<br />
+          아래 패턴은 실제로 <b>테무 배송조회 안됨</b> 검색이 폭발하는 대표 케이스입니다.
+        </p>
+
+        <ul class="tfx-ul">
+          <li><b>스캔 누락</b>: 중간 스캔이 누락돼서 업데이트가 뜸해 보임</li>
+          <li><b>스캔 몰림</b>: 하루~며칠 멈춘 듯하다가 한 번에 여러 단계가 찍힘</li>
+          <li><b>조회 채널 전환</b>: 해외→국내로 넘어오며 화면/번호가 바뀌어 보임</li>
+          <li><b>시간대 차이</b>: 해외 구간은 업데이트 시간이 한국 시간과 다르게 체감</li>
+        </ul>
+
+        <p class="tfx-p">
+          이 패턴에서는 “멈춤”이 아니라 “표시”가 늦는 경우가 많습니다.<br />
+          그래서 <b>테무 배송조회 안됨</b>이더라도, 첫 단계는 항상 “어디 구간인지”부터 잡는 게 안전합니다.
+        </p>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">위험 신호 체크: 이 문구가 보이면 바로 분기하세요</h2>
+
+        <p class="tfx-p">
+          반대로, 아래 문구가 보이면 단순 지연이 아니라
+          “액션을 해야 하는” 케이스일 수 있습니다.<br />
+          <b>테무 배송조회 안됨</b>이 오래가면서 이런 신호가 함께 있으면, 바로 문의 루트로 가는 게 좋습니다.
+        </p>
+
+        <div class="tfx-grid-2">
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">주소/수령 문제 신호</h3>
+            <ul class="tfx-bullets">
+              <li>주소 오류/수취인 불명</li>
+              <li>연락 불가/부재</li>
+              <li>반송 예정/반송 처리</li>
+            </ul>
+          </div>
+          <div class="tfx-card-mini">
+            <h3 class="tfx-h3">물류/분실 의심 신호</h3>
+            <ul class="tfx-bullets">
+              <li>장기간 동일 위치 고정</li>
+              <li>예상 도착일이 계속 뒤로 밀림</li>
+              <li>분실 조사/예외 처리 문구</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip">
+          팁) 이때는 “언제 와요?”보다,
+          <b>주문번호 + 마지막 스캔 시간 + 현재 문구</b>를 같이 전달하셔야 빠릅니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">문의 템플릿: 그대로 복사해서 보내면 됩니다</h2>
+
+        <p class="tfx-p">
+          <b>테무 배송조회 안됨</b>으로 문의할 때,
+          아래 템플릿을 그대로 보내면 답변이 훨씬 정확해집니다.
+        </p>
+
+        <div class="tfx-card-tip">
+          <b>문의 템플릿</b><br />
+          1) 주문번호: XXXXX<br />
+          2) 현재 상태 문구: (앱에 표시된 문구 그대로)<br />
+          3) 추적번호: (있으면 함께)<br />
+          4) 마지막 스캔 시간/장소: (보이는 그대로)<br />
+          5) 이상 징후: 주소 오류/반송/분실 의심 여부<br />
+          6) 요청: 위치 확인/인계 확인/다음 단계 안내
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리: 배송조회는 “멈춤”보다 “표시 지연”이 더 흔합니다</h2>
+
+        <p class="tfx-p">
+          <b>테무 배송조회 안됨</b>은 생각보다 자주 발생하지만,
+          실제로는 “스캔/연동/채널 전환” 때문에 멈춘 것처럼 보이는 경우가 많습니다.<br />
+          그래서 오늘 글의 순서대로 “구간을 잡고 → 신호를 분리하고 → 문의 템플릿으로 정리”하면,
+          불안과 시간을 동시에 줄일 수 있습니다.
+        </p>
+
+        <p class="tfx-p">
+          다음 글에서는 주소 수정/오입력처럼
+          “사람 실수로 생기는 배송 문제”를 분기 기준으로 정리해서,
+          가장 빠르게 해결되는 루트만 이어서 안내하겠습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: ‘예쁜’ 디자인 고정 -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
