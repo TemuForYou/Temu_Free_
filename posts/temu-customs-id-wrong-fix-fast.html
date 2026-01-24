@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 통관번호 오류/미입력: 수정 가능한 타이밍과 가장 빠른 해결 루트</title>
+
+  <!-- TFY 공통 스타일 -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <style>
+    /* ✅ 본문 가독성 강화(디자인 유지, 간격/정돈만) */
+    .tfx-p { line-height: 1.85; }
+    .tfx-strong { font-weight: 900; color:#111; }
+
+    /* 본문 체크 카드 (측면 패널 포인트 톤 기반) */
+    .tfx-checkcard{
+      margin: 14px 0 6px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 140, 0, 0.18);
+      background: #fff7ef;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+      padding: 14px 14px 12px;
+    }
+    .tfx-checkcard .title{
+      display:flex; align-items:center; gap:8px;
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      margin-bottom: 8px;
+    }
+    .tfx-checkcard .rows{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:8px;
+      margin-top: 8px;
+    }
+    .tfx-checkcard .row{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.78);
+      border: 1px solid rgba(0,0,0,0.05);
+    }
+    .tfx-checkcard .dot{
+      width:10px; height:10px; border-radius:999px;
+      margin-top: 6px;
+      background:#ff8c00;
+      box-shadow: 0 10px 18px rgba(255, 140, 0, 0.22);
+      flex:0 0 auto;
+    }
+    .tfx-checkcard .row b{
+      font-weight: 900;
+      color:#111;
+    }
+
+    /* 단계별 “빠른 해결 순서” 카드 */
+    .tfx-steps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    @media (max-width: 980px){
+      .tfx-steps{ grid-template-columns: 1fr; }
+    }
+    .tfx-steps .step{
+      border-radius: 18px;
+      background:#fff;
+      border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+    }
+    .tfx-steps .step .n{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:34px; height:34px;
+      border-radius: 999px;
+      background:#ff8c00;
+      color:#fff;
+      font-weight: 900;
+      box-shadow: 0 12px 20px rgba(255, 140, 0, 0.22);
+      margin-right: 8px;
+    }
+    .tfx-steps .step .h{
+      font-weight: 900;
+      letter-spacing: -0.2px;
+      margin: 2px 0 6px;
+    }
+    .tfx-steps .step .d{
+      color:#444;
+      line-height: 1.7;
+      margin:0;
+    }
+
+    /* “실수 유형” 비교 */
+    .tfx-compare{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 980px){
+      .tfx-compare{ grid-template-columns: 1fr; }
+    }
+    .tfx-compare .box{
+      border-radius: 18px;
+      border: 1px solid rgba(0,0,0,0.06);
+      background:#fff;
+      box-shadow: 0 12px 26px rgba(0,0,0,0.05);
+      overflow:hidden;
+    }
+    .tfx-compare .head{
+      padding: 12px 14px;
+      font-weight: 900;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      display:flex; align-items:center; gap:8px;
+    }
+    .tfx-compare .head.good{
+      background: rgba(0, 180, 120, 0.10);
+      color:#0b6b4d;
+    }
+    .tfx-compare .head.bad{
+      background: rgba(255, 90, 90, 0.10);
+      color:#a11a1a;
+    }
+    .tfx-compare .body{
+      padding: 12px 14px 14px;
+      color:#333;
+      line-height: 1.7;
+    }
+    .tfx-compare ul{
+      margin: 6px 0 0;
+      padding-left: 18px;
+    }
+    .tfx-compare li{ margin: 7px 0; }
+
+    /* 문의 템플릿 */
+    .tfx-template{
+      margin-top: 12px;
+      border-radius: 18px;
+      border: 1px dashed rgba(255, 140, 0, 0.35);
+      background: rgba(255,255,255,0.75);
+      padding: 12px 14px;
+      color:#444;
+      line-height: 1.75;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">통관·배송</span>
+        <span class="tfx-tag tfx-tag-accent">쿠폰 포함</span>
+      </div>
+
+      <h1 class="tfx-title">테무 통관번호 오류/미입력: 수정 가능한 타이밍과 가장 빠른 해결 루트</h1>
+
+      <p class="tfx-lead">
+        테무 주문이 “진행중”인데 갑자기 멈춘 것처럼 보이거나,
+        배송이 일정 구간에서 더 이상 업데이트되지 않는 경우가 있습니다.<br />
+        이때 가장 많이 터지는 원인 중 하나가 <b class="tfx-strong">테무 통관번호 오류</b>,
+        또는 <b class="tfx-strong">통관번호 미입력</b>입니다.
+      </p>
+
+      <p class="tfx-lead">
+        중요한 건 “통관번호가 틀렸나?” 자체보다,
+        <b class="tfx-strong">언제/어디서/어떤 방식으로 수정해야 가장 빠른지</b>입니다.
+        이 글에서는 <b class="tfx-strong">테무 통관번호</b>를 중심으로
+        실제로 많이 발생하는 케이스를 가장 현실적으로 정리해드립니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.01.09</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <div class="tfx-cta-row">
+        <a class="tfx-btn" href="#fast">30초 결론</a>
+        <a class="tfx-btn tfx-btn-primary" href="#route">가장 빠른 해결 순서</a>
+      </div>
+
+      <section class="tfx-section" id="fast">
+        <h2 class="tfx-h2">30초 결론: “진행중인데 멈춘 것처럼” 보이면 통관번호부터 점검합니다</h2>
+
+        <p class="tfx-p">
+          테무 배송은 크게 보면 <b class="tfx-strong">해외 이동 → 통관 확인 → 국내 인계</b> 흐름으로 움직입니다.
+          그래서 “진행중”이 오래 유지되는 구간이 생길 수 있는데,
+          그 중에서 가장 흔한 변수가 <b class="tfx-strong">테무 통관번호</b>입니다.
+        </p>
+
+        <div class="tfx-checkcard">
+          <div class="title">✅ 통관번호 문제를 의심해야 하는 대표 신호</div>
+          <div class="rows">
+            <div class="row">
+              <span class="dot"></span>
+              <div>
+                <b>상태는 “진행중/처리중”인데</b> 며칠 동안 변화가 거의 없음
+              </div>
+            </div>
+            <div class="row">
+              <span class="dot"></span>
+              <div>
+                배송이 “국내 도착/통관 대기”처럼 보이는 구간에서 오래 멈춤
+              </div>
+            </div>
+            <div class="row">
+              <span class="dot"></span>
+              <div>
+                주문 상세에 “통관 정보 필요/확인” 느낌의 안내가 보임
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="tfx-card-tip" style="margin-top:12px;">
+          요약) <b class="tfx-strong">테무 통관번호</b>가 한 글자라도 틀리면,
+          “배송이 멈춘 것처럼 보이는 구간”이 길어질 수 있습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section" id="route">
+        <h2 class="tfx-h2">가장 빠른 해결 순서: 이 순서대로 하면 시행착오가 줄어듭니다</h2>
+
+        <p class="tfx-p">
+          통관번호는 “찾아 넣으면 끝”처럼 보이지만,
+          실제로는 상황에 따라 루트가 갈립니다.
+          아래 순서대로 처리하면 가장 빠릅니다.
+        </p>
+
+        <div class="tfx-steps">
+          <div class="step">
+            <div class="h"><span class="n">1</span>주문 상세에서 상태 확인</div>
+            <p class="d">진행중/처리중인지, 발송/배송중인지 먼저 체크합니다. “통관 단계로 보이는지”가 핵심입니다.</p>
+          </div>
+          <div class="step">
+            <div class="h"><span class="n">2</span>통관번호 입력/오타 여부 확인</div>
+            <p class="d"><b class="tfx-strong">테무 통관번호</b>는 한 글자만 틀려도 매칭이 깨질 수 있습니다. 숫자/영문 혼동을 특히 조심합니다.</p>
+          </div>
+          <div class="step">
+            <div class="h"><span class="n">3</span>앱에서 수정 시도 (가능하면 즉시)</div>
+            <p class="d">수정 버튼이 열려 있으면 바로 수정합니다. 시간이 지날수록 수정이 막히는 케이스가 늘어납니다.</p>
+          </div>
+          <div class="step">
+            <div class="h"><span class="n">4</span>수정 불가면 문의/증빙 루트로 분기</div>
+            <p class="d">수정이 막히면 템플릿대로 문의를 넣는 게 가장 빠릅니다. 답변 기다리며 재시도만 하면 오히려 늦습니다.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">테무 통관번호 오류, 실제로 가장 많은 4가지 유형</h2>
+
+        <p class="tfx-p">
+          검색에서 “테무 통관번호 오류”가 많은 이유는,
+          문제 유형이 딱 정해져 있기 때문입니다.
+          아래 4가지만 체크해도 대부분 해결 방향이 잡힙니다.
+        </p>
+
+        <ol class="tfx-ol">
+          <li><b>오타</b>: 숫자 0/O, 1/I 같은 혼동</li>
+          <li><b>미입력</b>: 아예 통관번호를 넣지 않음</li>
+          <li><b>명의 불일치</b>: 주문자 이름과 통관정보의 이름이 다름</li>
+          <li><b>중복/예전 정보</b>: 오래된 정보가 자동으로 들어간 경우</li>
+        </ol>
+
+        <div class="tfx-card-tip">
+          포인트) “내가 입력한 것 같았는데?”라고 느껴도,
+          실제로는 <b class="tfx-strong">예전 정보가 자동으로 들어가거나</b> <b class="tfx-strong">한 글자 오타</b>가 가장 많습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">수정 가능한 경우 / 수정이 어려운 경우 (현실 기준)</h2>
+
+        <div class="tfx-compare">
+          <div class="box">
+            <div class="head good">✅ 수정 가능한 경우</div>
+            <div class="body">
+              이런 경우는 <b class="tfx-strong">테무 통관번호</b>를 앱에서 바꾸거나,
+              간단한 확인만으로 빠르게 풀리는 경우가 많습니다.
+              <ul>
+                <li>상태가 <b>처리 중</b>이거나 <b>통관 대기</b>처럼 보이는 단계</li>
+                <li>단순 오타/미입력 (정보만 정정하면 되는 케이스)</li>
+                <li>국내 배송사 인계 전</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="box">
+            <div class="head bad">⛔ 수정이 어려운 경우</div>
+            <div class="body">
+              아래 경우는 앱에서 버튼이 막힐 수 있고,
+              문의/증빙 루트가 더 빠릅니다.
+              <ul>
+                <li>국내 배송사 인계 이후</li>
+                <li>명의 불일치(주문자/통관 정보가 다름)</li>
+                <li>반송/통관 보류 안내가 이미 뜬 상태</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">문의 템플릿: 이렇게 보내면 답이 빨라집니다</h2>
+
+        <p class="tfx-p">
+          <b class="tfx-strong">테무 통관번호 오류</b>는 상담에서 가장 중요한 게 “정보를 한 번에 제공”하는 것입니다.
+          아래 템플릿을 그대로 사용하면 왕복 질문이 줄어들어 처리 속도가 빨라집니다.
+        </p>
+
+        <div class="tfx-template">
+          <b>문의 템플릿</b><br />
+          1) 주문번호: XXXXX<br />
+          2) 현재 상태: 진행중/처리중/통관 대기 (표시 문구 그대로)<br />
+          3) 문제 유형: 통관번호 오타 / 미입력 / 명의 불일치 / 기타<br />
+          4) 정확한 통관번호: (정확히 입력)<br />
+          5) 주문자 이름: (주문 정보 그대로)<br />
+          6) 요청 사항: 통관번호 수정 또는 확인 요청드립니다
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리: “진행중인데 멈춘 것처럼” 보이면 통관번호가 가장 빠른 체크 포인트</h2>
+
+        <p class="tfx-p">
+          배송이 멈춘 것처럼 보일 때,
+          무작정 기다리기보다 <b class="tfx-strong">테무 통관번호</b>부터 확인하는 것이
+          가장 비용이 적고 빠른 해결 루트입니다.
+        </p>
+
+        <p class="tfx-p">
+          다시 정리하면,
+          <b class="tfx-strong">상태 확인 → 통관번호 점검 → 수정 시도 → 안 되면 템플릿 문의</b>
+          이 흐름만 지키셔도 “불필요한 대기”를 크게 줄일 수 있습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: ‘예쁜’ 디자인 고정 -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
