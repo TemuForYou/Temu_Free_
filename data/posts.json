@@ -102,15 +102,15 @@
       "id": "p08",
       "category": "실수·문제 해결형",
       "title": "테무 통관번호 수정, 앱에서 가장 빠른 루트",
-      "slug": "post-08",
-      "date": "2026-01-05",
+      "slug": "temu-customs-id-wrong-fix-fast",
+      "date": "2026-01-22",
       "hasCoupon": true,
-      "status": "pending",
-      "summary": "업로드 예정",
-      "file": null,
-      "updated": "2026-01-05",
+      "status": "true",
+      "summary": "통관 번호 수정하는 루트, 이 글만 보세요!",
+      "file": "posts/temu-customs-id-wrong-fix-fast.html",
+      "updated": "2026-01-22",
       "tab": "실수·문제 해결형 ② 주문·결제",
-      "done": false
+      "done": true
     },
     {
       "id": "p09",
