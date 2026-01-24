@@ -88,15 +88,15 @@
       "id": "p07",
       "category": "실수·문제 해결형",
       "title": "테무 주소를 잘못 입력했을 때: 수정 가능/불가 기준",
-      "slug": "post-07",
-      "date": "2026-01-05",
+      "slug": "temu-address-wrong-fix-fast",
+      "date": "2026-01-24",
       "hasCoupon": true,
-      "status": "pending",
-      "summary": "업로드 예정",
-      "file": null,
-      "updated": "2026-01-05",
+      "status": "true",
+      "summary": "테무 주소에 문제가 있을때, 100% 해결 가능한 방법",
+      "file": "posts/temu-address-wrong-fix-fast.html",
+      "updated": "2026-01-21",
       "tab": "실수·문제 해결형 ② 주문·결제",
-      "done": false
+      "done": true
     },
     {
       "id": "p08",
