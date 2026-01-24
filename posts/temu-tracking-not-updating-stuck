@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="ko">
-<head>
+<head>  
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>테무 배송조회 안됨, ‘진행중’인데 멈춘 것처럼 보일 때</title>
