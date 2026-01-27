@@ -1,50 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
+  <!-- Home -->
   <url>
-    <loc>https://temuforyou.github.io/</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
+  <!-- p01 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-customs-code-one-letter-shipping-stop</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p02 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-shipping-not-moving-real-reason.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-shipping-not-moving-real-reason</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p03 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-payment-error-stuck-where-most-people-fail.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-payment-error-stuck-where-most-people-fail</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p04 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-order-cancel-possible-vs-impossible.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-order-cancel-possible-vs-impossible</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p05 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-refund-not-coming-what-to-check-first.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-refund-not-coming-what-to-check-first</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p06 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-tracking-not-updating-stuck.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-tracking-not-updating-stuck</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
+  <!-- p07 -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-address-wrong-fix-fast.html</loc>
+    <loc>https://temuforyou.github.io/Temu_Free_/post.html?slug=temu-address-wrong-fix-fast</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
