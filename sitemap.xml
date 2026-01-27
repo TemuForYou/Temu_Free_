@@ -1,52 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
-  <!-- Home -->
   <url>
     <loc>https://temuforyou.github.io/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Posts (Generated 7 only: p01 ~ p07) -->
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop</loc>
+    <loc>https://temuforyou.github.io/posts/temu-customs-code-one-letter-shipping-stop.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-shipping-not-moving-real-reason</loc>
+    <loc>https://temuforyou.github.io/posts/temu-shipping-not-moving-real-reason.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-payment-error-stuck-where-most-people-fail</loc>
+    <loc>https://temuforyou.github.io/posts/temu-payment-error-stuck-where-most-people-fail.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-order-cancel-possible-vs-impossible</loc>
+    <loc>https://temuforyou.github.io/posts/temu-order-cancel-possible-vs-impossible.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-refund-not-coming-what-to-check-first</loc>
+    <loc>https://temuforyou.github.io/posts/temu-refund-not-coming-what-to-check-first.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-tracking-not-updating-stuck</loc>
+    <loc>https://temuforyou.github.io/posts/temu-tracking-not-updating-stuck.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
   <url>
-    <loc>https://temuforyou.github.io/posts/temu-address-wrong-fix-fast</loc>
+    <loc>https://temuforyou.github.io/posts/temu-address-wrong-fix-fast.html</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
