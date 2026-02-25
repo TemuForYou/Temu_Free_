@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 무료배송이 갑자기 유료로 보일 때: 조건·묶음배송·최소금액 체크</title>
+
+  <!-- TFY 공통 스타일 (동결 유지) -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <!-- ✅ 본문 내용용 미세 UI만 추가 (레이아웃/측면패널/톤은 유지) -->
+  <style>
+    :root{
+      --tfx-accent:#ff8c00;
+      --tfx-ink:#111;
+      --tfx-sub:#444;
+      --tfx-line: rgba(0,0,0,0.06);
+      --tfx-soft: rgba(255,140,0,0.10);
+      --tfx-ok:#0a9b63;
+      --tfx-bad:#d92c2c;
+    }
+
+    .tfx-p{ line-height:1.9; color:var(--tfx-sub); }
+    .tfx-strong{ font-weight:900; color:var(--tfx-ink); }
+
+    .ui-callout{
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff, rgba(255,140,0,0.05));
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 14px 14px 14px;
+      margin-top: 12px;
+      overflow:hidden;
+      position:relative;
+    }
+    .ui-callout:before{
+      content:"";
+      position:absolute;
+      right:-40px; top:-40px;
+      width:150px; height:150px;
+      border-radius:999px;
+      background: rgba(255,140,0,0.10);
+    }
+    .ui-callout .k{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 950;
+      letter-spacing:-0.2px;
+      color:#111;
+      margin-bottom:6px;
+    }
+    .ui-pill{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,140,0,0.10);
+      border: 1px solid rgba(255,140,0,0.22);
+      font-size: 13px;
+      font-weight: 850;
+      color:#111;
+    }
+
+    .ui-steps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .ui-steps{ grid-template-columns:1fr; } }
+
+    .ui-step{
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ui-step .n{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px; height:40px;
+      border-radius: 18px;
+      background: var(--tfx-accent);
+      color:#fff;
+      font-weight: 950;
+      box-shadow: 0 14px 22px rgba(255,140,0,0.22);
+      margin-right: 8px;
+      flex:0 0 auto;
+    }
+    .ui-step .t{
+      display:flex; align-items:center; gap:8px;
+      font-weight: 950;
+      color:#111;
+      letter-spacing:-0.2px;
+      margin-bottom: 6px;
+    }
+    .ui-step .d{ margin:0; color:#444; line-height:1.75; }
+
+    .ui-note{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.05);
+      color:#444;
+      line-height:1.75;
+    }
+
+    .ui-qa{
+      margin-top: 12px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.85);
+      border: 1px dashed rgba(255,140,0,0.35);
+      padding: 12px 14px;
+      color:#444;
+      line-height:1.85;
+    }
+    .ui-qa .q{
+      font-weight: 950;
+      color:#111;
+      margin-top: 6px;
+    }
+
+    .ui-mini-table{
+      margin-top: 12px;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      background:#fff;
+    }
+    .ui-mini-table .row{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0;
+      border-top: 1px solid var(--tfx-line);
+    }
+    .ui-mini-table .row:first-child{ border-top:none; }
+    .ui-mini-table .k{
+      padding: 12px 14px;
+      font-weight: 900;
+      color:#111;
+      background: rgba(255,140,0,0.06);
+    }
+    .ui-mini-table .v{
+      padding: 12px 14px;
+      color:#444;
+      line-height:1.8;
+    }
+    @media (max-width: 720px){
+      .ui-mini-table .row{ grid-template-columns:1fr; }
+      .ui-mini-table .k{ border-bottom: 1px solid var(--tfx-line); }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">진위 검증형</span>
+        <span class="tfx-tag">배송·정책</span>
+        <span class="tfx-tag tfx-tag-accent">무료배송</span>
+      </div>
+
+      <h1 class="tfx-title">테무 무료배송이 갑자기 유료로 보일 때: 조건·묶음배송·최소금액 체크</h1>
+
+      <p class="tfx-lead">
+        테무에서 분명 “무료배송”이라고 봤는데,
+        장바구니나 결제 단계로 넘어가면 배송비가 붙는 것처럼 보이는 경우가 있습니다.<br />
+        이 문제는 버그처럼 느껴지지만, 실제로는 대부분 <b class="tfx-strong">조건/옵션/묶음배송</b>에서 발생합니다.
+      </p>
+
+      <p class="tfx-lead">
+        이 글에서는 테무 무료배송이 유료로 보일 때
+        가장 빠르게 원인을 찾고 다시 무료배송으로 돌리는 방법을
+        체크리스트 방식으로 정리합니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.02.10</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <section class="tfx-section" style="margin-top:14px;">
+        <h2 class="tfx-h2">먼저 결론: 무료배송이 유료로 보이는 5가지 대표 원인</h2>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">핵심</span> 대부분은 “배송 옵션/조건”입니다</div>
+          <p class="tfx-p" style="margin:0;">
+            ① <b class="tfx-strong">최소 금액 조건</b>을 충족하지 못해서<br />
+            ② <b class="tfx-strong">묶음배송/분리배송 옵션</b>이 바뀌어서<br />
+            ③ <b class="tfx-strong">특정 상품/판매자</b>가 무료배송 대상이 아니라서<br />
+            ④ <b class="tfx-strong">지역/배송 방식</b>에 따라 배송비가 붙어서<br />
+            ⑤ 장바구니 금액·재고·할인이 갱신되며 <b class="tfx-strong">조건이 깨져서</b>
+          </p>
+        </div>
+
+        <div class="ui-note">
+          팁) “배송비가 붙었다”는 표현과 “무료배송이 사라졌다”는 표현은 다를 수 있습니다.
+          배송비 항목이 보여도, 최종 결제에서 다시 0원으로 정리되는 케이스도 있으니
+          <b class="tfx-strong">결제 단계의 최종 배송비</b>를 기준으로 확인하는 게 가장 안전합니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">최소 금액 조건: 가장 흔한 원인</h2>
+
+        <p class="tfx-p">
+          무료배송은 “무조건”이 아니라,
+          특정 금액 이상일 때 적용되는 경우가 많습니다.
+          장바구니에서 쿠폰을 적용하거나 상품을 빼는 순간
+          최소 금액 아래로 내려가면 배송비가 붙을 수 있습니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>쿠폰 적용 후 금액이 내려갔는지 확인</div>
+            <p class="d">
+              쿠폰으로 할인되면 총 결제 금액이 줄어들면서
+              무료배송 조건 금액 아래로 떨어질 수 있습니다.
+            </p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>옵션/수량 변경 후 조건이 깨졌는지 확인</div>
+            <p class="d">
+              같은 상품이어도 옵션/수량을 조정하면
+              결제 금액이 변하면서 무료배송이 해제되는 케이스가 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          포인트) “무료배송 유지가 우선”이면,
+          쿠폰을 여러 개 만지기 전에 <b class="tfx-strong">배송비가 0원인지 먼저 고정 확인</b>하고 진행하는 게 좋습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">묶음배송/분리배송: 옵션 하나로 배송비가 달라집니다</h2>
+
+        <p class="tfx-p">
+          테무는 상품 구성에 따라 묶음배송(한 번에 받기) / 분리배송(따로 받기)이 달라질 수 있습니다.
+          이때 배송 방식이 바뀌며 배송비 항목이 생기는 것처럼 보이는 경우가 있습니다.
+        </p>
+
+        <div class="ui-mini-table">
+          <div class="row">
+            <div class="k">묶음배송</div>
+            <div class="v">
+              한 번에 받는 옵션으로 잡히면 무료배송이 유지되는 경우가 많습니다.
+              다만 재고/판매자 조합에 따라 자동으로 분리될 수 있습니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">분리배송</div>
+            <div class="v">
+              판매자·상품 출고지가 달라지면 자동으로 분리배송이 잡힐 수 있습니다.
+              이 과정에서 배송비가 “추가된 것처럼” 보이는 화면이 나올 수 있습니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">해결 포인트</div>
+            <div class="v">
+              결제 단계에서 배송 옵션을 다시 확인하고,
+              가능하다면 “묶음 배송”이 유지되도록 장바구니 상품을 단순화해보세요.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">특정 상품/판매자 이슈: 같은 테무라도 다 무료배송이 아닙니다</h2>
+
+        <p class="tfx-p">
+          테무 내 상품이라고 해서 모두 동일한 배송 조건을 가지는 건 아닙니다.
+          일부 상품은 특정 배송 방식/판매자 정책 때문에 무료배송 대상이 아닐 수 있습니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>장바구니에서 특정 상품만 배송비가 붙는지 확인</div>
+            <p class="d">
+              한 상품만 배송비가 붙는다면, 그 상품이 무료배송 대상이 아닐 확률이 높습니다.
+              이 경우 해당 상품을 제외하면 무료배송이 복구되는지 빠르게 확인할 수 있습니다.
+            </p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>같은 상품의 다른 옵션/다른 판매자 상품으로 교체</div>
+            <p class="d">
+              동일한 제품군이라도 옵션/판매자 조합에 따라 배송 조건이 달라질 수 있습니다.
+              배송비가 붙는다면 대체 옵션이 있는지 확인해보세요.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">가장 빠른 해결 루트: 무료배송을 다시 0원으로 만드는 순서</h2>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">루트</span> 이 순서대로만 하면 대부분 해결됩니다</div>
+          <p class="tfx-p" style="margin:0;">
+            ① 장바구니 상품을 1~2개로 <b class="tfx-strong">단순화</b><br />
+            ② 결제 단계에서 배송 옵션을 <b class="tfx-strong">묶음 배송</b> 중심으로 확인<br />
+            ③ 쿠폰/할인 적용 전후로 최소 금액 조건이 유지되는지 확인<br />
+            ④ 앱 재실행 후 장바구니 갱신(금액/재고/조건 업데이트)
+          </p>
+        </div>
+
+        <div class="ui-note">
+          “무료배송이 갑자기 유료”로 보일 때는
+          <b class="tfx-strong">장바구니 단순화</b>가 가장 강력한 해결 카드입니다.
+          어떤 상품이 원인인지 1분 안에 잡히는 경우가 많습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">자주 묻는 질문</h2>
+
+        <div class="ui-qa">
+          <div class="q">Q. 무료배송인데 결제 단계에서만 배송비가 생겨요.</div>
+          A. 배송 옵션/묶음배송이 바뀌거나 최소 금액 조건이 깨졌을 가능성이 큽니다.
+          결제 단계의 최종 배송 옵션을 먼저 확인해보세요.<br /><br />
+
+          <div class="q">Q. 쿠폰을 적용하면 배송비가 붙는 것 같아요.</div>
+          A. 할인으로 결제 금액이 내려가며 최소 금액 조건 아래로 떨어질 수 있습니다.
+          쿠폰 전/후 금액과 무료배송 조건을 같이 체크해보세요.<br /><br />
+
+          <div class="q">Q. 특정 상품만 배송비가 붙어요.</div>
+          A. 그 상품이 무료배송 대상이 아닐 가능성이 높습니다.
+          해당 상품을 제외했을 때 무료배송이 복구되는지 먼저 확인해보세요.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리</h2>
+
+        <p class="tfx-p">
+          테무 무료배송이 갑자기 유료로 보일 때는
+          대부분 시스템 오류가 아니라 <b class="tfx-strong">조건/옵션 변화</b>입니다.
+          장바구니를 단순화하고, 결제 단계에서 최종 배송 옵션을 확인하는 것만으로도
+          무료배송을 다시 0원으로 돌리는 사례가 많습니다.
+        </p>
+
+        <p class="tfx-p">
+          다음 글에서는 “결제 단계에서 가격이 달라지는 이유”처럼
+          장바구니/결제 화면에서 많이 혼동되는 문제를 더 깊게 다뤄보겠습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: 동결 디자인 유지 (3개만 사용) -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
