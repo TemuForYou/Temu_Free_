@@ -1,0 +1,615 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 결제 단계에서 가격이 달라지는 이유: 쿠폰·배송·옵션·세금까지 한 번에 정리</title>
+
+  <!-- TFY 공통 스타일 (동결 유지) -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <style>
+    :root{
+      --tfx-accent:#ff8c00;
+      --tfx-ink:#111;
+      --tfx-sub:#444;
+      --tfx-line: rgba(0,0,0,0.06);
+      --tfx-soft: rgba(255,140,0,0.10);
+      --tfx-ok:#0a9b63;
+      --tfx-bad:#d92c2c;
+    }
+
+    .tfx-p{ line-height:1.9; color:var(--tfx-sub); }
+    .tfx-strong{ font-weight:900; color:var(--tfx-ink); }
+
+    .ui-callout{
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff, rgba(255,140,0,0.05));
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 14px 14px 14px;
+      margin-top: 12px;
+      overflow:hidden;
+      position:relative;
+    }
+    .ui-callout:before{
+      content:"";
+      position:absolute;
+      right:-40px; top:-40px;
+      width:150px; height:150px;
+      border-radius:999px;
+      background: rgba(255,140,0,0.10);
+    }
+    .ui-callout .k{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 950;
+      letter-spacing:-0.2px;
+      color:#111;
+      margin-bottom:6px;
+    }
+    .ui-pill{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,140,0,0.10);
+      border: 1px solid rgba(255,140,0,0.22);
+      font-size: 13px;
+      font-weight: 850;
+      color:#111;
+    }
+
+    .ui-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 980px){ .ui-grid{ grid-template-columns:1fr; } }
+
+    .ui-card{
+      border-radius: 22px;
+      background:#fff;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+    }
+    .ui-card .h{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 950;
+      color:#111;
+      letter-spacing:-0.2px;
+      margin-bottom: 6px;
+    }
+    .ui-badge{
+      width:38px; height:38px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight: 950;
+      box-shadow: 0 14px 22px rgba(0,0,0,0.08);
+    }
+    .ui-badge.ok{ background: var(--tfx-ok); }
+    .ui-badge.bad{ background: var(--tfx-bad); }
+    .ui-badge.orange{ background: var(--tfx-accent); }
+
+    .ui-steps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .ui-steps{ grid-template-columns:1fr; } }
+    .ui-step{
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ui-step .n{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px; height:40px;
+      border-radius: 18px;
+      background: var(--tfx-accent);
+      color:#fff;
+      font-weight: 950;
+      box-shadow: 0 14px 22px rgba(255,140,0,0.22);
+      margin-right: 8px;
+      flex:0 0 auto;
+    }
+    .ui-step .t{
+      display:flex; align-items:center; gap:8px;
+      font-weight: 950;
+      color:#111;
+      letter-spacing:-0.2px;
+      margin-bottom: 6px;
+    }
+    .ui-step .d{ margin:0; color:#444; line-height:1.75; }
+
+    .ui-note{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.05);
+      color:#444;
+      line-height:1.75;
+    }
+
+    .ui-qa{
+      margin-top: 12px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.85);
+      border: 1px dashed rgba(255,140,0,0.35);
+      padding: 12px 14px;
+      color:#444;
+      line-height:1.85;
+    }
+    .ui-qa .q{
+      font-weight: 950;
+      color:#111;
+      margin-top: 6px;
+    }
+
+    .ui-mini-table{
+      margin-top: 12px;
+      border-radius: 22px;
+      overflow:hidden;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      background:#fff;
+    }
+    .ui-mini-table .row{
+      display:grid;
+      grid-template-columns: 160px 1fr;
+      gap: 0;
+      border-top: 1px solid var(--tfx-line);
+    }
+    .ui-mini-table .row:first-child{ border-top:none; }
+    .ui-mini-table .k{
+      padding: 12px 14px;
+      font-weight: 900;
+      color:#111;
+      background: rgba(255,140,0,0.06);
+    }
+    .ui-mini-table .v{
+      padding: 12px 14px;
+      color:#444;
+      line-height:1.8;
+    }
+    @media (max-width: 720px){
+      .ui-mini-table .row{ grid-template-columns:1fr; }
+      .ui-mini-table .k{ border-bottom: 1px solid var(--tfx-line); }
+    }
+
+    /* =========================
+       TFY Mobile Compatibility Patch (P13+)
+       - Keep desktop design frozen
+       - Only adjusts layout on small screens
+       ========================= */
+    @media (max-width: 980px){
+      .tfx-post-shell{
+        padding-left: 14px;
+        padding-right: 14px;
+        display:block;
+      }
+      .tfx-post{
+        width:100%;
+        max-width:100%;
+      }
+      .tfx-sidebar{
+        width:100%;
+        max-width:100%;
+        margin-top:16px;
+        position: static !important;
+        top:auto !important;
+      }
+      .tfx-title{
+        font-size: 28px;
+        line-height: 1.25;
+        word-break: keep-all;
+      }
+      .tfx-lead{
+        font-size: 16px;
+        line-height: 1.8;
+      }
+      .tfx-post *{
+        max-width:100%;
+      }
+      img, video{
+        max-width:100%;
+        height:auto;
+      }
+    }
+    @media (max-width: 480px){
+      .tfx-title{ font-size:24px; }
+      .tfx-lead{ font-size:15px; }
+      .tfx-coupon-actions{
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">결제·가격</span>
+        <span class="tfx-tag tfx-tag-accent">가격 변동</span>
+      </div>
+
+      <h1 class="tfx-title">테무 결제 단계에서 가격이 달라지는 이유: 쿠폰·배송·옵션·세금까지 한 번에 정리</h1>
+
+      <p class="tfx-lead">
+        테무에서 상품 페이지에서는 분명 저렴했는데,<br />
+        장바구니로 가거나 결제 단계로 넘어가면 금액이 달라져서 당황하는 경우가 많습니다.
+        이 현상은 “사기”라기보다 대부분 <b class="tfx-strong">계산 방식</b>과 <b class="tfx-strong">조건</b> 때문에 생깁니다.
+      </p>
+
+      <p class="tfx-lead">
+        이 글에서는 <b class="tfx-strong">테무 결제 단계에서 가격이 달라지는 대표 원인</b>을 하나씩 분리하고,
+        어떤 순서로 확인하면 가장 빨리 원인을 잡을 수 있는지,
+        그리고 “원래 봤던 가격”에 최대한 가깝게 맞추는 실전 루트를 정리해드립니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.02.13</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <section class="tfx-section" style="margin-top:14px;">
+        <h2 class="tfx-h2">먼저 결론: 가격이 달라지는 이유는 “이 6가지”가 대부분입니다</h2>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">핵심</span> 테무 가격 변동은 계산 순서가 원인인 경우가 많습니다</div>
+          <p class="tfx-p" style="margin:0;">
+            ① <b class="tfx-strong">옵션(색/사이즈/구성)</b>이 바뀐 상태로 담겨서<br />
+            ② <b class="tfx-strong">쿠폰 조건</b>(신규/최소금액/중복불가) 때문에 할인 금액이 바뀌어서<br />
+            ③ <b class="tfx-strong">장바구니 할인/이벤트 할인</b>이 결제 단계에서 재계산되어서<br />
+            ④ <b class="tfx-strong">배송 옵션(묶음/분리)</b>이 바뀌며 합산 금액이 바뀌어서<br />
+            ⑤ <b class="tfx-strong">결제 통화/환율 표시</b> 또는 반올림 규칙 차이로 체감 금액이 달라져서<br />
+            ⑥ 재고/프로모션 갱신으로 <b class="tfx-strong">할인 적용 우선순위</b>가 바뀌어서
+          </p>
+        </div>
+
+        <div class="ui-note">
+          포인트) “상품 페이지 가격”은 종종 <b class="tfx-strong">최대 할인 조건</b>을 전제로 보여주는 경우가 있습니다.
+          그래서 결제 단계에서 조건이 하나라도 틀어지면 금액이 달라질 수 있습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">1) 옵션 변화: 같은 상품처럼 보여도 가격이 달라집니다</h2>
+
+        <p class="tfx-p">
+          테무에서 가장 흔한 함정이 “옵션”입니다.
+          상품 페이지에서는 기본 옵션(가장 저렴한 옵션)이 선택된 상태로 가격이 보이는데,
+          장바구니에 담길 때 <b class="tfx-strong">구성/사이즈/세트 옵션</b>이 달라지면 가격이 달라집니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>장바구니에서 옵션명을 먼저 확인</div>
+            <p class="d">
+              색상/사이즈/구성(1개/2개/세트)이 실제로 무엇으로 담겼는지 확인하면,
+              가격 차이의 절반은 여기서 바로 해결됩니다.
+            </p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>옵션 변경 후 금액이 “즉시 갱신”되는지 확인</div>
+            <p class="d">
+              옵션을 바꿨는데 금액이 이상하면 화면 갱신이 늦는 경우가 있습니다.
+              잠깐 대기하거나 장바구니를 다시 열어보면 정상 반영되는 케이스가 있습니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          실전 팁) 상품 페이지에서 보던 가격을 맞추고 싶다면,
+          장바구니에서 “가장 저렴한 옵션”으로 다시 고정하는 게 1순위입니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">2) 쿠폰 조건: 적용은 됐는데 할인 금액이 달라지는 이유</h2>
+
+        <p class="tfx-p">
+          쿠폰은 “입력됨”과 “적용됨”이 다를 수 있습니다.
+          특히 테무 쿠폰은 <b class="tfx-strong">신규/기존, 최소금액, 카테고리 제한, 중복 규칙</b>이 얽혀 있어서
+          결제 단계에서 다시 계산되는 경우가 많습니다.
+        </p>
+
+        <div class="ui-mini-table">
+          <div class="row">
+            <div class="k">최소금액</div>
+            <div class="v">
+              쿠폰 적용 후 금액이 내려가면서 최소금액 아래로 떨어지면,
+              쿠폰이 “사라진 것처럼” 보일 수 있습니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">중복불가</div>
+            <div class="v">
+              장바구니 할인/이벤트 할인과 충돌하면 쿠폰 할인액이 줄거나 해제될 수 있습니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">신규/기존</div>
+            <div class="v">
+              신규 전용 쿠폰을 기존 계정에서 쓰면 입력은 되지만 결제 단계에서 0원으로 계산될 수 있습니다.
+            </div>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          가장 빠른 해결) <b class="tfx-strong">쿠폰 전부 해제 → 1개만 적용 → 결제 단계 최종 할인 확인</b>  
+          이 루트로 충돌을 1분 안에 잡을 수 있습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">3) 장바구니 할인/이벤트 할인: 결제 단계에서 재정렬되는 구조</h2>
+
+        <p class="tfx-p">
+          테무는 할인 종류가 여러 겹으로 걸리는 경우가 많습니다.
+          이때 “어떤 할인이 먼저 적용되는지”에 따라 결제 최종 금액이 달라질 수 있습니다.
+        </p>
+
+        <div class="ui-grid">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">A</span>상품 페이지에서 보이는 가격</div>
+            <p class="tfx-p" style="margin:0;">
+              최대 할인 조건이 포함된 “예상가” 성격이 강할 수 있습니다.<br />
+              (특정 쿠폰/이벤트/옵션이 전제되는 경우)
+            </p>
+          </div>
+
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">B</span>결제 단계의 최종 가격</div>
+            <p class="tfx-p" style="margin:0;">
+              실제 적용 가능한 할인만 남겨서 계산된 “확정가”에 가깝습니다.<br />
+              그래서 이 값이 기준이 됩니다.
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          결론) “결제 단계에서 가격이 달라졌다”면,
+          대부분은 할인 우선순위가 바뀌거나, 일부 할인이 조건 미충족으로 빠진 상태입니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">4) 배송 옵션(묶음/분리): 합산 방식이 바뀌며 가격이 달라 보일 수 있습니다</h2>
+
+        <p class="tfx-p">
+          장바구니 구성에 따라 묶음배송/분리배송이 자동으로 바뀌면
+          배송 관련 계산이 재정렬됩니다.
+          이 과정에서 배송비가 생긴 것처럼 보이거나,
+          반대로 무료배송이 적용되며 총액이 내려가는 케이스도 있습니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>결제 단계에서 “배송비 항목”을 기준으로 확인</div>
+            <p class="d">
+              장바구니 화면이 아니라 결제 단계의 최종 배송비가 기준입니다.
+              중간 화면의 표시값은 변동될 수 있습니다.
+            </p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>원인 찾을 땐 장바구니를 단순화</div>
+            <p class="d">
+              상품을 1~2개로 줄이면 어떤 상품/옵션이 배송 계산을 바꾸는지 바로 드러납니다.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">5) 표시 통화/환율/반올림: “몇 백 원 차이”의 정체</h2>
+
+        <p class="tfx-p">
+          같은 금액이라도 화면마다 표시 방식이 달라 체감이 달라질 수 있습니다.
+          특히 수백 원~천 원 단위의 차이는 옵션/쿠폰이 아니라
+          <b class="tfx-strong">표시 통화</b> 또는 <b class="tfx-strong">반올림</b> 영향인 경우가 있습니다.
+        </p>
+
+        <div class="ui-note">
+          이 경우는 “큰 폭의 가격 변동”과 다르게,
+          결제 단계에서 최종 금액이 안정적으로 유지되는지 확인하면 불안감이 사라집니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">가장 빠른 해결 루트: 가격을 ‘원래 보던 값’에 최대한 맞추는 순서</h2>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">루트</span> 이 순서대로만 하면 원인 분리가 됩니다</div>
+          <p class="tfx-p" style="margin:0;">
+            ① 장바구니에서 <b class="tfx-strong">옵션</b>부터 고정 (가장 저렴한 옵션인지 확인)<br />
+            ② 쿠폰 전부 해제 → <b class="tfx-strong">쿠폰 1개만</b> 적용<br />
+            ③ 결제 단계에서 <b class="tfx-strong">최종 할인/배송비 항목</b> 확인<br />
+            ④ 그래도 이상하면 장바구니 상품을 1~2개로 <b class="tfx-strong">단순화</b>해서 원인 상품 찾기
+          </p>
+        </div>
+
+        <div class="ui-note">
+          이 루트를 한 번만 익혀두면,
+          “테무 결제 단계에서 가격이 달라져요” 문제는 다음부터 거의 바로 해결됩니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">자주 묻는 질문</h2>
+
+        <div class="ui-qa">
+          <div class="q">Q. 상품 페이지 가격이랑 결제 금액이 너무 달라요.</div>
+          A. 옵션/쿠폰 조건/할인 우선순위 중 하나가 바뀌었을 가능성이 큽니다.
+          장바구니 옵션부터 확인하고, 쿠폰은 1개만 적용해보세요.<br /><br />
+
+          <div class="q">Q. 쿠폰은 적용된 것 같은데 할인 금액이 줄었어요.</div>
+          A. 중복불가 충돌 또는 최소금액 조건 문제일 수 있습니다.
+          결제 단계에서 최종 할인 항목을 기준으로 판단하는 게 가장 정확합니다.<br /><br />
+
+          <div class="q">Q. 배송 옵션 때문에 금액이 바뀌는 것 같아요.</div>
+          A. 묶음/분리 배송이 자동 변경되면 합산 방식이 바뀔 수 있습니다.
+          원인 찾을 땐 장바구니를 단순화해서 확인하는 것이 가장 빠릅니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리</h2>
+
+        <p class="tfx-p">
+          테무 결제 단계에서 가격이 달라지는 현상은 흔하지만,
+          대부분은 <b class="tfx-strong">옵션 + 쿠폰 조건 + 할인 재계산</b>에서 발생합니다.
+          원인을 분리해서 확인하면 생각보다 빨리 해결됩니다.
+        </p>
+
+        <p class="tfx-p">
+          다음 글에서는 “장바구니에서 결제가 실패하는 순간(결제 버튼 눌렀는데 멈춤/오류)”처럼
+          실제 결제 단계에서 더 당황스러운 문제를 문제 해결형으로 더 깊게 정리해드리겠습니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: 동결 디자인 유지 (3개만 사용) -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
