@@ -1,0 +1,511 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 쿠폰이 적용 안 될 때: 신규/기존 조건부터 순서까지 한 번에 정리</title>
+
+  <!-- TFY 공통 스타일 (동결 유지) -->
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+  <!-- ✅ 본문 내용용 미세 UI만 추가 (레이아웃/측면패널/톤은 유지) -->
+  <style>
+    :root{
+      --tfx-accent:#ff8c00;
+      --tfx-ink:#111;
+      --tfx-sub:#444;
+      --tfx-line: rgba(0,0,0,0.06);
+      --tfx-soft: rgba(255,140,0,0.10);
+      --tfx-soft2:#fff7ef;
+      --tfx-ok:#0a9b63;
+      --tfx-bad:#d92c2c;
+    }
+
+    .tfx-p{ line-height:1.9; color:var(--tfx-sub); }
+    .tfx-strong{ font-weight:900; color:var(--tfx-ink); }
+
+    .ui-callout{
+      border-radius: 22px;
+      background: linear-gradient(180deg, #fff, rgba(255,140,0,0.05));
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 14px 14px 14px;
+      margin-top: 12px;
+      overflow:hidden;
+      position:relative;
+    }
+    .ui-callout:before{
+      content:"";
+      position:absolute;
+      right:-40px; top:-40px;
+      width:150px; height:150px;
+      border-radius:999px;
+      background: rgba(255,140,0,0.10);
+    }
+    .ui-callout .k{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight: 950;
+      letter-spacing:-0.2px;
+      color:#111;
+      margin-bottom:6px;
+    }
+    .ui-pill{
+      display:inline-flex;
+      align-items:center;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,140,0,0.10);
+      border: 1px solid rgba(255,140,0,0.22);
+      font-size: 13px;
+      font-weight: 850;
+      color:#111;
+    }
+
+    .ui-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 12px;
+    }
+    @media (max-width: 980px){ .ui-grid{ grid-template-columns:1fr; } }
+
+    .ui-card{
+      border-radius: 22px;
+      background:#fff;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+    }
+    .ui-card .h{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight: 950;
+      color:#111;
+      letter-spacing:-0.2px;
+      margin-bottom: 6px;
+    }
+    .ui-badge{
+      width:38px; height:38px;
+      border-radius: 16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      font-weight: 950;
+      box-shadow: 0 14px 22px rgba(0,0,0,0.08);
+    }
+    .ui-badge.ok{ background: var(--tfx-ok); }
+    .ui-badge.bad{ background: var(--tfx-bad); }
+
+    .ui-steps{
+      margin-top: 12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 980px){ .ui-steps{ grid-template-columns:1fr; } }
+    .ui-step{
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--tfx-line);
+      box-shadow: 0 14px 30px rgba(0,0,0,0.05);
+      padding: 12px 14px 14px;
+      position:relative;
+      overflow:hidden;
+    }
+    .ui-step .n{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      width:40px; height:40px;
+      border-radius: 18px;
+      background: var(--tfx-accent);
+      color:#fff;
+      font-weight: 950;
+      box-shadow: 0 14px 22px rgba(255,140,0,0.22);
+      margin-right: 8px;
+      flex:0 0 auto;
+    }
+    .ui-step .t{
+      display:flex; align-items:center; gap:8px;
+      font-weight: 950;
+      color:#111;
+      letter-spacing:-0.2px;
+      margin-bottom: 6px;
+    }
+    .ui-step .d{ margin:0; color:#444; line-height:1.75; }
+
+    .ui-note{
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 16px;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.05);
+      color:#444;
+      line-height:1.75;
+    }
+
+    .ui-qa{
+      margin-top: 12px;
+      border-radius: 22px;
+      background: rgba(255,255,255,0.85);
+      border: 1px dashed rgba(255,140,0,0.35);
+      padding: 12px 14px;
+      color:#444;
+      line-height:1.85;
+    }
+    .ui-qa .q{
+      font-weight: 950;
+      color:#111;
+      margin-top: 6px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none; color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
+
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
+
+      <div class="tfx-tags">
+        <span class="tfx-tag">실수·문제 해결형</span>
+        <span class="tfx-tag">쿠폰·혜택</span>
+        <span class="tfx-tag tfx-tag-accent">적용 실패 해결</span>
+      </div>
+
+      <h1 class="tfx-title">테무 쿠폰이 적용 안 될 때: 신규/기존 조건부터 순서까지 한 번에 정리</h1>
+
+      <p class="tfx-lead">
+        테무 쓰다 보면 “쿠폰이 왜 안 먹지?” 하는 순간이 꼭 옵니다.<br />
+        문제는 쿠폰이 안 되는 이유가 하나가 아니라는 점입니다.
+        <b class="tfx-strong">신규/기존 조건</b>, <b class="tfx-strong">최소 금액</b>, <b class="tfx-strong">적용 순서</b>, <b class="tfx-strong">중복 규칙</b>이 한 번만 어긋나도
+        테무 쿠폰이 적용 안 될 수 있어요.
+      </p>
+
+      <p class="tfx-lead">
+        이 글은 “쿠폰이 적용 안 됨” 상황을 <b class="tfx-strong">원인별로 분리</b>하고,
+        실제로 가장 빨리 해결되는 <b class="tfx-strong">우선순위 순서</b>로 정리했습니다.
+        끝까지 따라오시면 대부분은 그 자리에서 해결됩니다.
+      </p>
+
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.02.04</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
+
+      <section class="tfx-section" style="margin-top:14px;">
+        <h2 class="tfx-h2">가장 먼저 체크할 것: “쿠폰이 안 되는” 4대 이유</h2>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">핵심</span> 테무 쿠폰이 적용 안 될 때, 대부분 여기서 끝납니다</div>
+          <p class="tfx-p" style="margin:0;">
+            ① <b class="tfx-strong">신규 전용</b>인데 기존 계정이라서<br />
+            ② <b class="tfx-strong">최소 금액/카테고리 제한</b>에 걸려서<br />
+            ③ <b class="tfx-strong">중복 불가</b> 규칙 때문에 자동 해제돼서<br />
+            ④ <b class="tfx-strong">적용 순서</b>가 꼬여서 할인 금액이 0으로 계산돼서
+          </p>
+        </div>
+
+        <div class="ui-note">
+          팁) “쿠폰 입력창에 넣었는데 반영이 안 된다”는 경우도,
+          실제로는 <b class="tfx-strong">장바구니 조건</b>이 안 맞아서 자동으로 빠지는 경우가 많습니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">신규/기존 조건: 여기서 가장 많이 막힙니다</h2>
+
+        <p class="tfx-p">
+          테무 쿠폰은 같은 “쿠폰”처럼 보여도, 실제로는 대상이 다릅니다.
+          특히 <b class="tfx-strong">신규 전용 쿠폰</b>은 기존 계정에서 입력해도
+          “입력은 되는데 적용이 안 되는” 형태로 보일 수 있습니다.
+        </p>
+
+        <div class="ui-grid">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge ok">NEW</span>신규 전용일 때 특징</div>
+            <p class="tfx-p" style="margin:0;">
+              - 가입/첫 주문/첫 결제 조건이 붙어 있음<br />
+              - 특정 결제 방식(카드/간편결제) 조건이 걸릴 수 있음<br />
+              - 장바구니에서 “할인 0원”으로 보이거나 자동 해제될 수 있음
+            </p>
+          </div>
+
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge bad">OLD</span>기존 계정에서 흔한 착각</div>
+            <p class="tfx-p" style="margin:0;">
+              - “쿠폰 코드가 들어갔으니 적용된 줄” 착각<br />
+              - 실제로는 조건 미충족이라 결제 단계에서 빠짐<br />
+              - 이미 사용한 쿠폰을 다시 쓰려다 실패
+            </p>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          신규/기존 조건이 애매하면, 가장 빠른 판단 방법은 “결제 단계”에서
+          <b class="tfx-strong">최종 할인 항목이 살아있는지</b> 확인하는 것입니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">최소 금액·카테고리 제한: 장바구니에서 꼭 확인</h2>
+
+        <p class="tfx-p">
+          테무 쿠폰이 적용 안 될 때 두 번째로 많은 원인은 <b class="tfx-strong">조건 미달</b>입니다.
+          대표적으로 최소 금액이 있고, 특정 카테고리에서만 적용되는 경우가 있습니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>최소 금액 충족 여부</div>
+            <p class="d">
+              쿠폰이 “적용됨”처럼 보여도, 결제 단계에서 금액이 조금만 변하면
+              최소 금액 아래로 내려가서 자동 해제될 수 있습니다.
+            </p>
+          </div>
+
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>상품/카테고리 제한 확인</div>
+            <p class="d">
+              일부 쿠폰은 특정 상품군/판매자/이벤트 상품에만 적용됩니다.
+              장바구니에 제한 상품이 섞이면 쿠폰이 통째로 빠지기도 합니다.
+            </p>
+          </div>
+
+          <div class="ui-step">
+            <div class="t"><span class="n">3</span>배송 옵션이 바뀌며 조건이 깨지는 경우</div>
+            <p class="d">
+              배송 옵션(묶음/분리/우선배송)에 따라 결제 금액 계산이 달라집니다.
+              이때 쿠폰 조건이 깨지는 사례가 많습니다.
+            </p>
+          </div>
+
+          <div class="ui-step">
+            <div class="t"><span class="n">4</span>장바구니 갱신(새로고침) 필요</div>
+            <p class="d">
+              앱이 오래 켜져 있던 상태에서는 금액·재고·할인이 갱신되지 않아
+              쿠폰 적용이 꼬여 보일 수 있습니다. 장바구니 화면을 다시 로드해보세요.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">중복 규칙: “자동으로 빠지는” 진짜 이유</h2>
+
+        <p class="tfx-p">
+          테무 쿠폰은 <b class="tfx-strong">중복 적용이 가능한 쿠폰</b>과
+          <b class="tfx-strong">중복 불가 쿠폰</b>이 섞여 있습니다.
+          그래서 쿠폰을 여러 개 손대기 시작하면, 어느 순간 쿠폰이 “슬쩍” 빠져버립니다.
+        </p>
+
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">체크</span> 중복 관련 대표 케이스</div>
+          <p class="tfx-p" style="margin:0;">
+            - 이벤트 혜택/장바구니 할인과 <b class="tfx-strong">쿠폰이 충돌</b>하는 경우<br />
+            - 특정 결제수단 할인과 <b class="tfx-strong">쿠폰이 동시에 적용 불가</b>인 경우<br />
+            - 동일 계정에서 <b class="tfx-strong">이미 사용한 쿠폰</b>을 다시 쓰는 경우
+          </p>
+        </div>
+
+        <div class="ui-note">
+          팁) “뭐가 충돌하는지 모르겠다”면,
+          <b class="tfx-strong">쿠폰을 전부 제거 → 1개만 적용 → 결제 단계 확인</b> 이 방법이 가장 빠릅니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">가장 빠른 해결 루트: 이 순서대로만 해보세요</h2>
+
+        <p class="tfx-p">
+          테무 쿠폰이 적용 안 될 때는 “이것저것 만지기”보다,
+          아래 순서대로만 진행하면 시간을 크게 줄일 수 있습니다.
+        </p>
+
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>쿠폰 전부 해제 후 1개만 적용</div>
+            <p class="d">충돌 여부를 한 번에 잡는 가장 빠른 방식입니다. 여러 개를 동시에 적용하면 원인이 숨습니다.</p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>장바구니 금액/상품군을 “단순화”</div>
+            <p class="d">조건을 확인하기 위해 잠깐만 상품을 1~2개로 줄여보면, 적용 조건이 정확히 보입니다.</p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">3</span>결제 단계에서 “최종 할인” 확인</div>
+            <p class="d">입력창이 아니라 결제 단계의 최종 할인 항목이 기준입니다. 여기서 빠지면 조건 미충족입니다.</p>
+          </div>
+          <div class="ui-step">
+            <div class="t"><span class="n">4</span>앱 재실행 후 다시 시도</div>
+            <p class="d">캐시/갱신 문제로 쿠폰이 꼬이는 경우가 있습니다. 재실행만으로 해결되는 케이스가 실제로 많습니다.</p>
+          </div>
+        </div>
+
+        <div class="ui-note">
+          요약) “전부 해제 → 1개 적용 → 결제 단계 확인” 이 루트가
+          테무 쿠폰 적용 안 됨 문제에서 가장 빠른 해결 루트입니다.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">자주 묻는 질문 (쿠폰 적용 안 됨)</h2>
+
+        <div class="ui-qa">
+          <div class="q">Q. 쿠폰 입력은 됐는데 할인 금액이 0원이에요.</div>
+          A. 조건 미충족(신규/기존, 최소금액, 카테고리 제한) 또는 중복 충돌 가능성이 큽니다.
+          “쿠폰 전부 해제 → 1개만 적용”으로 원인을 좁히는 게 가장 빠릅니다.<br /><br />
+
+          <div class="q">Q. 결제 단계에서만 쿠폰이 사라져요.</div>
+          A. 배송 옵션/세부 금액 변경으로 최소 금액 조건이 깨지는 경우가 많습니다.
+          결제 단계 직전에 장바구니 금액이 바뀌었는지 확인해보세요.<br /><br />
+
+          <div class="q">Q. 예전엔 됐는데 오늘은 안 돼요.</div>
+          A. 동일 쿠폰은 재사용이 안 되거나, 이벤트 종료/조건 변경으로 막힐 수 있습니다.
+          앱 캐시 문제도 있으니 재실행 후 재확인해보세요.
+        </div>
+      </section>
+
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리</h2>
+
+        <p class="tfx-p">
+          테무 쿠폰이 적용 안 될 때는 “버그”처럼 보이지만,
+          대부분은 <b class="tfx-strong">조건</b>과 <b class="tfx-strong">순서</b> 문제입니다.
+          특히 신규/기존 조건과 중복 규칙을 한 번만 정확히 잡아도
+          같은 문제로 다시 고생할 일이 거의 없어집니다.
+        </p>
+
+        <p class="tfx-p">
+          다시 한 번 핵심만 정리하면,<br />
+          <b class="tfx-strong">쿠폰 전부 해제 → 1개만 적용 → 결제 단계 최종 할인 확인</b><br />
+          이 루트가 가장 빠른 해결입니다.
+        </p>
+      </section>
+
+    </article>
+
+    <!-- ✅ 우측 쿠폰 패널: 동결 디자인 유지 (3개만 사용) -->
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">ack263361</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">frw419209</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alf468043</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
+
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
+
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
+
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
+</body>
+</html>
