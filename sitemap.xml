@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
   <!-- home -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -11,7 +12,7 @@
   <!-- p01 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-customs-code-one-letter-shipping-stop.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -19,7 +20,7 @@
   <!-- p02 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-shipping-not-moving-real-reason.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -27,7 +28,7 @@
   <!-- p03 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-payment-error-stuck-where-most-people-fail.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -35,7 +36,7 @@
   <!-- p04 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-order-cancel-possible-vs-impossible.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -43,7 +44,7 @@
   <!-- p05 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-refund-not-coming-what-to-check-first.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -51,7 +52,7 @@
   <!-- p06 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-tracking-not-updating-stuck.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -59,8 +60,65 @@
   <!-- p07 -->
   <url>
     <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-address-wrong-fix-fast.html</loc>
-    <lastmod>2026-02-02</lastmod>
+    <lastmod>2026-02-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- p08 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-customs-id-wrong-fix-fast.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p09 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-card-vs-easy-payment-failure-check.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p10 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-coupon-not-applied-new-vs-existing.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p11 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-free-gift-zero-won-event-works-or-not.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p12 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-free-shipping-turned-paid-why.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p13 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-price-changes-at-checkout-real-reasons.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- p14 -->
+  <url>
+    <loc>https://temuforyou.github.io/Temu_Free_/posts/temu-out-of-stock-cancel-how-to-reorder.html</loc>
+    <lastmod>2026-02-26</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
 </urlset>
