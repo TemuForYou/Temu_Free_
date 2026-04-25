@@ -362,7 +362,7 @@
 
     </article>
 
-    <!-- ✅ 오른쪽: 쿠폰 사이드바 -->
+  <!-- ✅ 우측 쿠폰 패널: ‘예쁜’ 디자인 고정 -->
     <aside class="tfx-sidebar">
       <div class="tfx-side-card">
         <div class="tfx-side-head">
@@ -370,17 +370,16 @@
           <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
         </div>
 
-        <!-- 카드 1 -->
-        <a class="tfx-coupon-card" href="https://temu.to/m/u6ndc7zl0v8" target="_blank" rel="noopener">
+        <a class="tfx-coupon-card" href="https://temu.to/k/g4cg0ctehlt" target="_blank" rel="noopener">
           <div class="tfx-coupon-left">
             <div class="tfx-coupon-badge">30%</div>
             <div>
               <div class="tfx-coupon-name">할인 코드</div>
-              <div class="tfx-coupon-code">ack263361</div>
+              <div class="tfx-coupon-code">alj466446</div>
             </div>
           </div>
           <div class="tfx-coupon-actions">
-            <button class="tfx-chip" type="button" data-copy="ack263361">복사</button>
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
             <span class="tfx-chip tfx-chip-ghost">이동</span>
           </div>
           <div class="tfx-download-row">
@@ -389,17 +388,16 @@
           </div>
         </a>
 
-        <!-- 카드 2 -->
-        <a class="tfx-coupon-card" href="https://temu.to/m/u0zwrhwzccf" target="_blank" rel="noopener">
+        <a class="tfx-coupon-card" href="https://temu.to/k/gjpirkucw3d" target="_blank" rel="noopener">
           <div class="tfx-coupon-left">
             <div class="tfx-coupon-badge">1원</div>
             <div>
               <div class="tfx-coupon-name">상품 이벤트</div>
-              <div class="tfx-coupon-code">frw419209</div>
+              <div class="tfx-coupon-code">alj466446</div>
             </div>
           </div>
           <div class="tfx-coupon-actions">
-            <button class="tfx-chip" type="button" data-copy="frw419209">복사</button>
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
             <span class="tfx-chip tfx-chip-ghost">이동</span>
           </div>
           <div class="tfx-download-row">
@@ -408,17 +406,16 @@
           </div>
         </a>
 
-        <!-- 카드 3 -->
-        <a class="tfx-coupon-card" href="https://temu.to/k/qgzxbhz73coe" target="_blank" rel="noopener">
+        <a class="tfx-coupon-card" href="https://temu.to/k/gbdiqw7h09v" target="_blank" rel="noopener">
           <div class="tfx-coupon-left">
             <div class="tfx-coupon-badge">99%</div>
             <div>
               <div class="tfx-coupon-name">할인 코드</div>
-              <div class="tfx-coupon-code">alf468043</div>
+              <div class="tfx-coupon-code">alj466446</div>
             </div>
           </div>
           <div class="tfx-coupon-actions">
-            <button class="tfx-chip" type="button" data-copy="alf468043">복사</button>
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
             <span class="tfx-chip tfx-chip-ghost">이동</span>
           </div>
           <div class="tfx-download-row">
@@ -438,16 +435,13 @@
   </main>
 
   <script>
-    // 쿠폰 복사 버튼
     (function () {
       const copyText = (t) => {
         const text = String(t || "").trim();
         if (!text) return;
         if (navigator.clipboard?.writeText) {
           navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
-        } else {
-          fallbackCopy(text);
-        }
+        } else fallbackCopy(text);
       };
 
       const fallbackCopy = (text) => {
@@ -462,8 +456,12 @@
         document.body.removeChild(ta);
       };
 
-      document.querySelectorAll("[data-copy]").forEach(btn => {
-        btn.addEventListener("click", () => copyText(btn.getAttribute("data-copy")));
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
       });
     })();
   </script>
