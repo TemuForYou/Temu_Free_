@@ -1,294 +1,464 @@
 <!doctype html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>테무 고객센터 답변이 늦을 때: 왕복 줄이고 빠르게 처리하는 문의 템플릿</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>테무 고객센터 답변이 늦을 때: 왕복 줄이고 빠르게 처리하는 문의 템플릿</title>
 
-<link rel="stylesheet" href="../assets/css/base.css" />
-<link rel="stylesheet" href="../assets/css/post.css" />
-<link rel="stylesheet" href="../assets/css/post-fix.css" />
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/post.css" />
+  <link rel="stylesheet" href="../assets/css/post-fix.css" />
 
-<style>
-:root{
-  --tfx-accent:#ff8c00;
-  --tfx-ink:#111;
-  --tfx-sub:#444;
-  --tfx-line: rgba(0,0,0,0.06);
-  --tfx-ok:#0a9b63;
-  --tfx-bad:#d92c2c;
-}
-.tfx-p{line-height:1.9;color:var(--tfx-sub);}
-.tfx-strong{font-weight:900;color:var(--tfx-ink);}
-
-.ui-callout{
-  border-radius:22px;
-  background:linear-gradient(180deg,#fff,rgba(255,140,0,0.05));
-  border:1px solid var(--tfx-line);
-  box-shadow:0 14px 30px rgba(0,0,0,0.05);
-  padding:16px;
-  margin-top:14px;
-}
-
-.ui-grid{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:14px;
-}
-@media(max-width:980px){.ui-grid{grid-template-columns:1fr;}}
-
-.ui-card{
-  border-radius:22px;
-  background:#fff;
-  border:1px solid var(--tfx-line);
-  box-shadow:0 14px 30px rgba(0,0,0,0.05);
-  padding:16px;
-}
-
-.ui-steps{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:14px;
-}
-@media(max-width:980px){.ui-steps{grid-template-columns:1fr;}}
-
-.ui-step{
-  border-radius:22px;
-  background:#fff;
-  border:1px solid var(--tfx-line);
-  padding:16px;
-}
-
-.ui-mini-table{
-  margin-top:14px;
-  border-radius:22px;
-  overflow:hidden;
-  border:1px solid var(--tfx-line);
-}
-.ui-mini-table .row{
-  display:grid;
-  grid-template-columns:170px 1fr;
-  border-top:1px solid var(--tfx-line);
-}
-.ui-mini-table .row:first-child{border-top:none;}
-.ui-mini-table .k{
-  padding:12px;
-  font-weight:900;
-  background:rgba(255,140,0,0.06);
-}
-.ui-mini-table .v{
-  padding:12px;
-}
-</style>
+  <style>
+    :root{
+      --tfx-accent:#ff8c00;
+      --tfx-ink:#111;
+      --tfx-sub:#444;
+      --tfx-line:rgba(0,0,0,0.06);
+      --tfx-ok:#0a9b63;
+      --tfx-bad:#d92c2c;
+    }
+    .tfx-p{line-height:1.9;color:var(--tfx-sub);}
+    .tfx-strong{font-weight:900;color:var(--tfx-ink);}
+    .ui-callout{border-radius:22px;background:linear-gradient(180deg,#fff,rgba(255,140,0,0.05));border:1px solid var(--tfx-line);box-shadow:0 14px 30px rgba(0,0,0,0.05);padding:14px;margin-top:12px;position:relative;overflow:hidden;}
+    .ui-callout:before{content:"";position:absolute;right:-40px;top:-40px;width:150px;height:150px;border-radius:999px;background:rgba(255,140,0,0.10);}
+    .ui-callout .k{display:inline-flex;align-items:center;gap:8px;font-weight:950;color:#111;margin-bottom:6px;}
+    .ui-pill{display:inline-flex;padding:6px 10px;border-radius:999px;background:rgba(255,140,0,0.10);border:1px solid rgba(255,140,0,0.22);font-size:13px;font-weight:850;color:#111;}
+    .ui-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;}
+    @media(max-width:980px){.ui-grid{grid-template-columns:1fr;}}
+    .ui-card{border-radius:22px;background:#fff;border:1px solid var(--tfx-line);box-shadow:0 14px 30px rgba(0,0,0,0.05);padding:12px 14px 14px;}
+    .ui-card .h{display:flex;align-items:center;gap:10px;font-weight:950;color:#111;margin-bottom:6px;}
+    .ui-badge{width:38px;height:38px;border-radius:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:950;box-shadow:0 14px 22px rgba(0,0,0,0.08);flex:0 0 auto;}
+    .ui-badge.ok{background:var(--tfx-ok);}
+    .ui-badge.bad{background:var(--tfx-bad);}
+    .ui-badge.orange{background:var(--tfx-accent);}
+    .ui-steps{margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+    @media(max-width:980px){.ui-steps{grid-template-columns:1fr;}}
+    .ui-step{border-radius:22px;background:#fff;border:1px solid var(--tfx-line);box-shadow:0 14px 30px rgba(0,0,0,0.05);padding:12px 14px 14px;overflow:hidden;}
+    .ui-step .n{display:inline-flex;align-items:center;justify-content:center;width:40px;height:40px;border-radius:18px;background:var(--tfx-accent);color:#fff;font-weight:950;box-shadow:0 14px 22px rgba(255,140,0,0.22);margin-right:8px;flex:0 0 auto;}
+    .ui-step .t{display:flex;align-items:center;gap:8px;font-weight:950;color:#111;margin-bottom:6px;}
+    .ui-step .d{margin:0;color:#444;line-height:1.75;}
+    .ui-note{margin-top:10px;padding:10px 12px;border-radius:16px;background:rgba(0,0,0,0.03);border:1px solid rgba(0,0,0,0.05);color:#444;line-height:1.75;}
+    .ui-mini-table{margin-top:12px;border-radius:22px;overflow:hidden;border:1px solid var(--tfx-line);box-shadow:0 14px 30px rgba(0,0,0,0.05);background:#fff;}
+    .ui-mini-table .row{display:grid;grid-template-columns:170px 1fr;border-top:1px solid var(--tfx-line);}
+    .ui-mini-table .row:first-child{border-top:none;}
+    .ui-mini-table .k{padding:12px 14px;font-weight:900;color:#111;background:rgba(255,140,0,0.06);}
+    .ui-mini-table .v{padding:12px 14px;color:#444;line-height:1.8;}
+    @media(max-width:720px){.ui-mini-table .row{grid-template-columns:1fr}.ui-mini-table .k{border-bottom:1px solid var(--tfx-line);}}
+    @media(max-width:980px){
+      .tfx-post-shell{padding-left:14px;padding-right:14px;display:block;}
+      .tfx-post{width:100%;max-width:100%;}
+      .tfx-sidebar{width:100%;max-width:100%;margin-top:16px;position:static!important;top:auto!important;}
+      .tfx-title{font-size:28px;line-height:1.25;word-break:keep-all;}
+      .tfx-lead{font-size:16px;line-height:1.8;}
+      .tfx-post *{max-width:100%;}
+    }
+    @media(max-width:480px){
+      .tfx-title{font-size:24px;}
+      .tfx-lead{font-size:15px;}
+      .tfx-coupon-actions{flex-wrap:wrap;gap:8px;}
+    }
+  </style>
 </head>
 
 <body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="../index.html" style="text-decoration:none;color:inherit;">
+        <span class="logo">TFY</span>
+        <span class="brand-name">TFY</span>
+      </a>
+      <nav class="nav">
+        <a class="nav-link" href="../index.html">홈</a>
+      </nav>
+    </div>
+  </div>
 
-<div class="topbar">
-<div class="topbar-inner">
-<a class="brand" href="../index.html">
-<span class="logo">TFY</span>
-<span class="brand-name">TFY</span>
-</a>
-</div>
-</div>
+  <main class="tfx-post-shell">
+    <article class="tfx-post">
 
-<main class="tfx-post-shell">
+      <div class="tfx-tags">
+        <span class="tfx-tag">진위 검증형</span>
+        <span class="tfx-tag">고객센터·문의</span>
+        <span class="tfx-tag tfx-tag-accent">빠른 처리</span>
+      </div>
 
-<article class="tfx-post">
+      <h1 class="tfx-title">테무 고객센터 답변이 늦을 때: 왕복 줄이고 빠르게 처리하는 문의 템플릿</h1>
 
-<h1 class="tfx-title">
-테무 고객센터 답변이 늦을 때: 왕복 줄이고 빠르게 처리하는 문의 템플릿
-</h1>
+      <p class="tfx-lead">
+        테무를 이용하다 보면 배송 지연, 환불, 결제 오류, 쿠폰 미적용, 파손 상품처럼 고객센터에 문의해야 하는 순간이 생깁니다.
+        그런데 문의를 남겼는데 답변이 늦거나, 답변이 와도 다시 정보를 달라고 해서 시간이 길어지는 경우가 많습니다.
+      </p>
 
-<p class="tfx-lead">
-테무를 사용하다 보면 고객센터에 문의를 남겼는데 답변이 늦어지는 경우가 생각보다 자주 발생합니다.
-단순히 기다리면 해결될 것 같지만, 실제로는 문의 방식에 따라 처리 속도가 크게 달라집니다.
-</p>
+      <p class="tfx-lead">
+        <b class="tfx-strong">테무 고객센터 답변이 늦을 때</b>는 무작정 같은 문의를 반복하기보다,
+        처음부터 주문번호, 문제 상황, 증빙, 원하는 처리 방식을 한 번에 정리하는 것이 중요합니다.
+        이 글에서는 테무 고객센터 문의가 늦어지는 이유와 빠르게 처리되는 문의 구조, 그대로 복사해서 쓸 수 있는 템플릿까지 정리합니다.
+      </p>
 
-<p class="tfx-lead">
-특히 <b class="tfx-strong">테무 고객센터 답변 늦을 때</b>는 대부분 공통된 이유가 있습니다.
-이 글에서는 왜 답변이 늦어지는지, 그리고 어떻게 하면 한 번에 빠르게 해결되는지 실제 사용 가능한 방식으로 정리합니다.
-</p>
+      <div class="tfx-meta">
+        <span class="dot">●</span>
+        <span>TFY 편집팀</span>
+        <span class="sep">·</span>
+        <span>2026.02.25</span>
+        <span class="sep">·</span>
+        <span>업데이트: 상시</span>
+      </div>
 
-<section class="tfx-section">
+      <section class="tfx-section" style="margin-top:14px;">
+        <h2 class="tfx-h2">먼저 결론: 답변 속도는 문의 내용의 완성도에서 갈립니다</h2>
 
-<h2 class="tfx-h2">핵심 결론</h2>
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">핵심</span> 테무 고객센터 답변이 늦을 때 가장 먼저 봐야 할 것</div>
+          <p class="tfx-p" style="margin:0;">
+            고객센터 답변이 늦어지는 이유는 보통 아래 5가지입니다.<br />
+            ① <b class="tfx-strong">주문번호가 빠져서</b> 담당자가 주문을 다시 확인해야 하는 경우<br />
+            ② <b class="tfx-strong">사진·영상 증빙이 없어</b> 문제 확인이 늦어지는 경우<br />
+            ③ <b class="tfx-strong">문의 유형을 잘못 선택해</b> 담당 부서가 달라지는 경우<br />
+            ④ <b class="tfx-strong">요청사항이 불분명해</b> 추가 질문이 생기는 경우<br />
+            ⑤ <b class="tfx-strong">같은 문의를 반복해서</b> 오히려 처리 흐름이 꼬이는 경우
+          </p>
+        </div>
 
-<div class="ui-callout">
-<p class="tfx-p">
-테무 고객센터 답변 속도는 문의 내용의 완성도에 따라 달라집니다.
-</p>
+        <div class="ui-note">
+          핵심은 “빨리 답 주세요”라고 쓰는 것이 아니라, 담당자가 바로 판단할 수 있게 정보를 완성해서 보내는 것입니다.
+        </div>
+      </section>
 
-<p class="tfx-p">
-✔ 정보 부족 → 추가 질문 발생<br>
-✔ 증빙 없음 → 확인 지연<br>
-✔ 요청 불명확 → 재문의 반복
-</p>
-</div>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">답변이 늦어지는 대표 원인 4가지</h2>
 
-</section>
+        <div class="ui-grid">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">1</span>문의 내용이 너무 짧은 경우</div>
+            <p class="tfx-p" style="margin:0;">
+              “배송이 안 와요”, “환불해주세요”처럼 짧게만 쓰면 담당자는 주문번호, 배송 상태, 문제 발생 시점, 원하는 처리 방식을 다시 물어봐야 합니다.
+              이 과정에서 답변 왕복이 늘어나고 처리 시간이 길어집니다.
+            </p>
+          </div>
 
-<section class="tfx-section">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">2</span>증빙이 없는 경우</div>
+            <p class="tfx-p" style="margin:0;">
+              파손, 오배송, 누락, 쿠폰 미적용, 결제 오류는 화면이나 상품 상태를 확인해야 합니다.
+              사진이나 캡처 없이 문의하면 확인이 늦어지고, 다시 첨부 요청을 받을 가능성이 높습니다.
+            </p>
+          </div>
 
-<h2 class="tfx-h2">답변이 늦어지는 이유</h2>
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">3</span>문의 유형이 맞지 않는 경우</div>
+            <p class="tfx-p" style="margin:0;">
+              배송 지연을 환불 문제로 넣거나, 결제 오류를 쿠폰 문제로 넣으면 처리 루트가 달라질 수 있습니다.
+              고객센터에서는 유형별로 확인 항목이 다르기 때문에 처음 선택이 중요합니다.
+            </p>
+          </div>
 
-<div class="ui-grid">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge orange">4</span>반복 문의가 많은 경우</div>
+            <p class="tfx-p" style="margin:0;">
+              답답해서 같은 내용을 여러 번 보내면 더 빨라질 것 같지만, 실제로는 기존 문의 흐름이 분산될 수 있습니다.
+              새 문의를 계속 만들기보다 기존 문의에 필요한 정보를 추가하는 것이 안전합니다.
+            </p>
+          </div>
+        </div>
+      </section>
 
-<div class="ui-card">
-<p class="tfx-p"><b>정보 부족</b><br>
-주문번호 없이 문의하면 담당자가 다시 확인해야 합니다.</p>
-</div>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">빠르게 처리되는 문의 구조</h2>
 
-<div class="ui-card">
-<p class="tfx-p"><b>증빙 부족</b><br>
-사진이나 영상이 없으면 처리 속도가 느려집니다.</p>
-</div>
+        <p class="tfx-p">
+          테무 고객센터 문의는 길게 쓰는 것보다 필요한 정보를 순서대로 넣는 것이 중요합니다.
+          담당자가 바로 주문을 찾고, 문제를 확인하고, 처리 방향을 판단할 수 있어야 답변 왕복이 줄어듭니다.
+        </p>
 
-<div class="ui-card">
-<p class="tfx-p"><b>문의 유형 오류</b><br>
-잘못된 카테고리 선택 시 처리 지연 발생</p>
-</div>
+        <div class="ui-mini-table">
+          <div class="row">
+            <div class="k">주문번호</div>
+            <div class="v">
+              문의 첫 줄에 주문번호를 넣습니다. 주문번호가 없으면 담당자가 어떤 주문인지 다시 물어볼 수 있습니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">문제 요약</div>
+            <div class="v">
+              “배송조회가 7일째 멈춤”, “상품 1개 누락”, “결제는 됐는데 주문 없음”처럼 한 줄로 정리합니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">현재 상태</div>
+            <div class="v">
+              앱에 표시되는 상태 문구를 그대로 적습니다. 예: 배송 중, 진행 중, 환불 처리 중, 결제 실패 등.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">증빙 자료</div>
+            <div class="v">
+              상품 사진, 포장 사진, 주문 내역 캡처, 결제 화면 캡처, 배송조회 화면을 함께 첨부합니다.
+            </div>
+          </div>
+          <div class="row">
+            <div class="k">요청사항</div>
+            <div class="v">
+              “위치 확인”, “환불 요청”, “누락 상품 재발송”, “결제 취소 확인”처럼 원하는 결과를 분명히 적습니다.
+            </div>
+          </div>
+        </div>
+      </section>
 
-<div class="ui-card">
-<p class="tfx-p"><b>반복 문의</b><br>
-여러 번 보내면 오히려 뒤로 밀립니다.</p>
-</div>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">상황별 문의 템플릿</h2>
 
-</div>
+        <div class="ui-steps">
+          <div class="ui-step">
+            <div class="t"><span class="n">1</span>배송 지연 문의</div>
+            <p class="d">
+              주문번호: XXXX<br />
+              현재 배송 상태가 ○일째 “진행 중”에서 멈춰 있습니다.<br />
+              마지막 업데이트 시간은 ○월 ○일이며, 배송 위치 확인과 예상 도착일 안내를 요청드립니다.
+            </p>
+          </div>
 
-</section>
+          <div class="ui-step">
+            <div class="t"><span class="n">2</span>환불 지연 문의</div>
+            <p class="d">
+              주문번호: XXXX<br />
+              환불 요청 후 ○일이 지났지만 아직 결제수단에 반영되지 않았습니다.<br />
+              현재 환불 처리 상태와 예상 반영 일정을 확인 부탁드립니다.
+            </p>
+          </div>
 
-<section class="tfx-section">
+          <div class="ui-step">
+            <div class="t"><span class="n">3</span>파손·오배송 문의</div>
+            <p class="d">
+              주문번호: XXXX<br />
+              수령한 상품이 주문 내역과 다르거나 파손된 상태입니다.<br />
+              첨부한 사진에서 문제 부분을 확인할 수 있으며, 환불 또는 재발송 가능 여부 안내를 요청드립니다.
+            </p>
+          </div>
 
-<h2 class="tfx-h2">빠르게 처리되는 문의 구조</h2>
+          <div class="ui-step">
+            <div class="t"><span class="n">4</span>결제 오류 문의</div>
+            <p class="d">
+              결제 시도 후 카드 승인/결제 알림은 확인됐지만 주문 내역에 표시되지 않습니다.<br />
+              결제 승인 여부와 주문 생성 여부를 확인해주시고, 필요 시 결제 취소 처리 부탁드립니다.
+            </p>
+          </div>
+        </div>
+      </section>
 
-<div class="ui-mini-table">
+      <section class="tfx-section">
+        <h2 class="tfx-h2">답변을 빠르게 받기 위한 실전 팁</h2>
 
-<div class="row">
-<div class="k">주문번호</div>
-<div class="v">반드시 포함</div>
-</div>
+        <div class="ui-grid">
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge ok">OK</span>한 번에 정리해서 보내기</div>
+            <p class="tfx-p" style="margin:0;">
+              주문번호, 문제 상황, 캡처, 요청사항을 한 메시지에 넣으면 담당자가 다시 묻지 않아도 됩니다.
+              테무 고객센터 답변이 늦을 때 가장 효과적인 방법은 “추가 질문이 필요 없는 문의”를 만드는 것입니다.
+            </p>
+          </div>
 
-<div class="row">
-<div class="k">문제 요약</div>
-<div class="v">한 줄로 정리</div>
-</div>
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge ok">OK</span>사진은 여러 장 첨부하기</div>
+            <p class="tfx-p" style="margin:0;">
+              파손·오배송·누락은 전체 사진과 문제 부위 확대 사진이 함께 있어야 합니다.
+              배송 문제는 배송조회 캡처, 결제 문제는 결제 화면 캡처가 도움이 됩니다.
+            </p>
+          </div>
 
-<div class="row">
-<div class="k">상세 설명</div>
-<div class="v">구체적으로 작성</div>
-</div>
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge bad">NO</span>감정 표현만 길게 쓰지 않기</div>
+            <p class="tfx-p" style="margin:0;">
+              “너무 화나요”, “빨리 처리해주세요”만 길게 쓰면 판단 정보가 부족합니다.
+              감정 표현은 줄이고, 사실과 요청을 분리해서 쓰는 것이 더 빠릅니다.
+            </p>
+          </div>
 
-<div class="row">
-<div class="k">증빙</div>
-<div class="v">사진 또는 영상 첨부</div>
-</div>
+          <div class="ui-card">
+            <div class="h"><span class="ui-badge bad">NO</span>새 문의를 계속 만들지 않기</div>
+            <p class="tfx-p" style="margin:0;">
+              같은 내용으로 새 문의를 반복하면 처리 기록이 흩어질 수 있습니다.
+              기존 문의에 정보와 증빙을 추가하는 방식이 더 안전합니다.
+            </p>
+          </div>
+        </div>
+      </section>
 
-<div class="row">
-<div class="k">요청</div>
-<div class="v">환불/교환 명확히</div>
-</div>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">답변이 계속 늦을 때 추가 조치</h2>
 
-</div>
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">추가 조치</span> 기다리기 전에 보강할 것</div>
+          <p class="tfx-p" style="margin:0;">
+            ① 기존 문의에 <b class="tfx-strong">주문번호와 현재 상태</b>를 다시 정리<br />
+            ② 사진·캡처가 부족했다면 <b class="tfx-strong">증빙 추가</b><br />
+            ③ 요청사항을 “환불”, “재발송”, “위치 확인” 중 하나로 명확히 작성<br />
+            ④ 같은 문의를 새로 만들기보다 <b class="tfx-strong">기존 문의에 이어서</b> 작성<br />
+            ⑤ 답변을 기다리는 동안 재주문이 필요하면 쿠폰·가격 조건을 다시 확인
+          </p>
+        </div>
 
-</section>
+        <div class="ui-note">
+          답변이 늦는다고 무조건 새 문의를 여러 개 넣는 것은 좋은 방법이 아닙니다.
+          더 빠른 방법은 기존 문의를 “처리 가능한 상태”로 보강하는 것입니다.
+        </div>
+      </section>
 
-<section class="tfx-section">
+      <section class="tfx-section">
+        <h2 class="tfx-h2">환불·취소 후 재주문할 때 주의할 점</h2>
 
-<h2 class="tfx-h2">실전 문의 템플릿</h2>
+        <p class="tfx-p">
+          고객센터 문의가 끝난 뒤 환불이나 취소가 처리되면 다시 주문해야 하는 상황이 생길 수 있습니다.
+          이때 이전에 적용했던 쿠폰이나 이벤트 가격이 그대로 유지되지 않을 수 있습니다.
+          특히 테무는 쿠폰 조건, 장바구니 할인, 이벤트 가격이 수시로 바뀌기 때문에 재주문 전 최종 결제 금액을 다시 확인해야 합니다.
+        </p>
 
-<div class="ui-callout">
+        <p class="tfx-p">
+          우측 쿠폰 카드의 코드를 복사해두고 다시 주문할 때 적용 가능 여부를 확인하면,
+          환불·취소 이후 재구매 과정에서 생기는 가격 차이를 줄일 수 있습니다.
+          테무 고객센터 답변이 늦을 때 기다리는 동안 대체 상품을 살펴보는 경우도 많은데,
+          이때도 쿠폰 조건을 먼저 확인하면 손해를 줄이는 데 도움이 됩니다.
+        </p>
+      </section>
 
-<p class="tfx-p">
-주문번호: XXXX<br>
-문제: 상품 파손<br>
-설명: 수령 직후 파손 확인<br>
-첨부: 사진 포함<br>
-요청: 환불 요청
-</p>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">자주 묻는 질문</h2>
 
-</div>
+        <div class="ui-callout">
+          <div class="k"><span class="ui-pill">FAQ</span> 테무 고객센터 문의 전 확인</div>
+          <p class="tfx-p" style="margin:0;">
+            <b>Q. 고객센터 답변은 보통 얼마나 걸리나요?</b><br />
+            상황과 문의 유형에 따라 다르지만, 정보가 부족하면 답변이 와도 다시 확인 요청을 받을 수 있습니다.
+            처음부터 주문번호와 증빙을 넣는 것이 가장 중요합니다.<br /><br />
 
-</section>
+            <b>Q. 사진이 없으면 환불이 안 되나요?</b><br />
+            무조건 안 되는 것은 아니지만, 파손·오배송·누락은 사진이 있어야 처리 속도가 훨씬 빨라집니다.<br /><br />
 
-<section class="tfx-section">
+            <b>Q. 같은 문의를 여러 번 보내면 더 빨라지나요?</b><br />
+            대부분은 그렇지 않습니다. 같은 내용을 반복하기보다 기존 문의에 부족한 정보를 추가하는 편이 낫습니다.
+          </p>
+        </div>
+      </section>
 
-<h2 class="tfx-h2">처리 속도를 올리는 핵심 전략</h2>
+      <section class="tfx-section">
+        <h2 class="tfx-h2">마무리</h2>
 
-<div class="ui-steps">
+        <p class="tfx-p">
+          테무 고객센터 답변이 늦을 때 가장 중요한 것은 기다리는 시간이 아니라 문의의 품질입니다.
+          주문번호, 문제 요약, 현재 상태, 증빙, 요청사항이 들어간 문의는 담당자가 바로 판단하기 쉽습니다.
+          반대로 정보가 부족한 문의는 답변이 와도 다시 질문을 받아야 해서 시간이 늘어납니다.
+        </p>
 
-<div class="ui-step">
-<p class="tfx-p">짧고 명확하게 작성</p>
-</div>
+        <p class="tfx-p">
+          다시 정리하면, <b class="tfx-strong">테무 고객센터 답변이 늦을 때</b>는 문의를 반복하기보다
+          기존 문의에 필요한 정보를 보강하는 것이 좋습니다.
+          특히 환불·배송·결제 문제는 증빙이 핵심이며, 재주문이 필요한 경우에는 쿠폰과 최종 가격 조건까지 다시 확인하는 것이 안전합니다.
+        </p>
+      </section>
 
-<div class="ui-step">
-<p class="tfx-p">증빙 필수 첨부</p>
-</div>
+    </article>
 
-<div class="ui-step">
-<p class="tfx-p">감정 표현 제거</p>
-</div>
+    <aside class="tfx-sidebar">
+      <div class="tfx-side-card">
+        <div class="tfx-side-head">
+          <div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+          <div class="tfx-side-sub">클릭 → 코드복사 → 이동/다운로드 순서</div>
+        </div>
 
-<div class="ui-step">
-<p class="tfx-p">한 번에 정리</p>
-</div>
+        <a class="tfx-coupon-card" href="https://temu.to/k/g4cg0ctehlt" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">30%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alj466446</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
 
-</div>
+        <a class="tfx-coupon-card" href="https://temu.to/k/gjpirkucw3d" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">1원</div>
+            <div>
+              <div class="tfx-coupon-name">상품 이벤트</div>
+              <div class="tfx-coupon-code">alj466446</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
 
-</section>
+        <a class="tfx-coupon-card" href="https://temu.to/k/gbdiqw7h09v" target="_blank" rel="noopener">
+          <div class="tfx-coupon-left">
+            <div class="tfx-coupon-badge">99%</div>
+            <div>
+              <div class="tfx-coupon-name">할인 코드</div>
+              <div class="tfx-coupon-code">alj466446</div>
+            </div>
+          </div>
+          <div class="tfx-coupon-actions">
+            <button class="tfx-chip" type="button" data-copy="alj466446">복사</button>
+            <span class="tfx-chip tfx-chip-ghost">이동</span>
+          </div>
+          <div class="tfx-download-row">
+            <span class="tfx-download-pill">다운로드</span>
+            <span class="tfx-download-hint">눌러서 링크 열기</span>
+          </div>
+        </a>
 
-<section class="tfx-section">
+        <div class="tfx-side-foot">
+          <div class="tfx-side-mini">
+            * 링크는 카드 클릭으로 이동됩니다.<br />
+            * “복사” 버튼은 코드만 복사합니다.
+          </div>
+        </div>
+      </div>
+    </aside>
+  </main>
 
-<h2 class="tfx-h2">재주문 전 체크</h2>
+  <script>
+    (function () {
+      const copyText = (t) => {
+        const text = String(t || "").trim();
+        if (!text) return;
+        if (navigator.clipboard?.writeText) {
+          navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        } else fallbackCopy(text);
+      };
 
-<div class="ui-callout">
-<p class="tfx-p">
-환불 후 재주문 시 가격과 쿠폰 조건이 바뀔 수 있습니다.
-우측 쿠폰을 활용하면 손해를 줄일 수 있습니다.
-</p>
-</div>
+      const fallbackCopy = (text) => {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        ta.style.position = "fixed";
+        ta.style.opacity = "0";
+        document.body.appendChild(ta);
+        ta.focus();
+        ta.select();
+        try { document.execCommand("copy"); } catch (_) {}
+        document.body.removeChild(ta);
+      };
 
-</section>
-
-<section class="tfx-section">
-
-<h2 class="tfx-h2">마무리</h2>
-
-<p class="tfx-p">
-테무 고객센터 답변이 늦을 때는 기다리는 것이 아니라,
-문의 방식 자체를 바꿔야 합니다.
-</p>
-
-<p class="tfx-p">
-핵심은 정확한 정보와 명확한 요청입니다.
-</p>
-
-</section>
-
-</article>
-
-<aside class="tfx-sidebar">
-<div class="tfx-side-card">
-
-<a class="tfx-coupon-card" href="https://temu.to/k/g4cg0ctehlt">
-<div class="tfx-coupon-code">alj466446</div>
-</a>
-
-<a class="tfx-coupon-card" href="https://temu.to/k/gjpirkucw3d">
-<div class="tfx-coupon-code">alj466446</div>
-</a>
-
-<a class="tfx-coupon-card" href="https://temu.to/k/gbdiqw7h09v">
-<div class="tfx-coupon-code">alj466446</div>
-</a>
-
-</div>
-</aside>
-
-</main>
-
+      document.querySelectorAll("[data-copy]").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          copyText(btn.getAttribute("data-copy"));
+        });
+      });
+    })();
+  </script>
 </body>
 </html>
