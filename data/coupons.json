@@ -2,41 +2,39 @@
   "mainSlots": [
     {
       "title": "30% 쿠폰",
-      "code": "ack263361",
-      "link": "https://temu.to/m/u6ndc7zl0v8",
+      "code": "alj466446",
+      "link": "https://temu.to/k/gbdiqw7h09v",
       "desc": "30% 고정할인 쿠폰!"
     },
     {
       "title": "1원 상품",
-      "code": "frw419209",
-      "link": "https://temu.to/m/u0zwrhwzccf",
+      "link": "https://temu.to/k/gjpirkucw3d",
       "desc": "1원상품 픽업 쿠폰!"
     },
     {
-      "title": "99% 할인 코드",
-      "code": "alf468043",
-      "link": "https://temu.to/k/qgzxbhz73coe",
-      "desc": "전체 상품 모두 99%할인!"
+      "title": "150,000원 쿠폰 묶음",
+      "code": "alj466446",
+      "link": "https://temu.to/k/g4cg0ctehlt",
+      "desc": "15만원 쿠폰 발급받기"
     }
   ],
   "sidebar": [
     {
-      "title": "30% 할인",
-      "code": "ack263361",
-      "link": "https://temu.to/m/u6ndc7zl0v8",
+      "title": "30% 쿠폰",
+      "code": "alj466446",
+      "link": "https://temu.to/k/gbdiqw7h09v",
       "tag": "30%"
     },
     {
-      "title": "사은품 1원",
-      "code": "frw419209",
-      "link": "https://temu.to/m/u0zwrhwzccf",
+      "title": "1원 상품",
+      "link": "https://temu.to/k/gjpirkucw3d",
       "tag": "1원"
     },
     {
-      "title": "추가 혜택",
-      "code": "alf468043",
-      "link": "https://temu.to/k/qgzxbhz73coe",
-      "tag": "99%"
+      "title": "150,000원 쿠폰 묶음",
+      "code": "alj466446",
+      "link": "https://temu.to/k/g4cg0ctehlt",
+      "tag": "100$"
     }
   ]
 }
