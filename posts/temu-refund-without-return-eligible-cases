@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>테무 반품 없이 환불 가능한 케이스: 가능한 조건과 불가 조건 구분표</title>
+
+<link rel="stylesheet" href="../assets/css/base.css" />
+<link rel="stylesheet" href="../assets/css/post.css" />
+<link rel="stylesheet" href="../assets/css/post-fix.css" />
+
+<style>
+:root{
+  --tfx-accent:#ff8c00;
+  --tfx-ink:#111;
+  --tfx-sub:#444;
+  --tfx-line: rgba(0,0,0,0.06);
+  --tfx-ok:#0a9b63;
+  --tfx-bad:#d92c2c;
+}
+
+.tfx-p{ line-height:1.9; color:var(--tfx-sub); }
+.tfx-strong{ font-weight:900; color:var(--tfx-ink); }
+
+.ui-callout{
+  border-radius:22px;
+  background:linear-gradient(180deg,#fff,rgba(255,140,0,0.05));
+  border:1px solid var(--tfx-line);
+  box-shadow:0 14px 30px rgba(0,0,0,0.05);
+  padding:14px;
+  margin-top:12px;
+  position:relative;
+  overflow:hidden;
+}
+.ui-callout:before{
+  content:"";
+  position:absolute;
+  right:-40px;
+  top:-40px;
+  width:150px;
+  height:150px;
+  border-radius:999px;
+  background:rgba(255,140,0,0.10);
+}
+.ui-callout .k{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  font-weight:950;
+  color:#111;
+  margin-bottom:6px;
+}
+.ui-pill{
+  display:inline-flex;
+  padding:6px 10px;
+  border-radius:999px;
+  background:rgba(255,140,0,0.10);
+  border:1px solid rgba(255,140,0,0.22);
+  font-size:13px;
+  font-weight:850;
+}
+
+.ui-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:12px;
+}
+@media(max-width:980px){ .ui-grid{ grid-template-columns:1fr; } }
+
+.ui-card{
+  border-radius:22px;
+  background:#fff;
+  border:1px solid var(--tfx-line);
+  box-shadow:0 14px 30px rgba(0,0,0,0.05);
+  padding:12px 14px;
+}
+
+.ui-badge{
+  width:38px;
+  height:38px;
+  border-radius:16px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#fff;
+  font-weight:900;
+}
+.ui-badge.ok{ background:var(--tfx-ok); }
+.ui-badge.bad{ background:var(--tfx-bad); }
+
+.ui-mini-table{
+  margin-top:12px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--tfx-line);
+}
+.ui-mini-table .row{
+  display:grid;
+  grid-template-columns:170px 1fr;
+  border-top:1px solid var(--tfx-line);
+}
+.ui-mini-table .row:first-child{ border-top:none; }
+.ui-mini-table .k{
+  padding:12px;
+  font-weight:900;
+  background:rgba(255,140,0,0.06);
+}
+.ui-mini-table .v{
+  padding:12px;
+}
+
+@media(max-width:980px){
+  .tfx-post-shell{ display:block; padding:14px; }
+  .tfx-sidebar{ margin-top:20px; position:static !important; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="../index.html">
+      <span class="logo">TFY</span>
+      <span class="brand-name">TFY</span>
+    </a>
+  </div>
+</div>
+
+<main class="tfx-post-shell">
+
+<article class="tfx-post">
+
+<h1 class="tfx-title">
+테무 반품 없이 환불 가능한 케이스: 가능한 조건과 불가 조건 구분표
+</h1>
+
+<p class="tfx-lead">
+테무를 사용하다 보면 “반품 없이 환불됐다”는 후기를 종종 보게 됩니다.
+하지만 실제로는 모든 상황에서 가능한 것이 아니라,
+<strong>특정 조건에서만 허용되는 방식</strong>입니다.
+</p>
+
+<section class="tfx-section">
+
+<h2 class="tfx-h2">핵심 결론</h2>
+
+<div class="ui-callout">
+<div class="k"><span class="ui-pill">핵심</span> 반품 없이 환불은 선택이 아니라 판단 결과입니다</div>
+
+<p class="tfx-p">
+테무는 다음 기준으로 판단합니다.
+</p>
+
+<p class="tfx-p">
+✔ 상품 상태<br>
+✔ 문제 유형<br>
+✔ 증빙 자료<br>
+✔ 상품 가격<br>
+✔ 계정 이력
+</p>
+</div>
+
+</section>
+
+<section class="tfx-section">
+
+<h2 class="tfx-h2">가능성이 높은 케이스</h2>
+
+<div class="ui-grid">
+
+<div class="ui-card">
+<div class="ui-badge ok">OK</div>
+<p class="tfx-p"><b>파손/불량</b><br>사진으로 명확하게 확인 가능할 경우</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge ok">OK</div>
+<p class="tfx-p"><b>오배송/누락</b><br>주문과 다른 상품 도착</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge ok">OK</div>
+<p class="tfx-p"><b>저가 상품</b><br>회수 비용이 더 클 경우</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge ok">OK</div>
+<p class="tfx-p"><b>배송 문제</b><br>분실 또는 장기 지연</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="tfx-section">
+
+<h2 class="tfx-h2">불가능한 케이스</h2>
+
+<div class="ui-grid">
+
+<div class="ui-card">
+<div class="ui-badge bad">NO</div>
+<p class="tfx-p">단순 변심</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge bad">NO</div>
+<p class="tfx-p">고가 상품</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge bad">NO</div>
+<p class="tfx-p">증빙 부족</p>
+</div>
+
+<div class="ui-card">
+<div class="ui-badge bad">NO</div>
+<p class="tfx-p">과도한 환불 이력</p>
+</div>
+
+</div>
+
+</section>
+
+<section class="tfx-section">
+
+<h2 class="tfx-h2">조건 구분표</h2>
+
+<div class="ui-mini-table">
+
+<div class="row">
+<div class="k">파손</div>
+<div class="v">가능성 높음 (사진 필수)</div>
+</div>
+
+<div class="row">
+<div class="k">오배송</div>
+<div class="v">가능성 높음</div>
+</div>
+
+<div class="row">
+<div class="k">변심</div>
+<div class="v">가능성 낮음</div>
+</div>
+
+<div class="row">
+<div class="k">고가 상품</div>
+<div class="v">대부분 반품 필요</div>
+</div>
+
+</div>
+
+</section>
+
+<section class="tfx-section">
+
+<h2 class="tfx-h2">핵심 전략</h2>
+
+<div class="ui-callout">
+
+<p class="tfx-p">
+✔ 사진은 반드시 여러 장<br>
+✔ 포장 상태 포함<br>
+✔ 짧고 정확하게 설명<br>
+✔ 감정 표현 X
+</p>
+
+</div>
+
+</section>
+
+</article>
+
+<!-- 쿠폰패널 (동결) -->
+<aside class="tfx-sidebar">
+<div class="tfx-side-card">
+
+<div class="tfx-side-head">
+<div class="tfx-side-title">🔥 쿠폰 코드 · 링크</div>
+</div>
+
+<a class="tfx-coupon-card" href="https://temu.to/k/g4cg0ctehlt" target="_blank">
+<div class="tfx-coupon-code">alj466446</div>
+</a>
+
+<a class="tfx-coupon-card" href="https://temu.to/k/gjpirkucw3d" target="_blank">
+<div class="tfx-coupon-code">alj466446</div>
+</a>
+
+<a class="tfx-coupon-card" href="https://temu.to/k/gbdiqw7h09v" target="_blank">
+<div class="tfx-coupon-code">alj466446</div>
+</a>
+
+</div>
+</aside>
+
+</main>
+
+</body>
+</html>
