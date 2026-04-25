@@ -15,6 +15,8 @@
   --tfx-ink:#111;
   --tfx-sub:#444;
   --tfx-line: rgba(0,0,0,0.06);
+  --tfx-ok:#0a9b63;
+  --tfx-bad:#d92c2c;
 }
 .tfx-p{line-height:1.9;color:var(--tfx-sub);}
 .tfx-strong{font-weight:900;color:var(--tfx-ink);}
@@ -23,6 +25,7 @@
   border-radius:22px;
   background:linear-gradient(180deg,#fff,rgba(255,140,0,0.05));
   border:1px solid var(--tfx-line);
+  box-shadow:0 14px 30px rgba(0,0,0,0.05);
   padding:16px;
   margin-top:14px;
 }
@@ -39,15 +42,44 @@
   border-radius:22px;
   background:#fff;
   border:1px solid var(--tfx-line);
+  box-shadow:0 14px 30px rgba(0,0,0,0.05);
   padding:16px;
 }
+
+.ui-steps{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-top:14px;
+}
+@media(max-width:980px){.ui-steps{grid-template-columns:1fr;}}
 
 .ui-step{
   border-radius:22px;
   background:#fff;
   border:1px solid var(--tfx-line);
   padding:16px;
+}
+
+.ui-mini-table{
   margin-top:14px;
+  border-radius:22px;
+  overflow:hidden;
+  border:1px solid var(--tfx-line);
+}
+.ui-mini-table .row{
+  display:grid;
+  grid-template-columns:170px 1fr;
+  border-top:1px solid var(--tfx-line);
+}
+.ui-mini-table .row:first-child{border-top:none;}
+.ui-mini-table .k{
+  padding:12px;
+  font-weight:900;
+  background:rgba(255,140,0,0.06);
+}
+.ui-mini-table .v{
+  padding:12px;
 }
 </style>
 </head>
@@ -72,13 +104,13 @@
 </h1>
 
 <p class="tfx-lead">
-테무를 이용하다 보면 고객센터에 문의를 남겼는데 답변이 늦어지는 경우가 꽤 자주 발생합니다.
+테무를 사용하다 보면 고객센터에 문의를 남겼는데 답변이 늦어지는 경우가 생각보다 자주 발생합니다.
 단순히 기다리면 해결될 것 같지만, 실제로는 문의 방식에 따라 처리 속도가 크게 달라집니다.
 </p>
 
 <p class="tfx-lead">
-특히 <b class="tfx-strong">테무 고객센터 답변이 늦을 때</b>는 대부분 이유가 있습니다.
-이 글에서는 왜 답변이 늦어지는지, 그리고 어떻게 하면 한 번에 빠르게 해결되는지 구체적으로 설명합니다.
+특히 <b class="tfx-strong">테무 고객센터 답변 늦을 때</b>는 대부분 공통된 이유가 있습니다.
+이 글에서는 왜 답변이 늦어지는지, 그리고 어떻게 하면 한 번에 빠르게 해결되는지 실제 사용 가능한 방식으로 정리합니다.
 </p>
 
 <section class="tfx-section">
@@ -87,13 +119,13 @@
 
 <div class="ui-callout">
 <p class="tfx-p">
-테무 고객센터 답변 속도는 “문의 내용의 완성도”에 따라 결정됩니다.
+테무 고객센터 답변 속도는 문의 내용의 완성도에 따라 달라집니다.
 </p>
 
 <p class="tfx-p">
 ✔ 정보 부족 → 추가 질문 발생<br>
 ✔ 증빙 없음 → 확인 지연<br>
-✔ 요청 불명확 → 재확인 반복
+✔ 요청 불명확 → 재문의 반복
 </p>
 </div>
 
@@ -107,22 +139,22 @@
 
 <div class="ui-card">
 <p class="tfx-p"><b>정보 부족</b><br>
-주문번호 없이 문의하면 담당자가 다시 확인 요청을 하게 됩니다.</p>
+주문번호 없이 문의하면 담당자가 다시 확인해야 합니다.</p>
 </div>
 
 <div class="ui-card">
-<p class="tfx-p"><b>증빙 없음</b><br>
-사진이나 영상이 없으면 문제 확인이 늦어집니다.</p>
+<p class="tfx-p"><b>증빙 부족</b><br>
+사진이나 영상이 없으면 처리 속도가 느려집니다.</p>
 </div>
 
 <div class="ui-card">
 <p class="tfx-p"><b>문의 유형 오류</b><br>
-환불 문제를 배송 문제로 넣으면 처리 루트가 꼬입니다.</p>
+잘못된 카테고리 선택 시 처리 지연 발생</p>
 </div>
 
 <div class="ui-card">
 <p class="tfx-p"><b>반복 문의</b><br>
-여러 번 보내면 오히려 처리 순서가 뒤로 밀릴 수 있습니다.</p>
+여러 번 보내면 오히려 뒤로 밀립니다.</p>
 </div>
 
 </div>
@@ -133,14 +165,33 @@
 
 <h2 class="tfx-h2">빠르게 처리되는 문의 구조</h2>
 
-<div class="ui-step">
-<p class="tfx-p">
-1. 주문번호 명확히<br>
-2. 문제 상황 한 줄 요약<br>
-3. 상세 설명<br>
-4. 증빙 첨부<br>
-5. 원하는 결과 작성
-</p>
+<div class="ui-mini-table">
+
+<div class="row">
+<div class="k">주문번호</div>
+<div class="v">반드시 포함</div>
+</div>
+
+<div class="row">
+<div class="k">문제 요약</div>
+<div class="v">한 줄로 정리</div>
+</div>
+
+<div class="row">
+<div class="k">상세 설명</div>
+<div class="v">구체적으로 작성</div>
+</div>
+
+<div class="row">
+<div class="k">증빙</div>
+<div class="v">사진 또는 영상 첨부</div>
+</div>
+
+<div class="row">
+<div class="k">요청</div>
+<div class="v">환불/교환 명확히</div>
+</div>
+
 </div>
 
 </section>
@@ -154,9 +205,9 @@
 <p class="tfx-p">
 주문번호: XXXX<br>
 문제: 상품 파손<br>
-설명: 수령 직후 확인 결과 파손 상태<br>
+설명: 수령 직후 파손 확인<br>
 첨부: 사진 포함<br>
-요청: 환불 처리 요청
+요청: 환불 요청
 </p>
 
 </div>
@@ -165,26 +216,37 @@
 
 <section class="tfx-section">
 
-<h2 class="tfx-h2">처리가 빨라지는 팁</h2>
+<h2 class="tfx-h2">처리 속도를 올리는 핵심 전략</h2>
+
+<div class="ui-steps">
 
 <div class="ui-step">
-<p class="tfx-p">
-✔ 감정 표현 X<br>
-✔ 짧고 정확하게<br>
-✔ 한 번에 정리<br>
-✔ 증빙 필수
-</p>
+<p class="tfx-p">짧고 명확하게 작성</p>
+</div>
+
+<div class="ui-step">
+<p class="tfx-p">증빙 필수 첨부</p>
+</div>
+
+<div class="ui-step">
+<p class="tfx-p">감정 표현 제거</p>
+</div>
+
+<div class="ui-step">
+<p class="tfx-p">한 번에 정리</p>
+</div>
+
 </div>
 
 </section>
 
 <section class="tfx-section">
 
-<h2 class="tfx-h2">재주문 시 주의</h2>
+<h2 class="tfx-h2">재주문 전 체크</h2>
 
 <div class="ui-callout">
 <p class="tfx-p">
-환불 후 재주문 시 가격과 할인 조건이 달라질 수 있습니다.
+환불 후 재주문 시 가격과 쿠폰 조건이 바뀔 수 있습니다.
 우측 쿠폰을 활용하면 손해를 줄일 수 있습니다.
 </p>
 </div>
@@ -196,8 +258,12 @@
 <h2 class="tfx-h2">마무리</h2>
 
 <p class="tfx-p">
-테무 고객센터 답변이 늦는 이유는 대부분 구조적인 문제입니다.
-문의 방식만 바꿔도 처리 속도는 크게 개선됩니다.
+테무 고객센터 답변이 늦을 때는 기다리는 것이 아니라,
+문의 방식 자체를 바꿔야 합니다.
+</p>
+
+<p class="tfx-p">
+핵심은 정확한 정보와 명확한 요청입니다.
 </p>
 
 </section>
